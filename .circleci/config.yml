@@ -22,6 +22,10 @@ jobs:
           name: Test
           command: yarn run test
           path: server
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
 
 workflows:
   version: 2
