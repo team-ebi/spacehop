@@ -9,7 +9,6 @@ import Resisration from "./components/Registration";
 ReactDOM.render(
   <React.StrictMode>
     <App />
-    <Resisration />
   </React.StrictMode>,
   document.getElementById("root")
 );

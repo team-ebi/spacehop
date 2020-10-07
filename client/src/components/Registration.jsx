@@ -39,7 +39,7 @@ function Resisration() {
     console.log(lastName);
     console.log(telephoneNumber);
     console.log(email);
-    await axios.post("endpoint", {
+    await axios.post("http://localhost:3000/someapi", {
       first_name: firstName,
       last_name: lastName,
       telephone_Number: telephoneNumber,
