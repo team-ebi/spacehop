@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import Data from '../data/businesses'
 
 
 
@@ -16,6 +17,7 @@ const [bizData, setBizData] = useState([{
     return (
         <div id="location-container">
         <div >
+            
             {bizData.map((biz, index)=>( <ul id="location-cell">
             <img id="business-image" src="https://www.japan-guide.com/g9/2005_01b.jpg"/> <br/>
              {biz.Name} <br/>
