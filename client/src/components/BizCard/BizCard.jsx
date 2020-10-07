@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import Data from '../data/businesses'
+import Data from '../../data/businesses'
 import './BizCard.css'
 
 
@@ -17,8 +17,6 @@ const [bizData, setBizData] = useState([{
 
     return (
         <div id="location-container">
-        <div >
-            
             {bizData.map((biz, index)=>( <ul id="location-cell">
             <img id="business-image" src="https://www.japan-guide.com/g9/2005_01b.jpg"/> <br/>
              {biz.Name} <br/>
@@ -32,7 +30,6 @@ const [bizData, setBizData] = useState([{
             <img  id="location-png"src="https://www.pngrepo.com/download/100889/yen-currency-symbol.png"/> {biz.Price} <br/>
             <input type="button" value="Book"></input>
             </ul>))}
-        </div>
         </div>
     )
 }
