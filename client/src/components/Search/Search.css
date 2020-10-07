@@ -49,9 +49,20 @@ input {
   background-color: #80cc37;
   border-radius: 50px;
   justify-content: center;
+  border: none;
+  box-shadow: 0 4px 8px lightgrey;
 }
 .field {
-  margin-left: 10%;
+  margin-left: 20px;
+}
+#location-input {
+  text-indent: 20px;
+}
+#autocomplete-selections {
+  border-radius: 20px;
+  margin-top: 20px;
+  background-color: white;
+  overflow: hidden;
 }
 /* reset^^^ */
 
