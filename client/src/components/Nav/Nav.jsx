@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "../styles/Nav.css";
+import "./Nav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import logo from "../images/logo.png"
+import logo from "../../images/logo.png"
 
 export default function Nav() {
   const [displayMenu, setDisplayMenu] = useState(false);
