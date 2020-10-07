@@ -7,7 +7,6 @@ import BizCard from './components/BizCard/BizCard';
 function App() {
   return (
     <div className="App">
-        <BizCard/>
     </div>
   );
 }
