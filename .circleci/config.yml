@@ -6,20 +6,15 @@ jobs:
       - image: node:12
     steps:
       - checkout
-      - run:
-          name: Install yarn dependencies
-          command: yarn install --ignore-engines
-          path: server
-      - store_test_results:
-          path: server/test-results
-      - store_artifacts:
-          path: test-results
   test:
     docker:
       - image: circleci/node:10
       - image: node:12
     steps:
-      - checkout
+      - run:
+          name: Install yarn dependencies
+          command: yarn install --ignore-engines
+          path: server
       - run:
           name: Test backend
           command: yarn run test:ci
