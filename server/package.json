@@ -15,6 +15,6 @@
     "start": "node ./src/index.js",
     "dev": "nodemon ./src/index.js",
     "lint": "eslint --fix --ext .js .",
-    "test": "mocha test && yarn lint"
+    "test": "mocha test"
   }
 }
