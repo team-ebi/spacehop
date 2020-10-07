@@ -12,7 +12,7 @@ jobs:
           command: yarn install --ignore-engines
       - run:
           name: Test backend
-          command: yarn run test:ci
+          command: mkdir -p test-results && mocha test --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/file.xml
       - store_test_results:
           path: server/test-results
       - store_artifacts:
