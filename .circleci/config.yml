@@ -8,7 +8,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install yarn dependencies & test backend
+          name: Install yarn dependencies
           command: yarn install --ignore-engines
           path: server
   test:
@@ -19,10 +19,16 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install yarn dependencies & test backend
+          name: Test backend
           command: yarn run test:ci
           path: server
       - store_test_results:
           path: server/test-results
       - store_artifacts:
           path: test-results
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test
