@@ -1,7 +1,13 @@
+<<<<<<< HEAD:client/src/components/BizCard/BizCard.jsx
 import React, {useState} from 'react'
 import Data from '../../data/businesses'
 import './BizCard.css'
 
+=======
+import React, {useState, useContext} from 'react'
+import Data from '../data/businesses'
+import List from './List/List'
+>>>>>>> af30969fd2d0e33ed63c088898ac96772df2abbe:client/src/components/BizCard.jsx
 
 
 export default function BizCard() {
