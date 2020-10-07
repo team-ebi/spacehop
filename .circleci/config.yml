@@ -9,10 +9,7 @@ jobs:
       - checkout
       - run:
           name: Install yarn dependencies
-          command: yarn install --ignore-engines
-      - run:
-          name: Test backend
-          command: mkdir -p test-results && mocha test --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/file.xml
+          command: yarn install --ignore-engines && mkdir -p test-results && mocha test --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/file.xml
       - store_test_results:
           path: server/test-results
       - store_artifacts:
