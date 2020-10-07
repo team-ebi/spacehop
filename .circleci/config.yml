@@ -20,7 +20,7 @@ jobs:
       - checkout
       - run:
           name: Test
-          command: test:ci
+          command: yarn test:ci
           path: server
       - store_test_results:
           path: server/test-results
