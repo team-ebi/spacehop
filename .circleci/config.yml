@@ -10,8 +10,7 @@ jobs:
       - run:
           name: Install yarn dependencies & test backend
           command: 
-            - yarn install --ignore-engines
-            - yarn test:ci
+            - yarn install --ignore-engines && yarn test:ci
           path: server
       - store_test_results:
           path: server/test-results
