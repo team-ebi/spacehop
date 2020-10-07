@@ -2,20 +2,19 @@
 #location-container{
   display: flex; 
   flex-flow: row wrap;
-  justify-content: center;
+  padding-top: 40px;
+  margin-left: 85px;
 }
 
 #location-cell{
-  background-color:white;
+  background-color: white;
   width: 300px;
   margin: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.11), 0 4px 15px 0 rgba(0, 0, 0, 0.103)
 }
 
 #business-image{
-  margin-top: 15px;
   width: 100%;
-  object-fit: cover;
 }
 
 #location-png{
