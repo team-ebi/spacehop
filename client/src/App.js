@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import Nav from "./components/Nav/Nav";
 import Search from "./components/Search";
-import List from "./components/List";
+import List from "./components/List/List";
 
 function App() {
   return (
