@@ -1,8 +1,6 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family:  Circular, -apple-system, system-ui, Roboto, "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -15,24 +13,24 @@ code {
 #location-container{
   display: flex; 
   flex-flow: row wrap;
-  justify-content: center;
+  padding-top: 110px;
+  margin-left: 85px;
 }
 
 #location-cell{
-  background-color: lightgreen;
-  width: 300px;
+  background-color: white;
+  width: 250px;
   margin: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.11), 0 4px 15px 0 rgba(0, 0, 0, 0.103)
 }
 
 #business-image{
-  margin-top: 15px;
-  width: 250px;
-  min-height: 100%;
-  object-fit: cover;
+  width: 100%;
 }
 
 #location-png{
   height:20px;
   width:15px;
 }
+
+
