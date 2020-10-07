@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import BizCard from './components/BizCard';
+import BizCard from './components/BizCard/BizCard';
 
 
 function App() {

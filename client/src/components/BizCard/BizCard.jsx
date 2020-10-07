@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import Data from '../data/businesses'
+import './BizCard.css'
 
 
 
