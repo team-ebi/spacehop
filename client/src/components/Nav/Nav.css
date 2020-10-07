@@ -1,8 +1,9 @@
 #navbar {
   display: flex;
-  justify-content: space-between;
-  height: 100px;
+  justify-content: flex-end;
+  height: 80px;
   background-color: white;
+  width: 100%;
 }
 #logo-container {
   padding: 20px;
@@ -29,17 +30,10 @@
   margin-left: 83%;
   position: fixed;
   border-radius: 40px;
-  margin-top: -3%;
   border: solid lightgrey;
   border-width: 1px;
-  margin-top: -25px;
+  margin-top: -1%;
   overflow: hidden;
-}
-#logo-container {
-  z-index: 100;
-}
-#logo {
-  height: 100%;
 }
 .menu-item {
   width: 100%;
