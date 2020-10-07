@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run:
           name: Install yarn dependencies
-          command: yarn install
+          command: yarn install --ignore-engines
           path: server
 
   test:
