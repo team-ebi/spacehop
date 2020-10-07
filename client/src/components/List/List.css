@@ -9,8 +9,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-<<<<<<< HEAD:client/src/tanner.css
-=======
 
 #location-container{
   display: flex; 
@@ -36,4 +34,3 @@ code {
 }
 
 
->>>>>>> af30969fd2d0e33ed63c088898ac96772df2abbe:client/src/components/List/List.css
