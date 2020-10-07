@@ -1,6 +1,6 @@
 version: 2
 jobs:
-    build:
+  build:
     working_directory: ~/server
     docker:
       - image: circleci/node:4.8.2
