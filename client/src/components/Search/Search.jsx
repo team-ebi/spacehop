@@ -34,7 +34,7 @@ export default function Search() {
           <div>
             <FontAwesomeIcon icon={faSearch} size="lg" />
           </div>
-          <div>Search</div>
+          <div id="search-text">Search</div>
         </div>
       </div>
     </div>
