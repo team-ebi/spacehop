@@ -18,6 +18,6 @@ describe("firstendpoint", () => {
   it("firstendpoint", async () => {
     const res = await request.get("/api/firstendpoint");
     const result = JSON.parse(res.text).test;
-    expect(result).to.equal("test");
+    expect(result).to.equal("est");
   });
 });
