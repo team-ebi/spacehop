@@ -1,8 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Search from "../Nav";
-import { render } from "@testing-library/react";
-
+import Search from "../Search";
 
 it('renders without crashing', () => {
     const div = document.createElement("div");
