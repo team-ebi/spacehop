@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  test:
     working_directory: ~/server
     docker:
       - image: circleci/node:4.8.2
@@ -8,19 +8,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install yarn dependencies
-          command: yarn install --ignore-engines
-          path: server
-
-  test:
-    docker:
-      - image: circleci/node:4.8.2
-      - image: node:12
-    steps:
-      - checkout
-      - run:
-          name: Test
-          command: yarn test:ci
+          name: Install yarn dependencies & test backend
+          command: 
+            - yarn install --ignore-engines
+            - yarn test:ci
           path: server
       - store_test_results:
           path: server/test-results
@@ -31,5 +22,4 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - build
       - test
