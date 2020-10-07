@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import Data from '../data/businesses'
-
+import List from './List/List'
 
 
 export default function BizCard() {
