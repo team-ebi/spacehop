@@ -20,6 +20,7 @@
   border-radius: 50px;
   width: 60%;
   box-shadow: 0 4px 8px lightgrey;
+  z-index: 10
 }
 .input {
   background-color: white;
@@ -90,7 +91,7 @@ input {
   .react-datepicker__time
   .react-datepicker__time-box
   ul.react-datepicker__time-list
-  li.react-datepicker__time-list-item--selected
+  .react-datepicker__time-list-item--selected
   li.react-datepicker__time-list-item--selected:hover {
   background-color: #80cc37;
   color: black;

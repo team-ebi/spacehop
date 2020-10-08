@@ -9,29 +9,30 @@ import {
   AmplifySignOut,
   AmplifySignUp,
 } from "@aws-amplify/ui-react";
-import logo from "../../images/logo.png";
 
 export default function Nav() {
   const [displayMenu, setDisplayMenu] = useState(false);
   const [displayLogin, setDisplayLogin] = useState(false);
+  const [dimOverlay, setDimOverlay] = useState("");
 
+  // when user clicks login button, menu window will disappear
+  // and login window will appear
   function handleLoginClick() {
     setDisplayMenu(false);
     setDisplayLogin(true);
+    setDimOverlay("dim");
   }
 
+  // when user clicks on body, login and menu windows will close
   function clearDisplay() {
     setDisplayLogin(false);
     setDisplayMenu(false);
+    setDimOverlay("");
   }
-  
 
   return (
     <>
-      <div
-        className="overlay"
-        onClick={clearDisplay}
-      ></div>
+      <div className={`overlay ${dimOverlay}`} onClick={clearDisplay}></div>
       <nav>
         <div id="navbar">
           <div id="menu-container" onClick={() => setDisplayMenu(true)}>
@@ -55,13 +56,43 @@ export default function Nav() {
             <div className="menu-item">Profile</div>
             <div className="menu-item">About</div>
             <div className="menu-item">Team</div>
-            <AmplifySignOut />
+            <div className="menu-item">
+              <AmplifySignOut buttonText="Log out" />
+            </div>
           </div>
         )}
 
         {displayLogin && (
           <div id="login-window">
-            <AmplifySignIn usernameAlias="email" />
+            <AmplifyAuthenticator>
+              <AmplifySignUp
+                slot="sign-up"
+                usernameAlias="email"
+                formFields={[
+                  {
+                    type: "first_name",
+                    label: "First Name",
+                    required: true,
+                  },
+                  {
+                    type: "last_name",
+                    label: "Last Name",
+                    required: true,
+                  },
+                  {
+                    type: "email",
+                    label: "Email",
+                    required: true,
+                  },
+                  {
+                    type: "phone",
+                    label: "Phone",
+                    required: true,
+                  },
+                ]}
+              />
+              <AmplifySignIn slot="sign-in" usernameAlias="email" />
+            </AmplifyAuthenticator>
           </div>
         )}
       </nav>

@@ -55,6 +55,14 @@ table {
 	--amplify-primary-contrast: black;
 	--amplify-font-family: 'Roboto', sans-serif;
   }
+amplify-sign-out {
+	--amplify-primary-color: transparent;
+	text-decoration-style: lowercase;
+	height: 20px;
+}
+amplify-sign-out:hover {
+	background-color: lightgrey;
+}
 /* reset^^^ */
 @media (max-width: 700px) {
 }
