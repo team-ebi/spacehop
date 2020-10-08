@@ -109,9 +109,10 @@ export default function Nav() {
             </AmplifyAuthenticator>
           </div>
         )}
-        
+
         {displaySignup && (
           <div className="auth-window">
+            <AmplifyAuthenticator>
               <AmplifySignUp
                 slot="sign-up"
                 usernameAlias="email"
@@ -138,6 +139,7 @@ export default function Nav() {
                   },
                 ]}
               />
+            </AmplifyAuthenticator>
           </div>
         )}
       </nav>
