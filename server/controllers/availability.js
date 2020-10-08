@@ -26,4 +26,12 @@ router.get("/", async(req, res) => {
   res.send(availability);
 });
 
+router.get("/data", async(req, res) => {
+  const availability = await db
+  .select("*")
+  .table("availability")
+
+  res.send(availability);
+});
+
 module.exports = router;
