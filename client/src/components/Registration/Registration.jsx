@@ -34,6 +34,7 @@ function Registration() {
   // console.log(email);
   //submit data by cliking the button
   //now, just console log
+  //I will add endpoints here when it ready
   async function submitData() {
     // console.log(firstName);
     // console.log(lastName);
