@@ -40,7 +40,7 @@ export default function Nav({}) {
     setDisplayLogin(false);
     setDisplayMenu(false);
     setDisplaySignup(false);
-    setDimOverlay("");
+    setDimOverlay("hide");
   }
 
   const history = useHistory();

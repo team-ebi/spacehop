@@ -6,7 +6,7 @@ export default function List() {
   const [data, setData] = useState(Data);
 
   return (
-    <div>
+    <div id="list-container">
       <h1>List View</h1>
       <div id="location-container">
         {/* Mapping through data to display on each bizcard */}
