@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = {
   development: {
     client: 'postgresql',
@@ -6,5 +8,9 @@ module.exports = {
   production: {
     client: 'postgresql',
     connection: process.env.DATABASE_URL
+  },
+  test: {
+    client: 'postgresql',
+    connection: `postgres://${process.env.USER}@127.0.0.1:5432/spacehoptest`
   }
 };
