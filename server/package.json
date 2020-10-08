@@ -15,7 +15,7 @@
   },
   "scripts": {
     "start": "node ./src/index.js",
-    "dev": "nodemon ./server/index.js",
+    "dev": "nodemon ./server/src/index.js",
     "lint": "eslint --fix --ext .js .",
     "test": "mocha test && yarn lint",
     "makeMigration": "knex migrate:make",
