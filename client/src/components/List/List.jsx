@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import Data from "../../data/businesses";
 import "./List.css";
 export default function List() {
   //state for JSON data
   const [data, setData] = useState(Data);
+  // useContext
+  import {BusinessContext} from "./BusinessContext/BusinessContext";
+
 
   return (
     <div>

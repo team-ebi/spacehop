@@ -8,7 +8,8 @@ import PlacesAutocomplete, {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Search.css";
-import { SearchContext } from "./SearchContext";
+// useContext
+import { BusinessContext } from "./BusinessContext/BusinessContext";
 
 export default function Search() {
   const [searchValue, setSearchValue] = useState("");
@@ -91,9 +92,6 @@ export default function Search() {
           <div id="search-text">Search</div>
         </button>
       </div>
-      <SearchContext.Provider value={{ searchValue, setSearchValue }}>
-        useContext!
-      </SearchContext.Provider>
     </div>
   );
 }
