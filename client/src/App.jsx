@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import Resisration from "./components/Registration";
+import Registration from "./components/Registration";
 
 function App() {
   return (
     <div className="App">
-      <Resisration />
+      <Registration />
     </div>
   );
 }

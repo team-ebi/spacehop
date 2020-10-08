@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 const axios = require("axios");
 
-function Resisration() {
+function Registration() {
   //state of first name
   const [firstName, setFirstName] = useState("");
   //state of last name
@@ -48,7 +48,7 @@ function Resisration() {
   }
 
   return (
-    <div className="Resisration">
+    <div className="Registrasion">
       <div>
         <div className="container" style={{ padding: "40px 30px" }}>
           <h2
@@ -117,4 +117,4 @@ function Resisration() {
   );
 }
 
-export default Resisration;
+export default Registration;
