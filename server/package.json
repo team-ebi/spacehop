@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "knex": "^0.21.6",
+    "pg": "^8.4.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -13,8 +15,12 @@
   },
   "scripts": {
     "start": "node ./src/index.js",
-    "dev": "nodemon ./src/index.js",
+    "dev": "nodemon ./server/index.js",
     "lint": "eslint --fix --ext .js .",
-    "test": "mocha test && yarn lint"
+    "test": "mocha test && yarn lint",
+    "makeMigration": "knex migrate:make",
+    "migrate": "knex migrate:latest",
+    "makeSeed": "knex seed:make",
+    "seed": "knex seed:run"
   }
 }
