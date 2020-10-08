@@ -1,17 +1,22 @@
 import React, { useState } from "react";
-import "./Search.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
+import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css';
+import "./Search.css";
 
 export default function Search() {
   const [location, setLocation] = useState("");
-  const [coordinates, setCoordinates] = useState({lat: null, lng: null})
+  // may or may not need coordinates
+  const [coordinates, setCoordinates] = useState({lat: null, lng: null});
+  const [selectedDate, setSelectedDate] = useState("")
 
-  const handleSelect = async value => {
+  // handles location update when location is selected in input
+  const handleLocationSelect = async value => {
     const results = await geocodeByAddress(value);
     const latLng = await getLatLng(results[0]);
     setLocation(value);
@@ -21,13 +26,14 @@ export default function Search() {
   return (
     <div id="search-container">
       <div id="search-bar">
+
+        {/* this google maps api autofill location search will update
+        location and coordinates states*/}
         <div className="input" id="location-input">
-          <div className="input-header field">Location</div>
-          <div>
             <PlacesAutocomplete
               value={location}
               onChange={setLocation}
-              onSelect={handleSelect}
+              onSelect={handleLocationSelect}
             >
               {({
                 getInputProps,
@@ -39,6 +45,8 @@ export default function Search() {
                   <input id="location-input" {...getInputProps({ placeholder: "Where to?" })} />
                   <div id="autocomplete-selections">
                     {loading ? <div>...loading</div> : null}
+
+                    {/* this will delay autofill options as user types */}
                     {suggestions.map((suggestion) => {
                       const style = {
                         backgroundColor: suggestion.active ? "#80cc37" : "white",
@@ -50,17 +58,21 @@ export default function Search() {
                 </div>
               )}
             </PlacesAutocomplete>
-          </div>
         </div>
+
+        {/* datepicker will update selectedDate state */}
         <div className="input">
-          <div className="input-header field">Date</div>
-          <div>
-            <input
+            <DatePicker
               id="date-input"
-              type="datetime-local"
-              className="field"
-            ></input>
-          </div>
+              placeholderText="When?"
+              selected={selectedDate}
+              onChange={date => setSelectedDate(date)}
+              name="selectedDate"
+              timeFormat="HH:00"
+              dateFormat="MMMM d, yyyy h:mm aa"
+              showTimeSelect
+            />
+         
         </div>
 
         {/* when this button is clicked, list of available
