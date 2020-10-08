@@ -1,7 +1,7 @@
 module.exports = {
   development: {
     client: 'postgresql',
-    connection: `postgres://${process.env.USER}@127.0.0.1:5432/test_ebi`
+    connection: `postgres://${process.env.USER}@127.0.0.1:5432/spacehop`
   },
   production: {
     client: 'postgresql',
