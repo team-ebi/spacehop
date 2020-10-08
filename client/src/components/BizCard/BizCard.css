@@ -1,0 +1,23 @@
+
+#location-container{
+  display: flex; 
+  flex-flow: row wrap;
+  padding-top: 40px;
+  margin-left: 85px;
+}
+
+#location-cell{
+  background-color: white;
+  width: 300px;
+  margin: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.11), 0 4px 15px 0 rgba(0, 0, 0, 0.103)
+}
+
+#business-image{
+  width: 100%;
+}
+
+#location-png{
+  height:20px;
+  width:15px;
+}

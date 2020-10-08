@@ -48,17 +48,7 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-#hero {
-  height: 820px;
-  width: 100%;
-  background-color: rgb(247, 243, 243);
-}
+/* reset^^^ */
 @media (max-width: 700px) {
- nav {
-   bottom: 0;
-   position: fixed;
-   z-index: 100000;
-   width: 100%;
- }
 
 }
