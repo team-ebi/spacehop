@@ -13,8 +13,12 @@ export default function Nav({}) {
     return history.push("/login");
   }
 
+  function teamHandler() {
+    return history.push("/team");
+  }
+
   function aboutHandler() {
-    return history.push('/about')
+    return history.push("/about");
   }
 
   return (
@@ -34,13 +38,21 @@ export default function Nav({}) {
       {/* menu when user is not logged in yet */}
       {displayMenu && (
         <div id="menu">
-          <div className="menu-item" id="login" onClick={routerHandler}>
+          <div
+            className="menu-item"
+            id="login"
+            onClick={routerHandler}
+          >
             Log In
           </div>
           <div className="menu-item">Sign Up</div>
           <div className="menu-item">Profile</div>
-          <div className="menu-item" onClick={aboutHandler}>About</div>
-          <div className="menu-item">Team</div>
+          <div className="menu-item" onClick={aboutHandler}>
+            About
+          </div>
+          <div className="menu-item" onClick={teamHandler}>
+            Team
+          </div>
         </div>
       )}
     </nav>
