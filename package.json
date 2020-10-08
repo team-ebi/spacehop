@@ -12,8 +12,8 @@
     "nodemon": "^2.0.4"
   },
   "scripts": {
-    "start": "cd server && yarn install && yarn start",
-    "start-client": "cd client && yarn install && yarn start",
+    "start": "cd server && npm install && npm start",
+    "start-client": "cd client && npm install && npm start",
     "dev": "nodemon ./src/index.js",
     "lint": "eslint --fix --ext .js .",
     "test": "mocha test && yarn lint"
