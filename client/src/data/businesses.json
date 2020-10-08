@@ -1,0 +1,343 @@
+[
+  {
+    "id": 1,
+    "name": "Ebi-chan",
+    "address_street": "1-8-1 Shimomeguro",
+    "address_city": "Meguro-ku",
+    "address_zip": "153-0064",
+    "phone": "03-5434-3977",
+    "business_type": "izakaya",
+    "capacity": "1-10",
+    "price": 20000,
+    "all_reservations": [
+      {
+        "id": 1,
+        "date": "2020-10-20",
+        "price": 20000,
+        "created_at": "Wed Oct 05 2020 00:05:33 GMT+0900 (Japan Standard Time)",
+        "user_id": {
+          "id": 1,
+          "first_name:": "Masuo",
+          "last_name": "Suzuki",
+          "email": "m.suzuki@gmail.com",
+          "phone": "080-7382-1819"
+        }
+      },
+      {
+        "id": 2,
+        "date": "2020-10-22",
+        "price": 20000,
+        "created_at": "Wed Oct 06 2020 09:05:33 GMT+0900 (Japan Standard Time)",
+        "user_id": {
+          "id": 2,
+          "first_name:": "Ryu",
+          "last_name": "Tamura",
+          "email": "r.tamura@gmail.com",
+          "phone": "080-3332-1611"
+        }
+      }
+    ],
+    "all_availabilities": [
+      {
+        "id": 1,
+        "day": "Tuesday",
+        "start_hour": 10,
+        "end_hour": 16
+      },
+      {
+        "id": 2,
+        "day": "Thursday",
+        "start_hour": 10,
+        "end_hour": 16
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "DANCING CRAB Kurabutokyo",
+    "address_street": "NOWA building 2F, 3-37-12 Meguro",
+    "address_city": "Meguro-ku",
+    "address_zip": "160-0022",
+    "phone": "03-6380-5151",
+    "business_type": "izakaya",
+    "capacity": "10-20",
+    "price": 30000,
+    "all_reservations": [],
+    "all_availabilities": [
+      {
+        "id": 3,
+        "day": "Monday",
+        "start_hour": 10,
+        "end_hour": 16
+      },
+      {
+        "id": 4,
+        "day": "Wednesday",
+        "start_hour": 10,
+        "end_hour": 16
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "TORAJI Ikebukuronishiguchiten",
+    "address_street": "Lumi Yale Building 6F, 1-17-7, Nishiikebukuro",
+    "address_city": "Meguro-ku",
+    "address_zip": "171-0021",
+    "phone": "03-5911-1129",
+    "business_type": "izakaya",
+    "capacity": "10-20",
+    "price": 30000,
+    "all_reservations": [],
+    "all_availabilities": [
+      {
+        "id": 5,
+        "day": "Monday",
+        "start_hour": 11,
+        "end_hour": 17
+      },
+      {
+        "id": 6,
+        "day": "Wednesday",
+        "start_hour": 11,
+        "end_hour": 17
+      },
+      {
+        "id": 7,
+        "day": "Friday",
+        "start_hour": 11,
+        "end_hour": 17
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "MUSASHINO BAR Mitakaten",
+    "address_street": "Mitaka 2F, 1-19-20, Nakacho",
+    "address_city": " Meguro-ku",
+    "address_zip": "180-0006",
+    "phone": "042-238-7388",
+    "business_type": "bar",
+    "capacity": "1-10",
+    "price": 20000,
+    "all_reservations": [],
+    "all_availabilities": [
+      {
+        "id": 8,
+        "day": "Monday",
+        "start_hour": 10,
+        "end_hour": 17
+      },
+      {
+        "id": 9,
+        "day": "Tuesday",
+        "start_hour": 10,
+        "end_hour": 17
+      },
+      {
+        "id": 10,
+        "day": "Wednesday",
+        "start_hour": 10,
+        "end_hour": 17
+      },
+      {
+        "id": 11,
+        "day": "Thursday",
+        "start_hour": 10,
+        "end_hour": 17
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "GRILL MANTENBOSHI Nihombashimitsukoshihonten",
+    "address_street": "Mitsukoshi Nihonbashi Main Store Shinkan 9F, 1-4-1, Muromachi, Nihombashi",
+    "address_city": "Meguro-ku",
+    "address_zip": "103-0022",
+    "phone": "03-3275-2800",
+    "business_type": "izakaya",
+    "capacity": "10-20",
+    "price": 30000,
+    "all_reservations": [],
+    "all_availabilities": [
+      {
+        "id": 12,
+        "day": "Monday",
+        "start_hour": 9,
+        "end_hour": 16
+      },
+      {
+        "id": 13,
+        "day": "Tuesday",
+        "start_hour": 9,
+        "end_hour": 16
+      },
+      {
+        "id": 14,
+        "day": "Wednesday",
+        "start_hour": 9,
+        "end_hour": 16
+      },
+      {
+        "id": 15,
+        "day": "Thursday",
+        "start_hour": 9,
+        "end_hour": 16
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "SHOUJYOU",
+    "address_street": "2-26-9, Minamiaoyama",
+    "address_city": "Meguro-ku",
+    "address_zip": "107-0062",
+    "phone": "03-3479-0770",
+    "business_type": "izakaya",
+    "capacity": "10-20",
+    "price": 30000,
+    "all_reservations": [],
+    "all_availabilities": [
+      {
+        "id": 16,
+        "day": "Monday",
+        "start_hour": 10,
+        "end_hour": 17
+      },
+      {
+        "id": 17,
+        "day": "Wednesday",
+        "start_hour": 10,
+        "end_hour": 17
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "SAKUCCHA Asakusaten",
+    "address_street": "1-2-9, Asakusa",
+    "address_city": "Meguro-ku",
+    "address_zip": "111-0032",
+    "phone": "03-6231-6294",
+    "business_type": "izakaya",
+    "capacity": "10-20",
+    "price": 30000,
+    "all_reservations": [],
+    "all_availabilities": [
+      {
+        "id": 18,
+        "day": "Monday",
+        "start_hour": 8,
+        "end_hour": 15
+      },
+      {
+        "id": 19,
+        "day": "Tuesday",
+        "start_hour": 8,
+        "end_hour": 15
+      },
+      {
+        "id": 20,
+        "day": "Wednesday",
+        "start_hour": 8,
+        "end_hour": 15
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "DEN AQUAROOM Akuarumuaoyama",
+    "address_street": "KDX Minamiaoyama building B1, 5-13-3, Minamiaoyama",
+    "address_city": "Meguro-ku",
+    "address_zip": "153-0064",
+    "phone": "03-5778-2090",
+    "business_type": "bar",
+    "capacity": "1-10",
+    "price": 20000,
+    "all_reservations": [],
+    "all_availabilities": [
+      {
+        "id": 21,
+        "day": "Monday",
+        "start_hour": 11,
+        "end_hour": 17
+      },
+      {
+        "id": 22,
+        "day": "Tuesday",
+        "start_hour": 11,
+        "end_hour": 17
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "KAWAII MONSTER Harajuku",
+    "address_street": "YM square building 4F, 4-31-10, Jinguumae",
+    "address_city": "Meguro-ku",
+    "address_zip": "150-0001",
+    "phone": "03-6854-8729",
+    "business_type": "bar",
+    "capacity": "1-10",
+    "price": 20000,
+    "all_reservations": [],
+    "all_availabilities": [
+      {
+        "id": 23,
+        "day": "Monday",
+        "start_hour": 10,
+        "end_hour": 17
+      },
+      {
+        "id": 24,
+        "day": "Tuesday",
+        "start_hour": 10,
+        "end_hour": 17
+      },
+      {
+        "id": 25,
+        "day": "Wednesday",
+        "start_hour": 10,
+        "end_hour": 17
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Hammonten",
+    "address_street": "2-42-7, Sannou",
+    "address_city": "Meguro-ku",
+    "address_zip": "143-0023",
+    "phone": "03-3771-0202",
+    "business_type": "izakaya",
+    "capacity": "10-20",
+    "price": 30000,
+    "all_reservations": [],
+    "all_availabilities": [
+      {
+        "id": 26,
+        "day": "Monday",
+        "start_hour": 10,
+        "end_hour": 17
+      },
+      {
+        "id": 27,
+        "day": "Tuesday",
+        "start_hour": 10,
+        "end_hour": 17
+      },
+      {
+        "id": 28,
+        "day": "Wednesday",
+        "start_hour": 10,
+        "end_hour": 17
+      },
+      {
+        "id": 29,
+        "day": "Thursday",
+        "start_hour": 10,
+        "end_hour": 17
+      }
+    ]
+  }
+]
