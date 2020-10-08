@@ -17,6 +17,10 @@ export default function Nav({}) {
     return history.push("/about");
   }
 
+  function profileHandler() {
+    return history.push("/profile");
+  }
+
   return (
     <nav>
       <div id="navbar">
@@ -25,7 +29,7 @@ export default function Nav({}) {
           <div id="menu-button">
             <FontAwesomeIcon icon={faBars} size="lg" color="#80CC37" />
           </div>
-          <div id="profile-thumb">
+          <div id="profile-thumb" onClick={profileHandler}>
             <FontAwesomeIcon icon={faUserCircle} size="lg" color="#80CC37" />
           </div>
         </div>
@@ -41,7 +45,7 @@ export default function Nav({}) {
             Log In
           </div>
           <div className="menu-item">Sign Up</div>
-          <div className="menu-item">Profile</div>
+          <div className="menu-item" onClick={profileHandler}>Profile</div>
           <div className="menu-item" onClick={aboutHandler}>
             About
           </div>
