@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Search.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { SearchContext } from "./SearchContext";
 
 export default function Search() {
+  // useContext
+  const [searchValue, setSearchValue] = useState("");
+
   return (
     <div id="search-container">
       <div id="search-bar">
@@ -37,6 +41,9 @@ export default function Search() {
           <div id="search-text">Search</div>
         </div>
       </div>
+      <SearchContext.Provider value={{ searchValue, setSearchValue }}>
+        useContext!
+      </SearchContext.Provider>
     </div>
   );
 }

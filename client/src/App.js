@@ -7,7 +7,7 @@ import { AppContext } from "./AppContext";
 
 function App() {
   // useContext
-  const [value, setValue] = useState("");
+  const [appValue, setAppValue] = useState("");
 
   return (
     <div className="App">
@@ -15,7 +15,7 @@ function App() {
       <Search />
       <List />
       {/* useContext */}
-      <AppContext.Provider value={{ value, setValue }}>
+      <AppContext.Provider value={{ appValue, setAppValue }}>
         useContext!
       </AppContext.Provider>
     </div>
