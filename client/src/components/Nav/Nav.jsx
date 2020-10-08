@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link, useHistory, withRouter } from "react-router-dom";
 import "./Nav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUserCircle } from "@fortawesome/free-solid-svg-icons";
@@ -10,7 +11,8 @@ import {
   AmplifySignUp,
 } from "@aws-amplify/ui-react";
 
-export default function Nav() {
+export default function Nav({}) {
+
   const [displayMenu, setDisplayMenu] = useState(false);
   const [displayLogin, setDisplayLogin] = useState(false);
   const [dimOverlay, setDimOverlay] = useState("");
@@ -42,6 +44,16 @@ export default function Nav() {
     setDimOverlay("");
   }
 
+  const history = useHistory();
+
+  function teamHandler() {
+    return history.push("/team");
+  }
+
+  function aboutHandler() {
+    return history.push("/about");
+  }
+
   return (
     <>
       <div className={`overlay ${dimOverlay}`} onClick={clearDisplay}></div>
@@ -68,8 +80,8 @@ export default function Nav() {
               Sign Up
             </button>
             <button className="menu-item">Profile</button>
-            <button className="menu-item">About</button>
-            <button className="menu-item">Team</button>
+            <button className="menu-item" onClick={aboutHandler}>About</button>
+            <button className="menu-item" onClick={teamHandler}>Team</button>
             <div className="menu-item">
               <AmplifySignOut buttonText="Log out" />
             </div>
