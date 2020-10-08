@@ -31,6 +31,26 @@ exports.seed = function(knex) {
           business_type: "Restaurant",
           capacity: 30,
           price: 30000
+        },
+        {
+          name: "Bar X",
+          address_street: "4th Street",
+          address_city: "Shibuya",
+          address_zip: "777",
+          phone: "0123-456-789",
+          business_type: "Bar",
+          capacity: 40,
+          price: 40000
+        },
+        {
+          name: "Cafe X",
+          address_street: "5th Street",
+          address_city: "Shinjuku",
+          address_zip: "777",
+          phone: "0123-456-789",
+          business_type: "Cafe",
+          capacity: 40,
+          price: 40000
         }
       ]);
     });

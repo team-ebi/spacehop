@@ -19,25 +19,11 @@ export default function List() {
             <br />
             <span id="location-name">{biz.name}</span> <br />
             <img id="location-png" />
-            {biz.address_city} <br />
-            <img id="location-png" />
-            {biz.address_street} <br />
-            {biz.address_zip} <br />
-            <img id="location-png" />
             {biz.business_type} <br />
-            <img id="location-png" />
-            {biz.phone} <br />
             {/* mapping through week days to display each available day */}
-            Availability:
-            <select id="days">
-              {biz.all_availabilities.map((avail, index) => (
-                <option>{avail.day}</option>
-              ))}
-            </select>{" "}
             <br />
             <img id="location-png" />
             {biz.price} <br />
-            <input type="button" value="Book" id="book-button"></input>
           </div>
         ))}
       </div>
