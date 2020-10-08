@@ -10,9 +10,9 @@ function App() {
     <div className="App">
       <div id="overlay"></div>
       <div id="hero">
-        <BizCard/>
         <Nav />
         <Search />
+        <List/>
       </div>
     </div>
   );
