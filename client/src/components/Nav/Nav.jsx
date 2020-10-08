@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./Nav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import logo from "../../images/logo.png"
 
 export default function Nav() {
   const [displayMenu, setDisplayMenu] = useState(false);
@@ -10,8 +9,9 @@ export default function Nav() {
   return (
     <nav>
       <div id="navbar">
-        <div id="logo-container"><img id="logo"src={logo}/></div>
         <div id="menu-container" onClick={() => setDisplayMenu(!displayMenu)}>
+          
+          {/* when button is clicked, small menu window will pop up */}
           <div id="menu-button">
             <FontAwesomeIcon icon={faBars} size="lg" color="#80CC37" />
           </div>
@@ -20,6 +20,8 @@ export default function Nav() {
           </div>
         </div>
       </div>
+
+      {/* menu when user is not logged in yet */}
       {displayMenu && 
       <div id="menu">
         <div className="menu-item" id="login">Log In</div>
