@@ -8,12 +8,16 @@ import PlacesAutocomplete, {
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import "./Search.css";
+import {useHistory} from 'react-router-dom';
 
 export default function Search() {
   const [location, setLocation] = useState("");
   // may or may not need coordinates
   const [coordinates, setCoordinates] = useState({lat: null, lng: null});
   const [selectedDate, setSelectedDate] = useState("")
+
+  //variable to access routes history
+  const history = useHistory()
 
   // handles location update when location is selected in input
   const handleLocationSelect = async value => {
@@ -22,6 +26,11 @@ export default function Search() {
     setLocation(value);
     setCoordinates(latLng);
   };
+
+  //handle local routing
+  function routerHandler() {
+    return history.push("/list");
+  }
 
   return (
     <div id="search-container">
@@ -77,7 +86,7 @@ export default function Search() {
 
         {/* when this button is clicked, list of available
         businesses will be displayed */}
-        <button id="search-button">
+        <button id="search-button" onClick={routerHandler}>
           <div>
             <FontAwesomeIcon icon={faSearch} size="lg" />
           </div>
