@@ -12,7 +12,7 @@ router.get("/", async(req, res) => {
   const start_hour = req.body.start_hour;
   const end_hour = req.body.end_hour;
   
-  const businesses = await db
+  const availability = await db
   .select("*")
   .table("businesses")
   .join("availability", { "availability.business_id": "businesses.id" })
@@ -23,7 +23,7 @@ router.get("/", async(req, res) => {
   .where("start_hour", "<=", start_hour)
   .andWhere("end_hour", ">=", end_hour);
   
-  res.send(businesses);
+  res.send(availability);
 });
 
 module.exports = router;
