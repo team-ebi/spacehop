@@ -7,6 +7,7 @@ import List from "./components/List/List";
 import Login from "./components/Login";
 import About from "./components/About/About"
 import Team from "./components/Team/Team"
+import BizCard from "./components/BizCard/BizCard"
 
 function App() {
   return (
