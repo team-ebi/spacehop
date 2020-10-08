@@ -8,12 +8,9 @@ import BizCard from "./components/BizCard/BizCard";
 function App() {
   return (
     <div className="App">
-      <div id="overlay"></div>
-      <div id="hero">
-        <Nav />
-        <Search />
-        <List/>
-      </div>
+      <Nav />
+      <Search />
+      <List />
     </div>
   );
 }
