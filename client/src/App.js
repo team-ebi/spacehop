@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./App.css";
 import Nav from "./components/Nav/Nav";
-import Search from "./components/Search/Search";
+import Search from "./components/Search";
 import List from "./components/List/List";
-import { AppContext } from "./AppContext";
+import BizCard from "./components/BizCard/BizCard";
 
 function App() {
   // useContext
