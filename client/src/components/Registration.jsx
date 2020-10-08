@@ -1,9 +1,9 @@
 import React from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 
-function Resisration() {
+function Registrasion() {
   return (
-    <div className="Resisration">
+    <div className="Registrasion">
       <div>
         <div className="container">
           <p>this is resisraiton</p>
@@ -58,4 +58,4 @@ function Resisration() {
   );
 }
 
-export default Resisration;
+export default Registrasion;
