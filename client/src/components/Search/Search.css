@@ -36,9 +36,8 @@ input {
   border: none;
   background-color: transparent;
   border-radius: 50px;
-}
-.input-header {
-  font-weight: 700;
+  display: flex;
+  align-content: center;
 }
 #search-button {
   width: 130px;
@@ -49,9 +48,56 @@ input {
   background-color: #80cc37;
   border-radius: 50px;
   justify-content: center;
+  border: none;
+  box-shadow: 0 4px 8px lightgrey;
 }
-.field {
-  margin-left: 10%;
+#location-input {
+  text-indent: 20px;
+  font-size: 18px;
+}
+#autocomplete-selections {
+  border-radius: 20px;
+  margin-top: 20px;
+  background-color: white;
+  overflow: hidden;
+}
+#date-input {
+  font-size: 18px;
+  align-self: center;
+}
+.react-datepicker-wrapper {
+  width: 100%;
+  display: flex;
+}
+.react-datepicker__day:hover,
+.react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range,
+.react-datepicker__month-text--selected,
+.react-datepicker__month-text--in-selecting-range,
+.react-datepicker__month-text--in-range,
+.react-datepicker__quarter-text--selected,
+.react-datepicker__quarter-text--in-selecting-range,
+.react-datepicker__quarter-text--in-range,
+.react-datepicker__year-text--selected,
+.react-datepicker__year-text--in-selecting-range,
+.react-datepicker__year-text--in-range,
+.react-datepicker__day--keyboard-selected {
+  background-color: #80cc37;
+  color: black;
+}
+.react-datepicker__time-container
+  .react-datepicker__time
+  .react-datepicker__time-box
+  ul.react-datepicker__time-list
+  li.react-datepicker__time-list-item--selected
+  li.react-datepicker__time-list-item--selected:hover {
+  background-color: #80cc37;
+  color: black;
+}
+.react-datepicker {
+  border-radius: 20px;
+  overflow: hidden;
 }
 /* reset^^^ */
 
@@ -81,7 +127,7 @@ input {
     height: 50px;
   }
   #search-text {
-   display: none;
+    display: none;
   }
   @media (max-width: 400px) {
     #search-container {
