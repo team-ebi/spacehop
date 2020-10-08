@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, Container, Row, Col, Image } from "react-bootstrap";
-import personImg from "../../img/personal-2.jpg";
-import data from "../../data/users.json";
+import personImg from "../img/personal-2.jpg";
+import data from "../data/users.json";
+import FutureBookings from "./FutureBookings";
 
 function Profile() {
   //state of data of a person
@@ -52,11 +53,16 @@ function Profile() {
         </Row>
         <Row>{profile}</Row>
         <div className="button_layout" style={{ margin: "0 auto " }}>
+          {/* future bookings is set in the middle of this code */}
+          {/* future booking has its own branch : futureBookings */}
+          <FutureBookings />
+
           <Button
             variant="success"
             type="submit"
             size="lg"
             block
+            style={{ background: "#80cc37",borderRadius: "50px", marginTop:"20px ", marginBottom:"20px"}}
             // onClick={submitData}
           >
             main page
