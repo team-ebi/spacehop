@@ -43,22 +43,19 @@
   cursor: pointer;
   border-bottom: solid lightgrey;
   border-width: 1px;
-}
-#login {
-  font-weight: 700;
   font-size: 16px;
   background-color: white;
   border: solid lightgrey;
   border-width: 1px;
   border-top: none;
 }
-#login:hover {
-  background-color: lightgrey;
-}
 .menu-item:hover {
   background-color: lightgrey;
 }
-#login-window {
+#login {
+  font-weight: 700;
+}
+.auth-window {
   display: flex;
   justify-content: center;
   position: fixed;
@@ -67,9 +64,6 @@
   z-index: 100;
   margin-left: 25%;
   border-radius: 90px;
-}
-amplify-sign-in {
-  padding: 100px;
 }
 .overlay {
   width: 100%;
