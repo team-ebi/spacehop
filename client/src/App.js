@@ -5,6 +5,7 @@ import Nav from "./components/Nav/Nav";
 import Search from "./components/Search/Search";
 import List from "./components/List/List";
 import Login from "./components/Login";
+import About from "./components/About/About"
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Switch>
           <Route path="/login" exact component={Login} />
           <Route path="/list" exact component={List} />
+          <Route path="/about" exact component={About} />
         </Switch>
     </div>
   );

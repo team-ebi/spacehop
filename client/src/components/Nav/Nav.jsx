@@ -13,6 +13,10 @@ export default function Nav({}) {
     return history.push("/login");
   }
 
+  function aboutHandler() {
+    return history.push('/about')
+  }
+
   return (
     <nav>
       <div id="navbar">
@@ -35,7 +39,7 @@ export default function Nav({}) {
           </div>
           <div className="menu-item">Sign Up</div>
           <div className="menu-item">Profile</div>
-          <div className="menu-item">About</div>
+          <div className="menu-item" onClick={aboutHandler}>About</div>
           <div className="menu-item">Team</div>
         </div>
       )}
