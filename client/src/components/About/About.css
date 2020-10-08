@@ -1,20 +1,8 @@
 #about-container {
-  display: flex;
-  justify-content: center;
-  align-content: center;
   height: 820px;
   width: 100%;
   background-color: rgb(250, 238, 238);
-  background-image: url("../../images/logo.png");
-  background-repeat: no-repeat;
-  background-position-x: center;
-  background-position-y: 5%;
-  background-size: 25%;
 }
 header {
-    margin-top: 40px;
-}
-h1 {
-    font-size: 30px;
-    font-weight: 700;
+    padding-top: 40px;
 }
