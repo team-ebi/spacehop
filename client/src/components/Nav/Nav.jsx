@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useHistory, withRouter } from "react-router-dom";
-import "./Nav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { Auth } from "aws-amplify";
@@ -10,9 +9,9 @@ import {
   AmplifySignOut,
   AmplifySignUp,
 } from "@aws-amplify/ui-react";
+import "./Nav.css";
 
 export default function Nav({}) {
-
   const [displayMenu, setDisplayMenu] = useState(false);
   const [displayLogin, setDisplayLogin] = useState(false);
   const [dimOverlay, setDimOverlay] = useState("");
@@ -80,8 +79,12 @@ export default function Nav({}) {
               Sign Up
             </button>
             <button className="menu-item">Profile</button>
-            <button className="menu-item" onClick={aboutHandler}>About</button>
-            <button className="menu-item" onClick={teamHandler}>Team</button>
+            <button className="menu-item" onClick={aboutHandler}>
+              About
+            </button>
+            <button className="menu-item" onClick={teamHandler}>
+              Team
+            </button>
             <div className="menu-item">
               <AmplifySignOut buttonText="Log out" />
             </div>
@@ -91,32 +94,6 @@ export default function Nav({}) {
         {displayLogin && (
           <div className="auth-window">
             <AmplifyAuthenticator>
-              <AmplifySignUp
-                slot="sign-up"
-                usernameAlias="email"
-                formFields={[
-                  {
-                    type: "first_name",
-                    label: "First Name",
-                    required: true,
-                  },
-                  {
-                    type: "last_name",
-                    label: "Last Name",
-                    required: true,
-                  },
-                  {
-                    type: "email",
-                    label: "Email",
-                    required: true,
-                  },
-                  {
-                    type: "phone",
-                    label: "Phone",
-                    required: true,
-                  },
-                ]}
-              />
               <AmplifySignIn slot="sign-in" usernameAlias="email" />
             </AmplifyAuthenticator>
           </div>
@@ -124,7 +101,7 @@ export default function Nav({}) {
 
         {displaySignup && (
           <div className="auth-window">
-            <AmplifyAuthenticator>
+            <AmplifyAuthenticator initialAuthState="signup">
               <AmplifySignUp
                 slot="sign-up"
                 usernameAlias="email"

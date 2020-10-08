@@ -19,10 +19,10 @@ export default function App() {
     <div className="App">
       <Nav />
         <Switch>
-          <Route path="/list" exact component={List} />
-          <Route path="/about" exact component={About} />
-          <Route path="/team" exact component={Team} />
           <Route path="/" exact component={Search} />
+          <Route path="/about" component={About} />
+          <Route path="/team" component={Team} />
+          <Route path="/list" component={List} />
         </Switch>
     </div>
   );
