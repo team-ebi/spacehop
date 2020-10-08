@@ -9,6 +9,12 @@ exports.seed = function(knex) {
           end_hour: 12
         },
         {
+          business_id: 1,
+          day: "Tuesday",
+          start_hour: 12,
+          end_hour: 14
+        },
+        {
           business_id: 2,
           day: "Wednesday",
           start_hour: 12,

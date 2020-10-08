@@ -6,8 +6,15 @@ exports.seed = function(knex) {
           first_name: "Potato",
           last_name: "Fan",
           email: "potato@dog.com",
-          phone: "090-777-777",
-          booking: [1]
+          phone: "090-7777-7777",
+          booking: [1, 2]
+        },
+        {
+          first_name: "Bobby",
+          last_name: "Boop",
+          email: "b.boop@gmail.com",
+          phone: "080-7777-7777",
+          booking: [3]
         }
       ]);
     });
