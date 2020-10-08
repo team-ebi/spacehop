@@ -11,20 +11,26 @@ router.post("/", async (req, res) => {
   const last_name = req.body.last_name;
   const email = req.body.email;
   const phone = req.body.phone;
-  const booking = req.body.booking;
 
   const register = await db
   .select("*")
-  .table("businesses")
+  .table("users")
   .insert({
     first_name,
     last_name,
     email,
-    phone,
-    booking
+    phone
   });
 
   res.send("New user created!");
+});
+
+router.get("/data", async (req, res) => {
+  const users = await db
+  .select("*")
+  .table("users");
+
+  res.send(users);
 });
 
 module.exports = router;
