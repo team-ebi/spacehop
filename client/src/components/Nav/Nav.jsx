@@ -8,10 +8,6 @@ export default function Nav({}) {
   const [displayMenu, setDisplayMenu] = useState(false);
   const history = useHistory();
 
-  //redirect to login page
-  function routerHandler() {
-    return history.push("/login");
-  }
 
   function teamHandler() {
     return history.push("/team");
@@ -41,7 +37,6 @@ export default function Nav({}) {
           <div
             className="menu-item"
             id="login"
-            onClick={routerHandler}
           >
             Log In
           </div>
