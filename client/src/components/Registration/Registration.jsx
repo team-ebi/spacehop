@@ -16,29 +16,29 @@ function Registration() {
   function getFirstName(e) {
     setFirstName(e.target.value);
   }
-  console.log(firstName);
+  // console.log(firstName);
   //get last name by onchange
   function getLastName(e) {
     setLastName(e.target.value);
   }
-  console.log(lastName);
+  // console.log(lastName);
   //get telephone number by onchange
   function getTelephoneNumber(e) {
     setTelephonenumber(e.target.value);
   }
-  console.log(telephoneNumber);
+  // console.log(telephoneNumber);
   //get email by onchange
   function getEmail(e) {
     setEmail(e.target.value);
   }
-  console.log(email);
+  // console.log(email);
   //submit data by cliking the button
   //now, just console log
   async function submitData() {
-    console.log(firstName);
-    console.log(lastName);
-    console.log(telephoneNumber);
-    console.log(email);
+    // console.log(firstName);
+    // console.log(lastName);
+    // console.log(telephoneNumber);
+    // console.log(email);
     await axios.post("http://localhost:3000/someapi", {
       first_name: firstName,
       last_name: lastName,
