@@ -1,0 +1,40 @@
+#team-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: rgb(250, 238, 238);
+    padding-bottom: 100px;
+  }
+  h1 {
+    font-size: 40px;
+    font-weight: 700;
+    font-family: "Poetsen One";
+    color: #80cc37;
+    margin-left: 50px;
+}
+  #team {
+      display: flex;
+      flex-flow: row wrap;
+  }
+  .teammate {
+      width: 500px;
+      text-align: center;
+      padding-top: 50px;
+      font-size: 20px;
+      z-index: 50;
+  }
+  img {
+      border: solid black;
+      border-width: 5px;
+      border-radius: 100%;
+  }
+  .member:hover {
+      cursor: pointer;
+  }
+  .name {
+      padding-top: 20px;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 40px;
+  }
+ 
