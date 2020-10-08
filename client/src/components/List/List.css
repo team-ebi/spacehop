@@ -1,7 +1,5 @@
 body {
   margin: 0;
-  font-family: Circular, -apple-system, system-ui, Roboto, "Helvetica Neue",
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
