@@ -37,7 +37,7 @@ export default function BizCard() {
   async function stripeCheckoutHandler() {
     const stripe = await stripePromise;
     const response = await fetch(
-      "http://localhost:4000/api/stripecheckout/create-checkout-session",
+      "http://localhost:4000/api/stripecheckout/checkoutsession",
       { method: "POST" }
     );
     const session = await response.json();
