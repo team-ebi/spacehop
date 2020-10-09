@@ -1,0 +1,10 @@
+.auth-window {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    width: 50%;
+    background-color: white;
+    z-index: 100;
+    margin-left: 25%;
+    border-radius: 90px;
+  }
