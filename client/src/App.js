@@ -9,10 +9,12 @@ import {BusinessContext} from "./components/BusinessContext/BusinessContext";
 import About from "./components/About/About"
 import Team from "./components/Team/Team"
 import BizCard from "./components/BizCard/BizCard"
+import Data from "./data/businesses";
 
-function App() {
 
-  const [businesses, setBusinesses] = useState([]); 
+export default function App() {
+
+  const [businesses, setBusinesses] = useState(Data); 
 
   return (
     <div className="App">
@@ -30,4 +32,3 @@ function App() {
   );
 }
 
-export default App;
