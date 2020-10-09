@@ -21,7 +21,6 @@ export default function App() {
     <div className="App">
       {/* useContext */}
       <BusinessContext.Provider value={{businesses, setBusinesses}}>
-        <BizCard></BizCard>
       <Nav />
         <Switch>
           <Route path="/list" exact component={List} />
