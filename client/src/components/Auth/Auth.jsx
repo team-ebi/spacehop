@@ -42,12 +42,13 @@ export default function Auth({ login, signup }) {
                 {
                   type: "email",
                   label: "Email",
+                  placeholder: "",
                   required: true,
                 },
                 {
                   type: "password",
-                  label: "Custom Password Label",
-                  placeholder: "custom password placeholder",
+                  label: "Password",
+                  placeholder: "",
                   required: true,
                 },
                 {

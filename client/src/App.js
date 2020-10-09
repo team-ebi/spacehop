@@ -4,6 +4,7 @@ import "./App.css";
 import { BusinessContext } from "./components/useContext/BusinessContext";
 import Nav from "./components/Nav/Nav";
 import Search from "./components/Search/Search";
+import Profile from "./components/Profile/Profile";
 import List from "./components/List/List";
 import About from "./components/About/About"
 import Team from "./components/Team/Team"
