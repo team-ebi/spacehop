@@ -11,7 +11,7 @@ paths:
   /api/businesses:
     parameters: []
     post:
-      summary: ''
+      summary: Resister a business
       operationId: post-api-businesses
       responses:
         '200':
@@ -57,10 +57,12 @@ paths:
           in: query
           name: business_type
           description: ex) "Bar"
-      description: Resister a business
+      description: |-
+        Resister a business to DB(businesses)
+        <br>```done```
   /api/availability:
     get:
-      summary: availability
+      summary: Get selected availabilities
       tags: []
       responses:
         '200':
@@ -71,7 +73,9 @@ paths:
                 type: object
                 properties: {}
       operationId: get-api-availability
-      description: 'Get all available spaces that filtered by day,address_city and open between start_hour and end_hour.'
+      description: |-
+        Get all available spaces that filtered by day,address_city and open between start_hour and end_hour.
+        <br>```done```
       parameters:
         - schema:
             type: string
@@ -96,21 +100,25 @@ paths:
     parameters: []
   /api/availability/data:
     get:
-      summary: Your GET endpoint
+      summary: Get all availabilities
       tags: []
       responses:
         '200':
           description: OK
       operationId: get-api-availability-data
-      description: Get all availabilities
+      description: |-
+        Get all availabilities(every row in table)
+        <br>```done```
   /api/users:
     post:
-      summary: ''
+      summary: Resister a user
       operationId: post-api-users
       responses:
         '200':
           description: OK
-      description: Resister a user
+      description: |-
+        Resister a user to DB(users)
+        <br>```done```
       parameters:
         - schema:
             type: string
@@ -134,12 +142,67 @@ paths:
           description: ex) "111-1111-1111"
   /api/users/data:
     get:
-      summary: Your GET endpoint
+      summary: Get all user data
       tags: []
       responses:
         '200':
           description: OK
       operationId: get-api-users-data
-      description: 'Get all user data '
+      description: |-
+        Get all user data 
+        <br>```done```
+  /api/reservations:
+    post:
+      summary: Make a reservation
+      operationId: post-api-reservations
+      responses:
+        '200':
+          description: OK
+      description: |-
+        Make a reservation
+        <br>``not yet``
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: date
+          description: ex) "2020-10-09"
+        - schema:
+            type: integer
+          in: query
+          name: user_id
+          description: ex) 3
+        - schema:
+            type: integer
+          in: query
+          name: business_id
+          description: ex) 6
+    parameters: []
+  '/api/reservations/:user_id':
+    parameters: []
+    get:
+      summary: Get selected user's reservations
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-api-reservations-user_id
+      description: |-
+        Get selected user's reservations
+        <br>```not yet```
+      parameters: []
+  '/api/reservations/:business_id':
+    parameters: []
+    get:
+      summary: Get selected business's reservations
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-api-reservations-business_id
+      description: |-
+        Get selected business's reservations
+        <br>```not yet```
+      parameters: []
 components:
   schemas: {}
