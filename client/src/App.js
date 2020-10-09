@@ -12,13 +12,13 @@ import BizCard from "./components/BizCard/BizCard"
 
 function App() {
 
+  const [businesses, setBusinesses] = useState([]); 
+
   return (
     <div className="App">
       {/* useContext */}
-      <BusinessContext.Provider value="test: spacehop is the best">
+      <BusinessContext.Provider value={{businesses, setBusinesses}}>
       <Nav />
-      <Search />
-      <List />
         <Switch>
           <Route path="/list" exact component={List} />
           <Route path="/about" exact component={About} />

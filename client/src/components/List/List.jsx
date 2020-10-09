@@ -6,7 +6,7 @@ import {BusinessContext} from "../BusinessContext/BusinessContext";
 
 export default function List() {
   //state for JSON data
-  const [data, setData] = useState(Data);
+  const [businesses, setBusinesses] = useContext(BusinessContext);
 
 
 
