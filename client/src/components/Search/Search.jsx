@@ -31,8 +31,8 @@ export default function Search() {
     setCoordinates(latLng);
   };
 
-  //handle local routing
-  function routerHandler() {
+  // reroute to list of filtered business 
+  function searchHandler() {
     return history.push("/list");
   }
 
@@ -99,7 +99,7 @@ export default function Search() {
 
         {/* when this button is clicked, list of available
         businesses will be displayed */}
-        <button id="search-button" onClick={routerHandler}>
+        <button id="search-button" onClick={searchHandler}>
           <div>
             <FontAwesomeIcon icon={faSearch} size="lg" />
           </div>
