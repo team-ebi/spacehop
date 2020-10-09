@@ -5,13 +5,15 @@ import { BusinessContext } from "./components/useContext/BusinessContext";
 import Nav from "./components/Nav/Nav";
 import Search from "./components/Search/Search";
 import List from "./components/List/List";
-import About from "./components/About/About";
-import Team from "./components/Team/Team";
-import BizCard from "./components/BizCard/BizCard";
-import Profile from "./components/Profile/Profile";
+import About from "./components/About/About"
+import Team from "./components/Team/Team"
+import BizCard from "./components/BizCard/BizCard"
+import Data from "./data/businesses";
+
 
 export default function App() {
-  const [businesses, setBusinesses] = useState([]);
+
+  const [businesses, setBusinesses] = useState(Data); 
 
   return (
     <div className="App">
