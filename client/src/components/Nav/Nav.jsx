@@ -4,7 +4,11 @@ import Auth from "../Auth/Auth";
 import { useHistory } from "react-router-dom";
 import { BusinessContext } from "../useContext/BusinessContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faBars, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHome,
+  faBars,
+  faUserCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import { AmplifySignOut } from "@aws-amplify/ui-react";
 import "./Nav.css";
 
@@ -13,7 +17,7 @@ export default function Nav() {
   const [displayMenu, setDisplayMenu] = useState(false);
   const [displayLogin, setDisplayLogin] = useState(false);
   const [displaySignup, setDisplaySignup] = useState(false);
-  const [dimOverlay, setDimOverlay] = useState("hide")
+  const [dimOverlay, setDimOverlay] = useState("hide");
   const { user, setUser } = useContext(UserContext);
 
   // when user clicks login button, menu window will disappear
@@ -88,6 +92,11 @@ export default function Nav() {
               onClick={homeHandler}
             />
           </div>
+          <div id="welcome">
+            <h2>{`Welcome${
+              user ? ", " + user.attributes.given_name : ""
+            }!`}</h2>
+          </div>
           <div id="menu-container" onClick={() => setDisplayMenu(!displayMenu)}>
             {/* when button is clicked, small menu window will pop up */}
             <div id="menu-button">
@@ -101,29 +110,37 @@ export default function Nav() {
         {/* menu when user is not logged in yet */}
         {displayMenu && (
           <div id="menu">
-            <button className="menu-item" id="login" onClick={loginHandler}>
-              Log in
-            </button>
-            <button className="menu-item" onClick={signupHandler}>
-              Sign Up
-            </button>
-            <button className="menu-item" onClick={profileHandler}>
-              Profile
-            </button>
+            {!user && (
+              <button className="menu-item" id="login" onClick={loginHandler}>
+                Log in
+              </button>
+            )}
+            {!user && (
+              <button className="menu-item" onClick={signupHandler}>
+                Sign Up
+              </button>
+            )}
+            {user && (
+              <button className="menu-item" onClick={profileHandler}>
+                Profile
+              </button>
+            )}
             <button className="menu-item" onClick={aboutHandler}>
               About
             </button>
             <button className="menu-item" onClick={teamHandler}>
               Team
             </button>
-            <div className="menu-item">
-              <AmplifySignOut buttonText="Log out" />
-            </div>
+            {user && (
+              <div className="menu-item">
+                <AmplifySignOut buttonText="Log out" />
+              </div>
+            )}
           </div>
         )}
 
         {(displayLogin || displaySignup) && (
-          <Auth login={displayLogin} signup={displaySignup}/>
+          <Auth login={displayLogin} signup={displaySignup} />
         )}
       </nav>
     </>

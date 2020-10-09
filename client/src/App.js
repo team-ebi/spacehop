@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Route, Switch } from "react-router-dom";
 import "./App.css";
 import { BusinessContext } from "./components/useContext/BusinessContext";
@@ -12,10 +12,22 @@ import Team from "./components/Team/Team";
 import BizCard from "./components/BizCard/BizCard";
 import Data from "./data/businesses";
 import Success from "./components/Success/Success";
+import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
+import { Auth as currentUser } from "aws-amplify";
+import { AmplifyAuthenticator } from "@aws-amplify/ui-react";
 
 export default function App() {
-  const [ user, setUser ] = useState({});
   const [businesses, setBusinesses] = useState(Data);
+  const [authState, setAuthState] = useState();
+  const [user, setUser] = useState();
+
+  // checks if user is signed in and fetches user data
+  useEffect(() => {
+    return onAuthUIStateChange((nextAuthState, authData) => {
+      setAuthState(nextAuthState);
+      setUser(authData);
+    });
+  }, []);
 
   return (
     <div className="App">
@@ -28,8 +40,9 @@ export default function App() {
             <Route path="/about" exact component={About} />
             <Route path="/team" exact component={Team} />
             <Route path="/list" exact component={List} />
-            <Route path="/booking/:name" 
-              render={(propTypes) => <BizCard props={propTypes}/>}
+            <Route
+              path="/booking/:name"
+              render={(propTypes) => <BizCard props={propTypes} />}
             />
             <Route path="/success" exact component={Success} />
           </Switch>
@@ -38,5 +51,3 @@ export default function App() {
     </div>
   );
 }
-
-// export default withAuthenticator(App);

@@ -1,12 +1,18 @@
-#home-button {
-  width: 50%;
-}
+
 #navbar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   background-color: white;
   height: 50px;
+}
+#welcome {
+  margin-left: 30px;
+}
+h2 {
+  font-size: 30px;
+  font-weight: 700;
+  font-family: "Poetsen One";
+  color: #80cc37;
 }
 #logo-container {
   padding: 20px;
@@ -16,7 +22,7 @@
   margin-left: 3%;
 }
 #menu-container {
-  margin-right: 5%;
+  margin-left: 70%;
   z-index: 100;
   border-radius: 40px;
   width: 50px;
@@ -37,7 +43,7 @@
   border-radius: 40px;
   border: solid lightgrey;
   border-width: 1px;
-  margin-top: -1%;
+  margin-top: -5px;
   overflow: hidden;
 }
 .menu-item {
@@ -53,6 +59,7 @@
   border: solid lightgrey;
   border-width: 1px;
   border-top: none;
+  max-height: 30px;
 }
 .menu-item:hover {
   background-color: lightgrey;

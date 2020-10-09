@@ -4,28 +4,12 @@ import {
   AmplifyAuthenticator,
   AmplifySignUp,
 } from "@aws-amplify/ui-react";
-import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
-import { Auth as currentUser } from "aws-amplify";
 import { UserContext } from "../useContext/UserContext";
 import "./Auth.css";
 
+
 export default function Auth({ login, signup }) {
-  const [authState, setAuthState] = useState();
-  const { user, setUser } = useContext(UserContext);
 
-  useEffect(() => {
-    if (currentUser.user) {
-      setUser(currentUser.user.attributes)
-      console.log("AUTH COMP: ", user);
-    }
-  }, [currentUser])
-
-  useEffect(() => {
-    return onAuthUIStateChange((nextAuthState, authData) => {
-      setAuthState(nextAuthState);
-      setUser(authData);
-    });
-  }, []);
 
   return (
     <>
