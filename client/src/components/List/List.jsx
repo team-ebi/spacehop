@@ -15,7 +15,7 @@ export default function List() {
       <h1>List View</h1>
       <div id="location-container">
         {/* Mapping through data to display on each bizcard */}
-        {data.map((biz, index) => (
+        {Data.map((biz, index) => (
           <div id="location-cell">
             <img
               id="business-image"
