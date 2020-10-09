@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Auth from "../Auth/Auth";
 import { useHistory } from "react-router-dom";
+import {BusinessContext} from "../BusinessContext/BusinessContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faBars,faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { AmplifySignOut } from "@aws-amplify/ui-react";
@@ -69,6 +70,7 @@ export default function Nav() {
     setDisplayMenu(false);
     return history.push("/profile");
   }
+
 
   return (
     <>
