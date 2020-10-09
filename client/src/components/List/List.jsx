@@ -1,21 +1,18 @@
 import React, { useState,useContext } from "react";
 import Data from "../../data/businesses";
 import "./List.css";
-  // useContext
 import {BusinessContext} from "../BusinessContext/BusinessContext";
 
 export default function List() {
   //state for JSON data
   const [businesses, setBusinesses] = useContext(BusinessContext);
 
-
-
   return (
     <div id="list-container">
       <h1>List View</h1>
       <div id="location-container">
         {/* Mapping through data to display on each bizcard */}
-        {data.map((biz, index) => (
+        {businesses.map((biz, index) => (
           <div id="location-cell">
             <img
               id="business-image"
