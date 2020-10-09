@@ -8,7 +8,7 @@ module.exports = {
   production: {
     // TODO
     client: 'postgresql',
-    connection: process.env.AWS_CONNECTION,
+    connection: process.env.DATABASE_URL,
     // host: process.env.AWS_HOST,
     // port: process.env.AWS_PORT,
     // user: process.env.AWS_USER,
