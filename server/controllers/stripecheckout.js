@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 require("dotenv").config();
 
-const stripe = require('stripe')(process.env.SECRET_KEY);
+
+const stripe = require('stripe')("sk_test_51HU0G2CjwFEQ1pgcfVWe50YSIpoME7Z58MNUcf7fodRIfops2Af7yPBdrpSevAB5osGf68sQTItOPqvPPV96qPtN006FFEqoXd");
 
 router.get("/test", async(req, res) => {
   res.send("working");
@@ -20,7 +21,7 @@ router.post("/create-checkout-session", async (req, res) => {
           },
           unit_amount: 2000,
         },
-        quanitity: 1,
+        quantity: 1,
       },
     ],
     mode: "payment",

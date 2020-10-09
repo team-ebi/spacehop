@@ -5,16 +5,13 @@ import "./List.css";
 import {BusinessContext} from "../BusinessContext/BusinessContext";
 
 export default function List() {
-  //state for JSON data
-  const [businesses, setBusinesses] = useContext(BusinessContext);
-
-
+  const { businesses, setBusinesses } = useContext(BusinessContext);
 
   return (
     <div>
       <h1>List View</h1>
       <div id="location-container">
-        {/* Mapping through data to display on each bizcard */}
+        {/* Mapping through businesses to display on each bizcard */}
         {businesses.map((biz, index) => (
           <div id="location-cell">
             <img
@@ -35,3 +32,4 @@ export default function List() {
     </div>
   );
 }
+

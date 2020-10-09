@@ -9,17 +9,19 @@ import {BusinessContext} from "./components/BusinessContext/BusinessContext";
 import About from "./components/About/About"
 import Team from "./components/Team/Team"
 import BizCard from "./components/BizCard/BizCard"
-import Profile from './components/Profile/Profile'
+import Data from "./data/businesses";
+import Profile from "./components/Profile/Profile"
 
 
-function App() {
+export default function App() {
 
-  const [businesses, setBusinesses] = useState([]); 
+  const [businesses, setBusinesses] = useState(Data); 
 
   return (
     <div className="App">
       {/* useContext */}
       <BusinessContext.Provider value={{businesses, setBusinesses}}>
+        <BizCard></BizCard>
       <Nav />
         <Switch>
           <Route path="/list" exact component={List} />
@@ -33,4 +35,3 @@ function App() {
   );
 }
 
-export default App;
