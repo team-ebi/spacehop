@@ -9,7 +9,7 @@ import {
   faMapPin,
 } from "@fortawesome/free-solid-svg-icons";
 // useContext
-import {BusinessContext} from "../BusinessContext/BusinessContext";
+import {BusinessContext} from "../useContext/BusinessContext";
 
 
 export default function BizCard() {

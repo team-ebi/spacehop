@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button, Container, Row, Col, Image } from "react-bootstrap";
-import personImg from "../img/personal-2.jpg";
-import data from "../data/users.json";
-import FutureBookings from "./FutureBookings";
+import personImg from "../../img/personal-2.jpg";
+import data from "../../data/users.json";
+import FutureBookings from "../FutureBookings/FutureBookings";
+import "./Profile.css";
 
 function Profile() {
   //state of data of a person
@@ -33,7 +34,7 @@ function Profile() {
   useEffect(() => manageProfile(), []);
 
   return (
-    <div className="Profile">
+    <div id="Profile">
       <h2
         style={{
           padding: "20px 10px",

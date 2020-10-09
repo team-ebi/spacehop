@@ -9,8 +9,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Search.css";
 // useContext
-import { BusinessContext } from "../BusinessContext/BusinessContext";
+import { BusinessContext } from "../useContext/BusinessContext";
 import {useHistory} from 'react-router-dom';
+import logo from "../../images/logo.png";
 
 export default function Search() {
   const [searchValue, setSearchValue] = useState("");
@@ -37,6 +38,10 @@ export default function Search() {
 
   return (
     <div id="search-container">
+      <div id="logo-container">
+        <img id="logo" src={logo} alt="logo"/>
+      </div>
+      
       <div id="search-bar">
         {/* this google maps api autofill location search will update
         location and coordinates states*/}
