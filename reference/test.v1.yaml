@@ -1,0 +1,145 @@
+openapi: 3.0.0
+info:
+  title: spacehop
+  version: '1.0'
+  description: ''
+servers:
+  - url: 'http://localhost:3000'
+  - url: ''
+    description: ''
+paths:
+  /api/businesses:
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-api-businesses
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: name
+          description: ex) "Spacehop Cafe"
+        - schema:
+            type: string
+          in: query
+          name: address_street
+          description: ex) 1st Street
+        - schema:
+            type: string
+          in: query
+          name: address_city
+          description: ex) "Roppongi"
+        - schema:
+            type: string
+          in: query
+          name: address_zip
+          description: ex) "777-7777"
+        - schema:
+            type: string
+          in: query
+          name: phone
+          description: ex) "111-1111-1111"
+        - schema:
+            type: integer
+          in: query
+          name: capacity
+          description: ex) 20
+        - schema:
+            type: integer
+          in: query
+          name: price
+          description: ex) 10000
+        - schema:
+            type: string
+          in: query
+          name: business_type
+          description: ex) "Bar"
+      description: Resister a business
+  /api/availability:
+    get:
+      summary: availability
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: get-api-availability
+      description: 'Get all available spaces that filtered by day,address_city and open between start_hour and end_hour.'
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: day
+          description: ex) "Monday"
+        - schema:
+            type: string
+          in: query
+          name: address_city
+          description: ex) "Roppongi"
+        - schema:
+            type: number
+          in: query
+          name: start_hour
+          description: ex) 12
+        - schema:
+            type: number
+          in: query
+          name: end_hour
+          description: ex) 16
+    parameters: []
+  /api/availability/data:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-api-availability-data
+      description: Get all availabilities
+  /api/users:
+    post:
+      summary: ''
+      operationId: post-api-users
+      responses:
+        '200':
+          description: OK
+      description: Resister a user
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: first_name
+          description: ex) "Noritake"
+        - schema:
+            type: string
+          in: query
+          name: last_name
+          description: ex) "Takamichi"
+        - schema:
+            type: string
+          in: query
+          name: email
+          description: ex) "aaa@gmail.com"
+        - schema:
+            type: string
+          in: query
+          name: phone
+          description: ex) "111-1111-1111"
+  /api/users/data:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-api-users-data
+      description: 'Get all user data '
+components:
+  schemas: {}
