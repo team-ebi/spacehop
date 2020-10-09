@@ -2,7 +2,7 @@ import React,{useEffect, useState} from "react";
 import { Button, Container, Row, Col, Image, Card } from "react-bootstrap";
 import axios from "axios";
 
-function FutureBookings() {
+export default function FutureBookings() {
 
     // manage state of information about future bookings 
     const [futureBookingInfo, setFutureBookings] = useState("")
@@ -57,4 +57,3 @@ function FutureBookings() {
   );
 }
 
-export default FutureBookings;
