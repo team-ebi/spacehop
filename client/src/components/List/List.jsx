@@ -1,14 +1,13 @@
 import React, { useState,useContext } from "react";
 import Data from "../../data/businesses";
 import "./List.css";
-  // useContext
-import {BusinessContext} from "../BusinessContext/BusinessContext";
+import {BusinessContext} from "../useContext/BusinessContext";
 
 export default function List() {
   const { businesses, setBusinesses } = useContext(BusinessContext);
 
   return (
-    <div>
+    <div id="list-container">
       <h1>List View</h1>
       <div id="location-container">
         {/* Mapping through businesses to display on each bizcard */}
