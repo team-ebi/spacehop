@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../useContext/UserContext";
 import Auth from "../Auth/Auth";
 import { useHistory } from "react-router-dom";
 import { BusinessContext } from "../useContext/BusinessContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHome,
-  faBars,
-  faUserCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { faHome, faBars, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { AmplifySignOut } from "@aws-amplify/ui-react";
 import "./Nav.css";
 
@@ -17,6 +14,7 @@ export default function Nav() {
   const [displayLogin, setDisplayLogin] = useState(false);
   const [displaySignup, setDisplaySignup] = useState(false);
   const [dimOverlay, setDimOverlay] = useState("hide")
+  const { user, setUser } = useContext(UserContext);
 
   // when user clicks login button, menu window will disappear
   // and login window will appear with overlay
