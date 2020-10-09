@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
+// useContext is ready
+import {BusinessContext} from "../BusinessContext/BusinessContext";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import "./Nav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,6 +30,7 @@ export default function Nav({}) {
   };
 
   function profileHandler() {
+    setDisplayMenu(false);
     return history.push("/profile");
   }
 
