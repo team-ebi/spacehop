@@ -8,6 +8,9 @@ import {
   faYenSign,
   faMapPin,
 } from "@fortawesome/free-solid-svg-icons";
+// useContext
+import {BusinessContext} from "../BusinessContext/BusinessContext";
+
 
 export default function BizCard() {
   const [bizData, setBizData] = useState([
