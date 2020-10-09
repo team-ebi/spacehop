@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, Container, Row, Col, Image } from "react-bootstrap";
-import personImg from "../img/personal-2.jpg";
-import data from "../data/users.json";
-import FutureBookings from "./FutureBookings";
+import personImg from "../../img/personal-2.jpg";
+import data from "../../data/users.json";
+// import FutureBookings from "./FutureBookings";
 
 function Profile() {
   //state of data of a person
@@ -55,7 +55,7 @@ function Profile() {
         <div className="button_layout" style={{ margin: "0 auto " }}>
           {/* future bookings is set in the middle of this code */}
           {/* future booking has its own branch : futureBookings */}
-          <FutureBookings />
+          {/* <FutureBookings /> */}
 
           <Button
             variant="success"
