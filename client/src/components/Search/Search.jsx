@@ -9,7 +9,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Search.css";
 // useContext
-import { BusinessContext } from "./BusinessContext/BusinessContext";
+import { BusinessContext } from "../BusinessContext/BusinessContext";
 
 export default function Search() {
   const [searchValue, setSearchValue] = useState("");
@@ -25,6 +25,8 @@ export default function Search() {
     setLocation(value);
     setCoordinates(latLng);
   };
+
+
 
   return (
     <div id="search-container">

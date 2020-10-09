@@ -8,6 +8,7 @@ import { faBars, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 export default function Nav() {
   const [displayMenu, setDisplayMenu] = useState(false);
 
+
   return (
     <nav>
       <div id="navbar">

@@ -15,7 +15,7 @@ function App() {
       <Search />
       <List /> */}
       {/* useContext */}
-      <BusinessContext.Provider>
+      <BusinessContext.Provider value="test: spacehop is the best">
       <Nav />
       <Search />
       <List />
