@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "spacehop786eed90": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

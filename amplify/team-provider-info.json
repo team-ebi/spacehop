@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-spacehop-dev-173343-authRole",
+      "UnauthRoleArn": "arn:aws:iam::019387197273:role/amplify-spacehop-dev-173343-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::019387197273:role/amplify-spacehop-dev-173343-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-spacehop-dev-173343-deployment",
+      "UnauthRoleName": "amplify-spacehop-dev-173343-unauthRole",
+      "StackName": "amplify-spacehop-dev-173343",
+      "StackId": "arn:aws:cloudformation:us-east-1:019387197273:stack/amplify-spacehop-dev-173343/d13d7b90-0877-11eb-9b61-0af8d25392ed",
+      "AmplifyAppId": "dlm7uq8ifxap1"
+    },
+    "categories": {
+      "auth": {
+        "spacehop786eed90": {}
+      }
+    }
+  }
+}
