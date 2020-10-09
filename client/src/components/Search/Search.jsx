@@ -11,6 +11,7 @@ import "./Search.css";
 // useContext
 import { BusinessContext } from "../BusinessContext/BusinessContext";
 import {useHistory} from 'react-router-dom';
+import axios from "axios";
 
 export default function Search() {
   const [searchValue, setSearchValue] = useState("");
@@ -34,6 +35,18 @@ export default function Search() {
   function routerHandler() {
     return history.push("/list");
   }
+
+  //test----- fetching data from database 
+  async function fetchAllData(){
+    console.log("I'm in fetchAllData!"); 
+  const req = axios.get("http://localhost:3000/api/availability/data");
+  const res = await req; 
+  console.log(res); 
+  const data = res.data; 
+  console.log(data);
+  }
+  fetchAllData();
+
 
   return (
     <div id="search-container">
