@@ -10,13 +10,14 @@ import {
   faMapPin,
 } from "@fortawesome/free-solid-svg-icons";
 // useContext
-import { BusinessContext } from "../BusinessContext/BusinessContext";
+import { BusinessContext } from "../useContext/BusinessContext";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
 require("dotenv").config();
 
 export default function BizCard() {
+  //dummy data that can deleted after we fetch
   const [bizData, setBizData] = useState([
     {
       Name: "Ebi-Chan",
@@ -26,25 +27,32 @@ export default function BizCard() {
       Price: 5000,
     },
   ]);
+
+  //publishable stripe API key
   const stripePromise = loadStripe(
     "pk_test_51HU0G2CjwFEQ1pgcvOchnwo0Gsb2seN5a3xGz8Q2iCvlVUjHkSCV7UZHy3NfeobxNNMeGwmiosi3UBxjbKcSjGZ000hENfQW0F"
   );
 
-async function stripeCheckoutHandler(){
+  //handles stripe checkout and redirects to checkout page
+  async function stripeCheckoutHandler() {
     const stripe = await stripePromise;
-    const response = await fetch("http://localhost:4000/api/stripecheckout/create-checkout-session", { method: 'POST' })
-        const session = await response.json();
-        const result = await stripe.redirectToCheckout({
-          sessionId: session.id,
-        });
+    const response = await fetch(
+      "http://localhost:4000/api/stripecheckout/create-checkout-session",
+      { method: "POST" }
+    );
+    const session = await response.json();
+    const result = await stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
 
-        if(result.error) {
-          alert('Payment Error')
-        }
-};
+    if (result.error) {
+      alert("Payment Error");
+    }
+  }
 
   return (
     <div id="bizcard-location-container">
+      {/* Elements helps load stripe */}
       <Elements stripe={stripePromise}>
         {bizData.map((biz, index) => (
           <div id="bizcard-location-cell">
