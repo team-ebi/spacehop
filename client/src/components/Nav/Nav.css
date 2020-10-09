@@ -8,6 +8,8 @@
 #welcome {
   margin-left: 30px;
   width: 500px;
+  transition-timing-function: linear;
+  transition: 2s;
 }
 h2 {
   font-size: 30px;

@@ -21,6 +21,7 @@ export default function App() {
   const [user, setUser] = useState(null);
 
   // checks if user is signed in and fetches user data
+  // whenever authUI state changes
   useEffect(() => {
     return onAuthUIStateChange((nextAuthState, authData) => {
       setAuthState(nextAuthState);
@@ -29,6 +30,8 @@ export default function App() {
     });
   }, []);
 
+  // fetches current user at initial render
+  // will remember last login
   useEffect(() => {
     async function init() {
       try {
