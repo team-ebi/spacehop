@@ -52,17 +52,17 @@ export default function Auth({ login, signup }) {
                   required: true,
                 },
                 {
-                  type: "first_name",
+                  type: "custom:first_name",
                   label: "First Name",
                   required: true,
                 },
                 {
-                  type: "last_name",
+                  type: "custom:last_name",
                   label: "Last Name",
                   required: true,
                 },
                 {
-                  type: "phone",
+                  type: "custom:phone",
                   label: "Phone",
                   required: true,
                 },
