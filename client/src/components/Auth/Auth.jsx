@@ -5,11 +5,23 @@ import {
   AmplifySignUp,
 } from "@aws-amplify/ui-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
+import {Auth as currentUser } from "aws-amplify";
 import "./Auth.css";
 
 export default function Auth({ login, signup }) {
   const [authState, setAuthState] = useState();
   const [user, setUser] = useState();
+
+  console.log(currentUser)
+
+  // useEffect(() => {
+  //   async function fetch() {
+  //     const result = await currentUser();
+  //     console.log("USER-----: ", result)
+  //     setUser(result)
+  //   };
+  //   fetch();
+  // }, [])
 
   useEffect(() => {
     return onAuthUIStateChange((nextAuthState, authData) => {
