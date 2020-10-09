@@ -10,6 +10,7 @@ import About from "./components/About/About";
 import Team from "./components/Team/Team";
 import BizCard from "./components/BizCard/BizCard";
 import Data from "./data/businesses";
+import Success from "./components/Success/Success";
 
 export default function App() {
   const [businesses, setBusinesses] = useState(Data);
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/about" exact component={About} />
           <Route path="/team" exact component={Team} />
           <Route path="/list" exact component={List} />
+          <Route path="/success" exact component={Success} />
         </Switch>
       </BusinessContext.Provider>
     </div>
