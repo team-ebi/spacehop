@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faBars, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHome,
+  faBars,
+  faUserCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import { Auth } from "aws-amplify";
 import {
   AmplifySignIn,
@@ -12,13 +16,14 @@ import {
 import "./Nav.css";
 
 export default function Nav({}) {
+  // these states manage display for modal windows for menu, login, and signup
   const [displayMenu, setDisplayMenu] = useState(false);
   const [displayLogin, setDisplayLogin] = useState(false);
-  const [dimOverlay, setDimOverlay] = useState("");
   const [displaySignup, setDisplaySignup] = useState(false);
+  const [dimOverlay, setDimOverlay] = useState("");
 
   // when user clicks login button, menu window will disappear
-  // and login window will appear
+  // and login window will appear with overlay
   function handleLoginClick() {
     setDisplayMenu(false);
     setDisplayLogin(true);
@@ -27,7 +32,7 @@ export default function Nav({}) {
   }
 
   // when user clicks signup button, menu window will disappear
-  // and login window will appear
+  // and login window will appear with overlay
   function handleSignupClick() {
     setDisplayMenu(false);
     setDisplaySignup(true);
@@ -35,7 +40,7 @@ export default function Nav({}) {
     setDimOverlay("dim");
   }
 
-  // when user clicks on body, login and menu windows will close
+  // when user clicks outside of modal window, modal window and overlay will disappear
   function clearDisplay() {
     setDisplayLogin(false);
     setDisplayMenu(false);
@@ -43,36 +48,45 @@ export default function Nav({}) {
     setDimOverlay("hide");
   }
 
+  // initializing react router
   const history = useHistory();
 
+  // redirects to to 'team' page with react router
+  // will close menu window
   function teamHandler() {
     setDisplayMenu(false);
     return history.push("/team");
-  };
+  }
 
+  // redirects to to 'about' page with react router
+  // will close menu window
   function aboutHandler() {
     setDisplayMenu(false);
     return history.push("/about");
-  };
+  }
 
+  // redirects to to 'home' page with react router
+  // will close menu window if it's open
   function homeHandler() {
     setDisplayMenu(false);
     return history.push("/");
-  };
+  }
 
   return (
     <>
+      {/* this overlay is hidden unless signin/signup modal windows are open */}
       <div className={`overlay ${dimOverlay}`} onClick={clearDisplay}></div>
+
       <nav>
         <div id="navbar">
-        <div id="home-button">
-          <FontAwesomeIcon
-            icon={faHome}
-            size="lg"
-            color="#80CC37"
-            onClick={homeHandler}
-          />
-        </div>
+          <div id="home-button">
+            <FontAwesomeIcon
+              icon={faHome}
+              size="lg"
+              color="#80CC37"
+              onClick={homeHandler}
+            />
+          </div>
           <div id="menu-container" onClick={() => setDisplayMenu(!displayMenu)}>
             {/* when button is clicked, small menu window will pop up */}
             <div id="menu-button">
@@ -103,8 +117,11 @@ export default function Nav({}) {
             <div className="menu-item">
               <AmplifySignOut buttonText="Log out" />
             </div>
-          </div>)}
+          </div>
+        )}
 
+        {/* signin form will be displayed when user clicks on
+        "Log in" button from menu window*/}
         {displayLogin && (
           <div className="auth-window">
             <AmplifyAuthenticator>
@@ -113,6 +130,8 @@ export default function Nav({}) {
           </div>
         )}
 
+        {/* signup form will be displayed when user clicks on
+        "Sign up" button from menu window */}
         {displaySignup && (
           <div className="auth-window">
             <AmplifyAuthenticator initialAuthState="signup">
