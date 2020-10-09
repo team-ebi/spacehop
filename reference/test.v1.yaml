@@ -11,7 +11,7 @@ paths:
   /api/businesses:
     parameters: []
     post:
-      summary: Resister a business
+      summary: Resister a business(done)
       operationId: post-api-businesses
       responses:
         '200':
@@ -60,9 +60,9 @@ paths:
       description: |-
         Resister a business to DB(businesses)
         <br>```done```
-  /api/availability:
+  '/api/availability/{day}/{address_city}/{start_hour}/{end_hour}':
     get:
-      summary: Get selected availabilities
+      summary: Get selected availabilities(done)
       tags: []
       responses:
         '200':
@@ -76,31 +76,35 @@ paths:
       description: |-
         Get all available spaces that filtered by day,address_city and open between start_hour and end_hour.
         <br>```done```
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: day
-          description: ex) "Monday"
-        - schema:
-            type: string
-          in: query
-          name: address_city
-          description: ex) "Roppongi"
-        - schema:
-            type: number
-          in: query
-          name: start_hour
-          description: ex) 12
-        - schema:
-            type: number
-          in: query
-          name: end_hour
-          description: ex) 16
-    parameters: []
+      parameters: []
+    parameters:
+      - schema:
+          type: string
+        name: day
+        in: path
+        required: true
+        description: ex) "Monday"
+      - schema:
+          type: string
+        name: address_city
+        in: path
+        required: true
+        description: ex) "Roppongi"
+      - schema:
+          type: integer
+        name: start_hour
+        in: path
+        required: true
+        description: ex) 12
+      - schema:
+          type: integer
+        name: end_hour
+        in: path
+        required: true
+        description: ex) 16
   /api/availability/data:
     get:
-      summary: Get all availabilities
+      summary: Get all availabilities(done)
       tags: []
       responses:
         '200':
@@ -111,7 +115,7 @@ paths:
         <br>```done```
   /api/users:
     post:
-      summary: Resister a user
+      summary: Resister a user(done)
       operationId: post-api-users
       responses:
         '200':
@@ -142,7 +146,7 @@ paths:
           description: ex) "111-1111-1111"
   /api/users/data:
     get:
-      summary: Get all user data
+      summary: Get all user data(done)
       tags: []
       responses:
         '200':
@@ -153,7 +157,7 @@ paths:
         <br>```done```
   /api/reservations:
     post:
-      summary: Make a reservation
+      summary: Make a reservation(not yet)
       operationId: post-api-reservations
       responses:
         '200':
@@ -181,7 +185,7 @@ paths:
   '/api/reservations/:user_id':
     parameters: []
     get:
-      summary: Get selected user's reservations
+      summary: Get selected user's reservations(not yet)
       tags: []
       responses:
         '200':
@@ -194,7 +198,7 @@ paths:
   '/api/reservations/:business_id':
     parameters: []
     get:
-      summary: Get selected business's reservations
+      summary: Get selected business's reservations(not yet)
       tags: []
       responses:
         '200':
