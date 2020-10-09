@@ -9,7 +9,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Search.css";
 // useContext
-import { BusinessContext } from "../BusinessContext/BusinessContext";
+import { BusinessContext } from "../useContext/BusinessContext";
 import {useHistory} from 'react-router-dom';
 import logo from "../../images/logo.png";
 

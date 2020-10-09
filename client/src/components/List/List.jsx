@@ -1,7 +1,7 @@
 import React, { useState,useContext } from "react";
 import Data from "../../data/businesses";
 import "./List.css";
-import {BusinessContext} from "../BusinessContext/BusinessContext";
+import {BusinessContext} from "../useContext/BusinessContext";
 
 export default function List() {
   //state for JSON data

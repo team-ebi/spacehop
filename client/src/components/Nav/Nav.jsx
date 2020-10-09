@@ -1,9 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import Auth from "../Auth/Auth";
 import { useHistory } from "react-router-dom";
-import {BusinessContext} from "../BusinessContext/BusinessContext";
+import { BusinessContext } from "../useContext/BusinessContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faBars,faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHome,
+  faBars,
+  faUserCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import { AmplifySignOut } from "@aws-amplify/ui-react";
 import "./Nav.css";
 
@@ -71,7 +75,6 @@ export default function Nav() {
     return history.push("/profile");
   }
 
-
   return (
     <>
       {/* this overlay is hidden unless signin/signup modal windows are open */}
@@ -97,7 +100,6 @@ export default function Nav() {
             </div>
           </div>
         </div>
-
         {/* menu when user is not logged in yet */}
         {displayMenu && (
           <div id="menu">
@@ -107,7 +109,9 @@ export default function Nav() {
             <button className="menu-item" onClick={signupHandler}>
               Sign Up
             </button>
-            <button className="menu-item" onClick={profileHandler}>Profile</button>
+            <button className="menu-item" onClick={profileHandler}>
+              Profile
+            </button>
             <button className="menu-item" onClick={aboutHandler}>
               About
             </button>
@@ -119,7 +123,10 @@ export default function Nav() {
             </div>
           </div>
         )}
-        <Auth displayLogin={displayLogin} displaySignup={displaySignup} />
+
+        {(displayLogin || displaySignup) && (
+          <Auth login={displayLogin} signup={displaySignup}/>
+        )}
       </nav>
     </>
   );

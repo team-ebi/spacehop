@@ -4,24 +4,25 @@ import {
   AmplifyAuthenticator,
   AmplifySignUp,
 } from "@aws-amplify/ui-react";
-import { AuthState, onAuthUIStateChange} from "@aws-amplify/ui-components";
+import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
+import "./Auth.css";
 
-export default function Auth({ displayLogin, displaySignup }) {
-  const [ authState, setAuthState ] = useState();
-  const [ user, setUser ] = useState();
+export default function Auth({ login, signup }) {
+  const [authState, setAuthState] = useState();
+  const [user, setUser] = useState();
 
   useEffect(() => {
     return onAuthUIStateChange((nextAuthState, authData) => {
       setAuthState(nextAuthState);
-      setUser(authData)
-    })
+      setUser(authData);
+    });
   }, []);
 
   return (
     <>
       {/* signin form will be displayed when user clicks on
         "Log in" button from menu window*/}
-      {displayLogin && (
+      {login && (
         <div className="auth-window">
           <AmplifyAuthenticator>
             <AmplifySignIn slot="sign-in" usernameAlias="email" />
@@ -31,13 +32,24 @@ export default function Auth({ displayLogin, displaySignup }) {
 
       {/* signup form will be displayed when user clicks on
         "Sign up" button from menu window */}
-      {displaySignup && (
+      {signup && (
         <div className="auth-window">
           <AmplifyAuthenticator initialAuthState="signup">
             <AmplifySignUp
               slot="sign-up"
               usernameAlias="email"
               formFields={[
+                {
+                  type: "email",
+                  label: "Email",
+                  required: true,
+                },
+                {
+                  type: "password",
+                  label: "Custom Password Label",
+                  placeholder: "custom password placeholder",
+                  required: true,
+                },
                 {
                   type: "first_name",
                   label: "First Name",
@@ -46,11 +58,6 @@ export default function Auth({ displayLogin, displaySignup }) {
                 {
                   type: "last_name",
                   label: "Last Name",
-                  required: true,
-                },
-                {
-                  type: "email",
-                  label: "Email",
                   required: true,
                 },
                 {
