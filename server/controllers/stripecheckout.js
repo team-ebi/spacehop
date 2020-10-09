@@ -11,7 +11,7 @@ router.get("/test", async(req, res) => {
 });
 
 //stripe checkout session endpoint
-router.post("/create-checkout-session", async (req, res) => {
+router.post("/checkoutsession", async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: [
