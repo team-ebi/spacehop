@@ -9,9 +9,13 @@ import Team from "./components/Team/Team"
 import BizCard from "./components/BizCard/BizCard"
 import Profile from './components/Profile/Profile'
 
+
 function App() {
   return (
     <div className="App">
+      <Elements stripe={stripePromise}>
+       
+      </Elements>
       <Nav />
         <Switch>
           <Route path="/list" exact component={List} />
