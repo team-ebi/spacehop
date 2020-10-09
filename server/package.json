@@ -3,11 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
     "cors": "^2.8.5",
-=======
     "@stripe/stripe-js": "^1.9.0",
->>>>>>> d896ab8a0a76a3950d23752311dde19eb4516379
     "express": "^4.17.1",
     "knex": "^0.21.6",
     "pg": "^8.4.0",

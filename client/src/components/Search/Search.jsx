@@ -38,16 +38,26 @@ export default function Search() {
   }
 
   //test----- fetching data from database 
-  async function fetchAllData(){
-    console.log("I'm in fetchAllData!"); 
-  const req = axios.get("http://localhost:3000/api/availability/data");
+  // async function fetchAllData(){
+  //   console.log("I'm in fetchAllData!"); 
+  // const req = axios.get("http://localhost:4000/api/availability/data");
+  // const res = await req; 
+  // console.log(res); 
+  // const data = res.data; 
+  // console.log(data);
+  // }
+  // fetchAllData();
+
+  //test-----fetching selected data from database 
+  async function fetchSelectedData(){
+    console.log("I'm in fetchSelectedData!"); 
+  const req = axios.get("http://localhost:4000/api/availability?day=Monday&address_city=Roppongi&start_hour=10&end_hour=11");
   const res = await req; 
-  console.log(res); 
+  // console.log(res); 
   const data = res.data; 
   console.log(data);
   }
-  fetchAllData();
-
+  fetchSelectedData();
 
   return (
     <div id="search-container">

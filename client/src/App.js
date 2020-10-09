@@ -13,12 +13,7 @@ import Data from "./data/businesses";
 import Success from "./components/Success/Success";
 
 export default function App() {
-<<<<<<< HEAD
-// test
-  const [businesses, setBusinesses] = useState(Data); 
-=======
   const [businesses, setBusinesses] = useState(Data);
->>>>>>> d896ab8a0a76a3950d23752311dde19eb4516379
 
   return (
     <div className="App">
