@@ -18,12 +18,10 @@ export default function Nav() {
   const [displayLogin, setDisplayLogin] = useState(false);
   const [displaySignup, setDisplaySignup] = useState(false);
   const [dimOverlay, setDimOverlay] = useState("hide");
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
-    if (user) {
-      setDisplayLogin(false);
-      setDisplaySignup(false);
+    if (user && user.attributes) {
       setDimOverlay("hide");
     }
   }, [user]);
@@ -102,7 +100,7 @@ export default function Nav() {
           </div>
           <div id="welcome">
             <h2>{`Welcome${
-              user ? ", " + user.attributes.given_name : ""
+              user && user.attributes ? ", " + user.attributes.given_name : ""
             }!`}</h2>
           </div>
           <div id="menu-container" onClick={() => setDisplayMenu(!displayMenu)}>

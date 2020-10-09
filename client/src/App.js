@@ -25,6 +25,7 @@ export default function App() {
     return onAuthUIStateChange((nextAuthState, authData) => {
       setAuthState(nextAuthState);
       setUser(authData);
+      console.log(user)
     });
   }, []);
 
@@ -33,6 +34,7 @@ export default function App() {
       try {
         const user = await Auth.currentAuthenticatedUser();
         setUser(user);
+        console.log(user)
       } catch (e) {
         console.error(e);
       }
