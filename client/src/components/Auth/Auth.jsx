@@ -7,10 +7,7 @@ import {
 import { UserContext } from "../useContext/UserContext";
 import "./Auth.css";
 
-
 export default function Auth({ login, signup }) {
-
-
   return (
     <>
       {/* signin form will be displayed when user clicks on

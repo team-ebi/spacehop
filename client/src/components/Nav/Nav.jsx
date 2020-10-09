@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../useContext/UserContext";
 import Auth from "../Auth/Auth";
 import { useHistory } from "react-router-dom";
@@ -19,6 +19,14 @@ export default function Nav() {
   const [displaySignup, setDisplaySignup] = useState(false);
   const [dimOverlay, setDimOverlay] = useState("hide");
   const { user, setUser } = useContext(UserContext);
+
+  useEffect(() => {
+    if (user) {
+      setDisplayLogin(false);
+      setDisplaySignup(false);
+      setDimOverlay("hide");
+    }
+  }, [user]);
 
   // when user clicks login button, menu window will disappear
   // and login window will appear with overlay

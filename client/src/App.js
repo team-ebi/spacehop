@@ -12,14 +12,13 @@ import Team from "./components/Team/Team";
 import BizCard from "./components/BizCard/BizCard";
 import Data from "./data/businesses";
 import Success from "./components/Success/Success";
-import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
-import { Auth as currentUser } from "aws-amplify";
-import { AmplifyAuthenticator } from "@aws-amplify/ui-react";
+import { onAuthUIStateChange } from "@aws-amplify/ui-components";
+import { Auth } from "aws-amplify";
 
 export default function App() {
   const [businesses, setBusinesses] = useState(Data);
   const [authState, setAuthState] = useState();
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
 
   // checks if user is signed in and fetches user data
   useEffect(() => {
@@ -27,6 +26,18 @@ export default function App() {
       setAuthState(nextAuthState);
       setUser(authData);
     });
+  }, []);
+
+  useEffect(() => {
+    async function init() {
+      try {
+        const user = await Auth.currentAuthenticatedUser();
+        setUser(user);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    init();
   }, []);
 
   return (
