@@ -39,7 +39,7 @@ export default function FutureBookings() {
         }))
       }
     
-    useEffect(()=>manageFutureBookings(), [])
+    useEffect(()=>{manageFutureBookings()}, [])
 
   return (
     <div className="futureBookings" style={{borderStyle:"dotted"}}>

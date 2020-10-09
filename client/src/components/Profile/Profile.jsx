@@ -31,7 +31,7 @@ function Profile() {
       </ul>
     );
   }
-  useEffect(() => manageProfile(), []);
+  useEffect(() => {manageProfile()}, []);
 
   return (
     <div id="Profile">
@@ -56,7 +56,7 @@ function Profile() {
         <div className="button_layout" style={{ margin: "0 auto " }}>
           {/* future bookings is set in the middle of this code */}
           {/* future booking has its own branch : futureBookings */}
-          {/* <FutureBookings /> */}
+          <FutureBookings />
 
           <Button
             variant="success"
