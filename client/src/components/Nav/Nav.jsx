@@ -16,7 +16,7 @@ export default function Nav() {
   const [displayMenu, setDisplayMenu] = useState(false);
   const [displayLogin, setDisplayLogin] = useState(false);
   const [displaySignup, setDisplaySignup] = useState(false);
-  const [dimOverlay, setDimOverlay] = useState("");
+  const [dimOverlay, setDimOverlay] = useState("hide")
 
   // when user clicks login button, menu window will disappear
   // and login window will appear with overlay
