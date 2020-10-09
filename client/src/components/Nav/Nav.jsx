@@ -58,7 +58,7 @@ export default function Nav({}) {
       <div className={`overlay ${dimOverlay}`} onClick={clearDisplay}></div>
       <nav>
         <div id="navbar">
-          <div id="menu-container" onClick={() => setDisplayMenu(true)}>
+          <div id="menu-container" onClick={() => setDisplayMenu(!displayMenu)}>
             {/* when button is clicked, small menu window will pop up */}
             <div id="menu-button">
               <FontAwesomeIcon icon={faBars} size="lg" color="#80CC37" />
