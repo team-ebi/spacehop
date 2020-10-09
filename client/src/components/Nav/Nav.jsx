@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useHistory, withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faBars, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { Auth } from "aws-amplify";
 import {
   AmplifySignIn,
@@ -46,18 +46,33 @@ export default function Nav({}) {
   const history = useHistory();
 
   function teamHandler() {
+    setDisplayMenu(false);
     return history.push("/team");
-  }
+  };
 
   function aboutHandler() {
+    setDisplayMenu(false);
     return history.push("/about");
-  }
+  };
+
+  function homeHandler() {
+    setDisplayMenu(false);
+    return history.push("/");
+  };
 
   return (
     <>
       <div className={`overlay ${dimOverlay}`} onClick={clearDisplay}></div>
       <nav>
         <div id="navbar">
+        <div id="home-button">
+          <FontAwesomeIcon
+            icon={faHome}
+            size="lg"
+            color="#80CC37"
+            onClick={homeHandler}
+          />
+        </div>
           <div id="menu-container" onClick={() => setDisplayMenu(!displayMenu)}>
             {/* when button is clicked, small menu window will pop up */}
             <div id="menu-button">
@@ -88,8 +103,7 @@ export default function Nav({}) {
             <div className="menu-item">
               <AmplifySignOut buttonText="Log out" />
             </div>
-          </div>
-        )}
+          </div>)}
 
         {displayLogin && (
           <div className="auth-window">
