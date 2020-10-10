@@ -193,7 +193,7 @@ paths:
       operationId: get-api-reservations-user_id
       description: |-
         Get selected user's reservations
-        <br>```done```
+        <br>```not yet```
       parameters: []
   '/api/reservations/:business_id':
     parameters: []
@@ -208,5 +208,14 @@ paths:
         Get selected business's reservations
         <br>```not yet```
       parameters: []
+  '/api/users/:user_id':
+    get:
+      summary: GET selected user's info
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: 'get-api-users-:user_id'
+      description: '```done```'
 components:
   schemas: {}
