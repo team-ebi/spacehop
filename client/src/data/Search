@@ -20,7 +20,6 @@ export default function Search() {
   // may or may not need coordinates
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
   const [selectedDate, setSelectedDate] = useState("");
-  const { businesses, setBusinesses } = useContext(BusinessContext);
 
   //variable to access routes history
   const history = useHistory()
@@ -34,10 +33,9 @@ export default function Search() {
   };
 
   //handle local routing
-  // async function routerHandler() {
-  //   await getSelectedData();
-  //   return history.push("/list");
-  // }
+  function routerHandler() {
+    return history.push("/list");
+  }
 
   //test----- fetching data from database 
   // async function fetchAllData(){
@@ -52,35 +50,14 @@ export default function Search() {
 
   //test-----fetching selected data from database 
   async function fetchSelectedData(){
+    console.log("I'm in fetchSelectedData!"); 
   const req = axios.get("http://localhost:4000/api/availability?day=Monday&address_city=Roppongi&start_hour=10&end_hour=11");
   const res = await req; 
+  // console.log(res); 
   const data = res.data; 
+  console.log(data);
   }
   fetchSelectedData();
-
-  //handle selected data 
-  //get entered data from imput 
-  async function getSelectedData(){
-    // parse the location
-    const selectedLocation = location.split(",")[0]
-
-    const date = new Date(selectedDate)
-    
-    // parse day from selected date
-    const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const selectedDay = week[date.getDay()];
-
-    // parse time from selected date
-    
-    //set data to axios.get(http://) then get filtered data
-    const res = await axios.get(`http://localhost:4000/api/availability?day=${selectedDay}&address_city=${selectedLocation}&start_hour=10&end_hour=11`);
-    console.log("AXIOS GET ========= ", res.data)
-
-    // set businesses state
-    setBusinesses(res.data);
-    // open list
-    return history.push("/list");
-  }
 
   return (
     <div id="search-container">
@@ -145,7 +122,7 @@ export default function Search() {
 
         {/* when this button is clicked, list of available
         businesses will be displayed */}
-        <button id="search-button" onClick={getSelectedData}>
+        <button id="search-button" onClick={routerHandler}>
           <div>
             <FontAwesomeIcon icon={faSearch} size="lg" />
           </div>
