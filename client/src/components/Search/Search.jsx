@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./Search.css";
 // useContext
 import { BusinessContext } from "../useContext/BusinessContext";
-import {useHistory} from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import logo from "../../images/logo.png";
 
 export default function Search() {
@@ -21,7 +21,7 @@ export default function Search() {
   const [selectedDate, setSelectedDate] = useState("");
 
   //variable to access routes history
-  const history = useHistory()
+  const history = useHistory();
 
   // handles location update when location is selected in input
   const handleLocationSelect = async (value) => {
@@ -31,7 +31,7 @@ export default function Search() {
     setCoordinates(latLng);
   };
 
-  // reroute to list of filtered business 
+  // reroute to list of filtered business
   function searchHandler() {
     return history.push("/list");
   }
@@ -39,72 +39,76 @@ export default function Search() {
   return (
     <div id="search-container">
       <div id="logo-container">
-        <img id="logo" src={logo} alt="logo"/>
+        <img id="logo" src={logo} alt="logo" />
       </div>
-      
-      <div id="search-bar">
-        {/* this google maps api autofill location search will update
+
+      <div id="search-bar-container">
+        <div id="search-bar">
+          {/* this google maps api autofill location search will update
         location and coordinates states*/}
-        <div className="input" id="location-input">
-          <PlacesAutocomplete
-            value={location}
-            onChange={setLocation}
-            onSelect={handleLocationSelect}
-          >
-            {({
-              getInputProps,
-              suggestions,
-              getSuggestionItemProps,
-              loading,
-            }) => (
-              <div>
-                <input
-                  id="location-input"
-                  {...getInputProps({ placeholder: "Where to?" })}
-                />
-                <div id="autocomplete-selections">
-                  {loading ? <div>...loading</div> : null}
+          <div className="input" id="location-input-field">
+            <PlacesAutocomplete
+              value={location}
+              onChange={setLocation}
+              onSelect={handleLocationSelect}
+            >
+              {({
+                getInputProps,
+                suggestions,
+                getSuggestionItemProps,
+                loading,
+              }) => (
+                <div>
+                  <input
+                    id="location-input"
+                    {...getInputProps({ placeholder: "Where to?" })}
+                  />
+                  <div id="autocomplete-selections">
+                    {loading ? <div>...loading</div> : null}
 
-                  {/* this will delay autofill options as user types */}
-                  {suggestions.map((suggestion) => {
-                    const style = {
-                      backgroundColor: suggestion.active ? "#80cc37" : "white",
-                      padding: "7px",
-                    };
-                    return (
-                      <div {...getSuggestionItemProps(suggestion, { style })}>
-                        {suggestion.description}
-                      </div>
-                    );
-                  })}
+                    {/* this will delay autofill options as user types */}
+                    {suggestions.map((suggestion) => {
+                      const style = {
+                        backgroundColor: suggestion.active
+                          ? "#80cc37"
+                          : "white",
+                        padding: "7px",
+                      };
+                      return (
+                        <div {...getSuggestionItemProps(suggestion, { style })}>
+                          {suggestion.description}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            )}
-          </PlacesAutocomplete>
-        </div>
-
-        {/* datepicker will update selectedDate state */}
-        <div className="input">
-          <DatePicker
-            id="date-input"
-            placeholderText="When?"
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            name="selectedDate"
-            timeFormat="HH:00"
-            dateFormat="MMMM d, yyyy h:mm aa"
-            showTimeSelect
-          />
-        </div>
-
-        {/* when this button is clicked, list of available
-        businesses will be displayed */}
-        <button id="search-button" onClick={searchHandler}>
-          <div>
-            <FontAwesomeIcon icon={faSearch} size="lg" />
+              )}
+            </PlacesAutocomplete>
           </div>
-          <div id="search-text">Search</div>
-        </button>
+
+          {/* datepicker will update selectedDate state */}
+          <div className="input">
+            <DatePicker
+              id="date-input"
+              placeholderText="When?"
+              selected={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+              name="selectedDate"
+              timeFormat="HH:00"
+              dateFormat="MMMM d, yyyy h:mm aa"
+              showTimeSelect
+            />
+          </div>
+
+          {/* when this button is clicked, list of available
+        businesses will be displayed */}
+          <button id="search-button" onClick={searchHandler} round>
+            <div>
+              <FontAwesomeIcon icon={faSearch} size="lg" />
+            </div>
+            <div id="search-text">Search</div>
+          </button>
+        </div>
       </div>
     </div>
   );

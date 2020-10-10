@@ -1,20 +1,21 @@
 #search-container {
- 
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  height: 820px;
   width: 100%;
   background-color: rgb(250, 238, 238);
+  height: 100%;
+  position: fixed;
 }
 #logo-container {
   width: 100%;
   text-align: center;
-  height: 50px;
 }
 #logo {
   margin-top: 80px;
   width: 300px;
+}
+#search-bar-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 #search-bar {
   background-color: white;
@@ -24,6 +25,7 @@
   width: 60%;
   box-shadow: 0 4px 8px lightgrey;
   z-index: 10;
+  align-self: flex-start;
 }
 .input {
   background-color: white;
@@ -44,16 +46,18 @@ input {
   align-content: center;
 }
 #search-button {
-  width: 130px;
+  width: 100px;
+  height: 100px;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   cursor: pointer;
   background-color: #80cc37;
-  border-radius: 50px;
+  border-radius: 50%;
   justify-content: center;
   border: none;
   box-shadow: 0 4px 8px lightgrey;
+  overflow: hidden;
 }
 #location-input {
   text-indent: 20px;
@@ -103,18 +107,13 @@ input {
   border-radius: 20px;
   overflow: hidden;
 }
-/* reset^^^ */
 
 @media (max-width: 700px) {
-  #search-container {
-    background-size: 40%;
-  }
   #search-bar {
     flex-flow: row wrap;
     background-color: transparent;
     box-shadow: none;
     justify-content: center;
-    align-content: center;
     width: 80%;
   }
   .input {
@@ -133,9 +132,23 @@ input {
   #search-text {
     display: none;
   }
-  @media (max-width: 400px) {
-    #search-container {
-      background-size: 60%;
+  @media (max-width: 500px) {
+    #logo-container {
+      height: 200px;
+      width: 100%;
+      padding: 0px;
+      padding-top: 20px;
+    }
+    #logo {
+      margin-top: 0px;
+      width: 50%;
+    }
+    .input {
+      height: 50px;
+    }
+    #autocomplete-selections {
+      z-index: 100;
+      position: fixed;
     }
   }
 }
