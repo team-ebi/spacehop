@@ -157,7 +157,7 @@ paths:
         <br>```done```
   /api/reservations:
     post:
-      summary: Make a reservation(not yet)
+      summary: 'Make a reservation(done, but not merged)'
       operationId: post-api-reservations
       responses:
         '200':
@@ -182,10 +182,10 @@ paths:
           name: business_id
           description: ex) 6
     parameters: []
-  '/api/reservations/:user_id':
+  '/api/reservations/user/:user_id':
     parameters: []
     get:
-      summary: Get selected user's reservations(not yet)
+      summary: Get selected user's reservations
       tags: []
       responses:
         '200':
@@ -193,7 +193,7 @@ paths:
       operationId: get-api-reservations-user_id
       description: |-
         Get selected user's reservations
-        <br>```not yet```
+        <br>```done```
       parameters: []
   '/api/reservations/:business_id':
     parameters: []
