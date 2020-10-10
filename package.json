@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "express": "^4.17.1"
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "pg": "^8.4.1",
+    "@stripe/react-stripe-js": "^1.1.2",
+    "@stripe/stripe-js": "^1.9.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -12,7 +16,7 @@
     "nodemon": "^2.0.4"
   },
   "scripts": {
-    "start": "cd server && npm install && npm knex migrate:latest --env production && npm knex seed:make --env production && npm start",
+    "start": "cd server && npm install && npm start",
     "start-client": "cd client && npm install && npm start",
     "dev": "nodemon ./src/index.js",
     "lint": "eslint --fix --ext .js .",
