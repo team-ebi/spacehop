@@ -71,10 +71,10 @@ router.patch("/:user_id", async (req, res) => {
   //object to store column to change
   let columnToChange={};
 
-  if(req.body.first_name) obj["first_name"]=req.body.first_name;
-  if(req.body.last_name) obj["last_name"]=req.body.last_name;
-  if(req.body.email) obj["email"]=req.body.email;
-  if(req.body.phone) obj["phone"]=req.body.phone;
+  if(req.body.first_name) columnToChange["first_name"]=req.body.first_name;
+  if(req.body.last_name) columnToChange["last_name"]=req.body.last_name;
+  if(req.body.email) columnToChange["email"]=req.body.email;
+  if(req.body.phone) columnToChange["phone"]=req.body.phone;
 
   try {
     const user = await db
