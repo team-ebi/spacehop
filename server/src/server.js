@@ -7,6 +7,8 @@ const availabilityAPI = require("../controllers/availability");
 const reservationsAPI = require("../controllers/reservations");
 const stripecheckoutAPI = require("../controllers/stripecheckout");
 
+const awsTest = require("../controllers/awstest");
+
 const setupServer = () => {
     app.use(express.json());
 
@@ -14,7 +16,9 @@ const setupServer = () => {
     app.use("/api/users", usersAPI);
     app.use("/api/availability", availabilityAPI);
     app.use("/api/reservations", reservationsAPI);
-    app.use("/api/stripecheckout", stripecheckoutAPI)
+    app.use("/api/stripecheckout", stripecheckoutAPI);
+
+    app.use("/api/awstest", awsTest);
 
     return app;
 };
