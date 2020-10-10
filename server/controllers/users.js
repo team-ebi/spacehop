@@ -33,4 +33,18 @@ router.get("/data", async (req, res) => {
   res.send(users);
 });
 
+//Get selected user's info 
+router.get("/:user_id", async(req, res) => {
+  const id = req.params.user_id;
+  
+  const reservations = await db
+  .select("*")
+  .table("users")
+  .where({
+    id
+  })
+  
+  res.send(reservations);
+});
+
 module.exports = router;
