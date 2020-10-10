@@ -26,7 +26,6 @@ export default function App() {
     return onAuthUIStateChange((nextAuthState, authData) => {
       setAuthState(nextAuthState);
       setUser(authData);
-      console.log(user)
     });
   }, []);
 
