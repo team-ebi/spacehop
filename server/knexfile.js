@@ -6,13 +6,12 @@ module.exports = {
     connection: `postgres://${process.env.USER}@127.0.0.1:5432/spacehop`
   },
   production: {
-    // TODO
     client: 'postgresql',
-    connection: process.env.DATABASE_URL,
-    // host: process.env.AWS_HOST,
-    // port: process.env.AWS_PORT,
-    // user: process.env.AWS_USER,
-    // password: process.env.AWS_PASSWORD,
-    // database: process.env.AWS_DATABASE
+    connection: {
+      host: process.env.AWS_SPACEHOP_HOST,
+      user: process.env.AWS_SPACEHOP_USER,
+      password: process.env.AWS_SPACEHOP_PASSWORD,
+      database: process.env.AWS_SPACEHOP_DB
+    }
   }
 };
