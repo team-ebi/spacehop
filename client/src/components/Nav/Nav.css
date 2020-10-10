@@ -74,11 +74,10 @@ h2 {
   display: flex;
   justify-content: center;
   position: fixed;
-  width: 50%;
   background-color: transparent;
   z-index: 100;
   margin-left: 25%;
-  border-radius: 90px;
+  border-radius: 20px;
 }
 .overlay {
   width: 100%;
@@ -93,11 +92,65 @@ h2 {
   background-color: rgba(87, 98, 126, 0.651);
   z-index: 90;
 }
+#mobile-bar {
+  display: none;
+}
+#mobile-welcome {
+  display: none;
+}
 @media (max-width: 700px) {
   nav {
     bottom: 0;
     position: fixed;
     z-index: 100000;
     width: 100%;
+  }
+  #navbar {
+    justify-content: space-evenly;
+  }
+  #welcome {
+    display: none;
+  }
+  #menu-container {
+    display: none;
+  }
+  #mobile-bar {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+  .menu-item {
+    display: inline-block;
+    white-space: nowrap;
+    border: none;
+    border-right: solid grey;
+    border-width: 1px;
+    text-align: center;
+    padding: 10px;
+  }
+  .menu-item:last-child {
+    border-right: none;
+  }
+  #logout-item {
+    width: 50px;
+  }
+  amplify-sign-out {
+    padding: none;
+    margin: none;
+  }
+  amplify-authenticator {
+    height: 30px;
+  }
+  .auth-window {
+    position: fixed;
+    top: 100px;
+    bottom: 50px;
+    right: 0;
+    left: 0;
+    width: 375px;
+    overflow-x: hidden;
+    overflow: scroll;
+    align-self: center;
+    margin-left: 0;
+    height: 450px;
   }
 }

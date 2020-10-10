@@ -109,6 +109,19 @@ input {
 }
 
 @media (max-width: 700px) {
+  #search-container {
+    background: #efefbb; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to bottom,
+      rgb(230, 228, 245),
+      #efefbb
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+      to bottom,
+      rgb(230, 228, 245),
+      #efefbb
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
   #search-bar {
     flex-flow: row wrap;
     background-color: transparent;
@@ -134,10 +147,10 @@ input {
   }
   @media (max-width: 500px) {
     #logo-container {
-      height: 200px;
+      height: 180px;
       width: 100%;
       padding: 0px;
-      padding-top: 20px;
+      padding-top: 30px;
     }
     #logo {
       margin-top: 0px;
@@ -149,6 +162,14 @@ input {
     #autocomplete-selections {
       z-index: 100;
       position: fixed;
+    }
+    #mobile-welcome {
+      display: flex;
+      justify-content: center;
+      padding-bottom: 30px;
+    }
+    #date-input {
+      text-indent: 20px;
     }
   }
 }

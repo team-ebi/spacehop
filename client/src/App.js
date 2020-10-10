@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import "./App.css";
 import { BusinessContext } from "./components/useContext/BusinessContext";
 import { UserContext } from "./components/useContext/UserContext";
+import { AuthStateContext } from "./components/useContext/AuthStateContext";
 import Nav from "./components/Nav/Nav";
 import Search from "./components/Search/Search";
 import Profile from "./components/Profile/Profile";
@@ -47,6 +48,7 @@ export default function App() {
   return (
     <div className="App">
       <UserContext.Provider value={{ user, setUser }}>
+      <AuthStateContext.Provider value={{ authState, setAuthState }}>
         <BusinessContext.Provider value={{ businesses, setBusinesses }}>
           <Nav />
           <Switch>
@@ -62,6 +64,7 @@ export default function App() {
             <Route path="/success" exact component={Success} />
           </Switch>
         </BusinessContext.Provider>
+        </AuthStateContext.Provider>
       </UserContext.Provider>
     </div>
   );

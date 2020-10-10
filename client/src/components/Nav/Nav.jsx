@@ -1,11 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../useContext/UserContext";
-import Auth from "../Auth/Auth";
+import { AuthStateContext } from "../useContext/AuthStateContext";
 import { useHistory } from "react-router-dom";
-import { BusinessContext } from "../useContext/BusinessContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faBars, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import Auth from "../Auth/Auth";
 import { AmplifySignOut } from "@aws-amplify/ui-react";
+import { onAuthUIStateChange } from "@aws-amplify/ui-components";
+import { Auth as AuthUser } from "aws-amplify";
 import "./Nav.css";
 
 export default function Nav() {
@@ -14,7 +16,8 @@ export default function Nav() {
   const [displayLogin, setDisplayLogin] = useState(false);
   const [displaySignup, setDisplaySignup] = useState(false);
   const [dimOverlay, setDimOverlay] = useState("hide");
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const { authState, setAuthState } = useContext(AuthStateContext);
 
   // once user logs and verifies email, 
   // this will remove overlay and close modals
@@ -83,6 +86,15 @@ export default function Nav() {
     return history.push("/profile");
   }
 
+  async function signoutHandler() {
+    await AuthUser.signOut();
+    await onAuthUIStateChange((nextAuthState, authData) => {
+      setAuthState(nextAuthState);
+      setUser(authData);
+    });
+    return history.push("/");
+  }
+
   return (
     <>
       {/* this overlay is hidden unless signin/signup modal windows are open */}
@@ -113,6 +125,42 @@ export default function Nav() {
             <div id="profile-thumb">
               <FontAwesomeIcon icon={faUserCircle} size="lg" color="#80CC37" />
             </div>
+          </div>
+
+          <div id="mobile-bar">
+            {/* only display login button if user is NOT logged in */}
+            {!user && (
+              <button className="menu-item" id="login" onClick={loginHandler}>
+                Log in
+              </button>
+            )}
+            
+            {/* only display signup button if user is NOT logged in */}
+            {!user && (
+              <button className="menu-item" onClick={signupHandler}>
+                Sign Up
+              </button>
+            )}
+            
+            {/* only display profile button if user IS logged in */}
+            {user && (
+              <button className="menu-item" onClick={profileHandler}>
+                Profile
+              </button>
+            )}
+            <button className="menu-item" onClick={aboutHandler}>
+              About
+            </button>
+            <button className="menu-item" onClick={teamHandler}>
+              Team
+            </button>
+
+            {/* only display signout button if user IS logged in */}
+            {user && (
+                <button className="menu-item" onClick={signoutHandler}>
+                Log out
+              </button>
+            )}
           </div>
         </div>
 
@@ -148,9 +196,12 @@ export default function Nav() {
 
             {/* only display signout button if user IS logged in */}
             {user && (
-              <div className="menu-item">
-                <AmplifySignOut buttonText="Log out" />
-              </div>
+              <button className="menu-item" onClick={signoutHandler}>
+                Log out
+              </button>
+              // <div className="menu-item">
+              //   <AmplifySignOut buttonText="Log out" />
+              // </div>
             )}
           </div>
         )}

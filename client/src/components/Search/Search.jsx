@@ -8,8 +8,8 @@ import PlacesAutocomplete, {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Search.css";
-// useContext
 import { BusinessContext } from "../useContext/BusinessContext";
+import { UserContext } from "../useContext/UserContext";
 import { useHistory } from "react-router-dom";
 import logo from "../../images/logo.png";
 
@@ -19,6 +19,7 @@ export default function Search() {
   // may or may not need coordinates
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
   const [selectedDate, setSelectedDate] = useState("");
+  const { user } = useContext(UserContext);
 
   //variable to access routes history
   const history = useHistory();
@@ -42,6 +43,13 @@ export default function Search() {
         <img id="logo" src={logo} alt="logo" />
       </div>
 
+      <div id="mobile-welcome">
+        {/* if user is logged in, will greet by name */}
+        <h2>{`Welcome${
+          user && user.attributes ? ", " + user.attributes.given_name : ""
+        }!`}</h2>
+      </div>
+      
       <div id="search-bar-container">
         <div id="search-bar">
           {/* this google maps api autofill location search will update
