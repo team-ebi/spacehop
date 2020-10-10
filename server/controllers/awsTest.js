@@ -11,4 +11,15 @@ router.get("/", async(req, res) => {
   res.send(availability);
 });
 
+router.post("/", async(req, res) => {
+  const name = req.body.name;
+
+  await db
+  .select("*")
+  .table("country")
+  .insert({ name });
+
+  res.send("New country added!");
+});
+
 module.exports = router;
