@@ -4,7 +4,7 @@
   background-color: rgb(250, 238, 238);
   position: fixed;
 }
-header {
+header:not(#results-header) {
     padding-top: 40px;
     text-align: center;
 }
