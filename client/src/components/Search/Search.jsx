@@ -19,7 +19,13 @@ export default function Search() {
   const [location, setLocation] = useState("");
   // may or may not need coordinates
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
+  //select date 
   const [selectedDate, setSelectedDate] = useState("");
+  //select start time 
+  const [selectedStartTime, setSelectedStartTime] = useState("");
+  //select end time 
+  const [selectedEndTime, setSelectedEndTime] = useState("");
+
   const { businesses, setBusinesses } = useContext(BusinessContext);
 
   //variable to access routes history
@@ -69,12 +75,24 @@ export default function Search() {
     // parse day from selected date
     const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const selectedDay = week[date.getDay()];
+    console.log(selectedDay)
 
-    // parse time from selected date
-    
-    //set data to axios.get(http://) then get filtered data
-    const res = await axios.get(`http://localhost:4000/api/availability?day=${selectedDay}&address_city=${selectedLocation}&start_hour=10&end_hour=11`);
+    // parse time from selected start time
+    console.log(selectedStartTime)
+    const startTime = new Date(selectedStartTime).getHours()
+    console.log(startTime)
+
+    // parse time from selected start time
+    console.log(selectedEndTime)
+    const endTime = new Date(selectedEndTime).getHours()
+    console.log(endTime)
+
+    // set data to axios.get(http://) then get filtered data
+    const res = await axios.get(`http://localhost:4000/api/availability?day=${selectedDay}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`);
     console.log("AXIOS GET ========= ", res.data)
+    // const res = await axios.get(`http://localhost:4000/api/availability?day=${selectedDay}&address_city=${selectedLocation}&start_hour=10&end_hour=11`);
+    // console.log("AXIOS GET ========= ", res.data)
+
 
     // set businesses state
     setBusinesses(res.data);
@@ -131,7 +149,7 @@ export default function Search() {
 
         {/* datepicker will update selectedDate state */}
         <div className="input">
-          <DatePicker
+          {/* <DatePicker
             id="date-input"
             placeholderText="When?"
             selected={selectedDate}
@@ -140,9 +158,34 @@ export default function Search() {
             timeFormat="HH:00"
             dateFormat="MMMM d, yyyy h:mm aa"
             showTimeSelect
-          />
+          /> */}
+          {/* select date */}
+          <DatePicker selected={selectedDate} 
+          placeholderText="Date?" 
+          onChange={date => setSelectedDate(date)} />
+          {/* select start time */}
+          <DatePicker
+          selected={selectedStartTime}
+          placeholderText="Start time?" 
+          onChange={startTime => setSelectedStartTime(startTime)}
+          showTimeSelect
+          showTimeSelectOnly
+          timeIntervals={15}
+          timeCaption="Time"
+          dateFormat="h:mm aa"
+            />
+          {/* select end time */}
+          <DatePicker
+          selected={selectedEndTime}
+          placeholderText="End time?" 
+          onChange={endTime => setSelectedEndTime(endTime)}
+          showTimeSelect
+          showTimeSelectOnly
+          timeIntervals={15}
+          timeCaption="Time"
+          dateFormat="h:mm aa"
+            />
         </div>
-
         {/* when this button is clicked, list of available
         businesses will be displayed */}
         <button id="search-button" onClick={getSelectedData}>
