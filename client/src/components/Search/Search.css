@@ -1,29 +1,37 @@
 #search-container {
- 
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  height: 820px;
   width: 100%;
   background-color: rgb(250, 238, 238);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-bottom: 50px;
 }
 #logo-container {
   width: 100%;
   text-align: center;
-  height: 50px;
 }
 #logo {
   margin-top: 80px;
   width: 300px;
+}
+#search-bar-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 #search-bar {
   background-color: white;
   display: flex;
   height: 100px;
   border-radius: 50px;
-  width: 60%;
+  width: 70%;
   box-shadow: 0 4px 8px lightgrey;
   z-index: 10;
+  align-self: flex-start;
 }
 .input {
   background-color: white;
@@ -34,30 +42,30 @@
 .input:hover {
   background-color: lightgrey;
 }
-input {
-  min-width: 80%;
+#search-button {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  cursor: pointer;
+  background-color: #80cc37;
+  border-radius: 50%;
+  justify-content: center;
+  border: none;
+  box-shadow: 0 4px 8px lightgrey;
+  overflow: hidden;
+}
+#location-input {
+  text-indent: 20px;
+  font-size: 18px;
   height: 50px;
   border: none;
   background-color: transparent;
   border-radius: 50px;
   display: flex;
   align-content: center;
-}
-#search-button {
-  width: 130px;
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  cursor: pointer;
-  background-color: #80cc37;
-  border-radius: 50px;
-  justify-content: center;
-  border: none;
-  box-shadow: 0 4px 8px lightgrey;
-}
-#location-input {
-  text-indent: 20px;
-  font-size: 18px;
+  width: 100%;
 }
 #autocomplete-selections {
   border-radius: 20px;
@@ -65,9 +73,18 @@ input {
   background-color: white;
   overflow: hidden;
 }
-#date-input {
+.date-input {
   font-size: 18px;
   align-self: center;
+  height: 50px;
+  border: none;
+  background-color: transparent;
+  border-radius: 50px;
+  display: flex;
+  align-content: center;
+}
+.time {
+  width: 150px;
 }
 .react-datepicker-wrapper {
   width: 100%;
@@ -103,28 +120,35 @@ input {
   border-radius: 20px;
   overflow: hidden;
 }
-/* reset^^^ */
 
 @media (max-width: 700px) {
   #search-container {
-    background-size: 40%;
+    bottom: 0;
+    background: #efefbb; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to bottom,
+      rgb(230, 228, 245),
+      #efefbb
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+      to bottom,
+      rgb(230, 228, 245),
+      #efefbb
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   }
   #search-bar {
     flex-flow: row wrap;
     background-color: transparent;
     box-shadow: none;
     justify-content: center;
-    align-content: center;
     width: 80%;
   }
   .input {
-    width: 100%;
+    width: 90%;
     background-color: white;
     margin-bottom: 30px;
   }
-  input {
-    width: 90%;
-  }
+  
   #search-button {
     border-radius: 100px;
     width: 100%;
@@ -133,9 +157,47 @@ input {
   #search-text {
     display: none;
   }
-  @media (max-width: 400px) {
-    #search-container {
-      background-size: 60%;
+  @media (max-width: 500px) {
+    #logo-container {
+      height: 180px;
+      width: 100%;
+      padding: 0px;
+      padding-top: 30px;
     }
+    #logo {
+      margin-top: 0px;
+      width: 50%;
+    }
+    .input {
+      height: 30px;
+      margin-bottom: 10px;
+    }
+    #autocomplete-selections {
+      z-index: 100;
+      position: fixed;
+    }
+    #mobile-welcome {
+      display: flex;
+      justify-content: center;
+      padding-bottom: 30px;
+    }
+    .date-input {
+      text-indent: 20px;
+    }
+    #search-button-container {
+      width: 100%;
+      margin-top: 20px;
+    }
+    #search-button {
+      height: 30px;
+    }
+  }
+}
+@media (min-height: 700px) and (max-height: 850px) {
+  #search-bar-container {
+    margin-top: 50px;
+  }
+  .input {
+    margin-bottom: 30px;
   }
 }
