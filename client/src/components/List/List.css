@@ -1,6 +1,13 @@
 #list-container {
   background-color: rgb(250, 238, 238);
-  padding-bottom: 40px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-bottom: 50px;
 }
 .corner-logo-container {
   width: 100%;
@@ -154,6 +161,9 @@
   .slick-next:before, .slick-prev:before {
     font-size: 30px;
     z-index: 100
+  }
+  .corner-logo-container {
+    justify-content: flex-start;
   }
   .corner-logo {
     width: 100px;
