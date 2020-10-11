@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
 const businessesAPI = require("../controllers/businesses");
 const usersAPI = require("../controllers/users");
@@ -11,6 +12,7 @@ const awsTest = require("../controllers/awstest");
 
 const setupServer = () => {
     app.use(express.json());
+    app.use(cors());
 
     app.use("/api/businesses", businessesAPI);
     app.use("/api/users", usersAPI);
@@ -24,3 +26,4 @@ const setupServer = () => {
 };
 
 module.exports = { setupServer };
+

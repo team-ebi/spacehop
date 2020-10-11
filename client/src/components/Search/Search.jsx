@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import PlacesAutocomplete, {
@@ -8,9 +8,9 @@ import PlacesAutocomplete, {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Search.css";
-// useContext
 import { BusinessContext } from "../useContext/BusinessContext";
 import {useHistory} from 'react-router-dom';
+import axios from "axios";
 import logo from "../../images/logo.png";
 
 export default function Search() {
@@ -19,6 +19,10 @@ export default function Search() {
   // may or may not need coordinates
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
   const [selectedDate, setSelectedDate] = useState("");
+  const [selectedStartTime, setSelectedStartTime] = useState("");
+  const [selectedEndTime, setSelectedEndTime] = useState("");
+
+  const { businesses, setBusinesses } = useContext(BusinessContext);
 
   //variable to access routes history
   const history = useHistory()
@@ -31,8 +35,31 @@ export default function Search() {
     setCoordinates(latLng);
   };
 
-  //handle local routing
-  function routerHandler() {
+  //handle selected data 
+  //get entered data from imput 
+  async function getSelectedData(){
+    // parse the location
+    const selectedLocation = location.split(",")[0]
+
+    const date = new Date(selectedDate)
+    
+    // parse day from selected date
+    const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const selectedDay = week[date.getDay()];
+
+    // parse time from selected start time
+    const startTime = new Date(selectedStartTime).getHours()
+
+    // parse time from selected start time
+    const endTime = new Date(selectedEndTime).getHours()
+
+    // set data to axios.get(http://) then get filtered data
+    const res = await axios.get(`http://localhost:4000/api/availability?day=${selectedDay}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`);
+
+
+    // set businesses state
+    setBusinesses(res.data);
+    // open list
     return history.push("/list");
   }
 
@@ -85,21 +112,40 @@ export default function Search() {
 
         {/* datepicker will update selectedDate state */}
         <div className="input">
-          <DatePicker
-            id="date-input"
-            placeholderText="When?"
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            name="selectedDate"
-            timeFormat="HH:00"
-            dateFormat="MMMM d, yyyy h:mm aa"
-            showTimeSelect
-          />
+          {/* select date */}
+          <DatePicker selected={selectedDate} 
+          placeholderText="Date?" 
+          onChange={date => setSelectedDate(date)} />
         </div>
-
+        <div className="input">
+          {/* select start time */}
+          <DatePicker
+          selected={selectedStartTime}
+          placeholderText="Start time?" 
+          onChange={startTime => setSelectedStartTime(startTime)}
+          showTimeSelect
+          showTimeSelectOnly
+          timeIntervals={15}
+          timeCaption="Time"
+          dateFormat="h:mm aa"
+            />
+        </div>
+        <div className="input">
+          {/* select end time */}
+          <DatePicker
+          selected={selectedEndTime}
+          placeholderText="End time?" 
+          onChange={endTime => setSelectedEndTime(endTime)}
+          showTimeSelect
+          showTimeSelectOnly
+          timeIntervals={15}
+          timeCaption="Time"
+          dateFormat="h:mm aa"
+            />
+        </div>
         {/* when this button is clicked, list of available
         businesses will be displayed */}
-        <button id="search-button" onClick={routerHandler}>
+        <button id="search-button" onClick={getSelectedData}>
           <div>
             <FontAwesomeIcon icon={faSearch} size="lg" />
           </div>
