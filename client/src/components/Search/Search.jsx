@@ -170,7 +170,7 @@ export default function Search() {
           </div>
           {/* when this button is clicked, list of available
         businesses will be displayed */}
-          <div>
+          <div id="search-button-container">
             <button id="search-button" onClick={getSelectedData}>
               <div>
                 <FontAwesomeIcon icon={faSearch} size="lg" />

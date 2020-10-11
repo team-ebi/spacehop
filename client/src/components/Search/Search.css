@@ -160,7 +160,8 @@ input {
       width: 50%;
     }
     .input {
-      height: 50px;
+      height: 30px;
+      margin-bottom: 10px;
     }
     #autocomplete-selections {
       z-index: 100;
@@ -173,6 +174,13 @@ input {
     }
     .date-input {
       text-indent: 20px;
+    }
+    #search-button-container {
+      width: 100%;
+      margin-top: 20px;
+    }
+    #search-button {
+      height: 30px;
     }
   }
 }
