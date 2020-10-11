@@ -6,8 +6,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import {
   faBuilding,
+  faPhone,
   faYenSign,
   faMapPin,
+  faUsers
 } from "@fortawesome/free-solid-svg-icons";
 // useContext
 import { BusinessContext } from "../useContext/BusinessContext";
@@ -16,7 +18,7 @@ import { loadStripe } from "@stripe/stripe-js";
 
 require("dotenv").config();
 
-export default function BizCard({props}) {
+export default function BizCard({ props }) {
   // props passed to router's useHistory
   const biz = props.location.state.state;
 
@@ -46,53 +48,104 @@ export default function BizCard({props}) {
     <div id="bizcard-location-container">
       {/* Elements helps load stripe */}
       <Elements stripe={stripePromise}>
-          <div id="bizcard-location-cell">
-            <img
-              id="business-image"
-              src="https://www.japan-guide.com/g9/2005_01b.jpg"
-            />{" "}
-            <br />
-            <div id="bizcard-location-name">
-              {biz.name} <br />
-            </div>
-            <FontAwesomeIcon
-              className="icon"
-              icon={faMapPin}
-              size="lg"
-              color="#80CC37"
-            />
-            {biz.address_street}  <br />
-            {biz.city} {biz.zip}
-            <FontAwesomeIcon
-              className="icon"
-              icon={faBuilding}
-              size="lg"
-              color="#80CC37"
-            />{" "}
-            {biz.business_type} <br />
-            <div>Booking Details:</div>
-            Availability:
-            <select id="days">
-              {/* loop through fetched data */}
-              <option value="item">Monday</option>
-            </select>{" "}
-            <br />
-            <FontAwesomeIcon
-              className="icon"
-              icon={faYenSign}
-              size="lg"
-              color="#80CC37"
-            />{" "}
-            {biz.price} <br />
-            <button
-              className="book-button"
-              onClick={stripeCheckoutHandler}
-              value="Book"
-            >
-              Book
-            </button>
+        <div id="image-cell">
+          <img
+            id="bizcard-image"
+            src="https://www.japan-guide.com/g9/2005_01b.jpg"
+          />
+        </div>
+        <div>
+          <div id="bizcard-name">
+            <h2>{biz.name}</h2>
           </div>
+          <div id="bizcard-location-cell">
+            <div id="info-cell">
+              <div id="bizcard-location">
+                <FontAwesomeIcon
+                  className="icon"
+                  icon={faMapPin}
+                  size="lg"
+                  color="darkslategrey"
+                />
+                <div>
+                  {biz.address_street} <br />
+                  {biz.address_city}, {biz.address_zip}
+                </div>
+              </div>
 
+              <div id="bizcard-phone">
+                <FontAwesomeIcon
+                  className="icon"
+                  icon={faPhone}
+                  size="lg"
+                  color="darkslategrey"
+                />
+                <div>{biz.phone}</div>
+              </div>
+
+              <div id="bizcard-type">
+                <FontAwesomeIcon
+                  className="icon"
+                  icon={faBuilding}
+                  size="lg"
+                  color="darkslategrey"
+                />
+                {biz.business_type[0].toUpperCase() +
+                  biz.business_type.slice(1)}
+              </div>
+
+              <div id="bizcard-capacity">
+              <FontAwesomeIcon
+                className="icon"
+                icon={faUsers}
+                size="lg"
+                color="darkslategrey"
+              />
+              {biz.capacity}
+            </div>
+
+              <div id="bizcard-price info">
+                <FontAwesomeIcon
+                  className="icon"
+                  icon={faYenSign}
+                  size="lg"
+                  color="darkslategrey"
+                />
+                {Number(biz.price).toLocaleString()}
+              </div>
+            </div>
+
+            <div id="booking-details">
+              <div id="booking-header">
+                Your booking:
+              </div>
+                <div id="booking-price">
+                  ¥{Number(biz.price).toLocaleString()}
+                </div>
+                <hr className="divider"></hr>
+              <div className="detail">
+                <div className="booking-title">Date:</div>
+                <div>somedate</div>
+              </div>
+              <div className="detail">
+                <div className="booking-title">Start Time:</div>
+                <div>blahblah</div>
+              </div>
+              <div className="detail">
+                <div className="booking-title">End Time:</div>
+                <div>blahblah</div>
+              </div>
+
+              <button
+                className="book-button info"
+                onClick={stripeCheckoutHandler}
+                value="Book"
+              >
+                Book
+              </button>
+            </div>
+          </div>
+        </div>
       </Elements>
     </div>
   );

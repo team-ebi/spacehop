@@ -4,7 +4,7 @@ import { BusinessContext } from "../useContext/BusinessContext";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faMapMarkerAlt,
+  faMapPin,
   faBuilding,
   faYenSign,
 } from "@fortawesome/free-solid-svg-icons";
@@ -58,8 +58,7 @@ export default function List() {
             <div className="location-name">{biz.name}</div>
             <div className="location-city info">
               <FontAwesomeIcon
-                className="icon"
-                icon={faMapMarkerAlt}
+                icon={faMapPin}
                 size="lg"
                 color="darkslategrey"
               />
@@ -67,7 +66,6 @@ export default function List() {
             </div>
             <div className="location-type info">
               <FontAwesomeIcon
-                className="icon"
                 icon={faBuilding}
                 size="lg"
                 color="darkslategrey"
@@ -76,7 +74,6 @@ export default function List() {
             </div>
             <div className="location-price info">
               <FontAwesomeIcon
-                className="icon"
                 icon={faYenSign}
                 size="lg"
                 color="darkslategrey"
