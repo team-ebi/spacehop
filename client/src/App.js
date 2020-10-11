@@ -17,7 +17,7 @@ import { onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Auth } from "aws-amplify";
 
 export default function App() {
-  const [businesses, setBusinesses] = useState(Data);
+  const [businesses, setBusinesses] = useState();
   const [authState, setAuthState] = useState();
   const [user, setUser] = useState(null);
 
