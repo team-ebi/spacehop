@@ -22,7 +22,7 @@
   display: flex;
   height: 100px;
   border-radius: 50px;
-  width: 60%;
+  width: 70%;
   box-shadow: 0 4px 8px lightgrey;
   z-index: 10;
   align-self: flex-start;
@@ -69,9 +69,12 @@ input {
   background-color: white;
   overflow: hidden;
 }
-#date-input {
+.date-input {
   font-size: 18px;
   align-self: center;
+}
+.time {
+  width: 150px;
 }
 .react-datepicker-wrapper {
   width: 100%;
@@ -130,7 +133,7 @@ input {
     width: 80%;
   }
   .input {
-    width: 100%;
+    width: 90%;
     background-color: white;
     margin-bottom: 30px;
   }
@@ -168,7 +171,7 @@ input {
       justify-content: center;
       padding-bottom: 30px;
     }
-    #date-input {
+    .date-input {
       text-indent: 20px;
     }
   }

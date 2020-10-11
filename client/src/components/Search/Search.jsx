@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import PlacesAutocomplete, {
@@ -11,6 +11,7 @@ import "./Search.css";
 import { BusinessContext } from "../useContext/BusinessContext";
 import { UserContext } from "../useContext/UserContext";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 import logo from "../../images/logo.png";
 
 export default function Search() {
@@ -20,6 +21,9 @@ export default function Search() {
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
   const [selectedDate, setSelectedDate] = useState("");
   const { user } = useContext(UserContext);
+  const [selectedStartTime, setSelectedStartTime] = useState("");
+  const [selectedEndTime, setSelectedEndTime] = useState("");
+  const { businesses, setBusinesses } = useContext(BusinessContext);
 
   //variable to access routes history
   const history = useHistory();
@@ -32,8 +36,40 @@ export default function Search() {
     setCoordinates(latLng);
   };
 
-  // reroute to list of filtered business
-  function searchHandler() {
+  //handle selected data
+  //get entered data from imput
+  async function getSelectedData() {
+    // parse the location
+    const selectedLocation = location.split(",")[0];
+
+    const date = new Date(selectedDate);
+
+    // parse day from selected date
+    const week = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const selectedDay = week[date.getDay()];
+
+    // parse time from selected start time
+    const startTime = new Date(selectedStartTime).getHours();
+
+    // parse time from selected start time
+    const endTime = new Date(selectedEndTime).getHours();
+
+    // set data to axios.get(http://) then get filtered data
+    const res = await axios.get(
+      `http://localhost:4000/api/availability?day=${selectedDay}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`
+    );
+
+    // set businesses state
+    setBusinesses(res.data);
+    // open list
     return history.push("/list");
   }
 
@@ -49,7 +85,7 @@ export default function Search() {
           user && user.attributes ? ", " + user.attributes.given_name : ""
         }!`}</h2>
       </div>
-      
+
       <div id="search-bar-container">
         <div id="search-bar">
           {/* this google maps api autofill location search will update
@@ -95,27 +131,53 @@ export default function Search() {
           </div>
 
           {/* datepicker will update selectedDate state */}
-          <div className="input">
+          <div className="input time">
+            {/* select date */}
             <DatePicker
-              id="date-input"
-              placeholderText="When?"
+              className="date-input"
               selected={selectedDate}
+              placeholderText="When?"
               onChange={(date) => setSelectedDate(date)}
-              name="selectedDate"
-              timeFormat="HH:00"
-              dateFormat="MMMM d, yyyy h:mm aa"
-              showTimeSelect
             />
           </div>
-
+          <div className="input time">
+            {/* select start time */}
+            <DatePicker
+              className="date-input"
+              selected={selectedStartTime}
+              placeholderText="Start time?"
+              onChange={(startTime) => setSelectedStartTime(startTime)}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={60}
+              timeCaption="Time"
+              dateFormat="h:mm aa"
+            />
+          </div>
+          <div className="input time">
+            {/* select end time */}
+            <DatePicker
+              className="date-input"
+              selected={selectedEndTime}
+              placeholderText="End time?"
+              onChange={(endTime) => setSelectedEndTime(endTime)}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={60}
+              timeCaption="Time"
+              dateFormat="h:mm aa"
+            />
+          </div>
           {/* when this button is clicked, list of available
         businesses will be displayed */}
-          <button id="search-button" onClick={searchHandler} round>
-            <div>
-              <FontAwesomeIcon icon={faSearch} size="lg" />
-            </div>
-            <div id="search-text">Search</div>
-          </button>
+          <div>
+            <button id="search-button" onClick={getSelectedData}>
+              <div>
+                <FontAwesomeIcon icon={faSearch} size="lg" />
+              </div>
+              <div id="search-text">Search</div>
+            </button>
+          </div>
         </div>
       </div>
     </div>
