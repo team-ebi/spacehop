@@ -63,8 +63,6 @@
   border: none;
   background-color: transparent;
   border-radius: 50px;
-  display: flex;
-  align-content: center;
   width: 100%;
 }
 #autocomplete-selections {
@@ -72,6 +70,7 @@
   margin-top: 20px;
   background-color: white;
   overflow: hidden;
+  position: relative;
 }
 .date-input {
   font-size: 18px;
@@ -148,7 +147,17 @@
     background-color: white;
     margin-bottom: 30px;
   }
-  
+  #location-input-field {
+    width: 90%;
+  }
+  #location-input {
+    font-size: 16px;
+    margin-top: 5px;
+    width: 100%;
+  }
+  .date-input {
+    font-size: 16px;
+  }
   #search-button {
     border-radius: 100px;
     width: 100%;
