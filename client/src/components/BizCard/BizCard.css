@@ -71,12 +71,49 @@
   width: 80%;
   border-width: 1px;
 }
-.book-button {
-  cursor: pointer;
-  margin-right: 30px;
-  border-radius: 25px;
-  margin  : 5px auto;
-  display : block;
-  width   : 50px;
+.booking-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end
 }
-
+#book-button {
+  background-color: #80cc37;
+  border: none;
+  width: 200px;
+  height: 50px;
+  border-radius: 40px;
+  box-shadow: 0 4px 8px lightgrey;
+  margin-top: 20px;
+  cursor: pointer;
+}
+#mobile-divider {
+  display: none;
+}
+@media (max-width: 700px) {
+  #bizcard-location-container {
+    position: static;
+  }
+  #bizcard-image {
+    width: 370px;
+    height: auto;
+  }
+  #bizcard-name {
+    padding-left: 15px;
+  }
+  #bizcard-location-cell {
+    width: 100%;
+    flex-flow: row wrap;
+  }
+  #info-cell {
+    border-right: none;
+    width: 100%;
+    padding-bottom: 20px;
+  }
+  #mobile-divider {
+    display: flex;
+  }
+  .booking-button-container {
+    padding-bottom: 100px;
+    justify-content: center;
+  }
+}

@@ -36,8 +36,9 @@
 #location-container {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   padding-top: 50px;
+  margin-left: 100px;
 }
 .location-cell { 
   background-color: white;
@@ -49,6 +50,10 @@
   margin-bottom: 30px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.11), 0 4px 15px 0 rgba(0, 0, 0, 0.103);
 } 
+.list-icon {
+  padding-left: 10px;
+  padding-right: 7px;
+}
 .business-image {
   width: 100%;
   overflow: hidden;
@@ -70,6 +75,9 @@
 .icon {
   padding-left: 10px;
 }
+#mobile-location-container {
+  display: none;
+}
 .slick-slider {
   width: 50%;
   margin-left: 25%;
@@ -89,6 +97,12 @@
   box-shadow: 0 4px 8px lightgrey;
 }
 @media (max-width: 700px) {
+  #location-container {
+    display: none;
+  }
+  #mobile-location-container {
+    display: flex;
+  }
   #list-container {
     background: #efefbb; /* fallback for old browsers */
     background: -webkit-linear-gradient(

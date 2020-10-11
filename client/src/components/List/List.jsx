@@ -19,8 +19,8 @@ export default function List() {
   const history = useHistory();
 
   function handleEditSearch() {
-    return history.push("/")
-  };
+    return history.push("/");
+  }
 
   return (
     <div id="list-container">
@@ -37,16 +37,16 @@ export default function List() {
           Check out these {businesses.length} spaces...
         </h1>
       </header>
-      <Slider
-        className="location-container"
-        dots={true}
-        slidesToShow={1}
-        swipe={true}
-      >
+
+      {/* this div will display on web with min-width 700px */}
+      <div id="location-container">
         {/* Mapping through businesses to display each bizcard */}
         {businesses.map((biz) => (
           <div
             className="location-cell"
+            // when user clicks on cell, they will be rerouted to
+            // bizcard page and biz info will be passed to that component
+            // as props
             onClick={() => {
               history.push(`/booking/${biz.name}`, { state: biz });
             }}
@@ -58,6 +58,7 @@ export default function List() {
             <div className="location-name">{biz.name}</div>
             <div className="location-city info">
               <FontAwesomeIcon
+                className="list-icon"
                 icon={faMapPin}
                 size="lg"
                 color="darkslategrey"
@@ -66,6 +67,7 @@ export default function List() {
             </div>
             <div className="location-type info">
               <FontAwesomeIcon
+                className="list-icon"
                 icon={faBuilding}
                 size="lg"
                 color="darkslategrey"
@@ -74,6 +76,7 @@ export default function List() {
             </div>
             <div className="location-price info">
               <FontAwesomeIcon
+                className="list-icon"
                 icon={faYenSign}
                 size="lg"
                 color="darkslategrey"
@@ -82,7 +85,55 @@ export default function List() {
             </div>
           </div>
         ))}
-      </Slider>
+      </div>
+
+      <div id="mobile-location-container">
+        <Slider dots={true} slidesToShow={1} swipe={true}>
+          {/* Mapping through businesses to display each bizcard */}
+          {businesses.map((biz) => (
+            <div
+              className="location-cell"
+              onClick={() => {
+                history.push(`/booking/${biz.name}`, { state: biz });
+              }}
+            >
+              <img
+                className="business-image"
+                src="https://media.timeout.com/images/105393878/image.jpg"
+              />
+              <div className="location-name">{biz.name}</div>
+              <div className="location-city info">
+                <FontAwesomeIcon
+                  className="list-icon"
+                  icon={faMapPin}
+                  size="lg"
+                  color="darkslategrey"
+                />
+                {biz.address_city}
+              </div>
+              <div className="location-type info">
+                <FontAwesomeIcon
+                  className="list-icon"
+                  icon={faBuilding}
+                  size="lg"
+                  color="darkslategrey"
+                />
+                {biz.business_type[0].toUpperCase() +
+                  biz.business_type.slice(1)}
+              </div>
+              <div className="location-price info">
+                <FontAwesomeIcon
+                  className="list-icon"
+                  icon={faYenSign}
+                  size="lg"
+                  color="darkslategrey"
+                />
+                {Number(biz.price).toLocaleString()}
+              </div>
+            </div>
+          ))}
+        </Slider>
+      </div>
     </div>
   );
 }

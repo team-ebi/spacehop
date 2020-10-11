@@ -9,7 +9,7 @@ import {
   faPhone,
   faYenSign,
   faMapPin,
-  faUsers
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 // useContext
 import { BusinessContext } from "../useContext/BusinessContext";
@@ -95,14 +95,14 @@ export default function BizCard({ props }) {
               </div>
 
               <div id="bizcard-capacity">
-              <FontAwesomeIcon
-                className="icon"
-                icon={faUsers}
-                size="lg"
-                color="darkslategrey"
-              />
-              {biz.capacity}
-            </div>
+                <FontAwesomeIcon
+                  className="icon"
+                  icon={faUsers}
+                  size="lg"
+                  color="darkslategrey"
+                />
+                {biz.capacity}
+              </div>
 
               <div id="bizcard-price info">
                 <FontAwesomeIcon
@@ -115,14 +115,14 @@ export default function BizCard({ props }) {
               </div>
             </div>
 
+            <hr className="divider" id="mobile-divider"></hr>
+
             <div id="booking-details">
-              <div id="booking-header">
-                Your booking:
+              <div id="booking-header">Your booking:</div>
+              <div id="booking-price">
+                ¥{Number(biz.price).toLocaleString()}
               </div>
-                <div id="booking-price">
-                  ¥{Number(biz.price).toLocaleString()}
-                </div>
-                <hr className="divider"></hr>
+              <hr className="divider"></hr>
               <div className="detail">
                 <div className="booking-title">Date:</div>
                 <div>somedate</div>
@@ -135,14 +135,11 @@ export default function BizCard({ props }) {
                 <div className="booking-title">End Time:</div>
                 <div>blahblah</div>
               </div>
-
-              <button
-                className="book-button info"
-                onClick={stripeCheckoutHandler}
-                value="Book"
-              >
-                Book
-              </button>
+              <div className="booking-button-container">
+                <button label="book" id="book-button" value="Book" onClick={stripeCheckoutHandler}>
+                  Book
+                </button>
+              </div>
             </div>
           </div>
         </div>
