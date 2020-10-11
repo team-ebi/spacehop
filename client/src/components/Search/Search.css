@@ -1,14 +1,12 @@
 #search-container {
-  width: 100%;
   background-color: rgb(250, 238, 238);
-  top: 0;
+  top: 50px;
   left: 0;
   right: 0;
   bottom: 0;
   position: fixed;
-  overflow-y: scroll;
+  overflow-y: hidden;
   overflow-x: hidden;
-  padding-bottom: 50px;
 }
 #logo-container {
   width: 100%;
@@ -20,6 +18,7 @@
 }
 #search-bar-container {
   width: 100%;
+  height: 150px;
   display: flex;
   justify-content: center;
 }
@@ -33,11 +32,15 @@
   z-index: 10;
   align-self: flex-start;
 }
+#location-input-field {
+  width: 40%;
+}
 .input {
   background-color: white;
   padding: 10px;
   border-radius: 50px;
-  width: 50%;
+  display: flex;
+  align-items: center;
 }
 .input:hover {
   background-color: lightgrey;
@@ -56,9 +59,11 @@
   box-shadow: 0 4px 8px lightgrey;
   overflow: hidden;
 }
+
 #location-input {
+  align-self: center;
   text-indent: 20px;
-  font-size: 18px;
+  font-size: 20px;
   height: 50px;
   border: none;
   background-color: transparent;
@@ -66,6 +71,7 @@
   display: flex;
   align-content: center;
   width: 100%;
+  margin-top: 15px;
 }
 #autocomplete-selections {
   border-radius: 20px;
@@ -74,7 +80,7 @@
   overflow: hidden;
 }
 .date-input {
-  font-size: 18px;
+  font-size: 20px;
   align-self: center;
   height: 50px;
   border: none;
@@ -84,7 +90,7 @@
   align-content: center;
 }
 .time {
-  width: 150px;
+  width: 20%;
 }
 .react-datepicker-wrapper {
   width: 100%;
@@ -120,9 +126,12 @@
   border-radius: 20px;
   overflow: hidden;
 }
-
+#search-button-container {
+  width: 5%;
+}
 @media (max-width: 700px) {
   #search-container {
+    top: 0;
     bottom: 0;
     background: #efefbb; /* fallback for old browsers */
     background: -webkit-linear-gradient(
@@ -148,7 +157,16 @@
     background-color: white;
     margin-bottom: 30px;
   }
-  
+  #location-input-field {
+    width: 90%;
+  }
+  #location-input {
+    font-size: 16px;
+    margin-top: 5px;
+  }
+  .date-input {
+    font-size: 16px;
+  }
   #search-button {
     border-radius: 100px;
     width: 100%;
