@@ -11,14 +11,18 @@ import Team from "./components/Team/Team";
 import BizCard from "./components/BizCard/BizCard";
 import Data from "./data/businesses";
 import Success from "./components/Success/Success";
+import CheckoutForm from './components/Stripe/Stripe'
+
 
 export default function App() {
   const [businesses, setBusinesses] = useState(Data);
+
 
   return (
     <div className="App">
       <BusinessContext.Provider value={{ businesses, setBusinesses }}>
         <Nav />
+        <BizCard/>
         <Switch>
           <Route path="/" exact component={Search} />
           <Route path="/profile" exact component={Profile} />
