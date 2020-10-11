@@ -133,8 +133,7 @@ h1 {
   font-size: 40px;
   font-weight: 700;
   font-family: "Poetsen One";
-  color: #80cc37;
-  margin-left: 50px;
+  color: darkslategrey;
 }
 :root {
   --amplify-primary-color: #73b930;
@@ -151,6 +150,12 @@ amplify-sign-out {
 amplify-sign-out:hover {
   background-color: lightgrey;
 }
+.button {
+  min-width: 10px;
+}
 /* reset^^^ */
 @media (max-width: 700px) {
+  .button {
+    min-width: 0px;
+  }
 }
