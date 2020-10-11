@@ -15,7 +15,6 @@ import axios from "axios";
 import logo from "../../images/logo.png";
 
 export default function Search() {
-  const [searchValue, setSearchValue] = useState("");
   const [location, setLocation] = useState("");
   // may or may not need coordinates
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });

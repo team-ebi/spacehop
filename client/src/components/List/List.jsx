@@ -34,7 +34,9 @@ export default function List() {
       </div>
       <header id="results-header-container">
         <h1 id="results-length">
-          Check out these {businesses.length} spaces...
+          {businesses.length === 0 && "Sorry, no results. Please edit your search."}
+          {businesses.length === 1 && "Check out this space..."}
+          {businesses.length > 1 && `Check out these ${businesses.length} spaces...`}
         </h1>
       </header>
 
