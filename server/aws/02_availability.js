@@ -61,6 +61,18 @@ knex("availability").del().then(() => {
       day: "Monday",
       start_hour: 10,
       end_hour: 12
+    },
+    {
+      business_id: 6,
+      day: "Monday",
+      start_hour: 10,
+      end_hour: 12
+    },
+    {
+      business_id: 7,
+      day: "Monday",
+      start_hour: 10,
+      end_hour: 12
     }
   ]);
 })
