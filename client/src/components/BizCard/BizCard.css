@@ -139,6 +139,28 @@
   margin-bottom: 20px;
   color: darkslategrey;
 }
+.booking-time {
+  width: 100%;
+}
+.auth-window-tobook {
+  position: fixed;
+  top: 100px;
+  bottom: 50px;
+  right: 0;
+  left: 0;
+  width: 475px;
+  overflow-x: hidden;
+  overflow: scroll;
+  align-self: center;
+  margin-left: 0;
+  height: 450px;
+}
+.book-message {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  width: 100%;
+}
 @media (max-width: 700px) {
   #bizcard-container {
     position: static;

@@ -9,7 +9,6 @@ import {
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import Auth from "../Auth/Auth";
-import { AmplifySignOut } from "@aws-amplify/ui-react";
 import { onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Auth as AuthUser } from "aws-amplify";
 import "./Nav.css";

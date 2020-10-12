@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
-import Data from "../../data/businesses";
-import List from "../List/List";
+import Auth from "../Auth/Auth";
 import "./BizCard.css";
+import "../Nav/Nav.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import {
@@ -11,45 +11,69 @@ import {
   faMapPin,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
-// useContext
-import { BusinessContext } from "../useContext/BusinessContext";
+import { UserContext } from "../useContext/UserContext";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import DatePicker from "react-datepicker";
 import logo from "../../images/logo.png";
+import {
+  AmplifySignIn,
+  AmplifyAuthenticator,
+  AmplifySignUp,
+} from "@aws-amplify/ui-react";
 
 require("dotenv").config();
 
 export default function BizCard({ props }) {
-  const [bookingDate, setBookingDate] = useState("");
-  const [bookingStartTime, setBookingStartTime] = useState("");
-  const [bookingEndTime, setBookingEndTime] = useState("");
+  const { user, setUser } = useContext(UserContext);
+  const [bookingDate, setBookingDate] = useState(null);
+  const [bookingStartTime, setBookingStartTime] = useState(null);
+  const [bookingEndTime, setBookingEndTime] = useState(null);
+  const [displayLogin, setDisplayLogin] = useState(false);
+  const [pickDate, setPickDate] = useState(false);
+  const [pickFuture, setPickFuture] = useState(false);
 
   // props passed to router's useHistory
   const biz = props.location.state.state;
 
   //url for server
-  const url = process.env.AWS_BACKEND_URL || "http://localhost:4000/api/stripecheckout/checkoutsession"
+  const url =
+    process.env.AWS_BACKEND_URL ||
+    "http://localhost:4000/api/stripecheckout/checkoutsession";
 
   //publishable stripe API key
   const stripePromise = loadStripe(
     "pk_test_51HU0G2CjwFEQ1pgcvOchnwo0Gsb2seN5a3xGz8Q2iCvlVUjHkSCV7UZHy3NfeobxNNMeGwmiosi3UBxjbKcSjGZ000hENfQW0F"
   );
 
+
   //handles stripe checkout and redirects to checkout page
   async function stripeCheckoutHandler() {
-    const stripe = await stripePromise;
-    const response = await fetch(
-     url,
-      { method: "POST" }
-    );
-    const session = await response.json();
-    const result = await stripe.redirectToCheckout({
-      sessionId: session.id,
-    });
-
-    if (result.error) {
-      alert("Payment Error");
+    if (!bookingDate || !bookingStartTime || !bookingEndTime) {
+      setPickDate(true);
+      setPickFuture(false);
+      return;
+    }
+    const today = new Date();
+    if (bookingDate < today) {
+      setPickDate(false);
+      setPickFuture(true);
+      return;
+    }
+    if (!user || !user.attributes) {
+      setDisplayLogin(true);
+    }
+    else {
+      const stripe = await stripePromise;
+      const response = await fetch(url, { method: "POST" });
+      const session = await response.json();
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.id,
+      });
+  
+      if (result.error) {
+        alert("Payment Error");
+      }
     }
   }
 
@@ -150,7 +174,7 @@ export default function BizCard({ props }) {
                   <div id="booking-time-container">
                     <div className="booking-time single-time-container">
                       <DatePicker
-                        className="booking-date-input time"
+                        className="booking-date-input booking-time"
                         selected={bookingStartTime}
                         placeholderText="Start time?"
                         onChange={(startTime) => setBookingStartTime(startTime)}
@@ -163,7 +187,7 @@ export default function BizCard({ props }) {
                     </div>
                     <div className="booking-time single-time-container">
                       <DatePicker
-                        className="booking-date-input time"
+                        className="booking-date-input booking-time"
                         selected={bookingEndTime}
                         placeholderText="End time?"
                         onChange={(endTime) => setBookingEndTime(endTime)}
@@ -187,11 +211,20 @@ export default function BizCard({ props }) {
                     Book
                   </button>
                 </div>
+                {pickDate && <div className="book-message">Please pick a time and date.</div>}
+                {pickFuture && <div className="book-message">Please pick a date in the future.</div>}
               </div>
             </div>
           </div>
         </Elements>
       </div>
+      {/* if user tries to book without logging in, Auth component will render.
+        pass props to determine which form gets rendered in Auth */}
+      {(displayLogin) && (
+        <div className="auth-window-tobook">
+          <Auth login={displayLogin}/>
+        </div>
+      )}
     </div>
   );
 }

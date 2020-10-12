@@ -63,6 +63,7 @@ export default function App() {
                   path="/booking/:name"
                   render={(propTypes) => <BizCard props={propTypes} />}
                 />
+                
                 <Route path="/success" exact component={Success} />
               </Switch>
    
