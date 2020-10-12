@@ -4,6 +4,7 @@ import { Button, Container, Row, Col, Image } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import FutureBookings from "../FutureBookings/FutureBookings";
+import { Auth } from "aws-amplify";
 import "./Profile.css";
 
 function Profile() {
@@ -25,7 +26,9 @@ function Profile() {
 
   // this function should pull from component state and
   // post to db + update user pool
-  async function updateProfile() {}
+  async function updateProfile() {
+   
+  }
 
   return (
     <div id="user-profile-container">
