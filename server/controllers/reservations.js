@@ -3,9 +3,9 @@ const router = express.Router();
 const db = require("../src/knex.js");
 const moment = require('moment');
 
-router.get("/", async(req, res) => {
-  res.send("working");
-});
+// router.get("/", async(req, res) => {
+//   res.send("working");
+// });
 
 //Make a Reservation
 router.post("/", async (req, res) => {
@@ -53,6 +53,28 @@ router.get("/user/:user_id", async(req, res) => {
   .orderBy('date', 'asc');
   
   res.send(reservations);
+});
+
+// Get all upcoming reservations
+router.get("/", async(req, res) => {
+  const email = req.body.email;
+  const user = await db
+  .select("*")
+  .table("users")
+  .where({
+    email
+  });
+
+  const user_id = user[0]["id"];
+
+  const upcomingReservations = await db
+  .select("*")
+  .table("businesses")
+  .join("reservations", { "businesses.id": "reservations.business_id" })
+  .join("users", { "reservations.user_id": "users.id" })
+  .where("reservations.user_id", user_id);
+
+  res.send(upcomingReservations);
 });
 
 //ISO 8601("2020-10-08T15:00:00.000Z") => YYYY-MM-DD
