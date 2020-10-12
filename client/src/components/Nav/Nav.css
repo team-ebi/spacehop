@@ -1,4 +1,6 @@
-
+nav {
+  height: 50px;
+}
 #navbar {
   display: flex;
   align-items: center;
