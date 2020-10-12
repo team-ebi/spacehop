@@ -3,7 +3,11 @@ import { UserContext } from "../useContext/UserContext";
 import { AuthStateContext } from "../useContext/AuthStateContext";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faBars, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHome,
+  faBars,
+  faUserCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import Auth from "../Auth/Auth";
 import { AmplifySignOut } from "@aws-amplify/ui-react";
 import { onAuthUIStateChange } from "@aws-amplify/ui-components";
@@ -19,7 +23,7 @@ export default function Nav() {
   const { user, setUser } = useContext(UserContext);
   const { authState, setAuthState } = useContext(AuthStateContext);
 
-  // once user logs and verifies email, 
+  // once user logs and verifies email,
   // this will remove overlay and close modals
   useEffect(() => {
     if (user && user.attributes) {
@@ -86,6 +90,13 @@ export default function Nav() {
     return history.push("/profile");
   }
 
+  // redirects to 'profile' page with react router
+  // will close menu window if it's open
+  function businessHandler() {
+    setDisplayMenu(false);
+    return history.push("/business");
+  }
+
   async function signoutHandler() {
     await AuthUser.signOut();
     await onAuthUIStateChange((nextAuthState, authData) => {
@@ -134,30 +145,37 @@ export default function Nav() {
                 Log in
               </button>
             )}
-            
+
             {/* only display signup button if user is NOT logged in */}
             {!user && (
               <button className="menu-item" onClick={signupHandler}>
                 Sign Up
               </button>
             )}
-            
+
             {/* only display profile button if user IS logged in */}
             {user && (
               <button className="menu-item" onClick={profileHandler}>
                 Profile
               </button>
             )}
-            <button className="menu-item" onClick={aboutHandler}>
+            {/* <button className="menu-item" onClick={aboutHandler}>
               About
             </button>
             <button className="menu-item" onClick={teamHandler}>
               Team
-            </button>
+            </button> */}
+
+            {/* only display profile button if user IS logged in */}
+            {user && (
+              <button className="menu-item" onClick={businessHandler}>
+                Business
+              </button>
+            )}
 
             {/* only display signout button if user IS logged in */}
             {user && (
-                <button className="menu-item" onClick={signoutHandler}>
+              <button className="menu-item" onClick={signoutHandler}>
                 Log out
               </button>
             )}
@@ -173,14 +191,14 @@ export default function Nav() {
                 Log in
               </button>
             )}
-            
+
             {/* only display signup button if user is NOT logged in */}
             {!user && (
               <button className="menu-item" onClick={signupHandler}>
                 Sign Up
               </button>
             )}
-            
+
             {/* only display profile button if user IS logged in */}
             {user && (
               <button className="menu-item" onClick={profileHandler}>
@@ -193,6 +211,13 @@ export default function Nav() {
             <button className="menu-item" onClick={teamHandler}>
               Team
             </button>
+
+            {/* only display profile button if user IS logged in */}
+            {user && (
+              <button className="menu-item" onClick={businessHandler}>
+                Business Page
+              </button>
+            )}
 
             {/* only display signout button if user IS logged in */}
             {user && (

@@ -10,6 +10,7 @@ import Profile from "./components/Profile/Profile";
 import List from "./components/List/List";
 import About from "./components/About/About";
 import Team from "./components/Team/Team";
+import Business from "./components/Business/Business";
 import BizCard from "./components/BizCard/BizCard";
 import Data from "./data/businesses";
 import Success from "./components/Success/Success";
@@ -57,6 +58,7 @@ export default function App() {
             <Route path="/profile" exact component={Profile} />
             <Route path="/about" exact component={About} />
             <Route path="/team" exact component={Team} />
+            <Route path="/business" exact component={Business} />
             <Route path="/list" exact component={List} />
             <Route
               path="/booking/:name"
