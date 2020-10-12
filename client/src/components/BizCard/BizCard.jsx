@@ -28,6 +28,9 @@ export default function BizCard({ props }) {
   // props passed to router's useHistory
   const biz = props.location.state.state;
 
+  //url for server
+  const url = process.env.AWS_BACKEND_URL || "http://localhost:4000/api/stripecheckout/checkoutsession"
+
   //publishable stripe API key
   const stripePromise = loadStripe(
     "pk_test_51HU0G2CjwFEQ1pgcvOchnwo0Gsb2seN5a3xGz8Q2iCvlVUjHkSCV7UZHy3NfeobxNNMeGwmiosi3UBxjbKcSjGZ000hENfQW0F"
@@ -37,7 +40,7 @@ export default function BizCard({ props }) {
   async function stripeCheckoutHandler() {
     const stripe = await stripePromise;
     const response = await fetch(
-      "http://localhost:4000/api/stripecheckout/create-checkout-session",
+     url,
       { method: "POST" }
     );
     const session = await response.json();
