@@ -12,8 +12,9 @@ router.post("/", async (req, res) => {
 
   //ex) req.body = {business_id:1,user_id:2,date:"2020-10-09"}
 
-  const business_id = req.body.business_id;
   const date = req.body.date;
+  const price = req.body.price;
+  const business_id = req.body.business_id;
   const user_id = req.body.user_id;
 
   //current date
@@ -23,10 +24,11 @@ router.post("/", async (req, res) => {
   .select("*")
   .table("reservations")
   .insert({
-    business_id,
     date,
+    price,
+    created_at,
+    business_id,
     user_id,
-    created_at
   });
 
   res.send("New reservation created!");
