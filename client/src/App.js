@@ -38,7 +38,7 @@ export default function App() {
       try {
         const user = await Auth.currentAuthenticatedUser();
         setUser(user);
-        console.log(user)
+        console.log(user);
       } catch (e) {
         console.error(e);
       }
@@ -46,27 +46,46 @@ export default function App() {
     init();
   }, []);
 
+   // redirects to 'about' page with react router
+  // will close menu window
+  function aboutHandler() {
+    return history.push("/about");
+  }
+
+  // redirects to 'team' page with react router
+  // will close menu window
+  function teamHandler() {
+    return history.push("/team");
+  }
 
   return (
     <div className="App">
       <UserContext.Provider value={{ user, setUser }}>
-      <AuthStateContext.Provider value={{ authState, setAuthState }}>
-        <BusinessContext.Provider value={{ businesses, setBusinesses }}>
-          <Nav />
-          <Switch>
-            <Route path="/" exact component={Search} />
-            <Route path="/profile" exact component={Profile} />
-            <Route path="/about" exact component={About} />
-            <Route path="/team" exact component={Team} />
-            <Route path="/business" exact component={Business} />
-            <Route path="/list" exact component={List} />
-            <Route
-              path="/booking/:name"
-              render={(propTypes) => <BizCard props={propTypes} />}
-            />
-            <Route path="/success" exact component={Success} />
-          </Switch>
-        </BusinessContext.Provider>
+        <AuthStateContext.Provider value={{ authState, setAuthState }}>
+          <BusinessContext.Provider value={{ businesses, setBusinesses }}>
+            <Nav />
+            <Switch>
+              <Route path="/" exact component={Search} />
+              <Route path="/profile" exact component={Profile} />
+              <Route path="/about" exact component={About} />
+              <Route path="/team" exact component={Team} />
+              <Route path="/business" exact component={Business} />
+              <Route path="/list" exact component={List} />
+              <Route
+                path="/booking/:name"
+                render={(propTypes) => <BizCard props={propTypes} />}
+              />
+              <Route path="/success" exact component={Success} />
+            </Switch>
+            <footer>
+              <button className="menu-item" onClick={aboutHandler}>
+                About
+              </button>
+              <button className="menu-item" onClick={teamHandler}>
+                Team
+              </button>
+            </footer>
+          </BusinessContext.Provider>
         </AuthStateContext.Provider>
       </UserContext.Provider>
     </div>
