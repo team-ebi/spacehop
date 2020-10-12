@@ -68,8 +68,6 @@
   border: none;
   background-color: transparent;
   border-radius: 50px;
-  display: flex;
-  align-content: center;
   width: 100%;
 }
 #autocomplete-selections {
