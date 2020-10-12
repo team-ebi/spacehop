@@ -69,14 +69,15 @@
   background-color: transparent;
   border-radius: 50px;
   width: 100%;
-  margin-top: 15px;
 }
 #autocomplete-selections {
   border-radius: 20px;
   margin-top: 20px;
   background-color: white;
   overflow: hidden;
-  position: relative;
+  position: absolute;
+  border: solid lightgrey;
+  border-width: 1px;
 }
 .date-input {
   font-size: 20px;
