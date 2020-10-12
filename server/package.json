@@ -25,6 +25,8 @@
     "test": "mocha test && yarn lint",
     "makeMigration": "knex migrate:make",
     "migrate": "knex migrate:latest",
+    "migrate:up": "knex migrate:up",
+    "migrate:down": "knex migrate:down",
     "makeSeed": "knex seed:make",
     "seed": "knex seed:run"
   }
