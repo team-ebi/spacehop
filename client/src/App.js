@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
 import "./App.css";
 import { BusinessContext } from "./components/useContext/BusinessContext";
 import { UserContext } from "./components/useContext/UserContext";
@@ -12,13 +12,12 @@ import About from "./components/About/About";
 import Team from "./components/Team/Team";
 import Business from "./components/Business/Business";
 import BizCard from "./components/BizCard/BizCard";
-import Data from "./data/businesses";
 import Success from "./components/Success/Success";
 import { onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Auth } from "aws-amplify";
 
 export default function App() {
-  const [businesses, setBusinesses] = useState(Data);
+  const [businesses, setBusinesses] = useState();
   const [authState, setAuthState] = useState();
   const [user, setUser] = useState(null);
 
@@ -46,19 +45,8 @@ export default function App() {
     init();
   }, []);
 
-   // redirects to 'about' page with react router
-  // will close menu window
-  function aboutHandler() {
-    return history.push("/about");
-  }
-
-  // redirects to 'team' page with react router
-  // will close menu window
-  function teamHandler() {
-    return history.push("/team");
-  }
-
   return (
+    <BrowserRouter>
     <div className="App">
       <UserContext.Provider value={{ user, setUser }}>
         <AuthStateContext.Provider value={{ authState, setAuthState }}>
@@ -77,17 +65,10 @@ export default function App() {
               />
               <Route path="/success" exact component={Success} />
             </Switch>
-            <footer>
-              <button className="menu-item" onClick={aboutHandler}>
-                About
-              </button>
-              <button className="menu-item" onClick={teamHandler}>
-                Team
-              </button>
-            </footer>
           </BusinessContext.Provider>
         </AuthStateContext.Provider>
       </UserContext.Provider>
     </div>
+    </BrowserRouter>
   );
 }
