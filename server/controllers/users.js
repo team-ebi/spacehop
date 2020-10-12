@@ -46,16 +46,15 @@ router.get("/data", async (req, res) => {
 });
 
 //Get selected user's info 
-router.get("/:user_id", async (req, res) => {
-  const id = req.params.user_id;
+router.get("/", async (req, res) => {
+  const email = req.body.email;  
   try {
     const user = await db
-      .select("*")
-      .table("users")
-      .where({
-        id
-      })
-
+    .select("*")
+    .table("users")
+    .where({
+      email
+    });
     res.send(user);
   } catch {
     //If error occur, send 500 status code
