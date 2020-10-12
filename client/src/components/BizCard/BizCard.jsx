@@ -6,27 +6,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import {
   faBuilding,
+  faPhone,
   faYenSign,
   faMapPin,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 // useContext
 import { BusinessContext } from "../useContext/BusinessContext";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import DatePicker from "react-datepicker";
+import logo from "../../images/logo.png";
+import { UserContext } from "../useContext/UserContext";
 
 require("dotenv").config();
 
-export default function BizCard() {
-  //dummy data that can deleted after we fetch
-  const [bizData, setBizData] = useState([
-    {
-      Name: "Ebi-Chan",
-      Address: "3 Chome-12-1 Amanuma Suginami City, Tokyo 167-0032",
-      Type: "Izakaya",
-      Availability: "Monday",
-      Price: 5000,
-    },
-  ]);
+export default function BizCard({ props }) {
+  const [bookingDate, setBookingDate] = useState("");
+  const [bookingStartTime, setBookingStartTime] = useState("");
+  const [bookingEndTime, setBookingEndTime] = useState("");
+  const {businesses, setBusiness} = useContext(BusinessContext);
+  const {user, setUser} = useContext(UserContext);
+
+  // props passed to router's useHistory
+  const biz = props.location.state.state;
 
   //url for server
   const url = process.env.AWS_BACKEND_URL || "http://localhost:4000/api/stripecheckout/checkoutsession"
@@ -53,58 +56,156 @@ export default function BizCard() {
     }
   }
 
+
+  //post reservation to db
+  function reservationHandler() {
+    console.log(user.attributes.email)
+    console.log(biz)
+    console.log(businesses)
+  }
+
   return (
-    <div id="bizcard-location-container">
-      {/* Elements helps load stripe */}
-      <Elements stripe={stripePromise}>
-        {bizData.map((biz, index) => (
-          <div id="bizcard-location-cell">
+    <div id="bizcard-container">
+      <div className="corner-logo-container">
+        <img className="corner-logo" src={logo}></img>
+      </div>
+      <div id="bizcard-location-container">
+        {/* Elements helps load stripe */}
+        <Elements stripe={stripePromise}>
+          <div id="image-cell">
             <img
-              id="business-image"
+              id="bizcard-image"
               src="https://www.japan-guide.com/g9/2005_01b.jpg"
-            />{" "}
-            <br />
-            <div id="bizcard-location-name">
-              {biz.Name} <br />
-            </div>
-            <FontAwesomeIcon
-              className="icon"
-              icon={faMapPin}
-              size="lg"
-              color="#80CC37"
             />
-            {biz.Address} <br />
-            <FontAwesomeIcon
-              className="icon"
-              icon={faBuilding}
-              size="lg"
-              color="#80CC37"
-            />{" "}
-            {biz.Type} <br />
-            <div>Booking Details:</div>
-            Availability:
-            <select id="days">
-              {/* loop through fetched data */}
-              <option value="item">Monday</option>
-            </select>{" "}
-            <br />
-            <FontAwesomeIcon
-              className="icon"
-              icon={faYenSign}
-              size="lg"
-              color="#80CC37"
-            />{" "}
-            {biz.Price} <br />
-            <button
-              className="book-button"
-              onClick={stripeCheckoutHandler}
-              value="Book"
-            >
-              Book
-            </button>
           </div>
-        ))}
-      </Elements>
+          <div>
+            <div id="bizcard-name">
+              <h2>{biz.name}</h2>
+            </div>
+            <div id="bizcard-location-cell">
+              <div id="info-cell">
+                <div id="bizcard-location">
+                  <FontAwesomeIcon
+                    className="icon"
+                    icon={faMapPin}
+                    size="lg"
+                    color="darkslategrey"
+                  />
+                  <div>
+                    {biz.address_street} <br />
+                    {biz.address_city}, {biz.address_zip}
+                  </div>
+                </div>
+
+                <div id="bizcard-phone">
+                  <FontAwesomeIcon
+                    className="icon"
+                    icon={faPhone}
+                    size="lg"
+                    color="darkslategrey"
+                  />
+                  <div>{biz.phone}</div>
+                </div>
+
+                <div id="bizcard-type">
+                  <FontAwesomeIcon
+                    className="icon"
+                    icon={faBuilding}
+                    size="lg"
+                    color="darkslategrey"
+                  />
+                  {biz.business_type[0].toUpperCase() +
+                    biz.business_type.slice(1)}
+                </div>
+
+                <div id="bizcard-capacity">
+                  <FontAwesomeIcon
+                    className="icon"
+                    icon={faUsers}
+                    size="lg"
+                    color="darkslategrey"
+                  />
+                  {biz.capacity}
+                </div>
+
+                <div id="bizcard-price info">
+                  <FontAwesomeIcon
+                    className="icon"
+                    icon={faYenSign}
+                    size="lg"
+                    color="darkslategrey"
+                  />
+                  {Number(biz.price).toLocaleString()}
+                </div>
+              </div>
+
+              <hr className="divider" id="mobile-divider"></hr>
+
+              <div id="booking-details">
+                <div id="booking-header">Your booking:</div>
+                <div id="booking-subheader">{"Total Price:"}</div>
+                <div id="booking-price">
+                  ¥{Number(biz.price).toLocaleString()}
+                </div>
+                <hr className="divider" id="booking-divider"></hr>
+                <div id="booking-subheader">{"Date & Time:"}</div>
+                <div id="datetime-container">
+                  <div className="booking-time" id="booking-date-container">
+                    <DatePicker
+                      className="booking-date-input"
+                      selected={bookingDate}
+                      placeholderText="When?"
+                      onChange={(date) => setBookingDate(date)}
+                    />
+                  </div>
+                  <div id="booking-time-container">
+                    <div className="booking-time single-time-container">
+                      <DatePicker
+                        className="booking-date-input time"
+                        selected={bookingStartTime}
+                        placeholderText="Start time?"
+                        onChange={(startTime) => setBookingStartTime(startTime)}
+                        showTimeSelect
+                        showTimeSelectOnly
+                        timeIntervals={60}
+                        timeCaption="Time"
+                        dateFormat="h:mm aa"
+                      />
+                    </div>
+                    <div className="booking-time single-time-container">
+                      <DatePicker
+                        className="booking-date-input time"
+                        selected={bookingEndTime}
+                        placeholderText="End time?"
+                        onChange={(endTime) => setBookingEndTime(endTime)}
+                        showTimeSelect
+                        showTimeSelectOnly
+                        timeIntervals={60}
+                        timeCaption="Time"
+                        dateFormat="h:mm aa"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="booking-button-container">
+                  <button
+                    label="book"
+                    id="book-button"
+                    value="Book"
+                    onClick={()=>{
+                      reservationHandler()
+                      stripeCheckoutHandler()
+                    }}
+                  >
+                    Book
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Elements>
+      </div>
     </div>
   );
 }
