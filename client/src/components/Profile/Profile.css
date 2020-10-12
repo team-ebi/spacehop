@@ -60,6 +60,21 @@
     font-size: 16px;
     margin-top: 20px;
 }
+#section-container {
+    display: flex;
+    flex-flow: row nowrap;
+}
+main {
+    width: 50%;
+    border-right: solid lightgrey;
+    border-width: 1px;
+}
+section {
+    width: 50%;
+}
+#profile-divider {
+    display: none;
+}
 @media (max-width: 700px) {
     #user-profile-container {
         overflow-y: scroll;
@@ -78,5 +93,24 @@
     }
     #profile-info {
         width: 100%;
+    }
+    #section-container {
+        flex-flow: row wrap;
+    }
+    main {
+        width: 100%;
+        border-right: none;
+    }
+    section {
+        width: 100%;
+    }
+    #profile-divider {
+        display: flex;
+        width: 80%;
+        color: lightgrey;
+        margin-top: 30px;
+    }
+    #profile-img {
+        margin-left: 10px;
     }
 }
