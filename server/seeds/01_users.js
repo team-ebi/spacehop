@@ -19,6 +19,18 @@ exports.seed = function(knex) {
           last_name: "Green",
           email: "frog@green.com",
           phone: "070-7777-7777"
+        },
+        {
+          first_name: "Rabbit",
+          last_name: "Tanaka",
+          email: "rabbit@tanaka.com",
+          phone: "070-7777-7777"
+        },
+        {
+          first_name: "Lion",
+          last_name: "KUdoh",
+          email: "lion@kudoh.com",
+          phone: "070-7777-7777"
         }
       ]);
     });
