@@ -1,40 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { UserContext } from "../useContext/UserContext";
 import { Button, Container, Row, Col, Image } from "react-bootstrap";
-import personImg from "../../img/personal-2.jpg";
-import data from "../../data/users.json";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import FutureBookings from "../FutureBookings/FutureBookings";
 import "./Profile.css";
 
 function Profile() {
-  //state of data of a person
-  const [profile, setProfile] = useState("");
+  const { user } = useContext(UserContext);
+  const [givenName, setGivenName] = useState("");
+  const [familyName, setFamilyName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState();
+  const [displayInputs, setDisplayInputs] = useState(false);
 
-  //get data from some api, set it in profile
-  async function manageProfile() {
-    // let req = axios.get(some api by id)
-    // let res = await req;
-    console.log(typeof data);
-    console.log(data[0]["first_name:"]);
-    return setProfile(
-      <ul
-        style={{
-          listStyle: "none",
-          margin: "10px 10px",
-          padding: "10px 10px",
-          fontSize: "xx-large",
-        }}
-      >
-        <li>{data[3]["first_name:"]}</li>
-        <li>{data[3]["last_name"]}</li>
-        <li>{data[3]["email"]}</li>
-        <li>{data[3]["phone"]}</li>
-      </ul>
-    );
-  }
-  useEffect(() => manageProfile(), []);
+  useEffect(() => {
+    if (user) {
+      setGivenName(user.attributes.given_name);
+      setFamilyName(user.attributes.family_name);
+      setEmail(user.attributes.email);
+      setPhone(user.attributes.phone_number);
+    }
+  }, [user]);
+
+  // this function should pull from component state and
+  // post to db + update user pool
+  async function updateProfile() {}
 
   return (
-    <div id="Profile">
+    <div id="user-profile-container">
       <h2
         style={{
           padding: "20px 10px",
@@ -44,32 +38,122 @@ function Profile() {
       >
         Profile
       </h2>
-      <Container>
-        <Row>
-          <Image
-            src={personImg}
-            style={{ width: "250px", height: "auto", margin: "0 auto" }}
-            rounded
-          />
-        </Row>
-        <Row>{profile}</Row>
-        <div className="button_layout" style={{ margin: "0 auto " }}>
-          {/* future bookings is set in the middle of this code */}
-          {/* future booking has its own branch : futureBookings */}
-          {/* <FutureBookings /> */}
+      <div id="section-container">
+        <main>
+          <div id="profile-info">
+            <div id="profile-img">
+              <FontAwesomeIcon
+                icon={faUserCircle}
+                size="8x"
+                color="darkslategrey"
+              />
+            </div>
+            <div id="profile-details">
+              <div className="detail">
+                <div id="profile-categories">First Name: </div>
+                {!displayInputs && (
+                  <div className="attribute">
+                    {user && user.attributes.given_name}
+                  </div>
+                )}
+                {displayInputs && (
+                  <div className="attribute">
+                    <input
+                      className="profile-input"
+                      value={givenName}
+                      onChange={(e) => setGivenName(e.target.value)}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="detail">
+                <div id="profile-categories">Last Name: </div>
+                {!displayInputs && (
+                  <div className="attribute">
+                    {user && user.attributes.family_name}
+                  </div>
+                )}
+                {displayInputs && (
+                  <div className="attribute">
+                    <input
+                      className="profile-input"
+                      value={familyName}
+                      onChange={(e) => setFamilyName(e.target.value)}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="detail">
+                <div id="profile-categories">Email: </div>
+                {!displayInputs && (
+                  <div className="attribute">
+                    {user && user.attributes.email}
+                  </div>
+                )}
+                {displayInputs && (
+                  <div className="attribute">
+                    <input
+                      className="profile-input"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="detail">
+                <div id="profile-categories">Phone Number: </div>
+                {!displayInputs && (
+                  <div className="attribute">
+                    {user && user.attributes.phone_number}
+                  </div>
+                )}
+                {displayInputs && (
+                  <div className="attribute">
+                    <input
+                      className="profile-input"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          <div id="edit-button-container">
+            {/* this button will display only if user is not in editing mode */}
+            {!displayInputs && (
+              <button
+                id="edit-button"
+                onClick={() => setDisplayInputs(!displayInputs)}
+              >
+                Edit
+              </button>
+            )}
 
-          <Button
-            variant="success"
-            type="submit"
-            size="lg"
-            block
-            style={{ background: "#80cc37",borderRadius: "50px", marginTop:"20px ", marginBottom:"20px"}}
-            // onClick={submitData}
-          >
-            main page
-          </Button>
-        </div>
-      </Container>
+            {/* this button will display only if user is editing details
+        when clicked, it should post new details to user pool and db */}
+            {displayInputs && (
+              <button id="edit-button" onClick={updateProfile}>
+                Save
+              </button>
+            )}
+          </div>
+          {displayInputs && (
+            <div id="edit-button-container">
+              <button id="cancel" onClick={() => setDisplayInputs(false)}>
+                Cancel
+              </button>
+            </div>
+          )}
+        </main>
+        <hr id="profile-divider"></hr>
+        <section>
+          <FutureBookings />
+        </section>
+      </div>
+
+      {/* future bookings is set in the middle of this code */}
+      {/* future booking has its own branch : futureBookings */}
     </div>
   );
 }
