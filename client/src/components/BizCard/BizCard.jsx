@@ -25,15 +25,17 @@ export default function BizCard({ props }) {
   const [bookingDate, setBookingDate] = useState("");
   const [bookingStartTime, setBookingStartTime] = useState("");
   const [bookingEndTime, setBookingEndTime] = useState("");
-  const {businesses, setBusiness} = useContext(BusinessContext);
-  const {user, setUser} = useContext(UserContext);
-  const [price, setPrice] = useState('price_1HbJV4CjwFEQ1pgcagpXzMWb');
+  const { businesses, setBusiness } = useContext(BusinessContext);
+  const { user, setUser } = useContext(UserContext);
+  const [price, setPrice] = useState("");
 
   // props passed to router's useHistory
   const biz = props.location.state.state;
 
   //url for server
-  const url = process.env.AWS_BACKEND_URL || "http://localhost:4000/api/stripecheckout/checkoutsession"
+  const url =
+    process.env.AWS_BACKEND_URL ||
+    "http://localhost:4000/api/stripecheckout/checkoutsession";
 
   //publishable stripe API key
   const stripePromise = loadStripe(
@@ -42,36 +44,41 @@ export default function BizCard({ props }) {
 
   //handles stripe checkout and redirects to checkout page
   async function stripeCheckoutHandler() {
-
-    const stripe = await stripePromise;
-    const { error } = await stripe.redirectToCheckout({
-      lineItems: [{
-        price: price, // Replace with the ID of your price
-        quantity: 1,
-      }],
-      mode: 'payment',
-      successUrl: "http://localhost:3000/profile",
-      cancelUrl: "http://localhost:3000/about",
-    });
+    try{
+      const stripe = await stripePromise;
+      const { error } = await stripe.redirectToCheckout({
+        lineItems: [
+          {
+            price: price, // Replace with the ID of your price
+            quantity: 1,
+          },
+        ],
+        mode: "payment",
+        successUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/profile",
+        cancelUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
+      }).then(()=>{
+        reservationHandler()
+      });
+    } catch(error) {
+      alert('Payment Error')
+    }
   }
 
-
-  //post reservation to db
+  //post reservation to database
   async function reservationHandler() {
-    await axios.post('/',{
-      email: user.attributes.email,
-      date: bookingDate,
-      price: biz.price,
-      business_id: biz.id
-    }).then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-    // console.log(user.attributes.email)
-    // console.log(biz)
-    // console.log(businesses)
+    await axios
+      .post("/api/reservations/", {
+        email: user.attributes.email,
+        date: bookingDate,
+        price: biz.price,
+        business_id: biz.id,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   return (
@@ -203,9 +210,9 @@ export default function BizCard({ props }) {
                     label="book"
                     id="book-button"
                     value="Book"
-                    onClick={()=>{
-                      reservationHandler()
-                      stripeCheckoutHandler()
+                    onClick={() => {
+                      // reservationHandler();
+                      stripeCheckoutHandler();
                     }}
                   >
                     Book
