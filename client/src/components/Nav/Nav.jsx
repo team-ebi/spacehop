@@ -159,12 +159,9 @@ export default function Nav() {
                 Profile
               </button>
             )}
-            {/* <button className="menu-item" onClick={aboutHandler}>
+            <button className="menu-item" onClick={aboutHandler}>
               About
             </button>
-            <button className="menu-item" onClick={teamHandler}>
-              Team
-            </button> */}
 
             {/* only display profile button if user IS logged in */}
             {user && (
@@ -207,9 +204,6 @@ export default function Nav() {
             )}
             <button className="menu-item" onClick={aboutHandler}>
               About
-            </button>
-            <button className="menu-item" onClick={teamHandler}>
-              Team
             </button>
 
             {/* only display profile button if user IS logged in */}

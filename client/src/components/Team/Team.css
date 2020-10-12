@@ -1,6 +1,6 @@
 #team-container {
   width: 100%;
-  background-color: rgb(250, 238, 238);
+  background-color: transparent;
   padding-bottom: 100px;
 }
 header:not(#results-header) {
@@ -35,19 +35,6 @@ header:not(#results-header) {
   line-height: 40px;
 }
 @media (max-width: 700px) {
-  #team-container {
-    background: #efefbb; /* fallback for old browsers */
-    background: -webkit-linear-gradient(
-      to bottom,
-      rgb(230, 228, 245),
-      #efefbb
-    ); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(
-      to bottom,
-      rgb(230, 228, 245),
-      #efefbb
-    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  }
   #team {
     overflow: scroll;
   }
