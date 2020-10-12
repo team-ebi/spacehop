@@ -59,6 +59,7 @@
     border: none;
     font-size: 16px;
     margin-top: 20px;
+    background: transparent;
 }
 #section-container {
     display: flex;
@@ -116,5 +117,8 @@ section {
     }
     #profile-details {
         margin-top: 20px;
+    }
+    #edit-button {
+        margin-top: 30px;
     }
 }

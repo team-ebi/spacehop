@@ -1,59 +1,118 @@
-import React,{useEffect, useState} from "react";
-import { Button, Container, Row, Col, Image, Card } from "react-bootstrap";
+import React, { useEffect, useState, useContext } from "react";
+import { UserContext } from "../useContext/UserContext";
 import axios from "axios";
+import "./FutureBookings.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarAlt, faClock } from "@fortawesome/free-solid-svg-icons";
 
 export default function FutureBookings() {
+  const { user } = useContext(UserContext);
 
-    // manage state of information about future bookings 
-    const [futureBookingInfo, setFutureBookings] = useState("")
+  // manage state of information about future bookings
+  const [futureBookingInfo, setFutureBookings] = useState([
+    {
+      date: "2020-12-31",
+      price: 10000,
+      start_time: 11,
+      end_time: 16,
+      created_at: "2020-11-29",
+      business_id: 1,
+      user_id: 1,
+      name: "Spacehop Cafe",
+      address_street: "1st Street",
+      address_city: "Roppongi",
+      address_zip: "777",
+      phone: "0123-456-789",
+      business_type: "Cafe",
+      capacity: 10,
+      price: 1000,
+    },
+    {
+      date: "2020-12-4",
+      price: 20000,
+      start_time: 11,
+      end_time: 16,
+      created_at: "2020-11-29",
+      business_id: 1,
+      user_id: 1,
+      name: "Bunny Cafe",
+      address_street: "1st Street",
+      address_city: "Roppongi",
+      address_zip: "777",
+      phone: "0123-456-789",
+      business_type: "Cafe",
+      capacity: 10,
+      price: 1000,
+    },
+    {
+      date: "2020-12-4",
+      price: 20000,
+      start_time: 11,
+      end_time: 16,
+      created_at: "2020-11-29",
+      business_id: 1,
+      user_id: 1,
+      name: "Bunny Cafe",
+      address_street: "1st Street",
+      address_city: "Roppongi",
+      address_zip: "777",
+      phone: "0123-456-789",
+      business_type: "Cafe",
+      capacity: 10,
+      price: 1000,
+    },
+  ]);
 
-        //get information about future bookings from endpoints 
-    async function manageFutureBookings(){
-        // let req = axios.get("some_api")
-        // let res = await req;
-        // maybe some process here 
-        // let info = res;  
-        // put the data into an array [{...},{...}]
-        // ie ↓　
-        let info = [{date:"2020/10/10", place:"Izakaya,Tokyo", time:"10:00~12:00"},{date:"2020/10/30", place:"Cafe,Tokyo", time:"17:00~20:00"}]
-        console.log(info)
-        return setFutureBookings(info.map((el)=>{
-          return (
-            <div>
-            <Container>
-            <Card style={{ width: "auto",margin:"15px" }}>
-              <Card.Body>
-                <Card.Title style={{fontSize:"30px" ,textAlign:"center"}}>{el.date}</Card.Title>
-                <Card.Text style={{fontSize:"25px" ,textAlign:"center"}}>
-                  {el.time}
-                </Card.Text>
-                <Card.Text style={{fontSize:"25px" ,textAlign:"center"}}>
-                  {el.place}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Container>
-    </div>
-
-          )
-        }))
-      }
-    
-    useEffect(()=>{manageFutureBookings()}, [])
+  // will run when component is first rendered
+  useEffect(() => {
+    async function fetchBookings() {
+      const reservations = await axios.get("/reservations");
+      setFutureBookings(reservations.data);
+    }
+    fetchBookings();
+  }, []);
 
   return (
-    <div className="futureBookings" style={{borderStyle:"dotted"}}>
-      <h3
-        style={{
-          padding: "20px 10px",
-          marginBottom: "20px",
-          textAlign: "center",
-        }}
-      >
-        Future bookings
-      </h3>
-      {futureBookingInfo}
+    <div className="bookings-container">
+      <header id="res-header">
+        <h3>Your upcoming reservations:</h3>
+      </header>
+      <main id="booking-section">
+        {futureBookingInfo.length > 0 && (
+          <div id="res-table">
+            {futureBookingInfo.map((booking) => (
+              <div className="single-booking-container">
+                <div>
+                  <div id="booked-biz-name">{booking.name}</div>
+                </div>
+                <div className="detail-row">
+                  <div id="booking-date">
+                    <FontAwesomeIcon
+                      icon={faCalendarAlt}
+                      size="med"
+                      color="darkslategrey"
+                    />
+                    {"  " + booking.date}
+                  </div>
+                  <div id="booking-time">
+                  <FontAwesomeIcon
+                      icon={faClock}
+                      size="med"
+                      color="darkslategrey"
+                    />
+                    {"  " + booking.start_time}:00 - {booking.end_time}:00
+                  </div>
+                </div>
+                <hr className="biz-info-divider"></hr>
+                <div className="detail-row">
+                  {`${booking.address_street} ${booking.address_city}, Tokyo ${booking.address_zip}`}
+                </div>
+                <div className="detail-row">{booking.phone}</div>
+              </div>
+            ))}
+          </div>
+        )}
+      </main>
     </div>
   );
 }
-

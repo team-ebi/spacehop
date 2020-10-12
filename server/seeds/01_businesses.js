@@ -10,7 +10,7 @@ exports.seed = function(knex) {
           phone: "0123-456-789",
           business_type: "Cafe",
           capacity: 10,
-          price: 10000
+          price: 1000
         },
         {
           name: "Space Xchange",
