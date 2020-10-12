@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../src/knex.js");
-const moment = require('moment');
+const moment = require("moment");
 
 // router.get("/", async(req, res) => {
 //   res.send("working");
@@ -13,11 +13,8 @@ router.post("/", async (req, res) => {
 
   // Get user id that matches with req.body.email
   const email = req.body.email;
-  const user = await db
-  .select("*")
-  .table("users")
-  .where({
-    email
+  const user = await db.select("*").table("users").where({
+    email,
   });
 
   const date = req.body.date;
@@ -26,10 +23,7 @@ router.post("/", async (req, res) => {
   const business_id = req.body.business_id;
   const user_id = user[0]["id"];
 
-  const register = await db
-  .select("*")
-  .table("reservations")
-  .insert({
+  const register = await db.select("*").table("reservations").insert({
     date,
     price,
     created_at,
@@ -40,46 +34,46 @@ router.post("/", async (req, res) => {
   res.send("New reservation created!");
 });
 
-//Get selected user's reservations 
-router.get("/user/:user_id", async(req, res) => {
-  const user_id = req.params.user_id;
-  
+//Get selected user's reservations
+router.get("/reservations/:email", async (req, res) => {
+  const email = req.params.email;
+  const user = await db.select("*").table("users").where({
+    email,
+  });
+
+  const userId= user[0]["id"]
+
   const reservations = await db
-  .select("*")
-  .table("reservations")
-  .where({
-    user_id
-  })
-  .orderBy('date', 'asc');
-  
+    .select("*")
+    .table("reservations")
+    .where({
+      userId
+    })
+    .orderBy("date", "asc");
+
   res.send(reservations);
 });
 
 // Get all upcoming reservations
-router.get("/", async(req, res) => {
+router.get("/", async (req, res) => {
   const email = req.body.email;
-  const user = await db
-  .select("*")
-  .table("users")
-  .where({
-    email
+  const user = await db.select("*").table("users").where({
+    email,
   });
 
   const user_id = user[0]["id"];
 
   const upcomingReservations = await db
-  .select("*")
-  .table("businesses")
-  .join("reservations", { "businesses.id": "reservations.business_id" })
-  .join("users", { "reservations.user_id": "users.id" })
-  .where("reservations.user_id", user_id);
+    .select("*")
+    .table("businesses")
+    .join("reservations", { "businesses.id": "reservations.business_id" })
+    .join("users", { "reservations.user_id": "users.id" })
+    .where("reservations.user_id", user_id);
 
   res.send(upcomingReservations);
 });
 
 //ISO 8601("2020-10-08T15:00:00.000Z") => YYYY-MM-DD
-const convertDate =(IsoString)=>{
-  
-}
+const convertDate = (IsoString) => {};
 
 module.exports = router;

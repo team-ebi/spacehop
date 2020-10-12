@@ -24,8 +24,16 @@ router.get("/:business_id", async (req, res) => {
 });
 
 //Post selected business's rating
-router.post("/:business_id/:user_id", async (req, res) => {
-  const user_id = req.params.user_id;
+router.post("/:business_id/:email", async (req, res) => {
+  const email = req.body.email;
+  const user = await db
+  .select("*")
+  .table("users")
+  .where({
+    email
+  });
+  
+  const user_id = user[0]["id"];
   const business_id = req.params.business_id;
   const point = req.body.point; //point is not null(1,2,3,4,5)
   const comment = req.body.comment;

@@ -17,59 +17,7 @@ export default function FutureBookings() {
   const [dimPast, setDimPast] = useState("dim");
 
   // manage state of information about future bookings
-  const [futureBookingInfo, setFutureBookings] = useState([
-    {
-      date: "2020-09-07",
-      price: 10000,
-      start_time: 11,
-      end_time: 16,
-      created_at: "2020-11-29",
-      business_id: 1,
-      user_id: 1,
-      name: "Spacehop Cafe",
-      address_street: "1st Street",
-      address_city: "Roppongi",
-      address_zip: "777",
-      phone: "0123-456-789",
-      business_type: "Cafe",
-      capacity: 10,
-      price: 1000,
-    },
-    {
-      date: "2020-12-4",
-      price: 20000,
-      start_time: 11,
-      end_time: 16,
-      created_at: "2020-11-29",
-      business_id: 1,
-      user_id: 1,
-      name: "Bunny Cafe",
-      address_street: "1st Street",
-      address_city: "Roppongi",
-      address_zip: "777",
-      phone: "0123-456-789",
-      business_type: "Cafe",
-      capacity: 10,
-      price: 1000,
-    },
-    {
-      date: "2020-12-4",
-      price: 20000,
-      start_time: 11,
-      end_time: 16,
-      created_at: "2020-11-29",
-      business_id: 1,
-      user_id: 1,
-      name: "Bunny Cafe",
-      address_street: "1st Street",
-      address_city: "Roppongi",
-      address_zip: "777",
-      phone: "0123-456-789",
-      business_type: "Cafe",
-      capacity: 10,
-      price: 1000,
-    },
-  ]);
+  const [futureBookingInfo, setFutureBookings] = useState({});
 
   // will run when component is first rendered
   useEffect(() => {

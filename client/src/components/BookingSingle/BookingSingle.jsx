@@ -31,12 +31,12 @@ export default function BookingSingle({ booking, display }) {
   }, [user]);
 
   async function postReview() {
-    // await axios.post(`/${booking.business_id}/${user.attributes.email}`, {
-    //   user_email: user.attributes.email,
-    //   business_id: booking.business_id,
-    //   point: rating,
-    //   comment: comment
-    // });
+    await axios.post(`/${booking.business_id}/${user.attributes.email}`, {
+      email: user.attributes.email,
+      business_id: booking.business_id,
+      point: rating,
+      comment: comment
+    });
     setReview({
       user_email: user.attributes.email,
       business_id: booking.business_id,
