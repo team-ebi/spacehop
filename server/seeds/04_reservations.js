@@ -5,14 +5,35 @@ exports.seed = function(knex) {
         {
           date: "2020-12-31",
           price: 10000,
-          created_at: "2020-11-29",
+          created_at: "2020-10-12",
           business_id: 1,
           user_id: 1
         },
         {
           date: "2020-11-30",
           price: 10000,
-          created_at: "2020-10-29",
+          created_at: "2020-10-12",
+          business_id: 1,
+          user_id: 1
+        },
+        {
+          date: "2020-10-30",
+          price: 10000,
+          created_at: "2020-10-12",
+          business_id: 1,
+          user_id: 1
+        },
+        {
+          date: "2020-09-30",
+          price: 10000,
+          created_at: "2020-09-12",
+          business_id: 1,
+          user_id: 1
+        },
+        {
+          date: "2020-08-30",
+          price: 10000,
+          created_at: "2020-08-29",
           business_id: 1,
           user_id: 1
         },
