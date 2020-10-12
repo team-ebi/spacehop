@@ -68,8 +68,6 @@
   border: none;
   background-color: transparent;
   border-radius: 50px;
-  display: flex;
-  align-content: center;
   width: 100%;
   margin-top: 15px;
 }
@@ -78,6 +76,7 @@
   margin-top: 20px;
   background-color: white;
   overflow: hidden;
+  position: relative;
 }
 .date-input {
   font-size: 20px;
