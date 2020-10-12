@@ -31,6 +31,18 @@ exports.seed = function(knex) {
           last_name: "KUdoh",
           email: "lion@kudoh.com",
           phone: "070-7777-7777"
+        },
+        {
+          first_name: "Turtle",
+          last_name: "Katoh",
+          email: "turtle@katoh.com",
+          phone: "070-7777-7777"
+        },
+        {
+          first_name: "Tuna",
+          last_name: "Itho",
+          email: "tuna@itoh.com",
+          phone: "070-7777-7777"
         }
       ]);
     });
