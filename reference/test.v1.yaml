@@ -294,7 +294,9 @@ paths:
       responses:
         '200':
           description: OK
-      description: Leave rating to business from user
+      description: |-
+        Leave rating to business from user
+        ```not yet```
       requestBody:
         content:
           application/json:
@@ -326,6 +328,8 @@ paths:
                 example-1:
                   value: {}
       operationId: get-api-ratings-business_id
-      description: Get business's ratings
+      description: |-
+        Get business's ratings
+        ```not yet```
 components:
   schemas: {}
