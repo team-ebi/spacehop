@@ -276,5 +276,56 @@ paths:
       description: |-
         Delete selected user
         <br>```done```
+  '/api/ratings/{user_id}/{business_id}':
+    parameters:
+      - schema:
+          type: string
+        name: user_id
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: business_id
+        in: path
+        required: true
+    post:
+      summary: Leave rating
+      operationId: post-api-ratings-user_id-business_id
+      responses:
+        '200':
+          description: OK
+      description: Leave rating to business from user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+        description: |-
+          point,
+          comment
+  '/api/ratings/{business_id}':
+    parameters:
+      - schema:
+          type: string
+        name: business_id
+        in: path
+        required: true
+    get:
+      summary: Get business's ratings
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                example-1:
+                  value: {}
+      operationId: get-api-ratings-business_id
+      description: Get business's ratings
 components:
   schemas: {}
