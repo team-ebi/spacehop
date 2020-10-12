@@ -15,11 +15,13 @@ import Data from "./data/businesses";
 import Success from "./components/Success/Success";
 import { onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Auth } from "aws-amplify";
+import axios from "axios";
 
 export default function App() {
   const [businesses, setBusinesses] = useState();
   const [authState, setAuthState] = useState();
   const [user, setUser] = useState(null);
+  const { checkUser, setCheckUser } = useContext(UserContext);
 
   // checks if user is signed in and fetches user data
   // whenever authUI state changes
@@ -37,6 +39,19 @@ export default function App() {
       try {
         const user = await Auth.currentAuthenticatedUser();
         setUser(user);
+        // check if user exists in db
+        const userCheck = await axios.get(`http://localhost:4000/api/users/`, {
+          email: user.attributes.email,
+        });
+        //if no post user data to db
+        if (!userCheck) {
+          await axios.post("http://localhost:4000/api/users/", {
+            first_name: user.attributes.first_name,
+            last_name: user.attributes.last_name,
+            email: user.attributes.email,
+            phone: user.attributes.phone,
+          });
+        }
         console.log(user);
       } catch (e) {
         console.error(e);
@@ -44,7 +59,6 @@ export default function App() {
     }
     init();
   }, []);
-
 
   return (
     <BrowserRouter>
