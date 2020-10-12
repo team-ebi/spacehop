@@ -27,6 +27,7 @@ export default function BizCard({ props }) {
   const [bookingEndTime, setBookingEndTime] = useState("");
   const {businesses, setBusiness} = useContext(BusinessContext);
   const {user, setUser} = useContext(UserContext);
+  const [price, setPrice] = useState('price_1HbJV4CjwFEQ1pgcagpXzMWb');
 
   // props passed to router's useHistory
   const biz = props.location.state.state;
@@ -41,19 +42,17 @@ export default function BizCard({ props }) {
 
   //handles stripe checkout and redirects to checkout page
   async function stripeCheckoutHandler() {
-    const stripe = await stripePromise;
-    const response = await fetch(
-     url,
-      { method: "POST" }
-    );
-    const session = await response.json();
-    const result = await stripe.redirectToCheckout({
-      sessionId: session.id,
-    });
 
-    if (result.error) {
-      alert("Payment Error");
-    }
+    const stripe = await stripePromise;
+    const { error } = await stripe.redirectToCheckout({
+      lineItems: [{
+        price: price, // Replace with the ID of your price
+        quantity: 1,
+      }],
+      mode: 'payment',
+      successUrl: "http://localhost:3000/profile",
+      cancelUrl: "http://localhost:3000/about",
+    });
   }
 
 
