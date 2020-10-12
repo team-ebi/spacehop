@@ -1,12 +1,11 @@
 
 
 exports.up = function (knex) {
-    console.log("hello7");
     return knex.schema
-        .dropTable("availability")
-        .dropTable("reservations")
-        .dropTable("businesses")
-        .dropTable("users")
+        .dropTableIfExists("availability")
+        .dropTableIfExists("reservations")
+        .dropTableIfExists("businesses")
+        .dropTableIfExists("users")
         .then(() => {
             return knex.schema
                 .createTable("users", (table) => {
@@ -27,6 +26,7 @@ exports.up = function (knex) {
                     table.string("business_type");
                     table.integer("capacity");
                     table.integer("price");
+                    table.string("stripe_price_id");
 
                     table.foreign("user_id")
                         .references("id")
@@ -68,6 +68,10 @@ exports.up = function (knex) {
 };
 
 exports.down = function (knex) {
-
+    return knex.schema
+        .dropTable("availability")
+        .dropTable("reservations")
+        .dropTable("businesses")
+        .dropTable("users")
 };
 
