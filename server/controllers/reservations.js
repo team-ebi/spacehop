@@ -9,16 +9,22 @@ router.get("/", async(req, res) => {
 
 //Make a Reservation
 router.post("/", async (req, res) => {
+  //ex) req.body = { "email": "potato@dog.com", "date": "2020-12-30", "price": 1000, "business_id": 1 }
 
-  //ex) req.body = {business_id:1,user_id:2,date:"2020-10-09"}
+  // Get user id that matches with req.body.email
+  const email = req.body.email;
+  const user = await db
+  .select("*")
+  .table("users")
+  .where({
+    email
+  });
 
   const date = req.body.date;
   const price = req.body.price;
+  const created_at = moment().format("YYYY-MM-DD"); // Current date
   const business_id = req.body.business_id;
-  const user_id = req.body.user_id;
-
-  //current date
-  const created_at = moment().format("YYYY-MM-DD");
+  const user_id = user[0]["id"];
 
   const register = await db
   .select("*")

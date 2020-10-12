@@ -57,15 +57,21 @@ export default function BizCard({ props }) {
 
 
   //post reservation to db
-  function reservationHandler() {
+  async function reservationHandler() {
     await axios.post('/',{
       email: user.attributes.email,
+      date: bookingDate,
       price: biz.price,
-      
+      business_id: biz.id
+    }).then(function (response) {
+      console.log(response);
     })
-    console.log(user.attributes.email)
-    console.log(biz)
-    console.log(businesses)
+    .catch(function (error) {
+      console.log(error);
+    });
+    // console.log(user.attributes.email)
+    // console.log(biz)
+    // console.log(businesses)
   }
 
   return (
