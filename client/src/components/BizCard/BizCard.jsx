@@ -27,7 +27,6 @@ export default function BizCard({ props }) {
   const [bookingEndTime, setBookingEndTime] = useState("");
   const { businesses, setBusiness } = useContext(BusinessContext);
   const { user, setUser } = useContext(UserContext);
-  const [price, setPrice] = useState("");
 
   // props passed to router's useHistory
   const biz = props.location.state.state;
@@ -49,7 +48,7 @@ export default function BizCard({ props }) {
       const { error } = await stripe.redirectToCheckout({
         lineItems: [
           {
-            price: price, // Replace with the ID of your price
+            price:  biz.stripe_price_id, 
             quantity: 1,
           },
         ],
@@ -210,10 +209,7 @@ export default function BizCard({ props }) {
                     label="book"
                     id="book-button"
                     value="Book"
-                    onClick={() => {
-                      // reservationHandler();
-                      stripeCheckoutHandler();
-                    }}
+                    onClick={stripeCheckoutHandler}
                   >
                     Book
                   </button>
