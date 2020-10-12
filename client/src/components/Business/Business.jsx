@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../useContext/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import FutureBookings from "../FutureBookings/FutureBookings";
+import BookingsAll from "../BookingsAll/BookingsAll";
 import axios from "axios";
 import "./Business.css";
 
@@ -245,7 +245,7 @@ function Business() {
         </main>
         <hr id="profile-divider"></hr>
         <section>
-          <FutureBookings />
+          <BookingsAll />
         </section>
       </div>)}
 

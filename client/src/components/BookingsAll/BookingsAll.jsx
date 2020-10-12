@@ -1,17 +1,25 @@
 import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../useContext/UserContext";
 import axios from "axios";
-import "./FutureBookings.css";
+import BookingSingle from "../BookingSingle/BookingSingle";
+import "./BookingsAll.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarAlt, faClock } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendarAlt,
+  faClock,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function FutureBookings() {
   const { user } = useContext(UserContext);
+  const [display, setDisplay] = useState("upcoming");
+  const [dimUpcoming, setDimUpcoming] = useState("");
+  const [dimPast, setDimPast] = useState("dim");
 
   // manage state of information about future bookings
   const [futureBookingInfo, setFutureBookings] = useState([
     {
-      date: "2020-12-31",
+      date: "2020-09-07",
       price: 10000,
       start_time: 11,
       end_time: 16,
@@ -72,47 +80,54 @@ export default function FutureBookings() {
     fetchBookings();
   }, []);
 
+  function displayUpcoming() {
+    setDisplay("upcoming");
+    setDimPast("dim");
+    setDimUpcoming("");
+  }
+
+  function displayPast() {
+    setDisplay("past");
+    setDimPast("");
+    setDimUpcoming("dim");
+  }
+
   return (
     <div className="bookings-container">
       <header id="res-header">
-        <h3>Your upcoming reservations:</h3>
+        <h3>Your reservations:</h3>
       </header>
+      <div id="upcoming-past-button-container">
+        <button
+          className={`selected-button ${dimUpcoming}`}
+          onClick={displayUpcoming}
+        >
+          Upcoming
+        </button>
+        <button className={`selected-button ${dimPast}`} onClick={displayPast}>
+          Past
+        </button>
+      </div>
       <main id="booking-section">
         {futureBookingInfo.length > 0 && (
           <div id="res-table">
-            {futureBookingInfo.map((booking) => (
-              <div className="single-booking-container">
-                <div>
-                  <div id="booked-biz-name">{booking.name}</div>
-                </div>
-                <div className="detail-row">
-                  <div id="booking-date">
-                    <FontAwesomeIcon
-                      icon={faCalendarAlt}
-                      size="med"
-                      color="darkslategrey"
-                    />
-                    {"  " + booking.date}
-                  </div>
-                  <div id="booking-time">
-                  <FontAwesomeIcon
-                      icon={faClock}
-                      size="med"
-                      color="darkslategrey"
-                    />
-                    {"  " + booking.start_time}:00 - {booking.end_time}:00
-                  </div>
-                </div>
-                <hr className="biz-info-divider"></hr>
-                <div className="detail-row">
-                  {`${booking.address_street} ${booking.address_city}, Tokyo ${booking.address_zip}`}
-                </div>
-                <div className="detail-row">{booking.phone}</div>
-              </div>
-            ))}
+            {futureBookingInfo
+              .filter((booking) => {
+                const today = new Date();
+                const resDate = new Date(booking.date);
+                if (display === "past") {
+                  return resDate < today;
+                } else {
+                  return resDate >= today;
+                }
+              })
+              .map((booking) => (
+               <BookingSingle booking={booking} display={display}/>
+              ))}
           </div>
         )}
       </main>
     </div>
   );
 }
+

@@ -1,0 +1,141 @@
+#res-header {
+    font-weight: 600;
+    font-size: 18px;
+    display: flex;
+    text-indent: 20px;
+    color: darkslategrey;
+    letter-spacing: 2px;
+}
+#booking-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+#res-table {
+    margin-top: 30px;
+    padding: 5px;
+    width: 80%;
+}
+tr {
+    height: 30px;
+    
+}
+#booked-biz-name {
+    font-weight: 700;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.single-booking-container {
+    margin-bottom: 20px;
+    border-radius: 40px;
+    padding: 10px;
+    padding-bottom: 15px;
+    background-color: white;
+    box-shadow: 0 4px 8px lightgrey;
+
+}
+.detail-row {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    line-height: 22px;
+}
+.biz-info-divider {
+    width: 50%;
+    margin-top: 20px;
+}
+#upcoming-past-button-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+.selected-button {
+    background: transparent;
+    border: none;
+    font-weight: 600;
+    font-size: 24px;
+    text-decoration: underline;
+    color: darkslategrey;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+.dim {
+    text-decoration: none;
+    font-weight: 300;
+    font-size: 18px;
+}
+.star-rating {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    cursor: pointer;
+}
+.comment-container {
+    width: 100%;
+}
+.one:active, 
+.two:active,
+.three:active,
+.four:active,
+.five:active {
+    color: gold;
+}
+.one:hover, 
+.two:hover,
+.three:hover,
+.four:hover,
+.five:hover {
+    color: gold;
+}
+.comment {
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    height: 120px;
+    margin-bottom: 20px;
+    border: solid lightgrey;
+    border-width: 1px;
+    border-radius: 30px;
+    padding-left: 20px;
+    font-size: 16px;
+    padding-top: 20px;
+    font-family: "Roboto", sans-serif;
+}
+.comment-submit {
+    background-color: #80cc37;
+    border: none;
+    width: 100px;
+    height: 50px;
+    border-radius: 40px;
+    box-shadow: 0 4px 8px lightgrey;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.star {
+    padding: 5px;
+}
+.rating {
+    font-weight: 700;
+    font-size: 23px;
+    color: darkslategrey;
+    margin-left: 50px;
+}
+@media (max-width: 700px) {
+    .single-booking-container {
+        width: 100%;
+    }
+    #res-table {
+        width: 80%;
+    }
+    #booked-biz-name {
+        padding-top: 20px;
+    }
+    #booking-date {
+        width: 50%;
+    }
+    tr {
+        width: 100%;
+    }
+}
