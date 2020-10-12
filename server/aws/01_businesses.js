@@ -51,6 +51,26 @@ knex("businesses").del().then(() => {
       business_type: "Cafe",
       capacity: 40,
       price: 40000
+    },
+    {
+      name: "Cafe Y",
+      address_street: "6th Street",
+      address_city: "Shibuya",
+      address_zip: "777",
+      phone: "0123-456-789",
+      business_type: "Cafe",
+      capacity: 50,
+      price: 50000
+    },
+    {
+      name: "Cafe Z",
+      address_street: "7th Street",
+      address_city: "Shibuya",
+      address_zip: "777",
+      phone: "0123-456-789",
+      business_type: "Cafe",
+      capacity: 60,
+      price: 60000
     }
   ]);
 })

@@ -15,7 +15,7 @@ import Slider from "react-slick";
 import logo from "../../images/logo.png";
 
 export default function List() {
-  const { businesses, setBusinesses } = useContext(BusinessContext);
+  const { businesses } = useContext(BusinessContext);
   const history = useHistory();
 
   function handleEditSearch() {
