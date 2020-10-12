@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faBars, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import Auth from "../Auth/Auth";
-import { AmplifySignOut } from "@aws-amplify/ui-react";
 import { onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Auth as AuthUser } from "aws-amplify";
 import "./Nav.css";
@@ -17,7 +16,7 @@ export default function Nav() {
   const [displaySignup, setDisplaySignup] = useState(false);
   const [dimOverlay, setDimOverlay] = useState("hide");
   const { user, setUser } = useContext(UserContext);
-  const { authState, setAuthState } = useContext(AuthStateContext);
+  const { setAuthState } = useContext(AuthStateContext);
 
   // once user logs and verifies email, 
   // this will remove overlay and close modals
