@@ -119,8 +119,18 @@ tr {
 .rating {
     font-weight: 700;
     font-size: 23px;
+    color: rgb(216, 187, 21);
+    text-align: center;
+    padding-bottom: 20px;
+}
+.review-header {
+    font-weight: 700;
     color: darkslategrey;
-    margin-left: 50px;
+    text-align: left;
+}
+.quote {
+    text-align: center;
+    font-size: 18px;
 }
 @media (max-width: 700px) {
     .single-booking-container {
