@@ -8,6 +8,7 @@ import {
   faClock,
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
+import moment from "moment";
 
 export default function BookingSingle({ booking, display }) {
   const { user } = useContext(UserContext);
@@ -15,6 +16,7 @@ export default function BookingSingle({ booking, display }) {
   const [rating, setRating] = useState(null);
   const [comment, setComment] = useState(null);
 
+  
   async function fetchReview() {
     if (user) {
       const res = await axios.get(
@@ -31,7 +33,7 @@ export default function BookingSingle({ booking, display }) {
   }, [user]);
 
   async function postReview() {
-    await axios.post(`/${booking.business_id}/${user.attributes.email}`, {
+    await axios.post(`/api/ratings/`, {
       email: user.attributes.email,
       business_id: booking.business_id,
       point: rating,
@@ -57,11 +59,11 @@ export default function BookingSingle({ booking, display }) {
             size="med"
             color="darkslategrey"
           />
-          {"  " + booking.date}
+          {"  " + moment(booking.date).format('ll')}
         </div>
         <div id="booking-time">
           <FontAwesomeIcon icon={faClock} size="med" color="darkslategrey" />
-          {"  " + booking.start_time}:00 - {booking.end_time}:00
+          {"  " + booking.start_hour}:00 - {booking.end_hour}:00
         </div>
       </div>
       <hr className="biz-info-divider"></hr>

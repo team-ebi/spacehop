@@ -22,11 +22,18 @@ export default function FutureBookings() {
   // will run when component is first rendered
   useEffect(() => {
     async function fetchBookings() {
-      const reservations = await axios.get("/reservations");
-      setFutureBookings(reservations.data);
+      try {
+        if (user) {
+          const reservations = await axios.get(`/api/reservations/${user.attributes.email}`);
+          console.log("res: ", reservations);
+          setFutureBookings(reservations.data);
+        }
+      } catch (err) {
+        console.log('FETCH ERROR: ', err);
+      }
     }
     fetchBookings();
-  }, []);
+  }, [user]);
 
   function displayUpcoming() {
     setDisplay("upcoming");
@@ -70,7 +77,7 @@ export default function FutureBookings() {
                 }
               })
               .map((booking) => (
-               <BookingSingle booking={booking} display={display}/>
+                <BookingSingle booking={booking} display={display} />
               ))}
           </div>
         )}
@@ -78,4 +85,3 @@ export default function FutureBookings() {
     </div>
   );
 }
-

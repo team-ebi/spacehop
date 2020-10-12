@@ -1,7 +1,6 @@
 #user-profile-container {
     background-color: rgb(250, 238, 238);
     height: 100%;
-    position: absolute;
     width: 100%;
 }
 #profile-info {
