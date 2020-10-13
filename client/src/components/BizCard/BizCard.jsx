@@ -16,19 +16,18 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import DatePicker from "react-datepicker";
 import logo from "../../images/logo.png";
-import {
-  AmplifySignIn,
-  AmplifyAuthenticator,
-  AmplifySignUp,
-} from "@aws-amplify/ui-react";
 
 require("dotenv").config();
 
 export default function BizCard({ props }) {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
+  
+  // state will be updated when user selects date and time for booking
   const [bookingDate, setBookingDate] = useState(null);
   const [bookingStartTime, setBookingStartTime] = useState(null);
   const [bookingEndTime, setBookingEndTime] = useState(null);
+
+  // these are just to conditionally render elements
   const [displayLogin, setDisplayLogin] = useState(false);
   const [pickDate, setPickDate] = useState(false);
   const [pickFuture, setPickFuture] = useState(false);
@@ -46,8 +45,10 @@ export default function BizCard({ props }) {
     "pk_test_51HU0G2CjwFEQ1pgcvOchnwo0Gsb2seN5a3xGz8Q2iCvlVUjHkSCV7UZHy3NfeobxNNMeGwmiosi3UBxjbKcSjGZ000hENfQW0F"
   );
 
-
-  //handles stripe checkout and redirects to checkout page
+  // will not run if user hasn't selected date or date is in the past
+  // if user is not logged in, login page will be displayed
+  // handles stripe checkout and redirects to checkout page
+  // will post new reservation to db
   async function stripeCheckoutHandler() {
     if (!bookingDate || !bookingStartTime || !bookingEndTime) {
       setPickDate(true);
@@ -62,19 +63,43 @@ export default function BizCard({ props }) {
     }
     if (!user || !user.attributes) {
       setDisplayLogin(true);
+      return;
     }
-    else {
+    try{
       const stripe = await stripePromise;
-      const response = await fetch(url, { method: "POST" });
-      const session = await response.json();
-      const result = await stripe.redirectToCheckout({
-        sessionId: session.id,
+      const { error } = await stripe.redirectToCheckout({
+        lineItems: [
+          {
+            price:  biz.stripe_price_id, 
+            quantity: 1,
+          },
+        ],
+        mode: "payment",
+        successUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/profile",
+        cancelUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
+      }).then(()=>{
+        reservationHandler()
       });
-  
-      if (result.error) {
-        alert("Payment Error");
-      }
+    } catch(error) {
+      alert('Payment Error')
     }
+  }
+
+  //post reservation to database
+  async function reservationHandler() {
+    await axios
+      .post("/api/reservations/", {
+        email: user.attributes.email,
+        date: bookingDate,
+        price: biz.price,
+        business_id: biz.id,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   return (

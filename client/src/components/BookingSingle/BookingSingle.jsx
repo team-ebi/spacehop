@@ -17,6 +17,7 @@ export default function BookingSingle({ booking, display }) {
   const [comment, setComment] = useState(null);
 
   
+  // function will fetch user's review for this space
   async function fetchReview() {
     if (user) {
       const res = await axios.get(
