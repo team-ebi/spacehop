@@ -124,7 +124,7 @@ export default function Nav() {
           <div id="welcome">
             {/* if user is logged in, will greet by name */}
             <h2>{`Welcome${
-              user && user.attributes ? ", " + user.attributes.given_name : ""
+              user && user.attributes && authState === "signedin" ? ", " + user.attributes.given_name : ""
             }!`}</h2>
           </div>
           <div id="menu-container" onClick={() => setDisplayMenu(!displayMenu)}>
