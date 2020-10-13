@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Auth from "../Auth/Auth";
 import "./BizCard.css";
 import "../Nav/Nav.css";
@@ -32,6 +32,7 @@ export default function BizCard({ props }) {
   const [displayLogin, setDisplayLogin] = useState(false);
   const [pickDate, setPickDate] = useState(false);
   const [pickFuture, setPickFuture] = useState(false);
+  const [userReviews, setUserReviews] = useState([]);
 
   // props passed to router's useHistory
   const biz = props.location.state.state;
@@ -89,6 +90,11 @@ export default function BizCard({ props }) {
     }
   }
 
+  useEffect(async () => {
+    let res = await axios.get(`/api/ratings/${biz.business_id}`);
+    setUserReviews(res.data);
+  }, []);
+
   //post reservation to database
   async function reservationHandler() {
     await axios
@@ -122,7 +128,6 @@ export default function BizCard({ props }) {
           </div>
           <div>
             <div id="bizcard-name">
-              {console.log(biz)}
               <h2>{biz.name}</h2>
             </div>
             <Rating
@@ -187,6 +192,13 @@ export default function BizCard({ props }) {
                   />
                   {Number(biz.price).toLocaleString()}
                 </div>
+                <hr className="divider" />
+                <div id="bizcard-user-review">
+                  <h2 id="reviews-header">Reviews</h2>
+                  {userReviews.map((review) => {
+                    return <li>{`"${review.comment}"`}</li>;
+                  })}
+                </div>
               </div>
 
               <hr className="divider" id="mobile-divider"></hr>
@@ -197,7 +209,7 @@ export default function BizCard({ props }) {
                 <div id="booking-price">
                   ¥{Number(biz.price).toLocaleString()}
                 </div>
-                <hr className="divider" id="booking-divider"></hr>
+                {/* <hr className="divider" id="booking-divider"></hr> */}
                 <div id="booking-subheader">{"Date & Time:"}</div>
                 <div id="datetime-container">
                   <div className="booking-time" id="booking-date-container">
