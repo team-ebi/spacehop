@@ -47,9 +47,13 @@ Example JSON request to create business account
   "capacity": 10,
   "price": 10000,
   "stripe_price_id": "stripe price id here"
+  "day": "Friday",
+	"start_hour": 10,
+	"end_hour": 12
 }
 */
 router.post("/", async (req, res) => {
+  // Information need for creating business account
   const email = req.body.email;
   const name = req.body.name;
   const address_street = req.body.address_street;
@@ -60,19 +64,26 @@ router.post("/", async (req, res) => {
   const capacity = req.body.capacity;
   const price = req.body.price;
   const stripe_price_id = req.body.stripe_price_id;
+  
+  // Information need for creating availability
+  const day = req.body.day;
+  const start_hour = req.body.start_hour;
+  const end_hour = req.body.end_hour;
 
+  // Get user id by email
   const user = await db
     .select("*")
     .table("users")
     .where({
       email
     });
-
   const user_id = user[0]["id"];
-
-  await db
+  
+  // Create business account, then create availability
+  const business = await db
     .select("*")
     .table("businesses")
+    .returning("id")
     .insert({
       user_id,
       name,
@@ -85,8 +96,19 @@ router.post("/", async (req, res) => {
       price,
       stripe_price_id
     });
+  
+  const business_id = business[0];
+  const availability = await db
+    .select("*")
+    .table("availability")
+    .insert({
+      business_id,
+      day,
+      start_hour,
+      end_hour
+    });
 
-  res.send("New business provider created!");
+  res.send("Business account and availability is created!");
 });
 
 // Get all business data
