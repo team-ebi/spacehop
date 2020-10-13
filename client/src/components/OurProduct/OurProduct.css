@@ -31,18 +31,18 @@ h3{
     margin-top: 30px;
     margin-bottom: 30px;
 }
-#lastLine{
-    font-size: 200%;
-    line-height: 50px;
-    margin-top: 30px;
-    margin-bottom: 70px;
-    text-align: center;
-    font-weight: 600;
-    color: #73b930;;
-}
 .lastLine-container{
     display: flex;
     flex-direction: row;
+}
+#lastLine{
+    font-size: 250%;
+    line-height: 50px;
+    margin-top: 30px;
+    margin-bottom: 70px;
+    margin-left:20%;
+    font-weight: 600;
+    color: #73b930;;
 }
 #frog{
     height: auto;
@@ -64,7 +64,8 @@ h3{
         margin-top: 30px;
         margin-bottom: 40px;
         text-align: center;
-        color: #73b930;;
+        color: #73b930; 
+        margin-left:0;
     }
     #frog{
         height: auto;
