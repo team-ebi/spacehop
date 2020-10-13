@@ -36,7 +36,7 @@ function Business() {
       if (user) {
         // check to see if user has a business associated with their account
         // if so, set userBusiness to their business
-        // const res = await axios.get(`/api/businesses/${user.attributes.email}`);
+        const res = await axios.get(`/api/businesses/${user.attributes.email}`);
         // setUserBusiness(res.data);
         // setDisplayBizPage(true);
       }
@@ -44,11 +44,30 @@ function Business() {
     fetchUserBiz();
   }, [user]);
 
+  // will connect to aws or default to loalhost
+  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000"
+
   // NEEDS TO BE WRITTEN
   // if the user adds their business,
   // this function should pull from component state and
   // patch to db
-  async function updateBizTable() {}
+  async function updateBizTable() {
+    try {
+      await axios.post(`${baseUrl}/api/businesses/`, {
+        email: user.attributes.email,
+        name: businessName,
+        address_street: addressStreet,
+        address_city: addressCity,
+        address_zip: addressZip,
+        phone: phone,
+        business_type: bizType,
+        capacity: capacity,
+        price: price
+      });
+    } catch (err) {
+      alert("There was an error with your request. Please try again later!")
+    }
+  }
 
   // when user clicks to add a new business,
   // the inputs will be displayed
@@ -227,6 +246,7 @@ function Business() {
                   {displayInputs && (
                     <div className="attribute">
                       <input
+                        type="number"
                         className="profile-input"
                         value={capacity}
                         onChange={(e) => setCapacity(e.target.value)}
@@ -246,6 +266,7 @@ function Business() {
                   {displayInputs && (
                     <div className="attribute">
                       <input
+                        type="number"
                         className="profile-input"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}

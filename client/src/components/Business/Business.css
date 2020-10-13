@@ -63,13 +63,12 @@
 }
 #section-container {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     margin-top: 40px;
+    justify-content: center;
 }
 main {
-    width: 50%;
-    border-right: solid lightgrey;
-    border-width: 1px;
+    width: 80%;
 }
 section {
     width: 50%;

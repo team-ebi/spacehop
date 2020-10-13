@@ -38,7 +38,7 @@ export default function App() {
       if (user && user.attributes) {
         const email = user.attributes.email;
         const userExists = await axios.get(`/api/users/${email}`)
-        if (!userExists.length) {
+        if (userExists.length === 0) {
           await axios.post("/api/users/", {
             first_name: user.attributes.given_name,
             last_name: user.attributes.family_name,
