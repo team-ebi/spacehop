@@ -18,8 +18,8 @@ import { Auth } from "aws-amplify";
 import axios from "axios";
 
 export default function App() {
-  const [businesses, setBusinesses] = useState();
-  const [authState, setAuthState] = useState();
+  const [businesses, setBusinesses] = useState(null);
+  const [authState, setAuthState] = useState(null);
   const [user, setUser] = useState(null);
   // const { checkUser, setCheckUser } = useContext(UserContext);
 
