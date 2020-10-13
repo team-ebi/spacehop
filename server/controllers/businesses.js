@@ -6,6 +6,7 @@ router.get("/test", async(req, res) => {
   res.send("working");
 });
 
+// Add business acount by email
 router.post("/", async (req, res) => {
   const name = req.body.name;
   const address_street = req.body.address_street;
