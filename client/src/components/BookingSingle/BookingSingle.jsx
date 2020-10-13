@@ -9,6 +9,7 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
+import Rating from "@material-ui/lab/Rating";
 
 export default function BookingSingle({ booking, display }) {
   const { user } = useContext(UserContext);
@@ -17,7 +18,7 @@ export default function BookingSingle({ booking, display }) {
   const [review, setReview] = useState(null);
 
   // will be updated if user submits new review
-  const [rating, setRating] = useState(null);
+  const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
   const baseUrl = process.env.BACKEND_URL || "http://localhost:4000"
@@ -47,7 +48,7 @@ export default function BookingSingle({ booking, display }) {
       email: user.attributes.email,
       business_id: booking.business_id,
       point: rating,
-      comment: comment
+      comment: comment,
     });
 
     // will set review state to the inputs
@@ -55,8 +56,8 @@ export default function BookingSingle({ booking, display }) {
       user_email: user.attributes.email,
       business_id: booking.business_id,
       point: rating,
-      comment: comment
-    })
+      comment: comment,
+    });
   }
 
   return (
@@ -72,7 +73,7 @@ export default function BookingSingle({ booking, display }) {
             size="1x"
             color="darkslategrey"
           />
-          {"  " + moment(booking.date).format('ll')}
+          {"  " + moment(booking.date).format("ll")}
         </div>
 
         {/* adding ':00' to start and end times */}
@@ -93,72 +94,26 @@ export default function BookingSingle({ booking, display }) {
       {/* will render past reservations */}
       {display === "past" && (
         <>
+        {/* clickable star rating system for biz */}
           <hr className="biz-info-divider"></hr>
           <div className="star-rating">
-
-            {/* if there is no review, inputs will be displayed */}
-            {!review && (
-              <>
-                <span className="star">
-                  <FontAwesomeIcon
-                    className="one"
-                    icon={faStar}
-                    size="med"
-                    color="darkslategrey"
-                    onClick={() => setRating(1)}
-                  />
-                </span>
-
-                <span className="star">
-                  <FontAwesomeIcon
-                    className="two"
-                    icon={faStar}
-                    size="med"
-                    color="darkslategrey"
-                    onClick={() => setRating(2)}
-                  />
-                </span>
-
-                <span className="star">
-                  <FontAwesomeIcon
-                    className="three"
-                    icon={faStar}
-                    size="med"
-                    color="darkslategrey"
-                    onClick={() => setRating(3)}
-                  />
-                </span>
-
-                <span className="star">
-                  <FontAwesomeIcon
-                    className="four"
-                    icon={faStar}
-                    size="med"
-                    color="darkslategrey"
-                    onClick={() => setRating(4)}
-                  />
-                </span>
-
-                <span className="star">
-                  <FontAwesomeIcon
-                    className="five"
-                    icon={faStar}
-                    size="med"
-                    color="darkslategrey"
-                    onClick={() => setRating(5)}
-                  />
-                </span>
-              </>
-            )}
+            <Rating
+              className="star-rating"
+              name="simple-controlled"
+              value={rating}
+              onChange={(event, newValue) => {
+                // set new value upon click
+                setRating(newValue);
+              }}
+            />
           </div>
 
           {/* if review exists already in db, will display "Your Review" header"*/}
           {review && <div className="review-header">Your Review: </div>}
-          
+
           {/* stars will show up when user selects stars on input or when
           user has already reviewed */}
           <div className="rating">{rating} Stars</div>
-
 
           <div>
             {/* text area input will show up when there is no review,
@@ -173,7 +128,7 @@ export default function BookingSingle({ booking, display }) {
 
             {/* will show up if there is a review but no comment */}
             {review && !comment && "You left no comments for this space."}
-            
+
             {/* will show up if there is a review and a commment */}
             {review && comment && <div className="quote">"{comment}"</div>}
           </div>
@@ -181,7 +136,9 @@ export default function BookingSingle({ booking, display }) {
           {/* if there is no review, button will show up */}
           {!review && (
             <div className="comment-container">
-              <button className="comment-submit" onClick={postReview}>Submit</button>
+              <button className="comment-submit" onClick={postReview}>
+                Submit
+              </button>
             </div>
           )}
         </>
