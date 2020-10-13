@@ -122,6 +122,7 @@ export default function BizCard({ props }) {
           </div>
           <div>
             <div id="bizcard-name">
+              {console.log(biz)}
               <h2>{biz.name}</h2>
             </div>
             <Rating
