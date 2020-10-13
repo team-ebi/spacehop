@@ -17,8 +17,8 @@ import { onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Auth } from "aws-amplify";
 
 export default function App() {
-  const [businesses, setBusinesses] = useState();
-  const [authState, setAuthState] = useState();
+  const [businesses, setBusinesses] = useState(null);
+  const [authState, setAuthState] = useState(null);
   const [user, setUser] = useState(null);
 
   // checks if user is signed in and fetches user data
