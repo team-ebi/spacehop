@@ -14,13 +14,21 @@ router.get("/:id", async (req, res) => {
     .from('ratings')
     .where('business_id', '=', id)
 
+  //Get each rating & comment
+  const comments = await db
+    .select("point", "comment", "users.first_name", "users.last_name")
+    .table("ratings")
+    .where('business_id', '=', id)
+    .join("users", { "ratings.user_id": "users.id" })
+
   const business = await db
-  .select("*")
-  .table("businesses")
-  .where('id', '=', id)
+    .select("*")
+    .table("businesses")
+    .where('id', '=', id)
 
   //add average point to business data
-  business[0]['avg']=averageRating[0]['avg']
+  business[0]['avg'] = averageRating[0]['avg'];
+  business[0]['comments'] = comments;
 
   res.send(business[0]);
 });
@@ -31,7 +39,7 @@ Example JSON request to create business account
 {
   "email": "potato@dog.com",
   "name": "Potato Cafe",
-	"address_street": "100th Street",
+  "address_street": "100th Street",
   "address_city": "Shibuya",
   "address_zip": "777-777",
   "phone": "0123-456-789",
@@ -54,38 +62,38 @@ router.post("/", async (req, res) => {
   const stripe_price_id = req.body.stripe_price_id;
 
   const user = await db
-  .select("*")
-  .table("users")
-  .where({
-    email
-  });
+    .select("*")
+    .table("users")
+    .where({
+      email
+    });
 
   const user_id = user[0]["id"];
 
   await db
-  .select("*")
-  .table("businesses")
-  .insert({
-    user_id,
-    name,
-    address_street,
-    address_city,
-    address_zip,
-    phone,
-    business_type,
-    capacity,
-    price,
-    stripe_price_id
-  });
+    .select("*")
+    .table("businesses")
+    .insert({
+      user_id,
+      name,
+      address_street,
+      address_city,
+      address_zip,
+      phone,
+      business_type,
+      capacity,
+      price,
+      stripe_price_id
+    });
 
   res.send("New business provider created!");
 });
 
 // Get all business data
-router.get("/data", async(req, res) => {
+router.get("/data", async (req, res) => {
   const allBusinessesInfo = await db
-  .select("*")
-  .table("businesses");
+    .select("*")
+    .table("businesses");
 
   res.send(allBusinessesInfo);
 });
