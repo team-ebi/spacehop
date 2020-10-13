@@ -12,7 +12,7 @@ exports.seed = function(knex) {
           capacity: 20,
           price: 20000,
           user_id: 2,
-          stripe_price_id: "price_1HbJrzCjwFEQ1pgcojUHgGut" 
+          stripe_price_id: "price_1HblppCjwFEQ1pgcJ7QPY9Nd" 
         },
         {
           name: "Spacehop Cafe",
@@ -24,7 +24,7 @@ exports.seed = function(knex) {
           capacity: 10,
           price: 10000,
           user_id: 2,
-          stripe_price_id: "price_1HbJV4CjwFEQ1pgcagpXzMWb"
+          stripe_price_id: "price_1HblqRCjwFEQ1pgcARvCsFXq"
         },
         {
           name: "Space Xchange",
@@ -36,7 +36,7 @@ exports.seed = function(knex) {
           capacity: 5,
           price: 5000,
           user_id: 2,
-          stripe_price_id: "price_1HbHfKCjwFEQ1pgc3poy4TVE" 
+          stripe_price_id: "price_1HblrNCjwFEQ1pgcXdtUQq8I" 
         },
         {
           name: "Flexspace Hamburger",
@@ -60,7 +60,7 @@ exports.seed = function(knex) {
           capacity: 30,
           price: 30000,
           user_id: 2,
-          stripe_price_id: "price_1HbJnoCjwFEQ1pgcQVglmJvo"
+          stripe_price_id: "price_1HbJqfCjwFEQ1pgcOxl1Ihpv"
         },
         {
           name: "Jazz Cafe",
@@ -96,7 +96,7 @@ exports.seed = function(knex) {
           capacity: 10,
           price: 10000,
           user_id: 2,
-          stripe_price_id: "price_1HbJqfCjwFEQ1pgcOxl1Ihpv"
+          stripe_price_id: "price_1HblvRCjwFEQ1pgcNzZjIWEL"
         }
       ]);
     });
