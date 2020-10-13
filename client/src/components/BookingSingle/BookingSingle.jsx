@@ -25,12 +25,12 @@ export default function BookingSingle({ booking, display }) {
   async function fetchReview() {
     if (user) {
       const res = await axios.get(
-        `/${booking.business_id}/${user.attributes.email}`
+        `api/ratings/${booking.business_id}/${user.attributes.email}`
       );
       if (res.data.length > 0) {
-        setReview(res.data);
-        setRating(res.data.point);
-        setComment(res.data.comment || "");
+        setReview(res.data[0]);
+        setRating(res.data[0].point);
+        setComment(res.data[0].comment || "");
       }
     }
   }
