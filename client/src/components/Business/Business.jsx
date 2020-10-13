@@ -28,6 +28,9 @@ function Business() {
   const [displayBizPage, setDisplayBizPage] = useState(false);
   const [displayInputs, setDisplayInputs] = useState(false);
 
+  // will connect to aws or default to loalhost
+  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000";
+
   // fetch user's business
   // BACKEND ENDPOINT IN PROGRESS
   useEffect(() => {
@@ -37,15 +40,24 @@ function Business() {
         // check to see if user has a business associated with their account
         // if so, set userBusiness to their business
         const res = await axios.get(`/api/businesses/${user.attributes.email}`);
-        // setUserBusiness(res.data);
-        // setDisplayBizPage(true);
+        if (res.data.length > 0) {
+          setUserBusiness(res.data);
+          setDisplayBizPage(true);
+          setBusinessName(res.data.name);
+          setAddressStreet(res.data.address_street);
+          setAddressCity(res.data.address_city);
+          setAddressZip(res.data.address_zip);
+          setPhone(res.data.phone);
+          setBizType(res.data.business_type);
+          setCapacity(res.data.capacity);
+          setPrice(res.data.price);
+        }
       }
     }
     fetchUserBiz();
-  }, [user]);
+  }, []);
 
-  // will connect to aws or default to loalhost
-  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000"
+  
 
   // NEEDS TO BE WRITTEN
   // if the user adds their business,
@@ -62,10 +74,10 @@ function Business() {
         phone: phone,
         business_type: bizType,
         capacity: capacity,
-        price: price
+        price: price,
       });
     } catch (err) {
-      alert("There was an error with your request. Please try again later!")
+      alert("There was an error with your request. Please try again later!");
     }
   }
 
@@ -274,18 +286,14 @@ function Business() {
                     </div>
                   )}
                 </div>
-            {/* NOTE TO MIKU!! input for availability should go here */}
+                {/* NOTE TO MIKU!! input for availability should go here */}
               </div>
             </div>
-
 
             <div id="edit-button-container">
               {/* this button will display only if user is not in editing mode */}
               {!displayInputs && (
-                <button
-                  id="edit-button"
-                  onClick={() => setDisplayInputs(true)}
-                >
+                <button id="edit-button" onClick={() => setDisplayInputs(true)}>
                   Edit
                 </button>
               )}
