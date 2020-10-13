@@ -277,12 +277,15 @@ function Business() {
 
             {/* NOTE TO MIKU!! input for availability should go here */}
             {/* datepicker will update business available  state */}
-            {/* <div className="edit-bizAvailable-container" > */}
+            <div id="weekly-available-title">
+              <p>Weekly availablility: </p>
+              </div>
+
             <div id="availability-input-container">
               <div className="availability-input">
-                <div className="availability-day">Sun</div>
+                <div className="availability-day">Sun.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" />
+                  <input className="checkbox-body" type="checkbox" value="sun"/>
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
@@ -315,9 +318,9 @@ function Business() {
               </div>
 
               <div className="availability-input">
-                <div className="availability-day">Sun</div>
+                <div className="availability-day">Mon.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" />
+                  <input className="checkbox-body" type="checkbox" value="mon"/>
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
@@ -350,9 +353,9 @@ function Business() {
               </div>
 
               <div className="availability-input">
-                <div className="availability-day">Sun</div>
+                <div className="availability-day">Tue.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" />
+                  <input className="checkbox-body" type="checkbox" value="tue"/>
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
@@ -385,9 +388,9 @@ function Business() {
               </div>
 
               <div className="availability-input">
-                <div className="availability-day">Sun</div>
+                <div className="availability-day">Wed.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" />
+                  <input className="checkbox-body" type="checkbox" value="wed"/>
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
@@ -420,9 +423,9 @@ function Business() {
               </div>
 
               <div className="availability-input">
-                <div className="availability-day">Sun</div>
+                <div className="availability-day">Thu.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" />
+                  <input className="checkbox-body" type="checkbox" value="thu"/>
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
@@ -455,9 +458,9 @@ function Business() {
               </div>
 
               <div className="availability-input">
-                <div className="availability-day">Sun</div>
+                <div className="availability-day">Fri.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" />
+                  <input className="checkbox-body" type="checkbox" value="fri"/>
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
@@ -490,9 +493,9 @@ function Business() {
               </div>
 
               <div className="availability-input">
-                <div className="availability-day">Sun</div>
+                <div className="availability-day">Sat.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" />
+                  <input className="checkbox-body" type="checkbox" value="sat"/>
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
