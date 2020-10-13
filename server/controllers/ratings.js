@@ -2,10 +2,6 @@ const express = require("express");
 const router = express.Router();
 const db = require("../src/knex.js");
 
-router.get("/test", async (req, res) => {
-  res.send("working");
-});
-
 //Get selected business's ratings
 router.get("/:business_id", async (req, res) => {
   const business_id = req.params.business_id;
@@ -40,8 +36,8 @@ router.post("/", async (req, res) => {
       comment,
     });
     res.send(ratings);
-  } catch (err) {
-    console.log("ERROR posting rating BE: ", err);
+  } catch {
+    res.sendStatus(500);
   }
 });
 
@@ -60,8 +56,8 @@ router.get("/:business_id/:email", async (req, res) => {
       user_id,
     });
     res.send(rating);
-  } catch (err) {
-    console.log("ERROR fetching rating BE: ", err);
+  } catch {
+    res.sendStatus(500);
   }
 });
 

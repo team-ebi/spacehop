@@ -15,6 +15,7 @@ import BizCard from "./components/BizCard/BizCard";
 import Success from "./components/Success/Success";
 import { onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Auth } from "aws-amplify";
+import axios from "axios";
 
 export default function App() {
   const [businesses, setBusinesses] = useState(null);
@@ -26,18 +27,38 @@ export default function App() {
   useEffect(() => {
     return onAuthUIStateChange((nextAuthState, authData) => {
       setAuthState(nextAuthState);
+      console.log("authstate:", authState);
       setUser(authData);
+      console.log("USER:", user);
     });
   }, []);
+
+  useEffect(() => {
+    async function checkDatabaseForUser() {
+      if (user && user.attributes) {
+        const email = user.attributes.email;
+        const userExists = await axios.get(`/api/users/${email}`)
+        if (!userExists.length) {
+          await axios.post("/api/users/", {
+            first_name: user.attributes.given_name,
+            last_name: user.attributes.family_name,
+            email: email,
+            phone: user.attributes.phone_number,
+          })
+          console.log("posted new user to db")
+        }
+      }
+    };
+    checkDatabaseForUser();
+  }, [user])
 
   // fetches current user at initial render
   // will remember last login
   useEffect(() => {
     async function init() {
       try {
-        const user = await Auth.currentAuthenticatedUser();
-        setUser(user);
-        console.log(user);
+        const currentUser = await Auth.currentAuthenticatedUser();
+        setUser(currentUser);
       } catch (e) {
         console.error(e);
       }
@@ -63,10 +84,9 @@ export default function App() {
                   path="/booking/:name"
                   render={(propTypes) => <BizCard props={propTypes} />}
                 />
-                
+
                 <Route path="/success" exact component={Success} />
               </Switch>
-   
             </BusinessContext.Provider>
           </AuthStateContext.Provider>
         </UserContext.Provider>
