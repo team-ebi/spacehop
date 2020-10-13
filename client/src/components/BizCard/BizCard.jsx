@@ -124,12 +124,10 @@ export default function BizCard({ props }) {
             <div id="bizcard-name">
               <h2>{biz.name}</h2>
             </div>
-            {/* insert ratings here!  */}
-            {console.log(biz)}
             <Rating
               id="bizcard-rating"
               name="half-rating-read"
-              defaultValue={biz.avg}
+              defaultValue={Math.ceil(biz.avg * 2) / 2}
               precision={0.5}
               readOnly
               size="medium"
