@@ -5,6 +5,9 @@ import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import BookingsAll from "../BookingsAll/BookingsAll";
 import axios from "axios";
 import "./Business.css";
+//miku edit below for availability section
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function Business() {
   // user email used to fetch data from db
@@ -23,6 +26,22 @@ function Business() {
   const [bizType, setBizType] = useState("");
   const [capacity, setCapacity] = useState(0);
   const [price, setPrice] = useState(0);
+
+
+  // const name = req.body.name;
+  // const address_street = req.body.address_street;
+  // const address_city = req.body.address_city;
+  // const address_zip = req.body.address_zip;
+  // const phone = req.body.phone;
+  // const business_type = req.body.business_type;
+  // const capacity = req.body.capacity;
+  // const price = req.body.price;
+
+
+  //miku edit below for availability section
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedStartTime, setSelectedStartTime] = useState("");
+  const [selectedEndTime, setSelectedEndTime] = useState("");
 
   // will either display user's biz profile or a form to register business
   const [displayBizPage, setDisplayBizPage] = useState(false);
@@ -253,18 +272,263 @@ function Business() {
                     </div>
                   )}
                 </div>
-            {/* NOTE TO MIKU!! input for availability should go here */}
               </div>
             </div>
 
+            {/* NOTE TO MIKU!! input for availability should go here */}
+            {/* datepicker will update business available  state */}
+            {/* <div className="edit-bizAvailable-container" > */}
+            <div id="availability-input-container">
+              <div className="availability-input">
+                <div className="availability-day">Sun</div>
+                <div className="availability-checkbox">
+                  <input className="checkbox-body" type="checkbox" />
+                </div>
+                <div className="availability-time">
+                  <div className="availability-startTime">
+                    <DatePicker
+                      className="avail-time-input"
+                      selected={selectedStartTime}
+                      placeholderText="Start time?"
+                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={60}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                    />
+                  </div>
+                  <div className="availability-endTime">
+                    <DatePicker
+                      className="avail-time-input"
+                      selected={selectedEndTime}
+                      placeholderText="End time?"
+                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={60}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="availability-input">
+                <div className="availability-day">Sun</div>
+                <div className="availability-checkbox">
+                  <input className="checkbox-body" type="checkbox" />
+                </div>
+                <div className="availability-time">
+                  <div className="availability-startTime">
+                    <DatePicker
+                      className="avail-time-input"
+                      selected={selectedStartTime}
+                      placeholderText="Start time?"
+                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={60}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                    />
+                  </div>
+                  <div className="availability-endTime">
+                    <DatePicker
+                      className="avail-time-input"
+                      selected={selectedEndTime}
+                      placeholderText="End time?"
+                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={60}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="availability-input">
+                <div className="availability-day">Sun</div>
+                <div className="availability-checkbox">
+                  <input className="checkbox-body" type="checkbox" />
+                </div>
+                <div className="availability-time">
+                  <div className="availability-startTime">
+                    <DatePicker
+                      className="avail-time-input"
+                      selected={selectedStartTime}
+                      placeholderText="Start time?"
+                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={60}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                    />
+                  </div>
+                  <div className="availability-endTime">
+                    <DatePicker
+                      className="avail-time-input"
+                      selected={selectedEndTime}
+                      placeholderText="End time?"
+                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={60}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="availability-input">
+                <div className="availability-day">Sun</div>
+                <div className="availability-checkbox">
+                  <input className="checkbox-body" type="checkbox" />
+                </div>
+                <div className="availability-time">
+                  <div className="availability-startTime">
+                    <DatePicker
+                      className="avail-time-input"
+                      selected={selectedStartTime}
+                      placeholderText="Start time?"
+                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={60}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                    />
+                  </div>
+                  <div className="availability-endTime">
+                    <DatePicker
+                      className="avail-time-input"
+                      selected={selectedEndTime}
+                      placeholderText="End time?"
+                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={60}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="availability-input">
+                <div className="availability-day">Sun</div>
+                <div className="availability-checkbox">
+                  <input className="checkbox-body" type="checkbox" />
+                </div>
+                <div className="availability-time">
+                  <div className="availability-startTime">
+                    <DatePicker
+                      className="avail-time-input"
+                      selected={selectedStartTime}
+                      placeholderText="Start time?"
+                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={60}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                    />
+                  </div>
+                  <div className="availability-endTime">
+                    <DatePicker
+                      className="avail-time-input"
+                      selected={selectedEndTime}
+                      placeholderText="End time?"
+                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={60}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="availability-input">
+                <div className="availability-day">Sun</div>
+                <div className="availability-checkbox">
+                  <input className="checkbox-body" type="checkbox" />
+                </div>
+                <div className="availability-time">
+                  <div className="availability-startTime">
+                    <DatePicker
+                      className="avail-time-input"
+                      selected={selectedStartTime}
+                      placeholderText="Start time?"
+                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={60}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                    />
+                  </div>
+                  <div className="availability-endTime">
+                    <DatePicker
+                      className="avail-time-input"
+                      selected={selectedEndTime}
+                      placeholderText="End time?"
+                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={60}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="availability-input">
+                <div className="availability-day">Sun</div>
+                <div className="availability-checkbox">
+                  <input className="checkbox-body" type="checkbox" />
+                </div>
+                <div className="availability-time">
+                  <div className="availability-startTime">
+                    <DatePicker
+                      className="avail-time-input"
+                      selected={selectedStartTime}
+                      placeholderText="Start time?"
+                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={60}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                    />
+                  </div>
+                  <div className="availability-endTime">
+                    <DatePicker
+                      className="avail-time-input"
+                      selected={selectedEndTime}
+                      placeholderText="End time?"
+                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={60}
+                      timeCaption="Time"
+                      dateFormat="h:mm aa"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <div id="edit-button-container">
               {/* this button will display only if user is not in editing mode */}
               {!displayInputs && (
-                <button
-                  id="edit-button"
-                  onClick={() => setDisplayInputs(true)}
-                >
+                <button id="edit-button" onClick={() => setDisplayInputs(true)}>
                   Edit
                 </button>
               )}
