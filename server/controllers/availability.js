@@ -12,6 +12,7 @@ router.get("/", async(req, res) => {
   const start_hour = req.query.start_hour;
   const end_hour = req.query.end_hour;
   
+  // Get all availability
   const availability = await db
   .select("*")
   .table("businesses")
@@ -22,7 +23,18 @@ router.get("/", async(req, res) => {
   })
   .where("start_hour", "<=", start_hour)
   .andWhere("end_hour", ">=", end_hour);
-  
+
+  // Get all business id from availability
+  const availableBusinessId = availability.map(business => business.business_id);
+
+  // Calculate average point
+  const averageRating = await db.avg("point")
+  .from("ratings")
+  .whereIn("business_id", availableBusinessId);
+
+  // Add average point to availability data
+  availability[0]["avg"] = averageRating[0]["avg"];
+
   res.send(availability);
 });
 
