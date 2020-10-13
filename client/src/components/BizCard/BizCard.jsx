@@ -79,7 +79,7 @@ export default function BizCard({ props }) {
             },
           ],
           mode: "payment",
-          successUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/profile",
+          successUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
           cancelUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
         })
         .then(() => {
