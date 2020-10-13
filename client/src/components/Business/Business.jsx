@@ -55,30 +55,31 @@ function Business() {
   // fetch user's business
   // BACKEND ENDPOINT IN PROGRESS
   useEffect(() => {
-    async function fetchUserBiz() {
-      // check if user is logged in
-      if (user) {
-        // check to see if user has a business associated with their account
-        // if so, set userBusiness to their business
-        const res = await axios.get(`/api/businesses/${user.attributes.email}`);
-        if (res.data.length > 0) {
-          setUserBusiness(res.data);
-          setSubmittedForm(false);
-          setDisplayInputs(false);
-          setDisplayBizPage(true);
-          setBusinessName(res.data.name);
-          setAddressStreet(res.data.address_street);
-          setAddressCity(res.data.address_city);
-          setAddressZip(res.data.address_zip);
-          setPhone(res.data.phone);
-          setBizType(res.data.business_type);
-          setCapacity(res.data.capacity);
-          setPrice(res.data.price);
-        }
-      }
-    }
     fetchUserBiz();
   }, []);
+
+  async function fetchUserBiz() {
+    // check if user is logged in
+    if (user) {
+      // check to see if user has a business associated with their account
+      // if so, set userBusiness to their business
+      const res = await axios.get(`/api/users/business`, {email: user.attributes.email});
+      if (res.data.length > 0) {
+        setUserBusiness(res.data);
+        setSubmittedForm(false);
+        setDisplayInputs(false);
+        setDisplayBizPage(true);
+        setBusinessName(res.data.name);
+        setAddressStreet(res.data.address_street);
+        setAddressCity(res.data.address_city);
+        setAddressZip(res.data.address_zip);
+        setPhone(res.data.phone);
+        setBizType(res.data.business_type);
+        setCapacity(res.data.capacity);
+        setPrice(res.data.price);
+      }
+    }
+  }
 
   // if the user adds their business,
   // this function should pull from component state and
@@ -154,7 +155,7 @@ function Business() {
           setAvailability([...availability, day]);
         }
       }
-      await axios.post(`${baseUrl}/api/businesses/`, {
+      const res = await axios.post(`${baseUrl}/api/businesses/`, {
         email: user.attributes.email,
         name: businessName,
         address_street: addressStreet,
@@ -164,12 +165,14 @@ function Business() {
         business_type: bizType,
         capacity: capacity,
         price: price,
+        availability: availability
       });
-      console.log("posted to db!");
+      console.log(res.data);
       setSubmittedForm(true);
       setDisplayInputs(false);
+      fetchUserBiz();
     } catch (err) {
-      alert("There was an error with your request. Please try again later!");
+      alert("There was an error with your request. Please try again later.");
     }
   }
 
