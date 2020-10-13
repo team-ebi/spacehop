@@ -26,7 +26,7 @@ function Business() {
   const [bizType, setBizType] = useState("");
   const [capacity, setCapacity] = useState(0);
   const [price, setPrice] = useState(0);
-
+  const [availability, setAvailability] = useState([]);
 
   // const name = req.body.name;
   // const address_street = req.body.address_street;
@@ -37,11 +37,22 @@ function Business() {
   // const capacity = req.body.capacity;
   // const price = req.body.price;
 
-
   //miku edit below for availability section
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedStartTime, setSelectedStartTime] = useState("");
-  const [selectedEndTime, setSelectedEndTime] = useState("");
+  const [sundayStart, setSundayStart] = useState(null);
+  const [sundayEnd, setSundayEnd] = useState(null);
+  const [mondayStart, setMondayStart] = useState(null);
+  const [mondayEnd, setMondayEnd] = useState(null);
+  const [tuesStart, setTuesStart] = useState(null);
+  const [tuesEnd, setTuesEnd] = useState(null);
+  const [wedStart, setWedStart] = useState(null);
+  const [wedEnd, setWedEnd] = useState(null);
+  const [thursStart, setThursStart] = useState(null);
+  const [thursEnd, setThursEnd] = useState(null);
+  const [friStart, setFriStart] = useState(null);
+  const [friEnd, setFriEnd] = useState(null);
+  const [satStart, setSatStart] = useState(null);
+  const [satEnd, setSatEnd] = useState(null);
+
 
   // will either display user's biz profile or a form to register business
   const [displayBizPage, setDisplayBizPage] = useState(false);
@@ -76,8 +87,6 @@ function Business() {
     fetchUserBiz();
   }, []);
 
-  
-
   // NEEDS TO BE WRITTEN
   // if the user adds their business,
   // this function should pull from component state and
@@ -106,6 +115,13 @@ function Business() {
   function addBiz() {
     setDisplayInputs(true);
     setDisplayBizPage(false);
+  }
+
+  function updateAvailableDay(e) {
+    console.log("e: ", e.target.value)
+    const availDay = e.target.value;
+    const newAvail = {availDay: {day: availDay}}
+    setAvailability([...availability, newAvail]);
   }
 
   return (
@@ -312,21 +328,27 @@ function Business() {
             {/* datepicker will update business available  state */}
             <div id="weekly-available-title">
               <p>Weekly availablility: </p>
-              </div>
+            </div>
 
             <div id="availability-input-container">
               <div className="availability-input">
                 <div className="availability-day">Sun.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" value="sun"/>
+                  <input
+                    className="checkbox-body"
+                    type="checkbox"
+                    value="Sunday"
+                    onInput={updateAvailableDay}
+                  />
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedStartTime}
+                      value={sundayStart}
                       placeholderText="Start time?"
-                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      key="Sunday"
+                      onChange={(time) => setSundayStart(time)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -337,9 +359,9 @@ function Business() {
                   <div className="availability-endTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedEndTime}
+                      selected={sundayEnd}
                       placeholderText="End time?"
-                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      onChange={(endTime) => setSundayEnd(endTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -353,15 +375,20 @@ function Business() {
               <div className="availability-input">
                 <div className="availability-day">Mon.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" value="mon"/>
+                  <input
+                    className="checkbox-body"
+                    type="checkbox"
+                    value="Monday"
+                    onInput={updateAvailableDay}
+                  />
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedStartTime}
+                      selected={mondayStart}
                       placeholderText="Start time?"
-                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      onChange={(time) => setMondayStart(time)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -372,9 +399,9 @@ function Business() {
                   <div className="availability-endTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedEndTime}
+                      selected={mondayEnd}
                       placeholderText="End time?"
-                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      onChange={(endTime) => setMondayEnd(endTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -388,15 +415,20 @@ function Business() {
               <div className="availability-input">
                 <div className="availability-day">Tue.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" value="tue"/>
+                  <input
+                    className="checkbox-body"
+                    type="checkbox"
+                    value="Tuesday"
+                    onInput={updateAvailableDay}
+                  />
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedStartTime}
+                      selected={tuesStart}
                       placeholderText="Start time?"
-                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      onChange={(startTime) => setTuesStart(startTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -407,9 +439,9 @@ function Business() {
                   <div className="availability-endTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedEndTime}
+                      selected={tuesEnd}
                       placeholderText="End time?"
-                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      onChange={(endTime) => setTuesEnd(endTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -423,15 +455,20 @@ function Business() {
               <div className="availability-input">
                 <div className="availability-day">Wed.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" value="wed"/>
+                  <input
+                    className="checkbox-body"
+                    type="checkbox"
+                    value="Wednesday"
+                    onInput={updateAvailableDay}
+                  />
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedStartTime}
+                      selected={wedStart}
                       placeholderText="Start time?"
-                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      onChange={(startTime) => setWedStart(startTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -442,9 +479,9 @@ function Business() {
                   <div className="availability-endTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedEndTime}
+                      selected={wedEnd}
                       placeholderText="End time?"
-                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      onChange={(endTime) => setWedEnd(endTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -458,15 +495,20 @@ function Business() {
               <div className="availability-input">
                 <div className="availability-day">Thu.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" value="thu"/>
+                  <input
+                    className="checkbox-body"
+                    type="checkbox"
+                    value="Thursday"
+                    onInput={updateAvailableDay}
+                  />
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedStartTime}
+                      selected={thursStart}
                       placeholderText="Start time?"
-                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      onChange={(startTime) => setThursStart(startTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -477,9 +519,9 @@ function Business() {
                   <div className="availability-endTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedEndTime}
+                      selected={thursEnd}
                       placeholderText="End time?"
-                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      onChange={(endTime) => setThursEnd(endTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -493,15 +535,20 @@ function Business() {
               <div className="availability-input">
                 <div className="availability-day">Fri.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" value="fri"/>
+                  <input
+                    className="checkbox-body"
+                    type="checkbox"
+                    value="Friday"
+                    onInput={updateAvailableDay}
+                  />
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedStartTime}
+                      selected={friStart}
                       placeholderText="Start time?"
-                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      onChange={(startTime) => setFriStart(startTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -512,9 +559,9 @@ function Business() {
                   <div className="availability-endTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedEndTime}
+                      selected={friEnd}
                       placeholderText="End time?"
-                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      onChange={(endTime) => setFriEnd(endTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -528,15 +575,20 @@ function Business() {
               <div className="availability-input">
                 <div className="availability-day">Sat.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" value="sat"/>
+                  <input
+                    className="checkbox-body"
+                    type="checkbox"
+                    value="Saturday"
+                    onInput={updateAvailableDay}
+                  />
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedStartTime}
+                      selected={satStart}
                       placeholderText="Start time?"
-                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      onChange={(startTime) => setSatStart(startTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -547,9 +599,9 @@ function Business() {
                   <div className="availability-endTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedEndTime}
+                      selected={satEnd}
                       placeholderText="End time?"
-                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      onChange={(endTime) => setSatEnd(endTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
