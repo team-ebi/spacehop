@@ -62,4 +62,13 @@ router.post("/", async (req, res) => {
   res.send("New business provider created!");
 });
 
+// Get all business data
+router.get("/data", async(req, res) => {
+  const allBusinessesInfo = await db
+  .select("*")
+  .table("businesses");
+
+  res.send(allBusinessesInfo);
+});
+
 module.exports = router;
