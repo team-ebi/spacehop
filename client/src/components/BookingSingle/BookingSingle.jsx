@@ -18,7 +18,7 @@ export default function BookingSingle({ booking, display }) {
 
   // will be updated if user submits new review
   const [rating, setRating] = useState(null);
-  const [comment, setComment] = useState(null);
+  const [comment, setComment] = useState("");
 
   
   // function will fetch user's review for this space
@@ -30,7 +30,7 @@ export default function BookingSingle({ booking, display }) {
       if (res.data.length > 0) {
         setReview(res.data);
         setRating(res.data.point);
-        setComment(res.data.comment || null);
+        setComment(res.data.comment || "");
       }
     }
   }
@@ -42,12 +42,12 @@ export default function BookingSingle({ booking, display }) {
 
   // will post review to db
   async function postReview() {
-    // await axios.post(`/api/ratings/`, {
-    //   email: user.attributes.email,
-    //   business_id: booking.business_id,
-    //   point: rating,
-    //   comment: comment
-    // });
+    await axios.post(`/api/ratings/`, {
+      email: user.attributes.email,
+      business_id: booking.business_id,
+      point: rating,
+      comment: comment
+    });
 
     // will set review state to the inputs
     setReview({
@@ -68,7 +68,7 @@ export default function BookingSingle({ booking, display }) {
         <div id="booking-date">
           <FontAwesomeIcon
             icon={faCalendarAlt}
-            size="med"
+            size="1x"
             color="darkslategrey"
           />
           {"  " + moment(booking.date).format('ll')}
@@ -76,7 +76,7 @@ export default function BookingSingle({ booking, display }) {
 
         {/* adding ':00' to start and end times */}
         <div id="booking-time">
-          <FontAwesomeIcon icon={faClock} size="med" color="darkslategrey" />
+          <FontAwesomeIcon icon={faClock} size="1x" color="darkslategrey" />
           {"  " + booking.start_hour}:00 - {booking.end_hour}:00
         </div>
       </div>
@@ -163,11 +163,11 @@ export default function BookingSingle({ booking, display }) {
             {/* text area input will show up when there is no review,
             will update comment state */}
             {!review && (
-              <textArea
+              <textarea
                 className="comment"
-                value={rating}
+                value={comment}
                 onChange={(e) => setComment(e.target.value)}
-              ></textArea>
+              ></textarea>
             )}
 
             {/* will show up if there is a review but no comment */}
