@@ -28,6 +28,7 @@
     "migrate:up": "knex migrate:up",
     "migrate:down": "knex migrate:down",
     "makeSeed": "knex seed:make",
-    "seed": "knex seed:run"
+    "seed": "knex seed:run",
+    "aws:migrate": "node aws/migration.js"
   }
 }
