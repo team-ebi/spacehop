@@ -90,15 +90,17 @@ export default function BizCard({ props }) {
     }
   }
 
+  const baseUrl = `${process.env.BACKEND_URL} || "http://localhost:4000"`
+
   useEffect(async () => {
-    let res = await axios.get(`/api/ratings/${biz.business_id}`);
+    let res = await axios.get(`${baseUrl}/api/ratings/${biz.business_id}`);
     setUserReviews(res.data);
   }, []);
 
   //post reservation to database
   async function reservationHandler() {
     await axios
-      .post("/api/reservations/", {
+      .post(`${baseUrl}/api/reservations/`, {
         email: user.attributes.email,
         date: bookingDate,
         price: biz.price,

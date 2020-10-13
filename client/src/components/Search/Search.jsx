@@ -24,6 +24,8 @@ export default function Search() {
   const [selectedEndTime, setSelectedEndTime] = useState("");
   const { businesses, setBusinesses } = useContext(BusinessContext);
 
+  const baseUrl = `${process.env.BACKEND_URL} || "http://localhost:4000"`
+
   //variable to access routes history
   const history = useHistory();
 
@@ -63,7 +65,7 @@ export default function Search() {
 
     // set data to axios.get(http://) then get filtered data
     const res = await axios.get(
-      `http://localhost:4000/api/availability/?day=${selectedDay}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`
+      `${baseUrl}/api/availability/?day=${selectedDay}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`
     );
 
     // set businesses state

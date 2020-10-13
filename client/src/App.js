@@ -33,13 +33,15 @@ export default function App() {
     });
   }, []);
 
+  const baseUrl = `${process.env.BACKEND_URL} || "http://localhost:4000"`
+
   useEffect(() => {
     async function checkDatabaseForUser() {
       if (user && user.attributes) {
         const email = user.attributes.email;
-        const userExists = await axios.get(`/api/users/${email}`)
+        const userExists = await axios.get(`${baseUrl}/api/users/${email}`)
         if (userExists.length === 0) {
-          await axios.post("/api/users/", {
+          await axios.post(`${baseUrl}/api/users/`, {
             first_name: user.attributes.given_name,
             last_name: user.attributes.family_name,
             email: email,
