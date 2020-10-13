@@ -2,8 +2,27 @@ const express = require("express");
 const router = express.Router();
 const db = require("../src/knex.js");
 
-router.get("/test", async(req, res) => {
+router.get("/test", async (req, res) => {
   res.send("working");
+});
+
+// Get business info by id with ratings
+router.get("/:id", async (req, res) => {
+  const id = req.params.id;
+
+  const averageRating = await db.avg('point')
+    .from('ratings')
+    .where('business_id', '=', id)
+
+  const business = await db
+  .select("*")
+  .table("businesses")
+  .where('id', '=', id)
+
+  //add average point to business data
+  business[0]['avg']=averageRating[0]['avg']
+
+  res.send(business[0]);
 });
 
 // Create business account by email
@@ -69,19 +88,6 @@ router.get("/data", async(req, res) => {
   .table("businesses");
 
   res.send(allBusinessesInfo);
-});
-
-// Get data by business id
-router.get("/:businesses_id", async(req, res) => {
-  const id = req.params.businesses_id;
-  const businessInfo = await db
-  .select("*")
-  .table("businesses")
-  .where({
-    id
-  });
-
-  res.send(businessInfo);
 });
 
 module.exports = router;
