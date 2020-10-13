@@ -14,15 +14,12 @@ router.post("/", async (req, res) => {
   const phone = req.body.phone;
 
   try {
-    const register = await db
-      .select("*")
-      .table("users")
-      .insert({
-        first_name,
-        last_name,
-        email,
-        phone
-      });
+    const register = await db.select("*").table("users").insert({
+      first_name,
+      last_name,
+      email,
+      phone,
+    });
 
     res.send("New user created!");
   } catch {
@@ -34,9 +31,7 @@ router.post("/", async (req, res) => {
 //Get all users
 router.get("/data", async (req, res) => {
   try {
-    const users = await db
-      .select("*")
-      .table("users");
+    const users = await db.select("*").table("users");
 
     res.send(users);
   } catch {
@@ -45,17 +40,12 @@ router.get("/data", async (req, res) => {
   }
 });
 
-//Get selected user's info 
-router.get("/:user_id", async (req, res) => {
-  const id = req.params.user_id;
+//Get selected user's info
+router.get("/:email", async (req, res) => {
   try {
-    const user = await db
-      .select("*")
-      .table("users")
-      .where({
-        id
-      })
-
+    const email = req.params.email;
+    const user = await db.select("*").table("users").where("email", email);
+    console.log(user)
     res.send(user);
   } catch {
     //If error occur, send 500 status code
@@ -63,26 +53,26 @@ router.get("/:user_id", async (req, res) => {
   }
 });
 
-
-//Edit selected user's info 
+//Edit selected user's info
 router.patch("/:user_id", async (req, res) => {
   const id = req.params.user_id;
 
   //object to store column to change
-  let columnToChange={};
+  let columnToChange = {};
 
-  if(req.body.first_name) columnToChange["first_name"]=req.body.first_name;
-  if(req.body.last_name) columnToChange["last_name"]=req.body.last_name;
-  if(req.body.email) columnToChange["email"]=req.body.email;
-  if(req.body.phone) columnToChange["phone"]=req.body.phone;
+  if (req.body.first_name) columnToChange["first_name"] = req.body.first_name;
+  if (req.body.last_name) columnToChange["last_name"] = req.body.last_name;
+  if (req.body.email) columnToChange["email"] = req.body.email;
+  if (req.body.phone) columnToChange["phone"] = req.body.phone;
 
   try {
     const user = await db
       .select("*")
       .table("users")
       .where({
-        id
-      }).update(columnToChange)
+        id,
+      })
+      .update(columnToChange);
     res.send("Update succeeded");
   } catch {
     //If error occur, send 500 status code
@@ -90,15 +80,16 @@ router.patch("/:user_id", async (req, res) => {
   }
 });
 
-//Delete selected user's info 
+//Delete selected user's info
 router.delete("/:user_id", async (req, res) => {
   const id = req.params.user_id;
   try {
     await db
       .table("users")
       .where({
-        id
-      }).del()
+        id,
+      })
+      .del();
     res.send("Delete succeeded");
   } catch {
     //If error occur, send 500 status code

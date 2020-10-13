@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import Auth from "../Auth/Auth";
 import "./BizCard.css";
-import "../Nav/Nav.css"
+import "../Nav/Nav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import {
@@ -16,12 +16,13 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import DatePicker from "react-datepicker";
 import logo from "../../images/logo.png";
+import Rating from "@material-ui/lab/Rating";
 
 require("dotenv").config();
 
 export default function BizCard({ props }) {
   const { user } = useContext(UserContext);
-  
+
   // state will be updated when user selects date and time for booking
   const [bookingDate, setBookingDate] = useState(null);
   const [bookingStartTime, setBookingStartTime] = useState(null);
@@ -37,8 +38,9 @@ export default function BizCard({ props }) {
 
   //url for server
 
-  const url = process.env.BACKEND_URL || "http://localhost:4000/api/stripecheckout/checkoutsession"
-
+  const url =
+    process.env.BACKEND_URL ||
+    "http://localhost:4000/api/stripecheckout/checkoutsession";
 
   //publishable stripe API key
   const stripePromise = loadStripe(
@@ -65,23 +67,25 @@ export default function BizCard({ props }) {
       setDisplayLogin(true);
       return;
     }
-    try{
+    try {
       const stripe = await stripePromise;
-      const { error } = await stripe.redirectToCheckout({
-        lineItems: [
-          {
-            price:  biz.stripe_price_id, 
-            quantity: 1,
-          },
-        ],
-        mode: "payment",
-        successUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/profile",
-        cancelUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
-      }).then(()=>{
-        reservationHandler()
-      });
-    } catch(error) {
-      alert('Payment Error')
+      const { error } = await stripe
+        .redirectToCheckout({
+          lineItems: [
+            {
+              price: biz.stripe_price_id,
+              quantity: 1,
+            },
+          ],
+          mode: "payment",
+          successUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/profile",
+          cancelUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
+        })
+        .then(() => {
+          reservationHandler();
+        });
+    } catch (error) {
+      alert("Payment Error");
     }
   }
 
@@ -118,8 +122,17 @@ export default function BizCard({ props }) {
           </div>
           <div>
             <div id="bizcard-name">
+              {console.log(biz)}
               <h2>{biz.name}</h2>
             </div>
+            <Rating
+              id="bizcard-rating"
+              name="half-rating-read"
+              defaultValue={Math.ceil(biz.avg * 2) / 2}
+              precision={0.5}
+              readOnly
+              size="medium"
+            />
             <div id="bizcard-location-cell">
               <div id="info-cell">
                 <div id="bizcard-location">
@@ -134,7 +147,6 @@ export default function BizCard({ props }) {
                     {biz.address_city}, {biz.address_zip}
                   </div>
                 </div>
-
                 <div id="bizcard-phone">
                   <FontAwesomeIcon
                     className="icon"
@@ -236,8 +248,16 @@ export default function BizCard({ props }) {
                     Book
                   </button>
                 </div>
-                {pickDate && <div className="book-message">Please pick a time and date.</div>}
-                {pickFuture && <div className="book-message">Please pick a date in the future.</div>}
+                {pickDate && (
+                  <div className="book-message">
+                    Please pick a time and date.
+                  </div>
+                )}
+                {pickFuture && (
+                  <div className="book-message">
+                    Please pick a date in the future.
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -245,9 +265,9 @@ export default function BizCard({ props }) {
       </div>
       {/* if user tries to book without logging in, Auth component will render.
         pass props to determine which form gets rendered in Auth */}
-      {(displayLogin) && (
+      {displayLogin && (
         <div className="auth-window-tobook">
-          <Auth login={displayLogin}/>
+          <Auth login={displayLogin} />
         </div>
       )}
     </div>

@@ -106,10 +106,6 @@ nav,
 section {
   display: block;
 }
-body {
-  line-height: 1;
-  font-family: "Roboto", sans-serif;
-}
 ol,
 ul {
   list-style: none;
@@ -128,6 +124,13 @@ q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+/* ^^^^ reset */
+
+body {
+  line-height: 20px;
+  font-family: "Roboto", sans-serif;
+  background-color: rgb(250, 238, 238);
 }
 h1 {
   font-size: 40px;
@@ -153,9 +156,22 @@ amplify-sign-out:hover {
 .button {
   min-width: 10px;
 }
-/* reset^^^ */
+
 @media (max-width: 700px) {
-  .button {
-    min-width: 0px;
+  body {
+    background: #efefbb; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to bottom,
+      rgb(230, 228, 245),
+      #efefbb
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+      to bottom,
+      rgb(230, 228, 245),
+      #efefbb
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+  h1 {
+    margin: 0;
   }
 }

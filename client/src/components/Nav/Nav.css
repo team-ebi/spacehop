@@ -3,7 +3,7 @@ nav {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 9000000
+  z-index: 100
 }
 #navbar {
   display: flex;
@@ -81,7 +81,7 @@ h2 {
   justify-content: center;
   position: fixed;
   background-color: transparent;
-  z-index: 100;
+  z-index: 10000000000000;
   margin-left: 35%;
   border-radius: 20px;
 }
@@ -109,7 +109,7 @@ h2 {
     top: auto;
     bottom: 0;
     position: fixed;
-    z-index: 100000;
+    z-index: 100;
     width: 100%;
   }
   #navbar {
