@@ -9,7 +9,7 @@ const reservationsAPI = require("../controllers/reservations");
 const stripecheckoutAPI = require("../controllers/stripecheckout");
 const ratingsAPI = require("../controllers/ratings");
 
-const awsTest = require("../controllers/awsTest");
+// const awsTest = require("../controllers/awsTest");
 
 const setupServer = () => {
     app.use(express.json());
@@ -22,7 +22,7 @@ const setupServer = () => {
     app.use("/api/ratings", ratingsAPI);
     app.use("/api/stripecheckout", stripecheckoutAPI);
 
-    app.use("/api/awstest", awsTest);
+    // app.use("/api/awstest", awsTest);
 
     return app;
 };
