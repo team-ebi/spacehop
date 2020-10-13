@@ -21,11 +21,13 @@ export default function BookingSingle({ booking, display }) {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
+  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000"
+
   // function will fetch user's review for this space
   async function fetchReview() {
     if (user) {
       const res = await axios.get(
-        `api/ratings/${booking.business_id}/${user.attributes.email}`
+        `${baseUrl}/api/ratings/${booking.business_id}/${user.attributes.email}`
       );
       if (res.data.length > 0) {
         setReview(res.data[0]);
@@ -42,7 +44,7 @@ export default function BookingSingle({ booking, display }) {
 
   // will post review to db
   async function postReview() {
-    await axios.post(`/api/ratings/`, {
+    await axios.post(`${baseUrl}/api/ratings/`, {
       email: user.attributes.email,
       business_id: booking.business_id,
       point: rating,

@@ -19,12 +19,14 @@ export default function FutureBookings() {
   // manage state of information about future bookings
   const [futureBookingInfo, setFutureBookings] = useState({});
 
+  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000"
+
   // will run when component is first rendered
   useEffect(() => {
     async function fetchBookings() {
       try {
         if (user) {
-          const reservations = await axios.get(`/api/reservations/${user.attributes.email}`);
+          const reservations = await axios.get(`${baseUrl}/api/reservations/${user.attributes.email}`);
           console.log("res: ", reservations);
           setFutureBookings(reservations.data);
         }
