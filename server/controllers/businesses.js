@@ -8,7 +8,7 @@ router.get("/test", async(req, res) => {
 
 // Create business account by email
 /*
-Exmaple JSON request to create business account
+Example JSON request to create business account
 {
   "email": "potato@dog.com",
   "name": "Potato Cafe",
