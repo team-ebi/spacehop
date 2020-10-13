@@ -13,6 +13,7 @@ import { UserContext } from "../useContext/UserContext";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import logo from "../../images/logo.png";
+require("dotenv").config();
 
 export default function Search() {
   const [location, setLocation] = useState("");
