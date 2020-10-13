@@ -40,6 +40,11 @@ router.get("/data", async (req, res) => {
   }
 });
 
+// Check if user is business account,
+// If business acccount, send joined business, user and reservation table
+// If not send empty array
+
+
 //Get selected user's info
 router.get("/:email", async (req, res) => {
   try {
