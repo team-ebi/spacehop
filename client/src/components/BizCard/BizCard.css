@@ -23,7 +23,7 @@
 }
 #bizcard-name {
   padding-top: 30px;
-  padding-bottom: 20px;
+  padding-bottom: 2px;
   width: 100%;
 }
 #bizcard-image {
@@ -33,7 +33,15 @@
   border-radius: 20px;
   box-shadow: 0 4px 8px lightgrey;
 }
-#bizcard-location, 
+
+#bizcard-rating{
+  line-height: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+#bizcard-location,
 #bizcard-type,
 #bizcard-price,
 #bizcard-phone,
