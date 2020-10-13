@@ -30,6 +30,8 @@ router.post("/checkoutsession", async (req, res) => {
     success_url: "http://localhost:3000/success",
     cancel_url: "https://example.com/cancel",
   });
+  
+  console.log({id: session.id})
   res.json({ id: session.id });
 });
 
