@@ -9,7 +9,7 @@ const reservationsAPI = require("../controllers/reservations");
 const stripecheckoutAPI = require("../controllers/stripecheckout");
 const ratingsAPI = require("../controllers/ratings");
 
-const awsTest = require("../controllers/awstest");
+const awsTest = require("../controllers/awsTest");
 
 const setupServer = () => {
     app.use(express.json());
