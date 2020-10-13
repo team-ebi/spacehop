@@ -1,9 +1,9 @@
 exports.up = function (knex) {
   return knex.schema
   .dropTableIfExists("availability")
+  .dropTableIfExists("reservations")
   .dropTableIfExists("businesses")
   .dropTableIfExists("users")
-  .dropTableIfExists("reservations")
   .then(() => {
     return knex.schema
       .createTable("businesses", (table) => {
