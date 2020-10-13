@@ -1,4 +1,5 @@
 import React from "react";
+import Team from "../Team/Team";
 import "./About.css";
 import logo from "../../images/logo.png";
 
@@ -11,6 +12,7 @@ export default function About() {
       <header>
         <h1>about</h1>
       </header>
+      <Team/>
     </div>
   );
 }

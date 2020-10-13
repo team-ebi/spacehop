@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 import {
   AmplifySignIn,
   AmplifyAuthenticator,
   AmplifySignUp,
 } from "@aws-amplify/ui-react";
-import { UserContext } from "../useContext/UserContext";
-import "./Auth.css";
 
 export default function Auth({ login, signup }) {
   return (
