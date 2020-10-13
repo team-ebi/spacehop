@@ -98,10 +98,8 @@ export default function Nav() {
 
   async function signoutHandler() {
     await AuthUser.signOut();
-    await onAuthUIStateChange((nextAuthState, authData) => {
-      setAuthState(nextAuthState);
-      setUser(authData);
-    });
+    setAuthState(null);
+    setUser(null);
     return history.push("/");
   }
 
@@ -155,7 +153,7 @@ export default function Nav() {
             )}
 
             {/* only display profile button if user IS logged in */}
-            {(user && user.attributes && (authState === "signedin" || authState === "verifyContact")) && (
+            {(user && user.attributes) && (
               <button className="menu-item" onClick={profileHandler}>
                 Profile
               </button>
@@ -165,14 +163,14 @@ export default function Nav() {
             </button>
 
             {/* only display profile button if user IS logged in */}
-            {(user && user.attributes && (authState === "signedin" || authState === "verifyContact")) && (
+            {(user && user.attributes) && (
               <button className="menu-item" onClick={businessHandler}>
                 Business
               </button>
             )}
 
             {/* only display signout button if user IS logged in */}
-            {(user && user.attributes || (authState === "signedin" || authState === "verifyContact")) && (
+            {(user && user.attributes) && (
               <button className="menu-item" onClick={signoutHandler}>
                 Log out
               </button>
@@ -198,7 +196,7 @@ export default function Nav() {
             )}
 
             {/* only display profile button if user IS logged in */}
-            {user && user.attributes && (authState === "signedin" || authState === "verifyContact") && (
+            {user && user.attributes && (
               <button className="menu-item" onClick={profileHandler}>
                 Profile
               </button>
@@ -208,14 +206,14 @@ export default function Nav() {
             </button>
 
             {/* only display profile button if user IS logged in */}
-            {user && user.attributes && (authState === "signedin" || authState === "verifyContact") && (
+            {user && user.attributes && (
               <button className="menu-item" onClick={businessHandler}>
                 Business Page
               </button>
             )}
 
             {/* only display signout button if user IS logged in */}
-            {(user && user.attributes || (authState === "signedin" || authState === "verifyContact")) && (
+            {(user && user.attributes) (
               <button className="menu-item" onClick={signoutHandler}>
                 Log out
               </button>
