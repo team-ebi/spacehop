@@ -71,7 +71,7 @@ exports.seed = function(knex) {
           business_type: "Cafe",
           capacity: 50,
           price: 50000,
-          user_id:5,
+          user_id:6,
           stripe_price_id: 'price_1HbJpnCjwFEQ1pgctBSWj8RX'
         },
         {
@@ -83,7 +83,7 @@ exports.seed = function(knex) {
           business_type: "Cafe",
           capacity: 60,
           price: 60000,
-          user_id:5,
+          user_id:7,
           stripe_price_id: 'price_1HbJqfCjwFEQ1pgcOxl1Ihpv'
         }
       ]);
