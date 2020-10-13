@@ -17,6 +17,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import DatePicker from "react-datepicker";
 import logo from "../../images/logo.png";
+import { UserContext } from "../useContext/UserContext";
 
 require("dotenv").config();
 
@@ -24,12 +25,16 @@ export default function BizCard({ props }) {
   const [bookingDate, setBookingDate] = useState("");
   const [bookingStartTime, setBookingStartTime] = useState("");
   const [bookingEndTime, setBookingEndTime] = useState("");
+  const { businesses, setBusiness } = useContext(BusinessContext);
+  const { user, setUser } = useContext(UserContext);
 
   // props passed to router's useHistory
   const biz = props.location.state.state;
 
   //url for server
-  const url = process.env.AWS_BACKEND_URL || "http://localhost:4000/api/stripecheckout/checkoutsession"
+  const url =
+    process.env.AWS_BACKEND_URL ||
+    "http://localhost:4000/api/stripecheckout/checkoutsession";
 
   //publishable stripe API key
   const stripePromise = loadStripe(
@@ -38,19 +43,41 @@ export default function BizCard({ props }) {
 
   //handles stripe checkout and redirects to checkout page
   async function stripeCheckoutHandler() {
-    const stripe = await stripePromise;
-    const response = await fetch(
-     url,
-      { method: "POST" }
-    );
-    const session = await response.json();
-    const result = await stripe.redirectToCheckout({
-      sessionId: session.id,
-    });
-
-    if (result.error) {
-      alert("Payment Error");
+    try{
+      const stripe = await stripePromise;
+      const { error } = await stripe.redirectToCheckout({
+        lineItems: [
+          {
+            price:  biz.stripe_price_id, 
+            quantity: 1,
+          },
+        ],
+        mode: "payment",
+        successUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/profile",
+        cancelUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
+      }).then(()=>{
+        reservationHandler()
+      });
+    } catch(error) {
+      alert('Payment Error')
     }
+  }
+
+  //post reservation to database
+  async function reservationHandler() {
+    await axios
+      .post("/api/reservations/", {
+        email: user.attributes.email,
+        date: bookingDate,
+        price: biz.price,
+        business_id: biz.id,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   return (
