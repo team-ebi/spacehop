@@ -10,8 +10,8 @@ import Profile from "./components/Profile/Profile";
 import List from "./components/List/List";
 import About from "./components/About/About";
 import Team from "./components/Team/Team";
+import Business from "./components/Business/Business";
 import BizCard from "./components/BizCard/BizCard";
-import Data from "./data/businesses";
 import Success from "./components/Success/Success";
 import { onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Auth } from "aws-amplify";
@@ -45,7 +45,6 @@ export default function App() {
     init();
   }, []);
 
-
   return (
     <BrowserRouter>
       <div className="App">
@@ -53,19 +52,21 @@ export default function App() {
           <AuthStateContext.Provider value={{ authState, setAuthState }}>
             <BusinessContext.Provider value={{ businesses, setBusinesses }}>
               <Nav />
-
               <Switch>
                 <Route path="/" exact component={Search} />
                 <Route path="/profile" exact component={Profile} />
                 <Route path="/about" exact component={About} />
                 <Route path="/team" exact component={Team} />
+                <Route path="/business" exact component={Business} />
                 <Route path="/list" exact component={List} />
                 <Route
                   path="/booking/:name"
                   render={(propTypes) => <BizCard props={propTypes} />}
                 />
+                
                 <Route path="/success" exact component={Success} />
               </Switch>
+   
             </BusinessContext.Provider>
           </AuthStateContext.Provider>
         </UserContext.Provider>

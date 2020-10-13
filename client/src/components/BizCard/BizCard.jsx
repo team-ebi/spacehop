@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
-import Data from "../../data/businesses";
-import List from "../List/List";
+import Auth from "../Auth/Auth";
 import "./BizCard.css";
+import "../Nav/Nav.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import {
@@ -11,8 +11,7 @@ import {
   faMapPin,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
-// useContext
-import { BusinessContext } from "../useContext/BusinessContext";
+import { UserContext } from "../useContext/UserContext";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import DatePicker from "react-datepicker";
@@ -21,36 +20,86 @@ import logo from "../../images/logo.png";
 require("dotenv").config();
 
 export default function BizCard({ props }) {
-  const [bookingDate, setBookingDate] = useState("");
-  const [bookingStartTime, setBookingStartTime] = useState("");
-  const [bookingEndTime, setBookingEndTime] = useState("");
+  const { user } = useContext(UserContext);
+  
+  // state will be updated when user selects date and time for booking
+  const [bookingDate, setBookingDate] = useState(null);
+  const [bookingStartTime, setBookingStartTime] = useState(null);
+  const [bookingEndTime, setBookingEndTime] = useState(null);
+
+  // these are just to conditionally render elements
+  const [displayLogin, setDisplayLogin] = useState(false);
+  const [pickDate, setPickDate] = useState(false);
+  const [pickFuture, setPickFuture] = useState(false);
 
   // props passed to router's useHistory
   const biz = props.location.state.state;
 
   //url for server
-  const url = process.env.AWS_BACKEND_URL || "http://localhost:4000/api/stripecheckout/checkoutsession"
+
+  const url = process.env.BACKEND_URL || "http://localhost:4000/api/stripecheckout/checkoutsession"
+
 
   //publishable stripe API key
   const stripePromise = loadStripe(
     "pk_test_51HU0G2CjwFEQ1pgcvOchnwo0Gsb2seN5a3xGz8Q2iCvlVUjHkSCV7UZHy3NfeobxNNMeGwmiosi3UBxjbKcSjGZ000hENfQW0F"
   );
 
-  //handles stripe checkout and redirects to checkout page
+  // will not run if user hasn't selected date or date is in the past
+  // if user is not logged in, login page will be displayed
+  // handles stripe checkout and redirects to checkout page
+  // will post new reservation to db
   async function stripeCheckoutHandler() {
-    const stripe = await stripePromise;
-    const response = await fetch(
-     url,
-      { method: "POST" }
-    );
-    const session = await response.json();
-    const result = await stripe.redirectToCheckout({
-      sessionId: session.id,
-    });
-
-    if (result.error) {
-      alert("Payment Error");
+    if (!bookingDate || !bookingStartTime || !bookingEndTime) {
+      setPickDate(true);
+      setPickFuture(false);
+      return;
     }
+    const today = new Date();
+    if (bookingDate < today) {
+      setPickDate(false);
+      setPickFuture(true);
+      return;
+    }
+    if (!user || !user.attributes) {
+      setDisplayLogin(true);
+      return;
+    }
+    try{
+      const stripe = await stripePromise;
+      const { error } = await stripe.redirectToCheckout({
+        lineItems: [
+          {
+            price:  biz.stripe_price_id, 
+            quantity: 1,
+          },
+        ],
+        mode: "payment",
+        successUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/profile",
+        cancelUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
+      }).then(()=>{
+        reservationHandler()
+      });
+    } catch(error) {
+      alert('Payment Error')
+    }
+  }
+
+  //post reservation to database
+  async function reservationHandler() {
+    await axios
+      .post("/api/reservations/", {
+        email: user.attributes.email,
+        date: bookingDate,
+        price: biz.price,
+        business_id: biz.id,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   return (
@@ -150,7 +199,7 @@ export default function BizCard({ props }) {
                   <div id="booking-time-container">
                     <div className="booking-time single-time-container">
                       <DatePicker
-                        className="booking-date-input time"
+                        className="booking-date-input booking-time"
                         selected={bookingStartTime}
                         placeholderText="Start time?"
                         onChange={(startTime) => setBookingStartTime(startTime)}
@@ -163,7 +212,7 @@ export default function BizCard({ props }) {
                     </div>
                     <div className="booking-time single-time-container">
                       <DatePicker
-                        className="booking-date-input time"
+                        className="booking-date-input booking-time"
                         selected={bookingEndTime}
                         placeholderText="End time?"
                         onChange={(endTime) => setBookingEndTime(endTime)}
@@ -187,11 +236,20 @@ export default function BizCard({ props }) {
                     Book
                   </button>
                 </div>
+                {pickDate && <div className="book-message">Please pick a time and date.</div>}
+                {pickFuture && <div className="book-message">Please pick a date in the future.</div>}
               </div>
             </div>
           </div>
         </Elements>
       </div>
+      {/* if user tries to book without logging in, Auth component will render.
+        pass props to determine which form gets rendered in Auth */}
+      {(displayLogin) && (
+        <div className="auth-window-tobook">
+          <Auth login={displayLogin}/>
+        </div>
+      )}
     </div>
   );
 }

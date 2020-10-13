@@ -11,9 +11,6 @@ import logo from "../../images/logo.png";
 export default function Team() {
   return (
     <div id="team-container">
-      <div className="corner-logo-container">
-        <img className="corner-logo" src={logo}></img>
-      </div>
       <header>
         <h1>meet the team</h1>
       </header>
