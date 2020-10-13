@@ -28,15 +28,6 @@ function Business() {
   const [price, setPrice] = useState(0);
   const [availability, setAvailability] = useState([]);
 
-  // const name = req.body.name;
-  // const address_street = req.body.address_street;
-  // const address_city = req.body.address_city;
-  // const address_zip = req.body.address_zip;
-  // const phone = req.body.phone;
-  // const business_type = req.body.business_type;
-  // const capacity = req.body.capacity;
-  // const price = req.body.price;
-
   //miku edit below for availability section
   const [sundayStart, setSundayStart] = useState(null);
   const [sundayEnd, setSundayEnd] = useState(null);
@@ -53,10 +44,10 @@ function Business() {
   const [satStart, setSatStart] = useState(null);
   const [satEnd, setSatEnd] = useState(null);
 
-
   // will either display user's biz profile or a form to register business
   const [displayBizPage, setDisplayBizPage] = useState(false);
   const [displayInputs, setDisplayInputs] = useState(false);
+  const [submittedForm, setSubmittedForm] = useState(false);
 
   // will connect to aws or default to loalhost
   const baseUrl = process.env.BACKEND_URL || "http://localhost:4000";
@@ -72,6 +63,8 @@ function Business() {
         const res = await axios.get(`/api/businesses/${user.attributes.email}`);
         if (res.data.length > 0) {
           setUserBusiness(res.data);
+          setSubmittedForm(false);
+          setDisplayInputs(false);
           setDisplayBizPage(true);
           setBusinessName(res.data.name);
           setAddressStreet(res.data.address_street);
@@ -87,12 +80,80 @@ function Business() {
     fetchUserBiz();
   }, []);
 
-  // NEEDS TO BE WRITTEN
   // if the user adds their business,
   // this function should pull from component state and
   // patch to db
   async function updateBizTable() {
     try {
+      for (const day of availability) {
+        if (day["day"] === "Monday" && !day["start_hour"] && !day["end_hour"]) {
+          const startHour = new Date(mondayStart).getHours();
+          const endHour = new Date(mondayEnd).getHours();
+          day["start_hour"] = startHour;
+          day["end_hour"] = endHour;
+          setAvailability([...availability, day]);
+        } else if (
+          day["day"] === "Tuesday" &&
+          !day["start_hour"] &&
+          !day["end_hour"]
+        ) {
+          const startHour = new Date(tuesStart).getHours();
+          const endHour = new Date(tuesEnd).getHours();
+          day["start_hour"] = startHour;
+          day["end_hour"] = endHour;
+          setAvailability([...availability, day]);
+        } else if (
+          day["day"] === "Wednesday" &&
+          !day["start_hour"] &&
+          !day["end_hour"]
+        ) {
+          const startHour = new Date(wedStart).getHours();
+          const endHour = new Date(wedEnd).getHours();
+          day["start_hour"] = startHour;
+          day["end_hour"] = endHour;
+          setAvailability([...availability, day]);
+        } else if (
+          day["day"] === "Thursday" &&
+          !day["start_hour"] &&
+          !day["end_hour"]
+        ) {
+          const startHour = new Date(thursStart).getHours();
+          const endHour = new Date(thursEnd).getHours();
+          day["start_hour"] = startHour;
+          day["end_hour"] = endHour;
+          setAvailability([...availability, day]);
+        } else if (
+          day["day"] === "Friday" &&
+          !day["start_hour"] &&
+          !day["end_hour"]
+        ) {
+          const startHour = new Date(friStart).getHours();
+          const endHour = new Date(friEnd).getHours();
+          day["start_hour"] = startHour;
+          day["end_hour"] = endHour;
+          setAvailability([...availability, day]);
+        } else if (
+          day["day"] === "Saturday" &&
+          !day["start_hour"] &&
+          !day["end_hour"]
+        ) {
+          const startHour = new Date(satStart).getHours();
+          const endHour = new Date(satEnd).getHours();
+          day["start_hour"] = startHour;
+          day["end_hour"] = endHour;
+          setAvailability([...availability, day]);
+        } else if (
+          day["day"] === "Sunday" &&
+          !day["start_hour"] &&
+          !day["end_hour"]
+        ) {
+          const startHour = new Date(sundayStart).getHours();
+          const endHour = new Date(sundayEnd).getHours();
+          day["start_hour"] = startHour;
+          day["end_hour"] = endHour;
+          setAvailability([...availability, day]);
+        }
+      }
       await axios.post(`${baseUrl}/api/businesses/`, {
         email: user.attributes.email,
         name: businessName,
@@ -104,6 +165,9 @@ function Business() {
         capacity: capacity,
         price: price,
       });
+      console.log("posted to db!");
+      setSubmittedForm(true);
+      setDisplayInputs(false);
     } catch (err) {
       alert("There was an error with your request. Please try again later!");
     }
@@ -118,9 +182,8 @@ function Business() {
   }
 
   function updateAvailableDay(e) {
-    console.log("e: ", e.target.value)
     const availDay = e.target.value;
-    const newAvail = {availDay: {day: availDay}}
+    const newAvail = { day: availDay };
     setAvailability([...availability, newAvail]);
   }
 
@@ -638,11 +701,18 @@ function Business() {
                 </button>
               </div>
             )}
+
+            {submittedForm && (
+              <div id="thanks">
+                Thank you for registering your business. We will reach out to
+                soon to complete the verification process.
+              </div>
+            )}
           </main>
           <hr id="profile-divider"></hr>
-          <section>
+          {/* <section>
             <BookingsAll />
-          </section>
+          </section> */}
         </div>
       )}
 
