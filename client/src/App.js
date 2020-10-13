@@ -54,6 +54,7 @@ export default function App() {
       const userCheck = await axios.get(`http://localhost:4000/api/users/`, {
         email: user.attributes.email,
       })
+      console.log(userCheck)
       //if not post user data to db
       if(!userCheck) {
         await axios.post('http://localhost:4000/api/users/', {
