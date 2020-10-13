@@ -60,6 +60,10 @@
   flex-flow: row nowrap;
   width: 800px;
 }
+#reviews-header{
+  padding-top: 20px;
+  padding-bottom: 15px;
+}
 #info-cell {
   width: 50%;
   border-right: solid lightgrey;
