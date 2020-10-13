@@ -26,18 +26,19 @@ export default function App() {
   useEffect(() => {
     return onAuthUIStateChange((nextAuthState, authData) => {
       setAuthState(nextAuthState);
+      console.log("authstate:", authState);
       setUser(authData);
+      console.log("USER:", user);
     });
-  }, []);
+  });
 
   // fetches current user at initial render
   // will remember last login
   useEffect(() => {
     async function init() {
       try {
-        const user = await Auth.currentAuthenticatedUser();
-        setUser(user);
-        console.log(user);
+        const currentUser = await Auth.currentAuthenticatedUser();
+        setUser(currentUser);
       } catch (e) {
         console.error(e);
       }
@@ -63,10 +64,9 @@ export default function App() {
                   path="/booking/:name"
                   render={(propTypes) => <BizCard props={propTypes} />}
                 />
-                
+
                 <Route path="/success" exact component={Success} />
               </Switch>
-   
             </BusinessContext.Provider>
           </AuthStateContext.Provider>
         </UserContext.Provider>
