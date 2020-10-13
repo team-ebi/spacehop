@@ -20,7 +20,7 @@ export default function BookingSingle({ booking, display }) {
   const [rating, setRating] = useState(null);
   const [comment, setComment] = useState("");
 
-  const baseUrl = `${process.env.BACKEND_URL} || "http://localhost:4000"`
+  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000"
 
   // function will fetch user's review for this space
   async function fetchReview() {

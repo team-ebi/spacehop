@@ -33,7 +33,7 @@ export default function App() {
     });
   }, []);
 
-  const baseUrl = `${process.env.BACKEND_URL} || "http://localhost:4000"`
+  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000"
 
   useEffect(() => {
     async function checkDatabaseForUser() {

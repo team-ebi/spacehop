@@ -19,7 +19,7 @@ export default function FutureBookings() {
   // manage state of information about future bookings
   const [futureBookingInfo, setFutureBookings] = useState({});
 
-  const baseUrl = `${process.env.BACKEND_URL} || "http://localhost:4000"`
+  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000"
 
   // will run when component is first rendered
   useEffect(() => {

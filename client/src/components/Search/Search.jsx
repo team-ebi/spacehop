@@ -24,7 +24,7 @@ export default function Search() {
   const [selectedEndTime, setSelectedEndTime] = useState("");
   const { businesses, setBusinesses } = useContext(BusinessContext);
 
-  const baseUrl = `${process.env.BACKEND_URL} || "http://localhost:4000"`
+  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000"
 
   //variable to access routes history
   const history = useHistory();
