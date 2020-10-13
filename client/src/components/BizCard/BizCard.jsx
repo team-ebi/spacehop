@@ -36,9 +36,8 @@ export default function BizCard({ props }) {
   const biz = props.location.state.state;
 
   //url for server
-  const url =
-    process.env.AWS_BACKEND_URL ||
-    "http://localhost:4000/api/stripecheckout/checkoutsession";
+  const baseUrl = `${process.env.BACKEND_URL} || "http://localhost:4000"`
+  const targetUrl = baseUrl + "/api/stripecheckout/checkoutsession"
 
   //publishable stripe API key
   const stripePromise = loadStripe(

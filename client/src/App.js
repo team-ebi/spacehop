@@ -15,14 +15,13 @@ import BizCard from "./components/BizCard/BizCard";
 import Success from "./components/Success/Success";
 import { onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Auth } from "aws-amplify";
-import axios from 'axios';
+import axios from "axios";
 
 export default function App() {
   const [businesses, setBusinesses] = useState();
   const [authState, setAuthState] = useState();
   const [user, setUser] = useState(null);
-  const { checkUser, setCheckUser } = useContext(UserContext);
-
+  // const { checkUser, setCheckUser } = useContext(UserContext);
 
   // checks if user is signed in and fetches user data
   // whenever authUI state changes
@@ -46,26 +45,6 @@ export default function App() {
       }
     }
     init();
-
-
-    // check if user exists in db
-    async function checkUser() {
-      const user = await Auth.currentAuthenticatedUser();
-      const userCheck = await axios.get(`http://localhost:4000/api/users/`, {
-        email: user.attributes.email,
-      })
-      console.log(userCheck)
-      //if not post user data to db
-      if(!userCheck) {
-        await axios.post('http://localhost:4000/api/users/', {
-           first_name: user.attributes.first_name,
-           last_name : user.attributes.last_name,
-           email : user.attributes.email,
-           phone : user.attributes.phone,
-        })
-      }
-    }
-    checkUser()
   }, []);
 
   return (
@@ -86,10 +65,9 @@ export default function App() {
                   path="/booking/:name"
                   render={(propTypes) => <BizCard props={propTypes} />}
                 />
-                
+
                 <Route path="/success" exact component={Success} />
               </Switch>
-   
             </BusinessContext.Provider>
           </AuthStateContext.Provider>
         </UserContext.Provider>
