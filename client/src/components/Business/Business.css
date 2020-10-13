@@ -1,8 +1,9 @@
 #biz-profile-container {
     background-color: rgb(250, 238, 238);
-    height: 100%;
     position: absolute;
+    top: 50px;
     width: 100%;
+    padding-bottom: 20px;
 }
 #profile-info {
     display: flex;
@@ -87,8 +88,10 @@ section {
 }
 @media (max-width: 700px) {
     #biz-profile-container {
+        top: 0;
         overflow-y: scroll;
         padding-bottom: 60px;
+        bottom: 0;
         background: #efefbb; /* fallback for old browsers */
         background: -webkit-linear-gradient(
           to bottom,
@@ -100,6 +103,7 @@ section {
           rgb(230, 228, 245),
           #efefbb
         ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
     }
     #add-biz-container {
         margin-bottom: 50px;

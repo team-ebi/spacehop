@@ -12,30 +12,30 @@ router.post("/", async (req, res) => {
   //ex) req.body = { "email": "potato@dog.com", "date": "2020-12-30", "price": 1000, "business_id": 1 }
 
   // Get user id that matches with req.body.email
- try {
-  const email = req.body.email;
-  const user = await db.select("*").table("users").where({
-    email,
-  });
+  try {
+    const email = req.body.email;
+    const user = await db.select("*").table("users").where({
+      email,
+    });
 
-  const date = req.body.date;
-  const price = req.body.price;
-  const created_at = moment().format("YYYY-MM-DD"); // Current date
-  const business_id = req.body.business_id;
-  const user_id = user[0]["id"];
+    const date = req.body.date;
+    const price = req.body.price;
+    const created_at = moment().format("YYYY-MM-DD"); // Current date
+    const business_id = req.body.business_id;
+    const user_id = user[0]["id"];
 
-  const register = await db.select("*").table("reservations").insert({
-    date,
-    price,
-    created_at,
-    business_id,
-    user_id,
-  });
+    const register = await db.select("*").table("reservations").insert({
+      date,
+      price,
+      created_at,
+      business_id,
+      user_id,
+    });
 
-  res.send("New reservation created!");
- } catch (err) {
-   console.log("ERROR posting reservation BE: ", err)
- }
+    res.send("New reservation created!");
+  } catch {
+    res.sendStatus(500);
+  }
 });
 
 //Get selected user's reservations
@@ -70,8 +70,8 @@ router.get("/:email", async (req, res) => {
       .where("reservations.user_id", user_id);
 
     res.send(upcomingReservations);
-  } catch (err) {
-    console.log("ERROR get reservation from BE: ", err);
+  } catch {
+    res.sendStatus(500);
   }
 });
 
