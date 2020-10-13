@@ -71,4 +71,17 @@ router.get("/data", async(req, res) => {
   res.send(allBusinessesInfo);
 });
 
+// Get data by business id
+router.get("/:businesses_id", async(req, res) => {
+  const id = req.params.businesses_id;
+  const businessInfo = await db
+  .select("*")
+  .table("businesses")
+  .where({
+    id
+  });
+
+  res.send(businessInfo);
+});
+
 module.exports = router;
