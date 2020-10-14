@@ -82,31 +82,30 @@ router.get("/:email", async (req, res) => {
   }
 });
 
-//Edit selected user's info
-router.patch("/:user_id", async (req, res) => {
-  const id = req.params.user_id;
+// Edit user info by email
+router.patch("/", async (req, res) => {
+  const email = req.body.email;
+  const user = await db
+  .select("*")
+  .returning("id")
+  .table("users")
+  .where({ email });
+  const id = user[0]["id"];
 
-  //object to store column to change
-  let columnToChange = {};
+  const updateInfo = {};
+  if (req.body.first_name) updateInfo["first_name"] = req.body.first_name;
+  if (req.body.last_name) updateInfo["last_name"] = req.body.last_name;
+  if (req.body.email) updateInfo["email"] = req.body.email;
+  if (req.body.phone) updateInfo["phone"] = req.body.phone;
 
-  if (req.body.first_name) columnToChange["first_name"] = req.body.first_name;
-  if (req.body.last_name) columnToChange["last_name"] = req.body.last_name;
-  if (req.body.email) columnToChange["email"] = req.body.email;
-  if (req.body.phone) columnToChange["phone"] = req.body.phone;
+  const update = await db
+  .select("*")
+  .returning(["id", "first_name", "last_name", "email", "phone"])
+  .table("users")
+  .where({ id })
+  .update(updateInfo);
 
-  try {
-    const user = await db
-      .select("*")
-      .table("users")
-      .where({
-        id,
-      })
-      .update(columnToChange);
-    res.send("Update succeeded");
-  } catch {
-    //If error occur, send 500 status code
-    res.sendStatus(500);
-  }
+  res.send(update);
 });
 
 //Delete selected user's info
