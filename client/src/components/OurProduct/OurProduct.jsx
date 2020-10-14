@@ -9,9 +9,9 @@ export default function OurProduct() {
         <header>
             <h1>about</h1>
         </header>
-        <h2>
+        <h4>
             Tired of working <br/>remotely in your <br/>tiny Tokyo apartment? 
-        </h2>
+        </h4>
         <img  id="cafe" src={imgPic} alt="image of cafe" />
         <div className="textField">
             <h3>
