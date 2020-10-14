@@ -11,9 +11,9 @@ h4{
     text-align: center;
     line-height: 25px;
     font-size: 20px;
-    font-weight: 600;
-    font-family: "Poetsen One";
-    color: darkslategrey;
+  font-weight: 700;
+  font-family: "Poetsen One";
+  color: darkslategrey;
 }
 #imgPic-container{
     display: flex;
@@ -28,7 +28,7 @@ h4{
     width: 80%;
     margin: 0 auto;
 }
-p{
+h3{
     font-size: 16px;
     line-height: 20px;
     word-wrap: break-word;
