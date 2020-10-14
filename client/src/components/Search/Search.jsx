@@ -64,9 +64,9 @@ export default function Search() {
     // parse time from selected start time
     const endTime = new Date(selectedEndTime).getHours();
 
-    console.log("process.env.REACT_APP_BACKEND_URL:",process.env.REACT_APP_BACKEND_URL);
+    console.log("process.env.REACT_APP_BACKEND_URL: ",process.env.REACT_APP_BACKEND_URL);
 
-    console.log("process.env.REACT_APP_REGION:",process.env.REACT_APP_REGION);
+    console.log("process.env.REACT_APP_REGION: ",process.env.REACT_APP_REGION);
 
     // set data to axios.get(http://) then get filtered data
     const res = await axios.get(
