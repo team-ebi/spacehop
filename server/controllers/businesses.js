@@ -119,15 +119,16 @@ router.patch("/", async (req, res) => {
   .where({ email });
   const user_id = user[0]["id"];
 
-  const updateInfo = {};
-  if (req.body.name) updateInfo["name"] = req.body.name;
-  if (req.body.last_name) updateInfo["address_street"] = req.body.address_street;
-  if (req.body.email) updateInfo["address_city"] = req.body.address_city;
-  if (req.body.phone) updateInfo["address_zip"] = req.body.address_zip;
-  if (req.body.phone) updateInfo["phone"] = req.body.phone;
-  if (req.body.phone) updateInfo["business_type"] = req.body.business_type;
-  if (req.body.phone) updateInfo["capacity"] = req.body.capacity;
-  if (req.body.phone) updateInfo["price"] = req.body.price;
+  const updateInfo = {
+    name: req.body.name,
+    address_street: req.body.address_street,
+    address_city: req.body.address_city,
+    address_zip: req.body.address_zip,
+    phone: req.body.phone,
+    business_type: req.body.business_type,
+    capacity: req.body.capacity,
+    price: req.body.price
+  }
 
   await db
   .select("*")
