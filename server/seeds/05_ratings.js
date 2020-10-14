@@ -4,7 +4,7 @@ exports.seed = function(knex) {
       return knex("ratings").insert([
         {
           business_id: 1,
-          user_id: 1,
+          user_id: 9,
           point: 3,
           comment: "Business owner is very kind. Will work here again soon!"
         },
