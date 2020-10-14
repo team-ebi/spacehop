@@ -85,24 +85,13 @@ router.get("/:email", async (req, res) => {
 // Edit user info by email
 router.patch("/", async (req, res) => {
   const email = req.body.email;
-  const user = await db
-  .select("*")
-  .returning("id")
-  .table("users")
-  .where({ email });
-  const id = user[0]["id"];
-
-  const updateInfo = {};
-  if (req.body.first_name) updateInfo["first_name"] = req.body.first_name;
-  if (req.body.last_name) updateInfo["last_name"] = req.body.last_name;
-  if (req.body.email) updateInfo["email"] = req.body.email;
-  if (req.body.phone) updateInfo["phone"] = req.body.phone;
+  const updateInfo = req.body;
 
   const update = await db
   .select("*")
-  .returning(["id", "first_name", "last_name", "email", "phone"])
+  .returning("*")
   .table("users")
-  .where({ id })
+  .where({ email })
   .update(updateInfo);
 
   res.send(update);
