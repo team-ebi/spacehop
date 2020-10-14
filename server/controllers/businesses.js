@@ -109,6 +109,35 @@ router.post("/", async (req, res) => {
   res.send("Business account and availability is created!");
 });
 
+// Edit business info by email
+router.patch("/", async (req, res) => {
+  const email = req.body.email;
+  const user = await db
+  .select("*")
+  .returning("id")
+  .table("users")
+  .where({ email });
+  const user_id = user[0]["id"];
+
+  const updateInfo = {};
+  if (req.body.name) updateInfo["name"] = req.body.name;
+  if (req.body.last_name) updateInfo["address_street"] = req.body.address_street;
+  if (req.body.email) updateInfo["address_city"] = req.body.address_city;
+  if (req.body.phone) updateInfo["address_zip"] = req.body.address_zip;
+  if (req.body.phone) updateInfo["phone"] = req.body.phone;
+  if (req.body.phone) updateInfo["business_type"] = req.body.business_type;
+  if (req.body.phone) updateInfo["capacity"] = req.body.capacity;
+  if (req.body.phone) updateInfo["price"] = req.body.price;
+
+  await db
+  .select("*")
+  .table("businesses")
+  .where({ user_id })
+  .update(updateInfo);
+
+  res.send("Business information is updated");
+});
+
 // Get all business data
 router.get("/data", async (req, res) => {
   const allBusinessesInfo = await db
