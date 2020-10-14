@@ -9,32 +9,32 @@ export default function OurProduct() {
         <header>
             <h1>about</h1>
         </header>
-        <h2>
+        <h4>
             Tired of working <br/>remotely in your <br/>tiny Tokyo apartment? 
-        </h2>
+        </h4>
         <img  id="cafe" src={imgPic} alt="image of cafe" />
         <div className="textField">
-            <h3>
+            <p>
                 Or perhaps you're a small business owner looking for creative ways to keep the lights on?
                 Spacehop is our team's vision for a mobile-friendly web app that seeks to help two types of users in today's pandemic-impacted society:
-            </h3>
-            <h3>
+            </p>
+            <p>
                 1. Small businesses that have suffered a loss in business due to the pandemic and have under-utilized spaces that can be rented out for alternative use.
-            </h3>
-            <h3>
+            </p>
+            <p>
                 2. Workers who are now required to work remotely but want to get out of their house from time to time
-                </h3>
+                </p>
 
-            <h3>
+            <p>
                 With Spacehop, remote workers can conveniently search for places to work from for the day. These spaces can range from izakayas, concert venues, exercise studios, and more!
-            </h3>
-            <h3>
+            </p>
+            <p>
                 The pandemic may not last forever, but remote work will be here to stay. 
-            </h3>
+            </p>
             <div className="lastLine-container">
-                <h3 id="lastLine">
+                <p id="lastLine">
                     Spacehop can help!
-                </h3>
+                </p>
                 <img  id="frog" src={frogPic} alt="image of frog" />
             </div>
 
