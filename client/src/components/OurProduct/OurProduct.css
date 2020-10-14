@@ -24,9 +24,9 @@ h2{
     width: 80%;
     margin: 0 auto;
 }
-h3{
-    font-size: 16px;
-    line-height: 20px;
+p{
+    font-size: 20px;
+    line-height: 30px;
     word-wrap: break-word;
     margin-top: 30px;
     margin-bottom: 30px;
@@ -53,9 +53,9 @@ h3{
 
 
 @media (max-width: 700px) {
-    h3{
-        font-size: 16px;
-        line-height: 20px;
+    p{
+        font-size: 20px;
+        line-height: 30px;
         word-wrap: break-word;
         margin-top: 30px;
     }
