@@ -25,8 +25,8 @@ export default function Team() {
             <img className="member" src={nori} alt="nori" />
           </a>
           <div className="name">Nori</div>
-          <div>Fullstack</div>
-          <div>Tech Lead</div>
+          <div className="description">Fullstack</div>
+          <div className="description">Tech Lead</div>
         </div>
 
         <div className="teammate">
@@ -38,7 +38,7 @@ export default function Team() {
             <img className="member" src={miku} alt="miku" />
           </a>
           <div className="name">Miku</div>
-          <div>Frontend</div>
+          <div className="description">Frontend</div>
         </div>
 
         <div className="teammate">
@@ -50,7 +50,7 @@ export default function Team() {
             <img className="member" src={tanner} alt="tanner" />
           </a>
           <div className="name">Tanner</div>
-          <div>Fullstack</div>
+          <div className="description">Fullstack</div>
         </div>
 
         <div className="teammate">
@@ -62,7 +62,7 @@ export default function Team() {
             <img className="member" src={yusuke} alt="yusuke" />
           </a>
           <div className="name">Yusuke</div>
-          <div>Backend</div>
+          <div className="description">Backend</div>
         </div>
 
         <div className="teammate">
@@ -74,7 +74,7 @@ export default function Team() {
             <img className="member" src={cat} alt="cat" />
           </a>
           <div className="name">Cat</div>
-          <div>Fullstack</div>
+          <div className="description">Fullstack</div>
         </div>
 
         <div className="teammate">
@@ -86,7 +86,7 @@ export default function Team() {
             <img className="member" src={hopper} alt="mascot" />
           </a>
           <div className="name">Hopper</div>
-          <div>Shortstack</div>
+          <div className="description">Shortstack</div>
         </div>
       </div>
     </div>

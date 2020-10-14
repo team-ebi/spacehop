@@ -79,7 +79,7 @@ export default function BizCard({ props }) {
             },
           ],
           mode: "payment",
-          successUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/profile",
+          successUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
           cancelUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
         })
         .then(() => {
@@ -90,18 +90,23 @@ export default function BizCard({ props }) {
     }
   }
 
-  useEffect(async () => {
-    let res = await axios.get(`/api/ratings/${biz.business_id}`);
-    setUserReviews(res.data);
+  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000"
+
+  useEffect(() => {
+    async function getRating(){
+      let res = await axios.get(`${baseUrl}/api/ratings/${biz.business_id}`);
+      setUserReviews(res.data);
+    }
+    getRating();
   }, []);
 
   //post reservation to database
   async function reservationHandler() {
     await axios
-      .post("/api/reservations/", {
+      .post(`${baseUrl}/api/reservations/`, {
         email: user.attributes.email,
         date: bookingDate,
-        price: biz.price,
+        price: biz.price, 
         business_id: biz.id,
       })
       .then(function (response) {

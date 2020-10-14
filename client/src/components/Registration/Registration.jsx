@@ -12,6 +12,8 @@ function Registration() {
   //state of email
   const [email, setEmail] = useState("");
 
+  const baseUrl = `${process.env.BACKEND_URL} || "http://localhost:4000"`
+
   //get first name by onchange
   function getFirstName(e) {
     setFirstName(e.target.value);
@@ -39,12 +41,12 @@ function Registration() {
     // console.log(lastName);
     // console.log(telephoneNumber);
     // console.log(email);
-    await axios.post("http://localhost:3000/someapi", {
-      first_name: firstName,
-      last_name: lastName,
-      telephone_Number: telephoneNumber,
-      e_mail: email,
-    });
+    // await axios.post(`${baseUrl}http://localhost:3000/someapi`, {
+    //   first_name: firstName,
+    //   last_name: lastName,
+    //   telephone_Number: telephoneNumber,
+    //   e_mail: email,
+    // });
   }
 
   return (

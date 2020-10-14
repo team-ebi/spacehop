@@ -13,6 +13,7 @@ import { UserContext } from "../useContext/UserContext";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import logo from "../../images/logo.png";
+require("dotenv").config();
 
 export default function Search() {
   const [location, setLocation] = useState("");
@@ -23,6 +24,8 @@ export default function Search() {
   const [selectedStartTime, setSelectedStartTime] = useState("");
   const [selectedEndTime, setSelectedEndTime] = useState("");
   const { businesses, setBusinesses } = useContext(BusinessContext);
+
+  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000"
 
   //variable to access routes history
   const history = useHistory();
@@ -61,9 +64,14 @@ export default function Search() {
     // parse time from selected start time
     const endTime = new Date(selectedEndTime).getHours();
 
+    console.log("process.env.REACT_APP_BACKEND_URL:",process.env.REACT_APP_BACKEND_URL);
+    console.log("baseUrl:",baseUrl);
+
+    console.log("process.env.REACT_APP_REGION:",process.env.REACT_APP_REGION);
+
     // set data to axios.get(http://) then get filtered data
     const res = await axios.get(
-      `http://localhost:4000/api/availability/?day=${selectedDay}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`
+      `${baseUrl}/api/availability/?day=${selectedDay}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`
     );
 
     // set businesses state

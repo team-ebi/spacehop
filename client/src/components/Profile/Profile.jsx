@@ -42,7 +42,7 @@ function Profile() {
         Profile
       </h2>
       <div id="section-container">
-        <main>
+        <main id="main">
           <div id="profile-info">
             <div id="profile-img">
               <FontAwesomeIcon

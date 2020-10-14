@@ -26,48 +26,155 @@ function Business() {
   const [bizType, setBizType] = useState("");
   const [capacity, setCapacity] = useState(0);
   const [price, setPrice] = useState(0);
-
-
-  // const name = req.body.name;
-  // const address_street = req.body.address_street;
-  // const address_city = req.body.address_city;
-  // const address_zip = req.body.address_zip;
-  // const phone = req.body.phone;
-  // const business_type = req.body.business_type;
-  // const capacity = req.body.capacity;
-  // const price = req.body.price;
-
+  const [availability, setAvailability] = useState([]);
 
   //miku edit below for availability section
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedStartTime, setSelectedStartTime] = useState("");
-  const [selectedEndTime, setSelectedEndTime] = useState("");
+  const [sundayStart, setSundayStart] = useState(null);
+  const [sundayEnd, setSundayEnd] = useState(null);
+  const [mondayStart, setMondayStart] = useState(null);
+  const [mondayEnd, setMondayEnd] = useState(null);
+  const [tuesStart, setTuesStart] = useState(null);
+  const [tuesEnd, setTuesEnd] = useState(null);
+  const [wedStart, setWedStart] = useState(null);
+  const [wedEnd, setWedEnd] = useState(null);
+  const [thursStart, setThursStart] = useState(null);
+  const [thursEnd, setThursEnd] = useState(null);
+  const [friStart, setFriStart] = useState(null);
+  const [friEnd, setFriEnd] = useState(null);
+  const [satStart, setSatStart] = useState(null);
+  const [satEnd, setSatEnd] = useState(null);
 
   // will either display user's biz profile or a form to register business
   const [displayBizPage, setDisplayBizPage] = useState(false);
   const [displayInputs, setDisplayInputs] = useState(false);
+  const [submittedForm, setSubmittedForm] = useState(false);
+
+  // will connect to aws or default to loalhost
+  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000";
 
   // fetch user's business
   // BACKEND ENDPOINT IN PROGRESS
   useEffect(() => {
-    async function fetchUserBiz() {
-      // check if user is logged in
-      if (user) {
-        // check to see if user has a business associated with their account
-        // if so, set userBusiness to their business
-        // const res = await axios.get(`/api/businesses/${user.attributes.email}`);
-        // setUserBusiness(res.data);
-        // setDisplayBizPage(true);
+    fetchUserBiz();
+  }, []);
+
+  async function fetchUserBiz() {
+    // check if user is logged in
+    if (user) {
+      // check to see if user has a business associated with their account
+      // if so, set userBusiness to their business
+      const res = await axios.get(`/api/users/business`, {email: user.attributes.email});
+      if (res.data.length > 0) {
+        setUserBusiness(res.data);
+        setSubmittedForm(false);
+        setDisplayInputs(false);
+        setDisplayBizPage(true);
+        setBusinessName(res.data.name);
+        setAddressStreet(res.data.address_street);
+        setAddressCity(res.data.address_city);
+        setAddressZip(res.data.address_zip);
+        setPhone(res.data.phone);
+        setBizType(res.data.business_type);
+        setCapacity(res.data.capacity);
+        setPrice(res.data.price);
       }
     }
-    fetchUserBiz();
-  }, [user]);
+  }
 
-  // NEEDS TO BE WRITTEN
   // if the user adds their business,
   // this function should pull from component state and
   // patch to db
-  async function updateBizTable() {}
+  async function updateBizTable() {
+    try {
+      for (const day of availability) {
+        if (day["day"] === "Monday" && !day["start_hour"] && !day["end_hour"]) {
+          const startHour = new Date(mondayStart).getHours();
+          const endHour = new Date(mondayEnd).getHours();
+          day["start_hour"] = startHour;
+          day["end_hour"] = endHour;
+          setAvailability([...availability, day]);
+        } else if (
+          day["day"] === "Tuesday" &&
+          !day["start_hour"] &&
+          !day["end_hour"]
+        ) {
+          const startHour = new Date(tuesStart).getHours();
+          const endHour = new Date(tuesEnd).getHours();
+          day["start_hour"] = startHour;
+          day["end_hour"] = endHour;
+          setAvailability([...availability, day]);
+        } else if (
+          day["day"] === "Wednesday" &&
+          !day["start_hour"] &&
+          !day["end_hour"]
+        ) {
+          const startHour = new Date(wedStart).getHours();
+          const endHour = new Date(wedEnd).getHours();
+          day["start_hour"] = startHour;
+          day["end_hour"] = endHour;
+          setAvailability([...availability, day]);
+        } else if (
+          day["day"] === "Thursday" &&
+          !day["start_hour"] &&
+          !day["end_hour"]
+        ) {
+          const startHour = new Date(thursStart).getHours();
+          const endHour = new Date(thursEnd).getHours();
+          day["start_hour"] = startHour;
+          day["end_hour"] = endHour;
+          setAvailability([...availability, day]);
+        } else if (
+          day["day"] === "Friday" &&
+          !day["start_hour"] &&
+          !day["end_hour"]
+        ) {
+          const startHour = new Date(friStart).getHours();
+          const endHour = new Date(friEnd).getHours();
+          day["start_hour"] = startHour;
+          day["end_hour"] = endHour;
+          setAvailability([...availability, day]);
+        } else if (
+          day["day"] === "Saturday" &&
+          !day["start_hour"] &&
+          !day["end_hour"]
+        ) {
+          const startHour = new Date(satStart).getHours();
+          const endHour = new Date(satEnd).getHours();
+          day["start_hour"] = startHour;
+          day["end_hour"] = endHour;
+          setAvailability([...availability, day]);
+        } else if (
+          day["day"] === "Sunday" &&
+          !day["start_hour"] &&
+          !day["end_hour"]
+        ) {
+          const startHour = new Date(sundayStart).getHours();
+          const endHour = new Date(sundayEnd).getHours();
+          day["start_hour"] = startHour;
+          day["end_hour"] = endHour;
+          setAvailability([...availability, day]);
+        }
+      }
+      const res = await axios.post(`${baseUrl}/api/businesses/`, {
+        email: user.attributes.email,
+        name: businessName,
+        address_street: addressStreet,
+        address_city: addressCity,
+        address_zip: addressZip,
+        phone: phone,
+        business_type: bizType,
+        capacity: capacity,
+        price: price,
+        availability: availability
+      });
+      console.log(res.data);
+      setSubmittedForm(true);
+      setDisplayInputs(false);
+      fetchUserBiz();
+    } catch (err) {
+      alert("There was an error with your request. Please try again later.");
+    }
+  }
 
   // when user clicks to add a new business,
   // the inputs will be displayed
@@ -75,6 +182,12 @@ function Business() {
   function addBiz() {
     setDisplayInputs(true);
     setDisplayBizPage(false);
+  }
+
+  function updateAvailableDay(e) {
+    const availDay = e.target.value;
+    const newAvail = { day: availDay };
+    setAvailability([...availability, newAvail]);
   }
 
   return (
@@ -246,6 +359,7 @@ function Business() {
                   {displayInputs && (
                     <div className="attribute">
                       <input
+                        type="number"
                         className="profile-input"
                         value={capacity}
                         onChange={(e) => setCapacity(e.target.value)}
@@ -265,6 +379,7 @@ function Business() {
                   {displayInputs && (
                     <div className="attribute">
                       <input
+                        type="number"
                         className="profile-input"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
@@ -279,21 +394,27 @@ function Business() {
             {/* datepicker will update business available  state */}
             <div id="weekly-available-title">
               <p>Weekly availablility: </p>
-              </div>
+            </div>
 
             <div id="availability-input-container">
               <div className="availability-input">
                 <div className="availability-day">Sun.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" value="sun"/>
+                  <input
+                    className="checkbox-body"
+                    type="checkbox"
+                    value="Sunday"
+                    onInput={updateAvailableDay}
+                  />
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedStartTime}
+                      value={sundayStart}
                       placeholderText="Start time?"
-                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      key="Sunday"
+                      onChange={(time) => setSundayStart(time)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -304,9 +425,9 @@ function Business() {
                   <div className="availability-endTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedEndTime}
+                      selected={sundayEnd}
                       placeholderText="End time?"
-                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      onChange={(endTime) => setSundayEnd(endTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -320,15 +441,20 @@ function Business() {
               <div className="availability-input">
                 <div className="availability-day">Mon.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" value="mon"/>
+                  <input
+                    className="checkbox-body"
+                    type="checkbox"
+                    value="Monday"
+                    onInput={updateAvailableDay}
+                  />
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedStartTime}
+                      selected={mondayStart}
                       placeholderText="Start time?"
-                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      onChange={(time) => setMondayStart(time)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -339,9 +465,9 @@ function Business() {
                   <div className="availability-endTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedEndTime}
+                      selected={mondayEnd}
                       placeholderText="End time?"
-                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      onChange={(endTime) => setMondayEnd(endTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -355,15 +481,20 @@ function Business() {
               <div className="availability-input">
                 <div className="availability-day">Tue.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" value="tue"/>
+                  <input
+                    className="checkbox-body"
+                    type="checkbox"
+                    value="Tuesday"
+                    onInput={updateAvailableDay}
+                  />
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedStartTime}
+                      selected={tuesStart}
                       placeholderText="Start time?"
-                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      onChange={(startTime) => setTuesStart(startTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -374,9 +505,9 @@ function Business() {
                   <div className="availability-endTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedEndTime}
+                      selected={tuesEnd}
                       placeholderText="End time?"
-                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      onChange={(endTime) => setTuesEnd(endTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -390,15 +521,20 @@ function Business() {
               <div className="availability-input">
                 <div className="availability-day">Wed.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" value="wed"/>
+                  <input
+                    className="checkbox-body"
+                    type="checkbox"
+                    value="Wednesday"
+                    onInput={updateAvailableDay}
+                  />
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedStartTime}
+                      selected={wedStart}
                       placeholderText="Start time?"
-                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      onChange={(startTime) => setWedStart(startTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -409,9 +545,9 @@ function Business() {
                   <div className="availability-endTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedEndTime}
+                      selected={wedEnd}
                       placeholderText="End time?"
-                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      onChange={(endTime) => setWedEnd(endTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -425,15 +561,20 @@ function Business() {
               <div className="availability-input">
                 <div className="availability-day">Thu.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" value="thu"/>
+                  <input
+                    className="checkbox-body"
+                    type="checkbox"
+                    value="Thursday"
+                    onInput={updateAvailableDay}
+                  />
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedStartTime}
+                      selected={thursStart}
                       placeholderText="Start time?"
-                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      onChange={(startTime) => setThursStart(startTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -444,9 +585,9 @@ function Business() {
                   <div className="availability-endTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedEndTime}
+                      selected={thursEnd}
                       placeholderText="End time?"
-                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      onChange={(endTime) => setThursEnd(endTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -460,15 +601,20 @@ function Business() {
               <div className="availability-input">
                 <div className="availability-day">Fri.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" value="fri"/>
+                  <input
+                    className="checkbox-body"
+                    type="checkbox"
+                    value="Friday"
+                    onInput={updateAvailableDay}
+                  />
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedStartTime}
+                      selected={friStart}
                       placeholderText="Start time?"
-                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      onChange={(startTime) => setFriStart(startTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -479,9 +625,9 @@ function Business() {
                   <div className="availability-endTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedEndTime}
+                      selected={friEnd}
                       placeholderText="End time?"
-                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      onChange={(endTime) => setFriEnd(endTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -495,15 +641,20 @@ function Business() {
               <div className="availability-input">
                 <div className="availability-day">Sat.</div>
                 <div className="availability-checkbox">
-                  <input className="checkbox-body" type="checkbox" value="sat"/>
+                  <input
+                    className="checkbox-body"
+                    type="checkbox"
+                    value="Saturday"
+                    onInput={updateAvailableDay}
+                  />
                 </div>
                 <div className="availability-time">
                   <div className="availability-startTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedStartTime}
+                      selected={satStart}
                       placeholderText="Start time?"
-                      onChange={(startTime) => setSelectedStartTime(startTime)}
+                      onChange={(startTime) => setSatStart(startTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -514,9 +665,9 @@ function Business() {
                   <div className="availability-endTime">
                     <DatePicker
                       className="avail-time-input"
-                      selected={selectedEndTime}
+                      selected={satEnd}
                       placeholderText="End time?"
-                      onChange={(endTime) => setSelectedEndTime(endTime)}
+                      onChange={(endTime) => setSatEnd(endTime)}
                       showTimeSelect
                       showTimeSelectOnly
                       timeIntervals={60}
@@ -553,11 +704,18 @@ function Business() {
                 </button>
               </div>
             )}
+
+            {submittedForm && (
+              <div id="thanks">
+                Thank you for registering your business. We will reach out to
+                soon to complete the verification process.
+              </div>
+            )}
           </main>
           <hr id="profile-divider"></hr>
-          <section>
+          {/* <section>
             <BookingsAll />
-          </section>
+          </section> */}
         </div>
       )}
 
