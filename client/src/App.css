@@ -4,51 +4,174 @@
    License: none (public domain)
 */
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
 }
-body {
-  line-height: 1;
-  font-family: 'Roboto', sans-serif;
+ol,
+ul {
+  list-style: none;
 }
-ol, ul {
-	list-style: none;
+blockquote,
+q {
+  quotes: none;
 }
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
 }
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
-/* reset^^^ */
-@media (max-width: 700px) {
+/* ^^^^ reset */
 
+body {
+  line-height: 20px;
+  font-family: "Roboto", sans-serif;
+  background-color: rgb(250, 238, 238);
+}
+h1 {
+  font-size: 40px;
+  font-weight: 700;
+  font-family: "Poetsen One";
+  color: darkslategrey;
+}
+:root {
+  --amplify-primary-color: #73b930;
+  --amplify-primary-tint: #315014;
+  --amplify-primary-shade: #3a6b0d;
+  --amplify-primary-contrast: black;
+  --amplify-font-family: "Roboto", sans-serif;
+}
+amplify-sign-out {
+  --amplify-primary-color: transparent;
+  text-decoration-style: lowercase;
+  height: 20px;
+}
+amplify-sign-out:hover {
+  background-color: lightgrey;
+}
+.button {
+  min-width: 10px;
+}
+
+@media (max-width: 700px) {
+  body {
+    background: #efefbb; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to bottom,
+      rgb(230, 228, 245),
+      #efefbb
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+      to bottom,
+      rgb(230, 228, 245),
+      #efefbb
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+  h1 {
+    margin: 0;
+  }
 }

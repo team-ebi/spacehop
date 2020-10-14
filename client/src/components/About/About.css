@@ -1,0 +1,22 @@
+#about-container {
+  width: 100%;
+  overflow: scroll;
+  margin-top: 50px;
+  padding-top: 20px;
+}
+header:not(#results-header) {
+    padding-top: 40px;
+    text-align: center;
+}
+.corner-logo{
+  margin: 0 auto;
+}
+@media (max-width: 700px) {
+  #about-container {
+    top: 0;
+    margin-top: 0px;
+  }
+  h1 {
+    margin: 0;
+  }
+}

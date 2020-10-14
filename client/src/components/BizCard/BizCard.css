@@ -1,23 +1,225 @@
-
-#location-container{
-  display: flex; 
+#bizcard-container {
+  background-color: rgb(250, 238, 238);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  margin-top: 50px;
+  padding-top: 20px;
+}
+#bizcard-location-container {
+  display: flex;
   flex-flow: row wrap;
+  justify-content: center;
   padding-top: 40px;
-  margin-left: 85px;
+  justify-content: center;
+  align-content: flex-start;
+  padding-bottom: 50px;
 }
-
-#location-cell{
-  background-color: white;
-  width: 300px;
-  margin: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.11), 0 4px 15px 0 rgba(0, 0, 0, 0.103)
+#image-cell {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
-
-#business-image{
+#bizcard-name {
+  padding-top: 30px;
+  padding-bottom: 2px;
   width: 100%;
 }
+#bizcard-image {
+  width: 800px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px lightgrey;
+}
 
-#location-png{
-  height:20px;
-  width:15px;
+#bizcard-rating{
+  line-height: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+#bizcard-location,
+#bizcard-type,
+#bizcard-price,
+#bizcard-phone,
+#bizcard-capacity {
+  font-size: 16px;
+  line-height: 20px;
+  padding-bottom: 10px;
+  display: flex;
+  flex-flow: row nowrap;
+}
+.icon {
+  padding-right: 15px;
+}
+#bizcard-location-cell {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 800px;
+}
+#reviews-header{
+  padding-top: 20px;
+  padding-bottom: 15px;
+}
+#info-cell {
+  width: 50%;
+  border-right: solid lightgrey;
+  border-width: 1px;
+}
+#booking-details {
+  width: 100%;
+}
+#booking-price {
+  font-size: 25px;
+  font-weight: 500;
+  text-align: center;
+  width: 100%;
+  padding-bottom: 20px;
+}
+#booking-header {
+  padding-left: 20px;
+  font-weight: 700;
+  font-size: 20px;
+  color: darkslategrey;
+}
+.divider {
+  width: 80%;
+  border-width: 1px;
+}
+.booking-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end
+}
+#book-button {
+  background-color: #80cc37;
+  border: none;
+  width: 200px;
+  height: 50px;
+  border-radius: 40px;
+  box-shadow: 0 4px 8px lightgrey;
+  margin-top: 20px;
+  cursor: pointer;
+}
+#mobile-divider {
+  display: none;
+}
+.booking-time {
+  background-color: white;
+  border-radius: 50px;
+  width: 50%;
+  height: 30px;
+  box-shadow: 0 4px 8px lightgrey;
+}
+.booking-date-input {
+  font-size: 16px;
+  text-indent: 20px;
+  height: 50px;
+  border: none;
+  background-color: transparent;
+  border-radius: 50px;
+  display: flex;
+  align-content: center;
+}
+#datetime-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  flex-flow: row wrap;
+}
+#booking-date-container {
+  width: 300px;
+  height: 50px;
+}
+#booking-time-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  width: 300px;
+  margin-top: 20px;
+}
+.single-time-container {
+  width: 140px;
+  height: 50px
+}
+#booking-subheader {
+  padding-left: 20px;
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  color: darkslategrey;
+}
+.booking-time {
+  width: 100%;
+}
+.auth-window-tobook {
+  position: fixed;
+  top: 100px;
+  bottom: 50px;
+  right: 0;
+  left: 0;
+  width: 475px;
+  overflow-x: hidden;
+  overflow: scroll;
+  align-self: center;
+  margin-left: 0;
+  height: 450px;
+}
+.book-message {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  width: 100%;
+}
+@media (max-width: 700px) {
+  #bizcard-container {
+    margin-top: 0px;
+    padding-top: 0px;
+    position: static;
+    background: #efefbb; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to bottom,
+      rgb(230, 228, 245),
+      #efefbb
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+      to bottom,
+      rgb(230, 228, 245),
+      #efefbb
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+  #bizcard-image {
+    width: 100%;
+    height: auto;
+  }
+  #bizcard-name {
+    padding-left: 15px;
+  }
+  #bizcard-location-cell {
+    width: 100%;
+    flex-flow: row wrap;
+  }
+  #info-cell {
+    border-right: none;
+    width: 100%;
+    padding-bottom: 20px;
+  }
+  #mobile-divider {
+    display: flex;
+  }
+  .booking-button-container {
+    padding-bottom: 10px;
+    justify-content: center;
+  }
+  .booking-divider {
+    display: none;
+  }
+  .book-message {
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
 }

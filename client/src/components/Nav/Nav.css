@@ -1,17 +1,37 @@
+nav {
+  height: 50px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100
+}
 #navbar {
   display: flex;
-  justify-content: flex-end;
-  height: 80px;
+  align-items: center;
   background-color: white;
-  width: 100%;
+  height: 50px;
+}
+#welcome {
+  margin-left: 30px;
+  width: 500px;
+  transition-timing-function: linear;
+  transition: 2s;
+}
+h2 {
+  font-size: 30px;
+  font-weight: 700;
+  font-family: "Poetsen One";
+  color: darkslategrey;
 }
 #logo-container {
   padding: 20px;
 }
+#home-button {
+  cursor: pointer;
+  margin-left: 3%;
+}
 #menu-container {
-  padding: 15px;
-  margin-right: 5%;
-  margin-top: 20px;
+  margin-left: 50%;
   z-index: 100;
   border-radius: 40px;
   width: 50px;
@@ -28,11 +48,11 @@
   background-color: white;
   z-index: 100;
   margin-left: 83%;
-  position: fixed;
+  position: absolute;
   border-radius: 40px;
   border: solid lightgrey;
   border-width: 1px;
-  margin-top: -1%;
+  margin-top: -5px;
   overflow: hidden;
 }
 .menu-item {
@@ -43,6 +63,12 @@
   cursor: pointer;
   border-bottom: solid lightgrey;
   border-width: 1px;
+  font-size: 16px;
+  background-color: white;
+  border: solid lightgrey;
+  border-width: 1px;
+  border-top: none;
+  max-height: 30px;
 }
 .menu-item:hover {
   background-color: lightgrey;
@@ -50,12 +76,88 @@
 #login {
   font-weight: 700;
 }
+.auth-window {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  background-color: transparent;
+  z-index: 10000000000000;
+  margin-left: 35%;
+  border-radius: 20px;
+}
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 0;
+}
+.hide {
+  display: none;
+}
+.dim {
+  background-color: rgba(87, 98, 126, 0.651);
+  z-index: 90;
+}
+#mobile-bar {
+  display: none;
+}
+#mobile-welcome {
+  display: none;
+}
 @media (max-width: 700px) {
   nav {
+    top: auto;
     bottom: 0;
     position: fixed;
-    z-index: 100000;
+    z-index: 100;
     width: 100%;
   }
+  #navbar {
+    justify-content: space-evenly;
+  }
+  #welcome {
+    display: none;
+  }
+  #menu-container {
+    display: none;
+  }
+  #mobile-bar {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+  .menu-item {
+    display: inline-block;
+    white-space: nowrap;
+    border: none;
+    border-right: solid grey;
+    border-width: 1px;
+    text-align: center;
+    padding: 10px;
+  }
+  .menu-item:last-child {
+    border-right: none;
+  }
+  #logout-item {
+    width: 50px;
+  }
+  amplify-sign-out {
+    padding: none;
+    margin: none;
+  }
+  amplify-authenticator {
+    height: 30px;
+  }
+  .auth-window {
+    position: fixed;
+    top: 100px;
+    bottom: 50px;
+    right: 0;
+    left: 0;
+    width: 375px;
+    overflow-x: hidden;
+    overflow: scroll;
+    align-self: center;
+    margin-left: 0;
+    height: 450px;
+  }
 }
- 
