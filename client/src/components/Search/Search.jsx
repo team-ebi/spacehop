@@ -64,6 +64,9 @@ export default function Search() {
     // parse time from selected start time
     const endTime = new Date(selectedEndTime).getHours();
 
+    console.log("process.env.REACT_APP_BACKEND_URL:",process.env.REACT_APP_BACKEND_URL);
+    console.log("baseUrl:",baseUrl);
+
     // set data to axios.get(http://) then get filtered data
     const res = await axios.get(
       `${baseUrl}/api/availability/?day=${selectedDay}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`
