@@ -65,7 +65,6 @@ export default function Search() {
     const endTime = new Date(selectedEndTime).getHours();
 
     console.log("process.env.REACT_APP_BACKEND_URL:",process.env.REACT_APP_BACKEND_URL);
-    console.log("baseUrl:",baseUrl);
 
     console.log("process.env.REACT_APP_REGION:",process.env.REACT_APP_REGION);
 
