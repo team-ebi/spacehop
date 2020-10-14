@@ -12,7 +12,7 @@ export default function OurProduct() {
         <h4>
             Tired of working <br/>remotely in your <br/>tiny Tokyo apartment? 
         </h4>
-        <img  id="cafe" src={imgPic} alt="image of cafe" />
+        <img  id="cafe" src={imgPic} alt="cafe" />
         <div className="textField">
             <h3>
                 Or perhaps you're a small business owner looking for creative ways to keep the lights on?
@@ -35,7 +35,7 @@ export default function OurProduct() {
                 <h3 id="lastLine">
                     Spacehop can help!
                 </h3>
-                <img  id="frog" src={frogPic} alt="image of frog" />
+                <img  id="frog" src={frogPic} alt="frog" />
             </div>
 
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../useContext/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import BookingsAll from "../BookingsAll/BookingsAll";
 import axios from "axios";
 import "./Business.css";
 //miku edit below for availability section

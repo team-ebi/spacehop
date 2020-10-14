@@ -3,12 +3,6 @@ import { UserContext } from "../useContext/UserContext";
 import axios from "axios";
 import BookingSingle from "../BookingSingle/BookingSingle";
 import "./BookingsAll.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCalendarAlt,
-  faClock,
-  faStar,
-} from "@fortawesome/free-solid-svg-icons";
 
 export default function FutureBookings() {
   const { user } = useContext(UserContext);
@@ -35,7 +29,7 @@ export default function FutureBookings() {
       }
     }
     fetchBookings();
-  }, [user]);
+  }, [user, baseUrl]);
 
   function displayUpcoming() {
     setDisplay("upcoming");

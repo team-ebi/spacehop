@@ -22,6 +22,7 @@
     "axios": "^0.20.0",
     "bootstrap": "^4.5.2",
     "dotenv": "^8.2.0",
+    "flickity": "^2.2.1",
     "jest-dom": "^4.0.0",
     "moment": "^2.29.1",
     "react": "^16.13.1",

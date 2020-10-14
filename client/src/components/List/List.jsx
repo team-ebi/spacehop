@@ -1,5 +1,4 @@
-import React, { useState, useContext } from "react";
-import Data from "../../data/businesses";
+import React, { useContext } from "react";
 import { BusinessContext } from "../useContext/BusinessContext";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,7 +24,7 @@ export default function List() {
   return (
     <div id="list-container">
       <div className="corner-logo-container">
-        <img className="corner-logo" src={logo}></img>
+        <img className="corner-logo" alt="spacehop-logo" src={logo}></img>
       </div>
       <div className="back-button-container">
         <button id="back" onClick={handleEditSearch}>
@@ -52,9 +51,11 @@ export default function List() {
             onClick={() => {
               history.push(`/booking/${biz.name}`, { state: biz });
             }}
+            key={biz.name + biz.id}
           >
             <img
               className="business-image"
+              alt="izakaya"
               src="https://media.timeout.com/images/105393878/image.jpg"
             />
             <div className="location-name">{biz.name}</div>
@@ -98,9 +99,11 @@ export default function List() {
               onClick={() => {
                 history.push(`/booking/${biz.name}`, { state: biz });
               }}
+              key={biz.name +  biz.id}
             >
               <img
                 className="business-image"
+                alt="izakaya"
                 src="https://media.timeout.com/images/105393878/image.jpg"
               />
               <div className="location-name">{biz.name}</div>

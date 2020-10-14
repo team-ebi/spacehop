@@ -8,7 +8,7 @@ export default function About() {
   return (
     <div id="about-container">
       <div className="corner-logo-container">
-        <img className="corner-logo" src={logo}></img>
+        <img className="corner-logo" alt="spacehop-logo" src={logo}></img>
       </div>
       <OurProduct/>
       <Team/>

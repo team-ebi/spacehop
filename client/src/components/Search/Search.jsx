@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import PlacesAutocomplete, {
@@ -18,12 +18,12 @@ require("dotenv").config();
 export default function Search() {
   const [location, setLocation] = useState("");
   // may or may not need coordinates
-  const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
+  const [ coordinates, setCoordinates] = useState({ lat: null, lng: null });
   const [selectedDate, setSelectedDate] = useState("");
   const { user } = useContext(UserContext);
   const [selectedStartTime, setSelectedStartTime] = useState("");
   const [selectedEndTime, setSelectedEndTime] = useState("");
-  const { businesses, setBusinesses } = useContext(BusinessContext);
+  const { setBusinesses } = useContext(BusinessContext);
 
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000"
 
@@ -126,7 +126,7 @@ export default function Search() {
                         padding: "7px",
                       };
                       return (
-                        <div {...getSuggestionItemProps(suggestion, { style })}>
+                        <div key={suggestion} {...getSuggestionItemProps(suggestion, { style })}>
                           {suggestion.description}
                         </div>
                       );

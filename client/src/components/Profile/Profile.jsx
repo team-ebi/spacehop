@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../useContext/UserContext";
-import { Button, Container, Row, Col, Image } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import FutureBookings from "../BookingsAll/BookingsAll";
-import { Auth } from "aws-amplify";
 import "./Profile.css";
 
 function Profile() {

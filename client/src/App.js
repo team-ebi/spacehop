@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import "./App.css";
 import { BusinessContext } from "./components/useContext/BusinessContext";
@@ -31,7 +31,7 @@ export default function App() {
       setUser(authData);
       console.log("USER:", user);
     });
-  }, []);
+  }, [authState, user]);
 
   const baseUrl = process.env.BACKEND_URL || "http://localhost:4000"
 
