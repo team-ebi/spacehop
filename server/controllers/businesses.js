@@ -65,6 +65,7 @@ router.post("/", async (req, res) => {
   const business_type = req.body.business_type;
   const capacity = req.body.capacity;
   const price = req.body.price;
+  const stripe_price_id = req.body.stripe_price_id;
   
   // Information need for creating availability
   const availabilities = req.body.availability;

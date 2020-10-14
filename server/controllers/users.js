@@ -45,7 +45,6 @@ router.get("/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const user = await db.select("*").table("users").where("email", email);
-    console.log(user)
     res.send(user);
   } catch {
     //If error occur, send 500 status code
@@ -96,5 +95,29 @@ router.delete("/:user_id", async (req, res) => {
     res.sendStatus(500);
   }
 });
+
+// NOT WORKING
+// router.get("/business/:email", async (req, res) => {
+//   const email = req.params.email;
+//   // Get user id by email
+//   const user = await db
+//     .select("*")
+//     .table("users")
+//     .returning("id")
+//     .where({ email });
+
+//   const user_id = user[0]["id"];
+
+//   // Find if user has business account
+//   const business = await db
+//     .select("*")
+//     .table("businesses")
+//     .innerJoin("availability", { "availability.business_id": "businesses.id" })
+//     .innerJoin("reservations", { "businesses.id": "reservations.business_id" })
+//     .where("business.user_id", user_id)
+//     .limit(1);
+
+//   res.send(business);
+// });
 
 module.exports = router;
