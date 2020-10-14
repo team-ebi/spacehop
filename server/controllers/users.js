@@ -97,21 +97,17 @@ router.patch("/", async (req, res) => {
   res.send(update);
 });
 
-//Delete selected user's info
-router.delete("/:user_id", async (req, res) => {
-  const id = req.params.user_id;
-  try {
-    await db
-      .table("users")
-      .where({
-        id,
-      })
-      .del();
-    res.send("Delete succeeded");
-  } catch {
-    //If error occur, send 500 status code
-    res.sendStatus(500);
-  }
+// Delete user info by email
+router.delete("/", async (req, res) => {
+  const email = req.body.email;
+
+  await db
+  .select("*")
+  .table("users")
+  .where({ email })
+  .del();
+
+  res.send("Delete user success");
 });
 
 module.exports = router;
