@@ -157,7 +157,13 @@ input.checkbox-body{
     font-size: 16px;
 
 }
-
+#thanks {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 20px;
+}
 @media (max-width: 700px) {
     #biz-profile-container {
         top: 0;
