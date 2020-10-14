@@ -67,6 +67,8 @@ export default function Search() {
     console.log("process.env.REACT_APP_BACKEND_URL:",process.env.REACT_APP_BACKEND_URL);
     console.log("baseUrl:",baseUrl);
 
+    console.log("process.env.REACT_APP_REGION:",process.env.REACT_APP_REGION);
+
     // set data to axios.get(http://) then get filtered data
     const res = await axios.get(
       `${baseUrl}/api/availability/?day=${selectedDay}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`
