@@ -13,6 +13,7 @@ import { UserContext } from "../useContext/UserContext";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import logo from "../../images/logo.png";
+require('dotenv').config()
 
 export default function Search() {
   const [location, setLocation] = useState("");
@@ -24,7 +25,11 @@ export default function Search() {
   const [selectedEndTime, setSelectedEndTime] = useState("");
   const { businesses, setBusinesses } = useContext(BusinessContext);
 
-  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000"
+
+  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000"
+
+
+
 
   //variable to access routes history
   const history = useHistory();

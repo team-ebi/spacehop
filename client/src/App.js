@@ -16,6 +16,7 @@ import Success from "./components/Success/Success";
 import { onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Auth } from "aws-amplify";
 import axios from "axios";
+require('dotenv').config()
 
 export default function App() {
   const [businesses, setBusinesses] = useState(null);
@@ -33,7 +34,7 @@ export default function App() {
     });
   }, []);
 
-  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000"
+  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000"
 
   useEffect(() => {
     async function checkDatabaseForUser() {
