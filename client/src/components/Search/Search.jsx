@@ -25,7 +25,7 @@ export default function Search() {
   const [selectedEndTime, setSelectedEndTime] = useState("");
   const { businesses, setBusinesses } = useContext(BusinessContext);
 
-  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000"
+  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 
   //variable to access routes history
   const history = useHistory();
@@ -64,10 +64,8 @@ export default function Search() {
     // parse time from selected start time
     const endTime = new Date(selectedEndTime).getHours();
 
-    console.log("process.env.REACT_APP_BACKEND_URL: ",process.env.REACT_APP_BACKEND_URL);
     console.log("baseUrl: ",baseUrl);
-
-    console.log("process.env.REACT_APP_REGION: ",process.env.REACT_APP_REGION);
+    console.log("process.env.REACT_APP_BACKEND_URL: ",process.env.REACT_APP_BACKEND_URL);
     console.log("process.env.NODE_ENV: ",process.env.NODE_ENV);
 
     // set data to axios.get(http://) then get filtered data
