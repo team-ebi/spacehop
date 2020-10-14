@@ -111,6 +111,7 @@ router.post("/", async (req, res) => {
 
 // Edit business info by email
 router.patch("/", async (req, res) => {
+  console.log(req.body);
   const email = req.body.email;
   const user = await db
   .select("*")
@@ -119,24 +120,17 @@ router.patch("/", async (req, res) => {
   .where({ email });
   const user_id = user[0]["id"];
 
-  const updateInfo = {
-    name: req.body.name,
-    address_street: req.body.address_street,
-    address_city: req.body.address_city,
-    address_zip: req.body.address_zip,
-    phone: req.body.phone,
-    business_type: req.body.business_type,
-    capacity: req.body.capacity,
-    price: req.body.price
-  }
+  const updateInfo = req.body;
+  delete updateInfo.email;
 
-  await db
+  const update = await db
   .select("*")
+  .returning("*")
   .table("businesses")
   .where({ user_id })
-  .update(updateInfo);
+  .update(updateInfo)
 
-  res.send("Business information is updated");
+  res.send(update);
 });
 
 // Delete user by email
