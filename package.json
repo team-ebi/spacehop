@@ -17,7 +17,7 @@
       "nodemon": "^2.0.4"
     },
     "scripts": {
-      "start":"yarn start:client && cd .. && start:server",
+      "start":"cd client && npm install && npm run build && cd ../server && npm install && node ./src/index.js",
       "start:server": "cd server && npm install && npm start",
       "start:client": "cd client && npm install && npm run build",
       "dev": "nodemon ./src/index.js",
