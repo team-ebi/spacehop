@@ -2,6 +2,7 @@ import React from "react";
 import Team from "../Team/Team";
 import "./About.css";
 import logo from "../../images/logo.png";
+import OurProduct from "../OurProduct/OurProduct";
 
 export default function About() {
   return (
@@ -9,9 +10,7 @@ export default function About() {
       <div className="corner-logo-container">
         <img className="corner-logo" src={logo}></img>
       </div>
-      <header>
-        <h1>about</h1>
-      </header>
+      <OurProduct/>
       <Team/>
     </div>
   );
