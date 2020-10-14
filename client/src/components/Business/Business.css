@@ -65,6 +65,7 @@
     display: flex;
     flex-flow: row wrap;
     margin-top: 40px;
+    justify-content: center;
 }
 main {
     width: 100%;
