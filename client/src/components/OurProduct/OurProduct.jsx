@@ -16,13 +16,16 @@ export default function OurProduct() {
         <div className="textField">
             <h3>
                 Or perhaps you're a small business owner looking for creative ways to keep the lights on?
-                Spacehop is our team's vision for a mobile-friendly web app that seeks to help two types of users in today's pandemic-impacted society.
+                Spacehop is our team's vision for a mobile-friendly web app that seeks to help two types of users in today's pandemic-impacted society:
             </h3>
             <h3>
-                Small businesses that have suffered a loss in business due to the pandemic and have under-utilized spaces that can be rented out for alternative use.
+                1. Small businesses that have suffered a loss in business due to the pandemic and have under-utilized spaces that can be rented out for alternative use.
             </h3>
             <h3>
-                Workers who are now required to work remotely but want to get out of their house from time to time
+                2. Workers who are now required to work remotely but want to get out of their house from time to time
+                </h3>
+
+            <h3>
                 With Spacehop, remote workers can conveniently search for places to work from for the day. These spaces can range from izakayas, concert venues, exercise studios, and more!
             </h3>
             <h3>
