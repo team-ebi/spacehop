@@ -111,8 +111,8 @@ router.post("/", async (req, res) => {
 
 // Edit business info by email
 router.patch("/", async (req, res) => {
-  console.log(req.body);
   const email = req.body.email;
+  
   const user = await db
   .select("*")
   .returning("id")
