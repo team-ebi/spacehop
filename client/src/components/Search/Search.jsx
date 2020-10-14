@@ -66,7 +66,8 @@ export default function Search() {
 
     console.log("baseUrl: ",baseUrl);
     console.log("process.env.REACT_APP_BACKEND_URL: ",process.env.REACT_APP_BACKEND_URL);
-    console.log("process.env.NODE_ENV: ",process.env.NODE_ENV);
+    console.log("process.env: ",process.env);
+    console.log("process.env: ",JSON.stringify(process.env));
 
     // set data to axios.get(http://) then get filtered data
     const res = await axios.get(
