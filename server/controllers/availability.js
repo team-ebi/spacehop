@@ -16,24 +16,22 @@ router.get("/", async(req, res) => {
   const availability = await db
   .select("*")
   .table("businesses")
-  .join("availability", { "availability.business_id": "businesses.id" })
+  .leftJoin("availability", { "availability.business_id": "businesses.id" })
   .where({
-    day,
-    address_city
+    "availability.day": day,
+    "businesses.address_city": address_city
   })
   .where("start_hour", "<=", start_hour)
   .andWhere("end_hour", ">=", end_hour);
 
-  // Get all business id from availability
-  const availableBusinessId = availability.map(business => business.business_id);
+  // Calculate average point for each business in array
+  for (const business of availability) {
+    const avgRating = await db.avg("point")
+    .from("ratings")
+    .where("business_id", business.id);
 
-  // Calculate average point
-  const averageRating = await db.avg("point")
-  .from("ratings")
-  .whereIn("business_id", availableBusinessId);
-
-  // Add average point to availability data
-  availability[0]["avg"] = averageRating[0]["avg"];
+    business["avg"] = Number(avgRating[0].avg);
+  }
 
   res.send(availability);
 });

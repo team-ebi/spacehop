@@ -75,13 +75,6 @@ export default function Nav() {
     return history.push("/about");
   }
 
-  // redirects to 'team' page with react router
-  // will close menu window
-  function teamHandler() {
-    setDisplayMenu(false);
-    return history.push("/team");
-  }
-
   // redirects to 'profile' page with react router
   // will close menu window if it's open
   function profileHandler() {
@@ -98,10 +91,8 @@ export default function Nav() {
 
   async function signoutHandler() {
     await AuthUser.signOut();
-    await onAuthUIStateChange((nextAuthState, authData) => {
-      setAuthState(nextAuthState);
-      setUser(authData);
-    });
+    setAuthState(null);
+    setUser(null);
     return history.push("/");
   }
 
@@ -124,9 +115,7 @@ export default function Nav() {
           <div id="welcome">
             {/* if user is logged in, will greet by name */}
             <h2>{`Welcome${
-              user && user.attributes && (authState === "signedin" || authState === "verifyContact")
-                ? ", " + user.attributes.given_name
-                : ""
+              user && user.attributes ? ", " + user.attributes.given_name : ""
             }!`}</h2>
           </div>
           <div id="menu-container" onClick={() => setDisplayMenu(!displayMenu)}>
@@ -155,7 +144,7 @@ export default function Nav() {
             )}
 
             {/* only display profile button if user IS logged in */}
-            {(user && user.attributes && (authState === "signedin" || authState === "verifyContact")) && (
+            {user && user.attributes && (
               <button className="menu-item" onClick={profileHandler}>
                 Profile
               </button>
@@ -165,14 +154,14 @@ export default function Nav() {
             </button>
 
             {/* only display profile button if user IS logged in */}
-            {(user && user.attributes && (authState === "signedin" || authState === "verifyContact")) && (
+            {user && user.attributes && (
               <button className="menu-item" onClick={businessHandler}>
                 Business
               </button>
             )}
 
             {/* only display signout button if user IS logged in */}
-            {(user && user.attributes || (authState === "signedin" || authState === "verifyContact")) && (
+            {user && user.attributes && (
               <button className="menu-item" onClick={signoutHandler}>
                 Log out
               </button>
@@ -198,7 +187,7 @@ export default function Nav() {
             )}
 
             {/* only display profile button if user IS logged in */}
-            {user && user.attributes && (authState === "signedin" || authState === "verifyContact") && (
+            {user && user.attributes && (
               <button className="menu-item" onClick={profileHandler}>
                 Profile
               </button>
@@ -208,14 +197,14 @@ export default function Nav() {
             </button>
 
             {/* only display profile button if user IS logged in */}
-            {user && user.attributes && (authState === "signedin" || authState === "verifyContact") && (
+            {user && user.attributes && (
               <button className="menu-item" onClick={businessHandler}>
                 Business Page
               </button>
             )}
 
             {/* only display signout button if user IS logged in */}
-            {(user && user.attributes || (authState === "signedin" || authState === "verifyContact")) && (
+            {user && user.attributes && (
               <button className="menu-item" onClick={signoutHandler}>
                 Log out
               </button>
@@ -229,7 +218,7 @@ export default function Nav() {
         {/* if user clicks login or signup, Auth component will render.
         pass props to determine which form gets rendered in Auth */}
         {(displayLogin || displaySignup) && (
-            <Auth login={displayLogin} signup={displaySignup} />
+          <Auth login={displayLogin} signup={displaySignup} />
         )}
       </nav>
     </>

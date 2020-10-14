@@ -96,6 +96,7 @@ export default function BookingSingle({ booking, display }) {
         <>
         {/* clickable star rating system for biz */}
           <hr className="biz-info-divider"></hr>
+          {!review && (
           <div className="star-rating">
             <Rating
               className="star-rating"
@@ -106,7 +107,7 @@ export default function BookingSingle({ booking, display }) {
                 setRating(newValue);
               }}
             />
-          </div>
+          </div>)}
 
           {/* if review exists already in db, will display "Your Review" header"*/}
           {review && <div className="review-header">Your Review: </div>}
