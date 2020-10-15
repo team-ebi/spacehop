@@ -103,9 +103,6 @@ export default function BizCard({ props }) {
         price: biz.price, 
         business_id: biz.id,
       })
-      .then(function (response) {
-        console.log(response);
-      })
       .catch(function (error) {
         console.log(error);
       });

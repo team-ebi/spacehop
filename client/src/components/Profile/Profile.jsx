@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import FutureBookings from "../BookingsAll/BookingsAll";
 import "./Profile.css";
-import axios from "axios"; 
+import axios from "axios";
 
 function Profile() {
   const { user } = useContext(UserContext);
@@ -14,35 +14,36 @@ function Profile() {
   const [phone, setPhone] = useState("");
   const [displayInputs, setDisplayInputs] = useState(false);
 
+  // will connect to aws or default to loalhost
+  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000";
 
-    useEffect(() => {
-        async function fetchUser(){
-          if (user) {
-            let req = axios.get(`http://localhost:4000/api/users/${user.attributes.email}`)      
-            let res = await req; 
-            let data = res.data;  
-            setGivenName(data[0].first_name);
-            setFamilyName(data[0].last_name); 
-            setEmail(data[0].email);
-            setPhone(data[0].phone); 
-          }
+  useEffect(() => {
+    async function fetchUser() {
+      if (user) {
+        let req = axios.get(`${baseUrl}/api/users/${user.attributes.email}`);
+        let res = await req;
+        let data = res.data;
+        setGivenName(data[0].first_name);
+        setFamilyName(data[0].last_name);
+        setEmail(data[0].email);
+        setPhone(data[0].phone);
       }
-      fetchUser(); 
-  },[user]);
-
-    // this function should pull from component state and
-    // post to db + update user pool
-    async function updateProfile() {
-      axios.patch(`http://localhost:4000/api/users/`, 
-      {
-        "first_name":givenName, 
-        "last_name":familyName,
-        "email":email,
-        "phone":phone
-      }); 
-      
-      setDisplayInputs(false); 
     }
+    fetchUser();
+  }, [user]);
+
+  // this function should pull from component state and
+  // post to db + update user pool
+  async function updateProfile() {
+    axios.patch(`${baseUrl}/api/users/`, {
+      first_name: givenName,
+      last_name: familyName,
+      email: email,
+      phone: phone,
+    });
+
+    setDisplayInputs(false);
+  }
 
   return (
     <div id="user-profile-container">
@@ -69,9 +70,7 @@ function Profile() {
               <div className="detail">
                 <div id="profile-categories">First Name: </div>
                 {!displayInputs && (
-                  <div className="attribute">
-                    {user && givenName}
-                  </div>
+                  <div className="attribute">{user && givenName}</div>
                 )}
                 {displayInputs && (
                   <div className="attribute">
@@ -86,9 +85,7 @@ function Profile() {
               <div className="detail">
                 <div id="profile-categories">Last Name: </div>
                 {!displayInputs && (
-                  <div className="attribute">
-                    {user && familyName}
-                  </div>
+                  <div className="attribute">{user && familyName}</div>
                 )}
                 {displayInputs && (
                   <div className="attribute">
@@ -103,22 +100,16 @@ function Profile() {
               <div className="detail">
                 <div id="profile-categories">Email: </div>
                 {!displayInputs && (
-                  <div className="attribute">
-                    {user && email}
-                  </div>
+                  <div className="attribute">{user && email}</div>
                 )}
                 {displayInputs && (
-                  <div className="attribute">
-                    {user && email}
-                  </div>
+                  <div className="attribute">{user && email}</div>
                 )}
               </div>
               <div className="detail">
                 <div id="profile-categories">Phone Number: </div>
                 {!displayInputs && (
-                  <div className="attribute">
-                    {user && phone}
-                  </div>
+                  <div className="attribute">{user && phone}</div>
                 )}
                 {displayInputs && (
                   <div className="attribute">

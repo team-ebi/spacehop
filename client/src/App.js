@@ -27,9 +27,7 @@ export default function App() {
   useEffect(() => {
     return onAuthUIStateChange((nextAuthState, authData) => {
       setAuthState(nextAuthState);
-      console.log("authstate:", authState);
       setUser(authData);
-      console.log("USER:", user);
     });
   }, [authState, user]);
 
