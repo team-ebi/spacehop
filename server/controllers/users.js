@@ -54,26 +54,30 @@ router.get("/account", async (req, res) => {
     .where({ email });
     const user_id = user[0]["id"];
   
-    // Find if user has business account
     const businessInfo = await db
     .select("*")
     .returning("*")
     .table("businesses")
     .where({ user_id })
-    .join("availability", { "businesses.id": "availability.business_id" });
     const business_id = businessInfo[0]["id"];
+
+    const availabilityInfo = await db
+    .select("*")
+    .returning("*")
+    .table("availability")
+    .where({ business_id });
   
-    // Reservation info
     const reservationInfo = await db
     .select("*")
     .table("reservations")
     .where({ business_id });
     
-    // Combine business info with reservation info
+    // Combine business, availability and reservation info
+    businessInfo[0]["availabilities"] = availabilityInfo;
     businessInfo[0]["reservations"] = reservationInfo;
     
     res.send(businessInfo);
-  } catch(err) {
+  } catch {
     res.send([]);
   }
 });
