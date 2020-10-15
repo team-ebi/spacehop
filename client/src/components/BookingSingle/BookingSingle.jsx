@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarAlt,
   faClock,
-  faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 import Rating from "@material-ui/lab/Rating";

@@ -15,6 +15,8 @@ const setupServer = () => {
     app.use(express.json());
     app.use(cors());
 
+    app.use(express.static(__dirname + '../../client/public'));
+
     app.use("/api/businesses", businessesAPI);
     app.use("/api/users", usersAPI);
     app.use("/api/availability", availabilityAPI);
@@ -23,6 +25,10 @@ const setupServer = () => {
     app.use("/api/stripecheckout", stripecheckoutAPI);
 
     app.use("/api/prod", productionTest);
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '../../client/build/index.html'));
+    });
 
     return app;
 };

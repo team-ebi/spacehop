@@ -6,7 +6,6 @@ import tanner from "../../images/tanner.png";
 import yusuke from "../../images/yusuke.png";
 import cat from "../../images/cat.png";
 import hopper from "../../images/hopper.png";
-import logo from "../../images/logo.png";
 
 export default function Team() {
   return (

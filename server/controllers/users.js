@@ -43,7 +43,7 @@ router.get("/data", async (req, res) => {
 // Check if user has business account by email
 // If business acccount, send joined business, user and reservation table
 // If not send empty array
-router.get("/account", async (req, res) => {
+router.post("/account/", async (req, res) => {
   try {
     const email = req.body.email;
   
@@ -75,7 +75,6 @@ router.get("/account", async (req, res) => {
     // Combine business, availability and reservation info
     businessInfo[0]["availabilities"] = availabilityInfo;
     businessInfo[0]["reservations"] = reservationInfo;
-    
     res.send(businessInfo);
   } catch {
     res.send([]);
@@ -87,7 +86,6 @@ router.get("/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const user = await db.select("*").table("users").where("email", email);
-    console.log(user)
     res.send(user);
   } catch {
     //If error occur, send 500 status code
