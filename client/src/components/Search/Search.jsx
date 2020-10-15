@@ -65,7 +65,7 @@ export default function Search() {
     // parse time from selected start time
     const endTime = new Date(selectedEndTime).getHours();
 
-    console.log("process.env:",process.env);
+    console.log("process.env: ",process.env);
 
     // set data to axios.get(http://) then get filtered data
     const res = await axios.get(
