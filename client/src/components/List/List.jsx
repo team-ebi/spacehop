@@ -12,6 +12,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "./List.css";
 import Slider from "react-slick";
 import logo from "../../images/logo.png";
+import Map from "../Map/Map"; 
 
 export default function List() {
   const { businesses } = useContext(BusinessContext);
@@ -89,6 +90,8 @@ export default function List() {
           </div>
         ))}
       </div>
+      <Map />
+
 
       <div id="mobile-location-container">
         <Slider dots={true} slidesToShow={1} swipe={true}>

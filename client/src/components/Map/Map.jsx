@@ -1,25 +1,50 @@
-import React,{useState, useEffect} from 'react';
+import React,{useState, useEffect, useContext} from 'react';
+import { BusinessContext } from "../useContext/BusinessContext";
 import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
-import flag from '../../images/checked.png'; 
+import flag from '../../images/registration-mark.png'; 
 
 function Map(){
+    const { businesses } = useContext(BusinessContext);
+
     const[selected, setSelected]=useState({});
     const onSelect = item => {
         setSelected(item);
     };
 
-    //test 
-    const locations = [
-      {name:"Tokyo station",
-      location:{
-          lat:35.6809591,
-          lng:139.7673068
-      }
-    }];
+    const [locations, setLocations] = useState([]); 
 
-    const mapStyles = {        
-        height: "100vh",
-        width: "100%"};
+    //test 
+    // const locations = [
+    //   {name:"Tokyo station",
+    //   location:{
+    //       lat:35.6809591,
+    //       lng:139.7673068
+    //   }
+    // }];
+
+    //everytime when this page is rendered, update locations 
+    useEffect(
+        ()=>{
+            function handleBusinesses(){
+                setLocations(businesses.map(item => {
+                    return (
+                        {
+                            name:item.name,
+                            location:{
+                                lat:item.lat,
+                                lng:item.lng
+                            }
+                        }
+                    )
+                }));
+            }; 
+            handleBusinesses()}, []
+    )
+
+    const mapStyles = {  
+        margin:"0 auto",      
+        height: "80vh",
+        width: "80%"};
       
       const defaultCenter = {
         lat:35.6809591, lng:139.7673068
