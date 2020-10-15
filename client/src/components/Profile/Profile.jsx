@@ -17,7 +17,7 @@ function Profile() {
 
     useEffect(() => {
         async function fetchUser(){
-          if(user){
+          if (user) {
             let req = axios.get(`http://localhost:4000/api/users/${user.attributes.email}`)      
             let res = await req; 
             let data = res.data;  
@@ -164,9 +164,6 @@ function Profile() {
           <FutureBookings />
         </section>
       </div>
-
-      {/* future bookings is set in the middle of this code */}
-      {/* future booking has its own branch : futureBookings */}
     </div>
   );
 }
