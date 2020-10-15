@@ -7,6 +7,7 @@ import "./Business.css";
 //miku edit below for availability section
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
 
 function Business() {
   // user email used to fetch data from db
@@ -49,6 +50,7 @@ function Business() {
   const [displayBizPage, setDisplayBizPage] = useState(false);
   const [displayInputs, setDisplayInputs] = useState(false);
   const [submittedForm, setSubmittedForm] = useState(false);
+  const [displayAvailInputs, setDisplayAvailInputs] = useState(false);
 
   const [display, setDisplay] = useState("upcoming");
   const [dimUpcoming, setDimUpcoming] = useState("");
@@ -83,6 +85,17 @@ function Business() {
           setBizType(biz.business_type);
           setCapacity(biz.capacity);
           setPrice(biz.price);
+
+          for (const avail of biz.availabilities) {
+            const update = availability[avail.day];
+            const date1 = new Date();
+            const date2 = new Date();
+            date1.setHours(avail.start_hour, 0);
+            date2.setHours(avail.end_hour, 0);
+            update.startTime = date1;
+            update.endTime = date2;
+            setAvailability({ ...availability, update });
+          }
         } else {
           setDisplayInputs(false);
         }
@@ -96,30 +109,67 @@ function Business() {
   // patch to db
   async function updateBusinessDetails() {
     try {
+      let res;
+
       // parse availability
       const availArray = [];
+      // loop through availabilities to post/patch to db
       for (const day in availability) {
         const obj = {};
-        if (obj[day].startTime && obj[day].endTime) {
+        if (
+          availability[day].startTime &&
+          availability[day].endTime &&
+          day !== "update"
+        ) {
           obj.day = day;
-          obj.start_time = day.startTime;
-          obj.end_time = day.endTime;
+          obj.start_time = availability[day].startTime.getHours();
+          obj.end_time = availability[day].endTime.getHours();
           availArray.push(obj);
         }
       }
-      const res = await axios.post(`${baseUrl}/api/businesses/`, {
-        email: user.attributes.email,
-        name: businessName,
-        address_street: addressStreet,
-        address_city: addressCity,
-        address_zip: addressZip,
-        phone: phone,
-        business_type: bizType,
-        capacity: capacity,
-        price: price,
-        availability: availArray,
-      });
-      setSubmittedForm(true);
+
+      // if user business already exists, send patch request
+      if (userBusiness) {
+        console.log("patching biz details")
+        res = await axios.patch(`${baseUrl}/api/businesses/`, {
+          email: user.attributes.email,
+          name: businessName,
+          address_street: addressStreet,
+          address_city: addressCity,
+          address_zip: addressZip,
+          phone: phone,
+          business_type: bizType,
+          capacity: capacity,
+          price: price,
+        });
+        console.log("patching avail")
+        const avail = await axios.patch(
+          `${baseUrl}/api/availability/${userBusiness.id}`,
+          {
+            availabilities: availArray,
+          }
+        );
+        res.data[0].availability = avail;
+        console.log(res.data[0])
+      }
+
+      // if user business does not exist, send post request
+      else if (!userBusiness) {
+        res = await axios.post(`${baseUrl}/api/businesses/`, {
+          email: user.attributes.email,
+          name: businessName,
+          address_street: addressStreet,
+          address_city: addressCity,
+          address_zip: addressZip,
+          phone: phone,
+          business_type: bizType,
+          capacity: capacity,
+          price: price,
+          availability: availArray,
+        });
+        setSubmittedForm(true);
+      }
+      setUserBusiness(res.data[0]);
       setDisplayInputs(false);
     } catch (err) {
       alert("There was an error with your request. Please try again later.");
@@ -352,7 +402,6 @@ function Business() {
               </div>
             </div>
 
-            {/* NOTE TO MIKU!! input for availability should go here */}
             {/* datepicker will update business available  state */}
             <div id="availability-container">
               <div id="weekly-available-title">
@@ -383,6 +432,18 @@ function Business() {
                             dateFormat="h:mm aa"
                           />
                         )}
+                        {!displayInputs && (
+                          <div>
+                            {availability[day].startTime && (
+                              <p className="timeslots">
+                                {availability[day].startTime.getHours() + ":00"}
+                              </p>
+                            )}
+                            {!availability[day].startTime && (
+                              <p className="unavailable timeslots">X</p>
+                            )}
+                          </div>
+                        )}
                       </div>
                       <div className="availability-endTime">
                         <label className="availability-label">End Time</label>
@@ -407,9 +468,16 @@ function Business() {
                           />
                         )}
                         {!displayInputs && (
-                          <div>{userBusiness.availability[day] && (
-                            <p>{userBusiness.availability[day].end_time}</p>
-                          )}</div>
+                          <div>
+                            {availability[day].endTime && (
+                              <p className="timeslots">
+                                {availability[day].endTime.getHours() + ":00"}
+                              </p>
+                            )}
+                            {!availability[day].endTime && (
+                              <p className="unavailable timeslots">X</p>
+                            )}
+                          </div>
                         )}
                       </div>
                     </div>

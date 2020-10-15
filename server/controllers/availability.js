@@ -64,10 +64,43 @@ router.get("/work_in_progress", async(req, res) => {
 
     return { business_id, name, capacity, user_id, all_availabilities };
   });
-
   res.send(all_availabilities);
 });
 
+  // Edit availability info by business id
+  router.patch("/:id", async (req, res) => {
+    console.log("patching")
+    const business_id = req.params.id;
+    const updatedAvail = req.body.availabilities;
+  
+    for (const dailyAvail of updatedAvail) {
+      console.log(dailyAvail);
+        const day = dailyAvail.day;
+        const updated = await db
+        .select("*")
+        .returning("*")
+        .table("availability")
+        .where({ business_id, day })
+        .update(dailyAvail);
+        if (updated.length === 0) {
+          const start_hour = dailyAvail.start_hour;
+          const end_hour = dailyAvail.end_hour;
+          const day = dailyAvail.day;
+          await db
+            .select("*")
+            .table("availability")
+            .insert({business_id, day, start_hour, end_hour});
+        }
+    }
+  
+    const update = await db
+      .select("*")
+      .table("availability")
+      .where( { business_id } )
+    
+    console.log("updated avail :", update)
+    res.send(update);
+  });
 
 
 module.exports = router;

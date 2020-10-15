@@ -182,6 +182,13 @@ input.checkbox-body{
 .availability-label {
     width: 100%;
 }
+.timeslots {
+    height: 30px;
+}
+.unavailable {
+    color: darkslategrey;
+    font-weight: 700;
+}
 #biz-res-title{
     width: 100%;
 }
