@@ -122,15 +122,13 @@ function Business() {
           day !== "update"
         ) {
           obj.day = day;
-          obj.start_time = availability[day].startTime.getHours();
-          obj.end_time = availability[day].endTime.getHours();
+          obj.start_hour = availability[day].startTime.getHours();
+          obj.end_hour = availability[day].endTime.getHours();
           availArray.push(obj);
         }
       }
-
       // if user business already exists, send patch request
       if (userBusiness) {
-        console.log("patching biz details")
         res = await axios.patch(`${baseUrl}/api/businesses/`, {
           email: user.attributes.email,
           name: businessName,
@@ -142,7 +140,6 @@ function Business() {
           capacity: capacity,
           price: price,
         });
-        console.log("patching avail")
         const avail = await axios.patch(
           `${baseUrl}/api/availability/${userBusiness.id}`,
           {
@@ -150,11 +147,11 @@ function Business() {
           }
         );
         res.data[0].availability = avail;
-        console.log(res.data[0])
       }
 
       // if user business does not exist, send post request
       else if (!userBusiness) {
+        console.log("posting")
         res = await axios.post(`${baseUrl}/api/businesses/`, {
           email: user.attributes.email,
           name: businessName,
@@ -167,9 +164,19 @@ function Business() {
           price: price,
           availability: availArray,
         });
+        console.log("finish posting", res.data[0]);
         setSubmittedForm(true);
       }
+      
       setUserBusiness(res.data[0]);
+      setBusinessName(res.data[0].name);
+      setAddressStreet(res.data[0].address_street);
+      setAddressCity(res.data[0].address_city);
+      setAddressZip(res.data[0].address_zip);
+      setPhone(res.data[0].phone);
+      setBizType(res.data[0].business_type);
+      setCapacity(res.data[0].capacity);
+      setPrice(res.data[0].price);
       setDisplayInputs(false);
     } catch (err) {
       alert("There was an error with your request. Please try again later.");
@@ -409,7 +416,7 @@ function Business() {
               </div>
             </div>
 
-            {userBusiness && (
+            {(displayInputs || userBusiness) && (
               <div id="availability-input-container">
                 {daysOfWeek.map((day) => (
                   <div className="availability-input" key={day}>
@@ -432,7 +439,7 @@ function Business() {
                             dateFormat="h:mm aa"
                           />
                         )}
-                        {!displayInputs && (
+                        {(!displayInputs && userBusiness) && (
                           <div>
                             {availability[day].startTime && (
                               <p className="timeslots">
@@ -454,10 +461,6 @@ function Business() {
                             name={day}
                             onChange={(time) => {
                               updateAvailability(time, day, "endTime");
-                              console.log(
-                                "SELECTED: ",
-                                availability[day].endTime
-                              );
                             }}
                             showTimeSelect
                             showTimeSelectOnly
@@ -520,17 +523,17 @@ function Business() {
             )}
           </main>
           <hr id="profile-divider"></hr>
-          <section>
+          {/* <section>
             <div id="availability-container">
               <div id="biz-res-title">
                 <p>Upcoming Reservations:</p>
               </div>
               <div id="biz-reservations">
-                {userBusiness.reservations.length === 0 && (
+                {userBusiness && userBusiness.reservations.length === 0 && (
                   <p>No upcoming reservations</p>
                 )}
 
-                {userBusiness.reservations.length > 0 && (
+                {userBusiness && userBusiness.reservations.length > 0 && (
                   <>
                     <div id="upcoming-past-button-container">
                       <button
@@ -565,7 +568,7 @@ function Business() {
                 )}
               </div>
             </div>
-          </section>
+          </section> */}
         </div>
       )}
     </div>

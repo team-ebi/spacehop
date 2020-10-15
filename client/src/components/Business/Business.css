@@ -217,6 +217,7 @@ input.checkbox-body{
     #profile-info {
         width: 100%;
         flex-flow: row wrap;
+        justify-content: center;
     }
     #add-button {
         margin-top: 20px;
@@ -241,6 +242,7 @@ input.checkbox-body{
         margin-left: 0;
         display: flex;
         justify-content: center;
+        width: 100%;
     }
     #biz-details {
         flex-flow: row wrap;
