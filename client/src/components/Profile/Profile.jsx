@@ -42,14 +42,7 @@ function Profile() {
         "email":email,
         "phone":phone
       }); 
-
-
-      //profile page is updated exept email. 
-      //email shouldn't be changed 
-      user.attributes.given_name=givenName; 
-      user.attributes.family_name=familyName;
-      user.attributes.phone_number=phone; 
-
+      
       setDisplayInputs(false); 
     }
 
