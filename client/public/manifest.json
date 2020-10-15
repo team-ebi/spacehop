@@ -1,6 +1,6 @@
 {
-    "short_name": "Spacehop App",
-    "name": "Spacehop App",
+    "short_name": "Spacehop",
+    "name": "Spacehop",
     "icons": [
         {
             "src": "favicon.ico",
@@ -10,11 +10,11 @@
         {
             "src": "logo.png",
             "type": "image/png",
-            "sizes": "552x441"
+            "sizes": "170x170"
         }
     ],
     "start_url": ".",
-    "display": "standalone",
+    "display": "fullscreen",
     "theme_color": "darkslategrey",
-    "background-color": "rgb(250, 238, 238)"
+    "background_color": "rgb(250, 238, 238)"
 }
