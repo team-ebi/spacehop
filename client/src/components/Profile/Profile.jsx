@@ -118,11 +118,6 @@ function Profile() {
                 )}
                 {displayInputs && (
                   <div className="attribute">
-                    {/* <input
-                      className="profile-input"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    /> */}
                     {user && email}
                   </div>
                 )}
