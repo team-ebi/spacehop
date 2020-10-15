@@ -44,29 +44,38 @@ router.get("/data", async (req, res) => {
 // If business acccount, send joined business, user and reservation table
 // If not send empty array
 router.get("/account", async (req, res) => {
-  const email = req.body.email;
+  try {
+    const email = req.body.email;
   
-  // Get user id by email
-  const user = await db
+    // Get user id by email
+    const user = await db
     .select("*")
     .table("users")
-    .returning("id")
     .where({ email });
-  const user_id = user[0]["id"];
-
-  // Find if user has business account
-  const business = await db
+    const user_id = user[0]["id"];
+  
+    // Find if user has business account
+    const businessInfo = await db
     .select("*")
+    .returning("*")
     .table("businesses")
-    .returning("id")
-    .where({ user_id }, (res) => {
-      console.log(res);
-      // res ?
-      // console.log(true) :
-      // console.log(false)
-    });
-
-  res.send("not business");
+    .where({ user_id })
+    .join("availability", { "businesses.id": "availability.business_id" });
+    const business_id = businessInfo[0]["id"];
+  
+    // Reservation info
+    const reservationInfo = await db
+    .select("*")
+    .table("reservations")
+    .where({ business_id });
+    
+    // Combine business info with reservation info
+    businessInfo[0]["reservations"] = reservationInfo;
+    
+    res.send(businessInfo);
+  } catch(err) {
+    res.send([]);
+  }
 });
 
 //Get selected user's info

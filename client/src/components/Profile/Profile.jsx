@@ -4,29 +4,45 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import FutureBookings from "../BookingsAll/BookingsAll";
 import "./Profile.css";
+import axios from "axios"; 
 
 function Profile() {
   const { user } = useContext(UserContext);
   const [givenName, setGivenName] = useState("");
   const [familyName, setFamilyName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState();
+  const [phone, setPhone] = useState("");
   const [displayInputs, setDisplayInputs] = useState(false);
 
-  useEffect(() => {
-    if (user) {
-      setGivenName(user.attributes.given_name);
-      setFamilyName(user.attributes.family_name);
-      setEmail(user.attributes.email);
-      setPhone(user.attributes.phone_number);
-    }
-  }, [user]);
 
-  // this function should pull from component state and
-  // post to db + update user pool
-  async function updateProfile() {
-   
-  }
+    useEffect(() => {
+        async function fetchUser(){
+          if(user){
+            let req = axios.get(`http://localhost:4000/api/users/${user.attributes.email}`)      
+            let res = await req; 
+            let data = res.data;  
+            setGivenName(data[0].first_name);
+            setFamilyName(data[0].last_name); 
+            setEmail(data[0].email);
+            setPhone(data[0].phone); 
+          }
+      }
+      fetchUser(); 
+  },[user]);
+
+    // this function should pull from component state and
+    // post to db + update user pool
+    async function updateProfile() {
+      axios.patch(`http://localhost:4000/api/users/`, 
+      {
+        "first_name":givenName, 
+        "last_name":familyName,
+        "email":email,
+        "phone":phone
+      }); 
+      
+      setDisplayInputs(false); 
+    }
 
   return (
     <div id="user-profile-container">
@@ -54,7 +70,7 @@ function Profile() {
                 <div id="profile-categories">First Name: </div>
                 {!displayInputs && (
                   <div className="attribute">
-                    {user && user.attributes.given_name}
+                    {user && givenName}
                   </div>
                 )}
                 {displayInputs && (
@@ -71,7 +87,7 @@ function Profile() {
                 <div id="profile-categories">Last Name: </div>
                 {!displayInputs && (
                   <div className="attribute">
-                    {user && user.attributes.family_name}
+                    {user && familyName}
                   </div>
                 )}
                 {displayInputs && (
@@ -88,16 +104,12 @@ function Profile() {
                 <div id="profile-categories">Email: </div>
                 {!displayInputs && (
                   <div className="attribute">
-                    {user && user.attributes.email}
+                    {user && email}
                   </div>
                 )}
                 {displayInputs && (
                   <div className="attribute">
-                    <input
-                      className="profile-input"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
+                    {user && email}
                   </div>
                 )}
               </div>
@@ -105,7 +117,7 @@ function Profile() {
                 <div id="profile-categories">Phone Number: </div>
                 {!displayInputs && (
                   <div className="attribute">
-                    {user && user.attributes.phone_number}
+                    {user && phone}
                   </div>
                 )}
                 {displayInputs && (
