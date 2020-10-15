@@ -68,15 +68,9 @@ router.get("/account", async (req, res) => {
     .select("*")
     .table("reservations")
     .where({ business_id });
-  
-    // Array to store all reservation
-    const reservations = [];
-    for (const reservation of reservationInfo) {
-      reservations.push(reservation);
-    }
     
     // Combine business info with reservation info
-    businessInfo[0]["reservations"] = reservations;
+    businessInfo[0]["reservations"] = reservationInfo;
     
     res.send(businessInfo);
   } catch(err) {
