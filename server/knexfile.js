@@ -1,4 +1,5 @@
-require("dotenv").config();
+require('dotenv').config();
+
 module.exports = {
   development: {
     client: 'postgresql',
@@ -12,6 +13,10 @@ module.exports = {
       password: process.env.AWS_SPACEHOP_PASSWORD,
       database: process.env.AWS_SPACEHOP_DB
     }
+  },
+  test: {
+    client: 'postgresql',
+    connection: `postgres://${process.env.USER}@127.0.0.1:5432/spacehoptest`
   }
 };
 
