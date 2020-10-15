@@ -42,7 +42,7 @@ router.post("/", async (req, res) => {
 
   const image = await listObjects(bucket)
   .then(result => result.map(elem => getSingleObject(bucket, elem.Key)))
-  .then(result => Promise.all(result));
+  .then(result => Promise.all(result.slice(1)));
   
   // Send image with base64
   res.send(image);
