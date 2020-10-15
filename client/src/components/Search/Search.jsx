@@ -25,8 +25,6 @@ export default function Search() {
   const [selectedEndTime, setSelectedEndTime] = useState("");
   const { businesses, setBusinesses } = useContext(BusinessContext);
 
-  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000"
-
   //variable to access routes history
   const history = useHistory();
 
@@ -64,9 +62,14 @@ export default function Search() {
     // parse time from selected start time
     const endTime = new Date(selectedEndTime).getHours();
 
-    console.log("process.env.REACT_APP_BACKEND_URL:",process.env.REACT_APP_BACKEND_URL);
+    let baseUrl;
 
-    console.log("process.env.REACT_APP_REGION:",process.env.REACT_APP_REGION);
+    //change backend server target 
+    if(process.env.REACT_APP_BACKEND_ENV==="develop"){
+      baseUrl="http://localhost:4000";
+    }else{
+      baseUrl = "http://spacehop-env.eba-xcf3tuwj.us-east-1.elasticbeanstalk.com"
+    }
 
     // set data to axios.get(http://) then get filtered data
     const res = await axios.get(
