@@ -1,15 +1,15 @@
-const AWS = require("aws-sdk");
+const aws = require("aws-sdk");
 const express = require("express");
 const router = express.Router();
 require("dotenv").config();
 
 // AWS S3 configuration
 const bucketName = process.env.S3_BUCKET_NAME;
-const credentials = new AWS.Credentials({
+const credentials = new aws.Credentials({
   accessKeyId: process.env.S3_ACCESS_KEY,
   secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
 });
-AWS.config.credentials = credentials;
+aws.config.credentials = credentials;
 
 // Get all list from bucket
 const listObjects = (bucket) => {
@@ -33,7 +33,7 @@ const getSingleObject = (bucket, key) => {
 
 router.post("/", async (req, res) => {
   const email = req.body.email;
-  const bucket = new AWS.S3({
+  const bucket = new aws.S3({
     params: {
       Bucket: bucketName,
       Prefix: `${email}/`
