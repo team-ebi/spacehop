@@ -70,9 +70,7 @@ router.post("/", async (req, res) => {
   const availabilities = req.body.availability;
 
   // Get user id by email
-  const user = await db.select("*").table("users").where({
-    email,
-  });
+  const user = await db.select("*").table("users").where({email});
   const user_id = user[0]["id"];
 
   // Create business account, then create availability
@@ -92,8 +90,10 @@ router.post("/", async (req, res) => {
       price,
     });
 
+  // get new business id 
   const business_id = business[0].id;
-  
+
+  // loop through availabilities and insert each one into availability table
   for (const availability of availabilities) {
     await db.select("*").table("availability").insert({
       business_id,
@@ -103,14 +103,15 @@ router.post("/", async (req, res) => {
     });
   }
 
+  // fetch all availabilities
   const availability = await db
     .select("*")
     .table("availability")
     .where({ business_id });
 
+  // add availability to business data that will be sent in response
   business[0]["availability"] = availability;
 
-  console.log(business);
   res.send(business);
 });
 
@@ -118,16 +119,19 @@ router.post("/", async (req, res) => {
 router.patch("/", async (req, res) => {
   const email = req.body.email;
 
+  // get user details from user table by email
   const user = await db
     .select("*")
     .returning("id")
     .table("users")
     .where({ email });
+
   const user_id = user[0]["id"];
 
   const updateInfo = req.body;
   delete updateInfo.email;
 
+  // update business info for user
   const businessInfo = await db
     .select("*")
     .returning("*")
@@ -135,6 +139,7 @@ router.patch("/", async (req, res) => {
     .where({ user_id })
     .update(updateInfo);
 
+  // get business id to fetch all reservations to be sent in response
   const business_id = businessInfo[0]["id"];
 
   const reservationInfo = await db
@@ -142,7 +147,7 @@ router.patch("/", async (req, res) => {
     .table("reservations")
     .where({ business_id });
 
-  // Combine business, availability and reservation info
+  // Combine business and reservation info
   businessInfo[0]["reservations"] = reservationInfo;
 
   res.send(businessInfo);
