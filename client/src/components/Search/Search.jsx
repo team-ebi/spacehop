@@ -71,7 +71,7 @@ export default function Search() {
       baseUrl = "http://spacehop-env.eba-xcf3tuwj.us-east-1.elasticbeanstalk.com"
     }
 
-    console.log("process.env:",process.env);
+    console.log("process.env: ",process.env);
 
     // set data to axios.get(http://) then get filtered data
     const res = await axios.get(
