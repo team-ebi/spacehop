@@ -31,6 +31,7 @@ const getSingleObject = (bucket, key) => {
   return getSingleObject;
 };
 
+// Get image by email
 router.post("/", async (req, res) => {
   const email = req.body.email;
   const bucket = new aws.S3({
