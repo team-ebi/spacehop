@@ -56,11 +56,11 @@ const deleteObjects = (bucket, objects) => {
 
 // Get image by business id
 router.post("/:id", async (req, res) => {
-  const email = req.params.id;
+  const businessID = req.params.id;
   const bucket = new aws.S3({
     params: {
       Bucket: bucketName,
-      Prefix: `${email}/`
+      Prefix: `${businessID}/`
     }
   });
 
