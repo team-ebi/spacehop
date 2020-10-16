@@ -16,6 +16,9 @@ import Success from "./components/Success/Success";
 import { onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Auth } from "aws-amplify";
 import axios from "axios";
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
+
 
 export default function App() {
   const [businesses, setBusinesses] = useState(null);
@@ -72,6 +75,7 @@ export default function App() {
         <UserContext.Provider value={{ user, setUser }}>
           <AuthStateContext.Provider value={{ authState, setAuthState }}>
             <BusinessContext.Provider value={{ businesses, setBusinesses }}>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
               <Nav />
               <Switch>
                 <Route path="/" exact component={Search} />
@@ -87,6 +91,7 @@ export default function App() {
 
                 <Route path="/success" exact component={Success} />
               </Switch>
+              </MuiPickersUtilsProvider>
             </BusinessContext.Provider>
           </AuthStateContext.Provider>
         </UserContext.Provider>

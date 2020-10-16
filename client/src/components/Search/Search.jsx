@@ -5,7 +5,7 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Search.css";
 import { BusinessContext } from "../useContext/BusinessContext";
@@ -13,19 +13,36 @@ import { UserContext } from "../useContext/UserContext";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import logo from "../../images/logo.png";
+import { createMuiTheme } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
+import { DatePicker, TimePicker } from "@material-ui/pickers";
+import moment from "moment";
+
 require("dotenv").config();
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#80cc37",
+    },
+    secondary: {
+      main: "#000",
+    },
+  },
+});
 
 export default function Search() {
   const [location, setLocation] = useState("");
   // may or may not need coordinates
-  const [ coordinates, setCoordinates] = useState({ lat: null, lng: null });
-  const [selectedDate, setSelectedDate] = useState("");
+  const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
+  const [selectedDate, setSelectedDate] = useState(null);
   const { user } = useContext(UserContext);
-  const [selectedStartTime, setSelectedStartTime] = useState("");
-  const [selectedEndTime, setSelectedEndTime] = useState("");
+  const [selectedStartTime, setSelectedStartTime] = useState(moment().format());
+  const [selectedEndTime, setSelectedEndTime] = useState(moment().format());
   const { setBusinesses } = useContext(BusinessContext);
+  const [focus, setFocus] = useState(false);
 
-  //change backend server target 
+  //change backend server target
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 
   //variable to access routes history
@@ -65,7 +82,7 @@ export default function Search() {
     // parse time from selected start time
     const endTime = new Date(selectedEndTime).getHours();
 
-    console.log("process.env: ",process.env);
+    console.log("process.env: ", process.env);
 
     // set data to axios.get(http://) then get filtered data
     const res = await axios.get(
@@ -124,7 +141,10 @@ export default function Search() {
                         padding: "7px",
                       };
                       return (
-                        <div key={suggestion} {...getSuggestionItemProps(suggestion, { style })}>
+                        <div
+                          key={suggestion}
+                          {...getSuggestionItemProps(suggestion, { style })}
+                        >
                           {suggestion.description}
                         </div>
                       );
@@ -138,40 +158,46 @@ export default function Search() {
           {/* datepicker will update selectedDate state */}
           <div className="input time">
             {/* select date */}
-            <DatePicker
-              className="date-input"
-              selected={selectedDate}
-              placeholderText="When?"
-              onChange={(date) => setSelectedDate(date)}
-            />
+            <ThemeProvider theme={theme}>
+              <DatePicker
+                autoOk
+                label="Date"
+                value={selectedDate}
+                onChange={(date) => setSelectedDate(date)}
+                animateYearScrolling
+                disablePast={true}
+                cancelLabel={false}
+                okLabel={false}
+              />
+            </ThemeProvider>
           </div>
           <div className="input time">
             {/* select start time */}
-            <DatePicker
-              className="date-input"
-              selected={selectedStartTime}
-              placeholderText="Start time?"
-              onChange={(startTime) => setSelectedStartTime(startTime)}
-              showTimeSelect
-              showTimeSelectOnly
-              timeIntervals={60}
-              timeCaption="Time"
-              dateFormat="h:mm aa"
-            />
+            <ThemeProvider theme={theme}>
+              <TimePicker
+                autoOk
+                label="Start Time"
+                className="date-input"
+                value={selectedStartTime}
+                onChange={(startTime) => setSelectedStartTime(startTime)}
+                disablePast={true}
+                views={["hours"]}
+              />
+            </ThemeProvider>
           </div>
           <div className="input time">
             {/* select end time */}
-            <DatePicker
-              className="date-input"
-              selected={selectedEndTime}
-              placeholderText="End time?"
-              onChange={(endTime) => setSelectedEndTime(endTime)}
-              showTimeSelect
-              showTimeSelectOnly
-              timeIntervals={60}
-              timeCaption="Time"
-              dateFormat="h:mm aa"
-            />
+            <ThemeProvider theme={theme}>
+              <TimePicker
+                autoOk
+                label="End Time"
+                className="date-input"
+                value={selectedEndTime}
+                onChange={(endTime) => setSelectedEndTime(endTime)}
+                disablePast={true}
+                views={["hours", "minutes"]}
+              />
+            </ThemeProvider>
           </div>
           {/* when this button is clicked, list of available
         businesses will be displayed */}
