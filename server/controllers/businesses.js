@@ -70,7 +70,7 @@ router.post("/", async (req, res) => {
   const availabilities = req.body.availability;
 
   // Get user id by email
-  const user = await db.select("*").table("users").where({email});
+  const user = await db.select("*").table("users").where({ email });
   const user_id = user[0]["id"];
 
   // Create business account, then create availability
@@ -170,9 +170,16 @@ router.delete("/", async (req, res) => {
 
 // Get all business data
 router.get("/data", async (req, res) => {
-  const allBusinessesInfo = await db.select("*").table("businesses");
-
-  res.send(allBusinessesInfo);
+  const dbData = require("../src/knex.js");
+  try {
+    const allBusinessesInfo = await dbData.select("*").table("businesses");
+    res.send(allBusinessesInfo);
+  } catch (err) {
+    console.log(err);
+  }
+  finally {
+    await dbData.destroy();
+  }
 });
 
 module.exports = router;

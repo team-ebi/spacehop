@@ -24,7 +24,7 @@
     "start": "node ./src/index.js",
     "dev": "nodemon ./server/src/index.js",
     "lint": "eslint --fix --ext .js .",
-    "test": "mocha test",
+    "test": "mocha test --env test",
     "makeMigration": "knex migrate:make",
     "migrate": "knex migrate:latest",
     "migrate:up": "knex migrate:up",

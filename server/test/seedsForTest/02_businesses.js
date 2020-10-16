@@ -86,18 +86,18 @@ exports.seed = function(knex) {
           user_id: 26,
           stripe_price_id: "price_1HbJqfCjwFEQ1pgcOxl1Ihpv"
         },
-        // {
-        //   name: "Macchan",
-        //   address_street: "3-1-21 Shibuya",
-        //   address_city: "Shibuya",
-        //   address_zip: "150-0002",
-        //   phone: "0123-456-789",
-        //   business_type: "Izakaya",
-        //   capacity: 10,
-        //   price: 10000,
-        //   user_id: 27,
-        //   stripe_price_id: "price_1HblvRCjwFEQ1pgcNzZjIWEL"
-        // }
+        {
+          name: "Macchan",
+          address_street: "3-1-21 Shibuya",
+          address_city: "Shibuya",
+          address_zip: "150-0002",
+          phone: "0123-456-789",
+          business_type: "Izakaya",
+          capacity: 10,
+          price: 10000,
+          user_id: 27,
+          stripe_price_id: "price_1HblvRCjwFEQ1pgcNzZjIWEL"
+        }
       ]);
     });
 };
