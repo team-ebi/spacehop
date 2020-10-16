@@ -34,6 +34,7 @@ const getSingleObject = (bucket, key) => {
   return getSingleObject;
 };
 
+// Save image inside folder
 const saveObject = (bucket, params) => {
   const saveObject = new Promise((resolve, reject) => {
     bucket.putObject(params, (error, data) => {
