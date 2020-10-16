@@ -54,9 +54,9 @@ const deleteObjects = (bucket, objects) => {
   return deleteObjects;
 }
 
-// Get image by email
-router.post("/", async (req, res) => {
-  const email = req.body.email;
+// Get image by business id
+router.post("/:id", async (req, res) => {
+  const email = req.params.id;
   const bucket = new aws.S3({
     params: {
       Bucket: bucketName,
