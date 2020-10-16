@@ -61,4 +61,26 @@ router.post("/", async (req, res) => {
   res.send(image);
 });
 
+// Post image by business id
+router.post("/:id", async (req, res) => {
+  const folderName = req.params.id;
+  const fileName = req.files.image.name;
+  const imageData = Buffer.from(req.files.image.data, "binary");
+
+  const bucket = new aws.S3({
+    params: {
+      Bucket: bucketName,
+    }
+  });
+  const params = {
+    Key: `${folderName}/${fileName}`,
+    Body: imageData,
+    ACL: "public-read",
+  }
+
+  saveObject(bucket, params);
+
+  res.send("Upload image success");
+});
+
 module.exports = router;
