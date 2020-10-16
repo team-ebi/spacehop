@@ -37,12 +37,6 @@ export default function BizCard({ props }) {
   // props passed to router's useHistory
   const biz = props.location.state.state;
 
-  //url for server
-
-  const url =
-    process.env.REACT_APP_BACKEND_URL ||
-    "http://localhost:4000/api/stripecheckout/checkoutsession";
-
   //publishable stripe API key
   const stripePromise = loadStripe(
     "pk_test_51HU0G2CjwFEQ1pgcvOchnwo0Gsb2seN5a3xGz8Q2iCvlVUjHkSCV7UZHy3NfeobxNNMeGwmiosi3UBxjbKcSjGZ000hENfQW0F"
@@ -85,7 +79,7 @@ export default function BizCard({ props }) {
         .then(() => {
           reservationHandler();
         });
-    } catch (error) {
+    } catch {
       alert("Payment Error");
     }
   }
@@ -98,7 +92,7 @@ export default function BizCard({ props }) {
       setUserReviews(res.data);
     }
     getRating();
-  }, []);
+  }, [baseUrl, biz.business_id]);
 
   //post reservation to database
   async function reservationHandler() {
@@ -109,9 +103,6 @@ export default function BizCard({ props }) {
         price: biz.price, 
         business_id: biz.id,
       })
-      .then(function (response) {
-        console.log(response);
-      })
       .catch(function (error) {
         console.log(error);
       });
@@ -120,7 +111,7 @@ export default function BizCard({ props }) {
   return (
     <div id="bizcard-container">
       <div className="corner-logo-container">
-        <img className="corner-logo" src={logo}></img>
+        <img className="corner-logo" alt="spacehop-logo" src={logo}></img>
       </div>
       <div id="bizcard-location-container">
         {/* Elements helps load stripe */}
@@ -128,6 +119,7 @@ export default function BizCard({ props }) {
           <div id="image-cell">
             <img
               id="bizcard-image"
+              alt='izakaya'
               src="https://www.japan-guide.com/g9/2005_01b.jpg"
             />
           </div>
@@ -201,7 +193,7 @@ export default function BizCard({ props }) {
                 <div id="bizcard-user-review">
                   <h2 id="reviews-header">Reviews</h2>
                   {userReviews.map((review) => {
-                    return <li>{`"${review.comment}"`}</li>;
+                    return <li key={review.id}>{`"${review.comment}"`}</li>;
                   })}
                 </div>
               </div>

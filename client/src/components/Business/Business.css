@@ -10,9 +10,12 @@
     /* justify-content: center; */
     width: 100%;
     height: 300px;
+    justify-content: center;
 }
 #biz-img {
-    width: 200px;
+    width: 20%;
+    display: flex;
+    justify-content: center;
 }
 .attribute {
     margin-left: 15px;
@@ -81,7 +84,7 @@ section {
 #biz-details {
     display: flex;
     flex-flow: column wrap;
-    width: 60%;
+    width: 70%;
 }
 #add-biz-container {
     display: flex;
@@ -100,9 +103,11 @@ section {
     margin: 5px;
     width:150px;
     padding:10px;
-    background-color: lightgray;
+    background-color: white;
     border-radius: 20px;
-    box-shadow:0px 4px 6px gray;
+    border: solid lightgrey;
+    border-width: 1px;
+    box-shadow:0px 4px 4px lightgrey;
 }
 #weekly-available-title{
     font-weight: 600;
@@ -113,6 +118,7 @@ section {
     margin:0 auto;
     margin-top: 30px;
     margin-bottom: 15px;
+
 }
 .availability-day{
     font-size: 16px;
@@ -129,32 +135,37 @@ input.checkbox-body{
     padding:10px;
     transform: scale(1.8);
 }
-.availability-startTime{
+.availability-startTime {
     display: flex;
     justify-content: center;
     width:100%;
-    text-align: center;
+    text-align: left;
     margin-top: 10px;
     margin-bottom: 20px;
-    
+    flex-flow: row wrap;
+    padding-left: 2px;
+
 }
 .availability-endTime{
     display: flex;
     justify-content: center;
     width:100%;
-    text-align: center;
+    text-align: left;
     margin-top: 5px;
     margin-bottom: 5px;
+    flex-flow: row wrap;
+    padding-left: 2px;
 }
 .avail-time-input{
     width:120px;
     border-radius: 10px;
     border: none;
     text-indent: 5px;
-    box-shadow: 0 4px 8px lightgrey;
     width: 90%;
     height: 30px;
     font-size: 16px;
+    border: solid grey;
+    border-width: 1px;
 
 }
 #thanks {
@@ -163,6 +174,23 @@ input.checkbox-body{
     margin-top: 20px;
     font-size: 16px;
     line-height: 20px;
+}
+#availability-container {
+    width: 100%;
+    display: flex;
+}
+.availability-label {
+    width: 100%;
+}
+.timeslots {
+    height: 30px;
+}
+.unavailable {
+    color: darkslategrey;
+    font-weight: 700;
+}
+#biz-res-title{
+    width: 100%;
 }
 @media (max-width: 700px) {
     #biz-profile-container {
@@ -189,6 +217,7 @@ input.checkbox-body{
     #profile-info {
         width: 100%;
         flex-flow: row wrap;
+        justify-content: center;
     }
     #add-button {
         margin-top: 20px;
@@ -213,6 +242,7 @@ input.checkbox-body{
         margin-left: 0;
         display: flex;
         justify-content: center;
+        width: 100%;
     }
     #biz-details {
         flex-flow: row wrap;
