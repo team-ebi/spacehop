@@ -31,6 +31,15 @@ const getSingleObject = (bucket, key) => {
   return getSingleObject;
 };
 
+const saveObject = (bucket, params) => {
+  const saveObject = new Promise((resolve, reject) => {
+    bucket.putObject(params, (error, data) => {
+      error ? console.error("error: ", error) : resolve(data);
+    });
+  });
+  return saveObject;
+}
+
 // Get image by email
 router.post("/", async (req, res) => {
   const email = req.body.email;
