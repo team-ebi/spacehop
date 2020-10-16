@@ -2,6 +2,7 @@ import React,{useState, useEffect, useContext} from 'react';
 import { BusinessContext } from "../useContext/BusinessContext";
 import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import flag from '../../images/registration-mark.png'; 
+import sampleData from "./sampledata.json"; 
 
 function Map(){
     const { businesses } = useContext(BusinessContext);
@@ -28,13 +29,19 @@ function Map(){
     useEffect(
         ()=>{
             function handleBusinesses(){
-                setLocations(businesses.map(item => {
+                // setLocations(businesses.map(item => {
+                    console.log(sampleData);
+                    setLocations(sampleData.map(item => {
+                        console.log(item.name)
+                        console.log(item.location[0].lat)
+                        console.log("img",item.img); 
+
                     return (
                         {
-                            name:item.name,
-                            location:{
-                                lat:item.lat,
-                                lng:item.lng
+                            "name":item.name,
+                            "location":{
+                                "lat":Number(item.location[0].lat),
+                                "lng":Number(item.location[0].lng)
                             }
                         }
                     )
@@ -42,6 +49,7 @@ function Map(){
             }; 
             handleBusinesses()}, []
     )
+    console.log(locations); 
 
     const mapStyles = {  
         margin:"0 auto",      
@@ -49,20 +57,21 @@ function Map(){
         width: "80%"};
       
       const defaultCenter = {
-        lat:35.6809591, lng:139.7673068
+        lat:35.659871, lng:139.700662
       }
 
       return (
           <div>
               <GoogleMap
               mapContainerStyle={mapStyles}
-              zoom={13}
+              zoom={16}
               center={defaultCenter}>
                   {locations.map(item=>{
                       return(
                           <Marker
                           key={item.name}
                           position={item.location}
+                          address_street={item.address_street}
                           icon={flag}
                           onClick ={
                               ()=>onSelect(item)
@@ -77,7 +86,7 @@ function Map(){
                       onCloseClick={
                           ()=>setSelected({})
                       }>
-                          <p>{selected.name}</p>
+                      <p>Name: {selected.name}</p>
                       </InfoWindow>
                   )}
               </GoogleMap>
