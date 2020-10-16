@@ -1,7 +1,10 @@
 const aws = require("aws-sdk");
 const express = require("express");
 const router = express.Router();
+const fileUpload = require("express-fileupload");
 require("dotenv").config();
+
+router.use(fileUpload());
 
 // AWS S3 configuration
 const bucketName = process.env.S3_BUCKET_NAME;
