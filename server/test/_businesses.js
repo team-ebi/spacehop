@@ -35,33 +35,8 @@ const config = {
 const server = setupServer();
 
 describe("firstendpoint", () => {
+  const dbConnectionBefore = getDbConnection();
   let request;
-
-  before( (done) =>{
-    const dbConnectionBefore = getDbConnection();
-    dbConnectionBefore.raw('CREATE DATABASE spacehoptest')
-
-      .then(() => {
-        return dbConnectionBefore.destroy();
-      })
-      .then(() => {
-        done();
-      })
-      .catch(err => done(err));
-  });
-
-  after((done) => {
-    const dbConnectionAfter = getDbConnection();
-
-    dbConnectionAfter.raw('DROP DATABASE spacehoptest')
-      .then(() => {
-        dbConnectionAfter.destroy()
-      })
-      .then(() => {
-        done();
-      })
-      .catch(err => done(err));
-  });
 
   beforeEach((done) => {
     request = chai.request(server);
@@ -85,45 +60,21 @@ describe("firstendpoint", () => {
     knexAfterEach.migrate.rollback()
       .then(() => {
         knexAfterEach.destroy();
-      })
-      .then(() => {
         done();
       })
+
       .catch(err => done(err));
   });
 
-  it("businessestest", (done) => {
-    request.get("/api/businesses/test")
-      .then((res) => {
-        const result = res.text;
-        expect(result).to.equal("working");
-        done();
-      })
-      .catch(err => done(err));
+  it("just test", async () => {
+    const res = await request.get("/api/businesses/test")
+    const result = res.text;
+    expect(result).to.equal("working");
   });
 
-  it("businessestest2", (done) => {
-    request.get("/api/businesses/test")
-      .then((res) => {
-        const result = res.text;
-        expect(result).to.equal("working");
-        done();
-      })
-      .catch(err => done(err));
-  });
-
-
-  it("count1", (done) => {
-
-    request.get("/api/businesses/data")
-      .then((res) => {
-        const result = res.body;
-        expect(result.length).to.equal(8);
-      })
-      .then(() => {
-        done();
-      })
-      .catch(err => done(err));
-
+  it("count", async () => {
+    const res = await request.get("/api/businesses/data")
+    const result = res.body;
+    expect(result.length).to.equal(8);
   });
 });
