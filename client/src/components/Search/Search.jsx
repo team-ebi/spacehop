@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import PlacesAutocomplete, {
@@ -18,12 +18,15 @@ require("dotenv").config();
 export default function Search() {
   const [location, setLocation] = useState("");
   // may or may not need coordinates
-  const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
+  const [ coordinates, setCoordinates] = useState({ lat: null, lng: null });
   const [selectedDate, setSelectedDate] = useState("");
   const { user } = useContext(UserContext);
   const [selectedStartTime, setSelectedStartTime] = useState("");
   const [selectedEndTime, setSelectedEndTime] = useState("");
-  const { businesses, setBusinesses } = useContext(BusinessContext);
+  const { setBusinesses } = useContext(BusinessContext);
+
+  //change backend server target 
+  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 
   //variable to access routes history
   const history = useHistory();
@@ -62,14 +65,7 @@ export default function Search() {
     // parse time from selected start time
     const endTime = new Date(selectedEndTime).getHours();
 
-    let baseUrl;
-
-    //change backend server target 
-    if(process.env.REACT_APP_BACKEND_ENV==="develop"){
-      baseUrl="http://localhost:4000";
-    }else{
-      baseUrl = "http://spacehop-env.eba-xcf3tuwj.us-east-1.elasticbeanstalk.com"
-    }
+    console.log("process.env: ",process.env);
 
     // set data to axios.get(http://) then get filtered data
     const res = await axios.get(
@@ -128,7 +124,7 @@ export default function Search() {
                         padding: "7px",
                       };
                       return (
-                        <div {...getSuggestionItemProps(suggestion, { style })}>
+                        <div key={suggestion} {...getSuggestionItemProps(suggestion, { style })}>
                           {suggestion.description}
                         </div>
                       );

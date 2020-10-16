@@ -65,24 +65,19 @@ router.post("/", async (req, res) => {
   const business_type = req.body.business_type;
   const capacity = req.body.capacity;
   const price = req.body.price;
-  
+
   // Information need for creating availability
   const availabilities = req.body.availability;
 
   // Get user id by email
-  const user = await db
-    .select("*")
-    .table("users")
-    .where({
-      email
-    });
+  const user = await db.select("*").table("users").where({email});
   const user_id = user[0]["id"];
-  
+
   // Create business account, then create availability
   const business = await db
     .select("*")
     .table("businesses")
-    .returning("id")
+    .returning("*")
     .insert({
       user_id,
       name,
@@ -93,69 +88,89 @@ router.post("/", async (req, res) => {
       business_type,
       capacity,
       price,
-      stripe_price_id
     });
 
-  const business_id = business[0];
+  // get new business id 
+  const business_id = business[0].id;
+
+  // loop through availabilities and insert each one into availability table
   for (const availability of availabilities) {
     await db.select("*").table("availability").insert({
       business_id,
       day: availability.day,
       start_hour: availability.start_hour,
-      end_hour: availability.end_hour
+      end_hour: availability.end_hour,
     });
   }
 
-  res.send("Business account and availability is created!");
+  // fetch all availabilities
+  const availability = await db
+    .select("*")
+    .table("availability")
+    .where({ business_id });
+
+  // add availability to business data that will be sent in response
+  business[0]["availability"] = availability;
+
+  res.send(business);
 });
 
 // Edit business info by email
 router.patch("/", async (req, res) => {
   const email = req.body.email;
-  
+
+  // get user details from user table by email
   const user = await db
-  .select("*")
-  .returning("id")
-  .table("users")
-  .where({ email });
+    .select("*")
+    .returning("id")
+    .table("users")
+    .where({ email });
+
   const user_id = user[0]["id"];
 
   const updateInfo = req.body;
   delete updateInfo.email;
 
-  const update = await db
-  .select("*")
-  .returning("*")
-  .table("businesses")
-  .where({ user_id })
-  .update(updateInfo)
+  // update business info for user
+  const businessInfo = await db
+    .select("*")
+    .returning("*")
+    .table("businesses")
+    .where({ user_id })
+    .update(updateInfo);
 
-  res.send(update);
+  // get business id to fetch all reservations to be sent in response
+  const business_id = businessInfo[0]["id"];
+
+  const reservationInfo = await db
+    .select("*")
+    .table("reservations")
+    .where({ business_id });
+
+  // Combine business and reservation info
+  businessInfo[0]["reservations"] = reservationInfo;
+
+  res.send(businessInfo);
 });
 
 // Delete user by email
 router.delete("/", async (req, res) => {
   const email = req.body.email;
   const user = await db
-  .select("*")
-  .returning("id")
-  .table("users")
-  .where({ email });
+    .select("*")
+    .returning("id")
+    .table("users")
+    .where({ email });
   const user_id = user[0]["id"];
 
-  await db
-  .table("businesses")
-  .where({ user_id })
-  .del();
+  await db.table("businesses").where({ user_id }).del();
 
   res.send("Business information deleted");
 });
 
 // Get all business data
 router.get("/data", async (req, res) => {
-  const allBusinessesInfo = await db
-    .select("*")
-    .table("businesses");
+  const allBusinessesInfo = await db.select("*").table("businesses");
 
   res.send(allBusinessesInfo);
 });

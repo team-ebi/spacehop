@@ -43,7 +43,7 @@ router.get("/data", async (req, res) => {
 // Check if user has business account by email
 // If business acccount, send joined business, user and reservation table
 // If not send empty array
-router.get("/account", async (req, res) => {
+router.post("/account/", async (req, res) => {
   try {
     const email = req.body.email;
   
@@ -54,26 +54,29 @@ router.get("/account", async (req, res) => {
     .where({ email });
     const user_id = user[0]["id"];
   
-    // Find if user has business account
     const businessInfo = await db
     .select("*")
     .returning("*")
     .table("businesses")
     .where({ user_id })
-    .join("availability", { "businesses.id": "availability.business_id" });
     const business_id = businessInfo[0]["id"];
+
+    const availabilityInfo = await db
+    .select("*")
+    .returning("*")
+    .table("availability")
+    .where({ business_id });
   
-    // Reservation info
     const reservationInfo = await db
     .select("*")
     .table("reservations")
     .where({ business_id });
     
-    // Combine business info with reservation info
+    // Combine business, availability and reservation info
+    businessInfo[0]["availabilities"] = availabilityInfo;
     businessInfo[0]["reservations"] = reservationInfo;
-    
     res.send(businessInfo);
-  } catch(err) {
+  } catch {
     res.send([]);
   }
 });
@@ -83,7 +86,6 @@ router.get("/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const user = await db.select("*").table("users").where("email", email);
-    console.log(user)
     res.send(user);
   } catch {
     //If error occur, send 500 status code
