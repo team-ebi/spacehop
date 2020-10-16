@@ -56,20 +56,20 @@ const deleteObjects = (bucket, objects) => {
 
 // Get image by business id
 router.post("/:id", async (req, res) => {
-  const businessID = req.params.id;
+  const folderName = req.params.id;
   const bucket = new aws.S3({
     params: {
       Bucket: bucketName,
-      Prefix: `${businessID}/`
+      Prefix: `${folderName}/`
     }
   });
 
-  const image = await listObjects(bucket)
+  const images = await listObjects(bucket)
   .then(result => result.map(elem => getSingleObject(bucket, elem.Key)))
   .then(result => Promise.all(result));
   
   // Send image with base64
-  res.send(image);
+  res.send(images);
 });
 
 // Post image by business id
