@@ -17,6 +17,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import DatePicker from "react-datepicker";
 import logo from "../../images/logo.png";
 import Rating from "@material-ui/lab/Rating";
+import BizCard_Map from "../BizCard_Map/BizCard_Map";
 
 require("dotenv").config();
 
@@ -123,6 +124,7 @@ export default function BizCard({ props }) {
               src="https://www.japan-guide.com/g9/2005_01b.jpg"
             />
           </div>
+          <BizCard_Map props={biz}/>
           <div>
             <div id="bizcard-name">
               <h2>{biz.name}</h2>

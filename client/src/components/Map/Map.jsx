@@ -14,27 +14,13 @@ function Map(){
 
     const [locations, setLocations] = useState([]); 
 
-    //test 
-    // const locations = [
-    //   {name:"Tokyo station",
-    //   location:{
-    //       lat:35.6809591,
-    //       lng:139.7673068
-    //   }
-    // }];
-
-
     //everytime when this page is rendered, update locations 
-
+    //only selected data should be shown here □
     useEffect(
         ()=>{
             function handleBusinesses(){
                 // setLocations(businesses.map(item => {
-                    console.log(sampleData);
                     setLocations(sampleData.map(item => {
-                        console.log(item.name)
-                        console.log(item.location[0].lat)
-                        console.log("img",item.img); 
 
                     return (
                         {
@@ -49,7 +35,6 @@ function Map(){
             }; 
             handleBusinesses()}, []
     )
-    console.log(locations); 
 
     const mapStyles = {  
         margin:"0 auto",      
@@ -71,7 +56,6 @@ function Map(){
                           <Marker
                           key={item.name}
                           position={item.location}
-                          address_street={item.address_street}
                           icon={flag}
                           onClick ={
                               ()=>onSelect(item)
