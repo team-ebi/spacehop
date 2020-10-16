@@ -22,7 +22,9 @@ function Map(){
     //   }
     // }];
 
+
     //everytime when this page is rendered, update locations 
+
     useEffect(
         ()=>{
             function handleBusinesses(){
