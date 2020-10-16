@@ -44,6 +44,16 @@ const saveObject = (bucket, params) => {
   return saveObject;
 }
 
+// Delete folder
+const deleteObjects = (bucket, objects) => {
+  const deleteObjects = new Promise((resolve, reject) => {
+    bucket.deleteObjects({ Delete: { Objects: objects, Quiet: true }}, (error, data) => {
+      error ? console.error("error: ", error) : resolve(data);
+    });
+  });
+  return deleteObjects;
+}
+
 // Get image by email
 router.post("/", async (req, res) => {
   const email = req.body.email;
@@ -82,6 +92,23 @@ router.post("/:id", async (req, res) => {
   saveObject(bucket, params);
 
   res.send("Upload image success");
+});
+
+// Delete folder by business id
+router.delete("/:id", async (req, res) => {
+  const folderName = req.params.id;
+  const bucket = new aws.S3({
+    params: {
+      Bucket: bucketName,
+      Prefix: `${folderName}/`
+    }
+  });
+
+  await listObjects(bucket)
+  .then(result => result.map(elem => ({ "Key": elem.Key }) ))
+  .then(result => deleteObjects(bucket, result));
+
+  res.send("Delete folder success");
 });
 
 module.exports = router;
