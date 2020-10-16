@@ -10,6 +10,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./Search.css";
 import { BusinessContext } from "../useContext/BusinessContext";
 import { UserContext } from "../useContext/UserContext";
+import {
+  LocationContext,
+  DateContext,
+  StartTimeContext,
+  EndTimeContext,
+} from "../useContext/Search";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import logo from "../../images/logo.png";
@@ -35,12 +41,13 @@ export default function Search() {
   const [location, setLocation] = useState("");
   // may or may not need coordinates
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
-  const [selectedDate, setSelectedDate] = useState(null);
-  const { user } = useContext(UserContext);
-  const [selectedStartTime, setSelectedStartTime] = useState(moment().format());
-  const [selectedEndTime, setSelectedEndTime] = useState(moment().format());
+
+  // context will be passed to bizCard 
+  const { date, setDate } = useContext(DateContext);
+  const { startTime, setStartTime } = useContext(StartTimeContext);
+  const { endTime, setEndTime } = useContext(EndTimeContext);
   const { setBusinesses } = useContext(BusinessContext);
-  const [focus, setFocus] = useState(false);
+  const { user } = useContext(UserContext);
 
   //change backend server target
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
@@ -62,7 +69,7 @@ export default function Search() {
     // parse the location
     const selectedLocation = location.split(",")[0];
 
-    const date = new Date(selectedDate);
+    const selectedDate = new Date(date);
 
     // parse day from selected date
     const week = [
@@ -74,19 +81,17 @@ export default function Search() {
       "Friday",
       "Saturday",
     ];
-    const selectedDay = week[date.getDay()];
+    const selectedDay = week[selectedDate.getDay()];
 
     // parse time from selected start time
-    const startTime = new Date(selectedStartTime).getHours();
+    const selectedStartTime = new Date(startTime).getHours();
 
     // parse time from selected start time
-    const endTime = new Date(selectedEndTime).getHours();
-
-    console.log("process.env: ", process.env);
+    const selectedEndtime = new Date(endTime).getHours();
 
     // set data to axios.get(http://) then get filtered data
     const res = await axios.get(
-      `${baseUrl}/api/availability/?day=${selectedDay}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`
+      `${baseUrl}/api/availability/?day=${selectedDay}&address_city=${selectedLocation}&start_hour=${selectedStartTime}&end_hour=${selectedEndtime}`
     );
 
     // set businesses state
@@ -162,8 +167,8 @@ export default function Search() {
               <DatePicker
                 autoOk
                 label="Date"
-                value={selectedDate}
-                onChange={(date) => setSelectedDate(date)}
+                value={date}
+                onChange={(date) => setDate(date)}
                 animateYearScrolling
                 disablePast={true}
                 cancelLabel={false}
@@ -178,8 +183,8 @@ export default function Search() {
                 autoOk
                 label="Start Time"
                 className="date-input"
-                value={selectedStartTime}
-                onChange={(startTime) => setSelectedStartTime(startTime)}
+                value={startTime}
+                onChange={(time) => setStartTime(time)}
                 disablePast={true}
                 views={["hours"]}
               />
@@ -192,8 +197,8 @@ export default function Search() {
                 autoOk
                 label="End Time"
                 className="date-input"
-                value={selectedEndTime}
-                onChange={(endTime) => setSelectedEndTime(endTime)}
+                value={endTime}
+                onChange={(time) => setEndTime(time)}
                 disablePast={true}
                 views={["hours", "minutes"]}
               />

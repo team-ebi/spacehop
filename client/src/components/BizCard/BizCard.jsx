@@ -12,21 +12,43 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { UserContext } from "../useContext/UserContext";
+import {
+  LocationContext,
+  DateContext,
+  StartTimeContext,
+  EndTimeContext,
+} from "../useContext/Search";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import DatePicker from "react-datepicker";
 import logo from "../../images/logo.png";
 import Rating from "@material-ui/lab/Rating";
+
+import { createMuiTheme } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
+import { DatePicker, TimePicker } from "@material-ui/pickers";
+import moment from "moment";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#80cc37",
+    },
+    secondary: {
+      main: "#000",
+    },
+  },
+});
 
 require("dotenv").config();
 
 export default function BizCard({ props }) {
   const { user } = useContext(UserContext);
 
-  // state will be updated when user selects date and time for booking
-  const [bookingDate, setBookingDate] = useState(null);
-  const [bookingStartTime, setBookingStartTime] = useState(null);
-  const [bookingEndTime, setBookingEndTime] = useState(null);
+  // useContext will pull from previous search
+  //  will be updated if user selects new date and time for booking
+  const { date, setDate } = useContext(DateContext);
+  const { startTime, setStartTime } = useContext(StartTimeContext);
+  const { endTime, setEndTime } = useContext(EndTimeContext);
 
   // these are just to conditionally render elements
   const [displayLogin, setDisplayLogin] = useState(false);
@@ -47,13 +69,13 @@ export default function BizCard({ props }) {
   // handles stripe checkout and redirects to checkout page
   // will post new reservation to db
   async function stripeCheckoutHandler() {
-    if (!bookingDate || !bookingStartTime || !bookingEndTime) {
+    if (!date || !startTime || !endTime) {
       setPickDate(true);
       setPickFuture(false);
       return;
     }
     const today = new Date();
-    if (bookingDate < today) {
+    if (date < today) {
       setPickDate(false);
       setPickFuture(true);
       return;
@@ -84,23 +106,26 @@ export default function BizCard({ props }) {
     }
   }
 
-  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000"
+  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000";
 
   useEffect(() => {
-    async function getRating(){
+    const ac = new AbortController();
+    async function getRating() {
       let res = await axios.get(`${baseUrl}/api/ratings/${biz.business_id}`);
       setUserReviews(res.data);
+
+      return () => ac.abort(); // Abort fetch on unmount
     }
     getRating();
-  }, [baseUrl, biz.business_id]);
+  }, [biz.business_id]);
 
   //post reservation to database
   async function reservationHandler() {
     await axios
       .post(`${baseUrl}/api/reservations/`, {
         email: user.attributes.email,
-        date: bookingDate,
-        price: biz.price, 
+        date: date,
+        price: biz.price,
         business_id: biz.id,
       })
       .catch(function (error) {
@@ -119,7 +144,7 @@ export default function BizCard({ props }) {
           <div id="image-cell">
             <img
               id="bizcard-image"
-              alt='izakaya'
+              alt="izakaya"
               src="https://www.japan-guide.com/g9/2005_01b.jpg"
             />
           </div>
@@ -210,39 +235,48 @@ export default function BizCard({ props }) {
                 <div id="booking-subheader">{"Date & Time:"}</div>
                 <div id="datetime-container">
                   <div className="booking-time" id="booking-date-container">
-                    <DatePicker
-                      className="booking-date-input"
-                      selected={bookingDate}
-                      placeholderText="When?"
-                      onChange={(date) => setBookingDate(date)}
-                    />
+                    <ThemeProvider theme={theme}>
+                      <DatePicker
+                        autoOk
+                        className="booking-date-input"
+                        label="Date"
+                        value={date}
+                        onChange={(date) => setDate(date)}
+                        animateYearScrolling
+                        disablePast={true}
+                        cancelLabel={false}
+                        okLabel={false}
+                      />
+                    </ThemeProvider>
                   </div>
                   <div id="booking-time-container">
                     <div className="booking-time single-time-container">
-                      <DatePicker
-                        className="booking-date-input booking-time"
-                        selected={bookingStartTime}
-                        placeholderText="Start time?"
-                        onChange={(startTime) => setBookingStartTime(startTime)}
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeIntervals={60}
-                        timeCaption="Time"
-                        dateFormat="h:mm aa"
-                      />
+                      <ThemeProvider theme={theme}>
+                        <TimePicker
+                          autoOk
+                          className="booking-date-input booking-time"
+                          label="Start Time"
+                          className="date-input"
+                          value={startTime}
+                          onChange={(time) => setStartTime(time)}
+                          disablePast={true}
+                          views={["hours"]}
+                        />
+                      </ThemeProvider>
                     </div>
                     <div className="booking-time single-time-container">
-                      <DatePicker
-                        className="booking-date-input booking-time"
-                        selected={bookingEndTime}
-                        placeholderText="End time?"
-                        onChange={(endTime) => setBookingEndTime(endTime)}
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeIntervals={60}
-                        timeCaption="Time"
-                        dateFormat="h:mm aa"
-                      />
+                      <ThemeProvider theme={theme}>
+                        <TimePicker
+                          autoOk
+                          className="booking-date-input booking-time"
+                          label="End Time"
+                          className="date-input"
+                          value={endTime}
+                          onChange={(time) => setEndTime(time)}
+                          disablePast={true}
+                          views={["hours", "minutes"]}
+                        />
+                      </ThemeProvider>
                     </div>
                   </div>
                 </div>
