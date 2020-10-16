@@ -14,7 +14,7 @@ const credentials = new aws.Credentials({
 });
 aws.config.credentials = credentials;
 
-// Get all list from bucket
+// Get all foler from bucket
 const listObjects = (bucket) => {
   const listObjects = new Promise((resolve, reject) => {
     bucket.listObjects((error, data) => {
@@ -24,7 +24,7 @@ const listObjects = (bucket) => {
   return listObjects;
 };
 
-// Get all file from list
+// Get all file from folder
 const getSingleObject = (bucket, key) => {
   const getSingleObject = new Promise((resolve, reject) => {
     bucket.getObject({ Bucket: bucketName, Key: key }, (error, data) => {
@@ -34,7 +34,7 @@ const getSingleObject = (bucket, key) => {
   return getSingleObject;
 };
 
-// Save image inside folder
+// Save images inside folder
 const saveObject = (bucket, params) => {
   const saveObject = new Promise((resolve, reject) => {
     bucket.putObject(params, (error, data) => {
@@ -54,7 +54,7 @@ const deleteObjects = (bucket, objects) => {
   return deleteObjects;
 }
 
-// Get image by business id
+// Get images by business id
 router.post("/:id", async (req, res) => {
   const folderName = req.params.id;
   const bucket = new aws.S3({
@@ -68,7 +68,7 @@ router.post("/:id", async (req, res) => {
   .then(result => result.map(elem => getSingleObject(bucket, elem.Key)))
   .then(result => Promise.all(result));
   
-  // Send image with base64
+  // Send images with base64
   res.send(images);
 });
 
