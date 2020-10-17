@@ -8,11 +8,10 @@ router.use(fileUpload());
 
 // AWS S3 configuration
 const bucketName = process.env.S3_BUCKET_NAME;
-const credentials = new aws.Credentials({
+aws.config.credentials = new aws.Credentials({
   accessKeyId: process.env.S3_ACCESS_KEY,
   secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
 });
-aws.config.credentials = credentials;
 
 // Get all folder from bucket
 const listObjects = (bucket) => {
