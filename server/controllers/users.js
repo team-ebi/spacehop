@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../src/knex.js");
+var moment = require('moment');
 
 router.get("/test", async (req, res) => {
   res.send("working");
@@ -71,7 +72,13 @@ router.post("/account/", async (req, res) => {
     .select("*")
     .table("reservations")
     .where({ business_id });
+
+    reservationInfo[0].created_at=moment(reservationInfo[0].created_at).format('YYYY-MM-DD')
     
+    for(elm of reservationInfo){
+      elm.date=moment(elm.date).format('YYYY-MM-DD');
+      elm.created_at=moment(elm.created_at).format('YYYY-MM-DD');
+    }
     // Combine business, availability and reservation info
     businessInfo[0]["availabilities"] = availabilityInfo;
     businessInfo[0]["reservations"] = reservationInfo;

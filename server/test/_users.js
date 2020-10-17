@@ -56,7 +56,7 @@ describe("users", () => {
   });
 
   //resister user
-  it("count", async () => {
+  it("add user", async () => {
 
     const first_name = "taro";
     const last_name = "test";
@@ -77,23 +77,33 @@ describe("users", () => {
     expect(addedUser.length).to.equal(1);
   });
 
-  // // Check if user has business account by email
-  // it("count", async () => {
-  //   const res = await request.post("/api/users/account").send({email:"aiko@mochizuki.com"});
-  //   const availabilities=res.body[0].availabilities;
-  //   //Monday only
-  //   expect(availabilities.length).to.equal(1);
-  //   expect(availabilities[0].day).to.equal("Monday");
-  //   expect(availabilities[0].start_hour).to.equal(12);
-  //   expect(availabilities[0].end_hour).to.equal(17);
+  // Check if user has business account by email
+  it("get availability and reservation (user is business owner)", async () => {
+    const res = await request.post("/api/users/account").send({email:"aiko@mochizuki.com"});
+    const availabilities=res.body[0].availabilities;
+    //Monday only
+    expect(availabilities.length).to.equal(1);
+    expect(availabilities[0].day).to.equal("Monday");
+    expect(availabilities[0].start_hour).to.equal(12);
+    expect(availabilities[0].end_hour).to.equal(17);
     
-  //   const reservations=res.body[0].reservations;
-  //   //Have one reservation
-  //   expect(reservations.length).to.equal(6);
-  //   expect(reservations[0].date).to.equal("2020-11-02")
-  //   expect(reservations[0].price).to.equal(20000);
-  //   expect(reservations[0].created_at).to.equal("2020-10-01");
-  //   expect(reservations[0].business_id).to.equal(1);
-  //   expect(reservations[0].user_id).to.equal(1);
-  // });
+    const reservations=res.body[0].reservations;
+    //Have one reservation
+    expect(reservations.length).to.equal(6);
+    expect(reservations[0].date).to.equal("2020-11-02");
+    expect(reservations[0].price).to.equal(20000);
+    expect(reservations[0].created_at).to.equal("2020-10-01");
+    expect(reservations[0].business_id).to.equal(1);
+    expect(reservations[0].user_id).to.equal(1);
+    expect(reservations[2].date).to.equal("2020-11-03");
+    expect(reservations[2].created_at).to.equal("2020-10-01");
+  });
+
+    // Check if user has business account by email
+    it("get availability and reservation (user is not business owner)", async () => {
+      const res = await request.post("/api/users/account").send({email:"masuo@suzuki.com"});
+      const result=res.body;
+      //result is empty array
+      expect(result.length).to.equal(0);
+    });
 });
