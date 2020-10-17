@@ -21,6 +21,7 @@ export default function List() {
   function handleEditSearch() {
     return history.push("/");
   }
+  
 
   return (
     <div id="list-container">
