@@ -8,15 +8,15 @@ jobs:
       - checkout
       - run:
           name: install postgres
-          command: apt-get install -y postgresql-client
+          command: sudo apt-get install -y postgresql-client
           path: server
       - run:
           name: create user of postgres
-          command: psql -c "create role testuser login password '1234';" -U postgres
+          command: sudo psql -c "create role testuser login password '1234';" -U postgres
           path: server
       - run:
           name: create database for test
-          command: psql -c 'create database spacehoptest;' -U postgres
+          command: sudo psql -c 'create database spacehoptest;' -U postgres
           path: server
       - run:
           name: Install yarn dependencies
