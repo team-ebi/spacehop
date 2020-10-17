@@ -10,6 +10,7 @@
     "express": "^4.17.1",
     "knex": "^0.21.6",
     "lint": "^0.7.0",
+    "mocha-junit-reporter": "^2.0.0",
     "moment": "^2.29.1",
     "pg": "^8.4.1",
     "stripe": "^8.108.0"
