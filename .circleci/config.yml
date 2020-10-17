@@ -5,9 +5,7 @@ jobs:
       - image: circleci/node:10
       - image: circleci/postgres:9.6.2-alpine
           environment:
-            POSTGRES_USER: testuser
             POSTGRES_DB: spacehoptest
-            POSTGRES_PASSWORD: ""
     steps:
       - checkout
       - run:

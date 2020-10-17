@@ -29,7 +29,7 @@ const config = {
     host : 'localhost',
     database : 'spacehoptest',
     port: "5432",
-    user: "testuser",
+    // user: "testuser",
   },
   migrations: {
     directory: './test/migrationsForTest'
