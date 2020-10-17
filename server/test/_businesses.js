@@ -29,7 +29,6 @@ const config = {
     host : 'localhost',
     database : 'spacehoptest',
     port: "5432",
-    password: "1234",
     user: "testuser",
   },
   migrations: {
