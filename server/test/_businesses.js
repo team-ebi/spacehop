@@ -14,9 +14,7 @@ function getDbConnection() {
     connection: {
       host: "localhost",
       database: "postgres",
-      port: "5432",
-      password: "",
-      user: "",
+      port: "5432"
     }
   });
 }
@@ -28,9 +26,7 @@ const config = {
   connection: {
     host : 'localhost',
     database : 'spacehoptest',
-    port: "5432",
-    password: "",
-    user: ""
+    port: "5432"
   },
   migrations: {
     directory: './test/migrationsForTest'
