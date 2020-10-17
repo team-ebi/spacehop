@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../src/knex.js");
-var moment = require('moment');
+const moment = require('moment');
 
 router.get("/test", async (req, res) => {
   res.send("working");
