@@ -74,6 +74,7 @@ export default function Search() {
 
     // set businesses state
     setBusinesses(res.data);
+
     // open list
     return history.push("/list");
   }

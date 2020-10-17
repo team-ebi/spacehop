@@ -4,7 +4,7 @@ import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import flag from '../../images/hopper_flag.png'; 
 import sampleData from "./sampledata.json"; 
 
-function Map(){
+function Map({bizImgPic}){
     const { businesses } = useContext(BusinessContext);
 
     const[selected, setSelected]=useState({});
@@ -16,8 +16,8 @@ function Map(){
     
     //[we need modify here] temporarily I add picture image but it should be  removed later 
     //add picture image 
-    selected.img ="https://i.ibb.co/zhvKgwy/1280px-Bar-P1030319.jpg"
-    console.log("selected?", selected); 
+    // selected.img ="https://i.ibb.co/zhvKgwy/1280px-Bar-P1030319.jpg"
+    console.log("bizImgPic", bizImgPic[0]); 
 
 
     //everytime when this page is rendered, update locations 
@@ -30,6 +30,7 @@ function Map(){
 
                     return (
                         {
+                            "id":item.id,
                             "name":item.name,
                             "location":{
                                 "lat":Number(item.location_lat),
@@ -80,9 +81,21 @@ function Map(){
                           ()=>setSelected({})
                       }>
                         <p>Name: {selected.name}<br/>
-                        {<img src={selected.img} style={{width:"10",height:"auto"}} />}<br/>
-                        Price: {selected.price}<br/>
-                        Capacity: {selected.capacity}</p>
+                        <img src={
+                            selected.id===1 && bizImgPic[0] || 
+                            selected.id===2 && bizImgPic[1] ||
+                            selected.id===3 && bizImgPic[2] ||
+                            selected.id===4 && bizImgPic[3] ||
+                            selected.id===5 && bizImgPic[4] ||
+                            selected.id===6 && bizImgPic[5] ||
+                            selected.id===7 && bizImgPic[6] ||
+                            selected.id===8 && bizImgPic[7] ||
+                            selected.id===9 && bizImgPic[8] ||
+                            selected.id===10 && bizImgPic[9]
+                            } 
+                            style={{width:"10",height:"auto"}} /><br/>
+                            Price: {selected.price}<br/>
+                            Capacity: {selected.capacity}</p>
                       </InfoWindow>
                   )}
               </GoogleMap>

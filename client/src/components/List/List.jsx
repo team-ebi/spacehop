@@ -22,6 +22,18 @@ export default function List() {
     return history.push("/");
   }
   
+  //add images to businesses 
+  const bizImg=[
+  "https://i.ibb.co/0yRnM5f/patrick-tomasso-GXXYk-Swnd-P4-unsplash.jpg",
+  "https://i.ibb.co/VLqdZxn/news-img-20181031133646137.jpg",
+  "https://i.ibb.co/x200FqT/file-20200624-132988-168jsqs.jpg",
+  "https://i.ibb.co/34NSdGZ/eyecatch-1.jpg",
+  "https://i.ibb.co/cvrPXL6/bokaal2.jpg",
+  "https://i.ibb.co/CMNYL2k/92449ba604a5c01f3adc696f1dbb1fdd.jpg",
+  "https://i.ibb.co/y8Kg2v9/1280px-Bar-P1030319.jpg",
+  "https://i.ibb.co/R7wJ3SF/09aa053e522cc9a55786c19cb14ed1a66e6ad418.jpg",
+  "https://i.ibb.co/TgXxz5Y/73aa46fa721fd4274d8aca444af8ac88.jpg"
+  ]; 
 
   return (
     <div id="list-container">
@@ -55,11 +67,30 @@ export default function List() {
             }}
             key={biz.name + biz.id}
           >
-            <img
+            {/* <img
               className="business-image"
               alt="izakaya"
               src="https://media.timeout.com/images/105393878/image.jpg"
+            /> */}
+
+            {/* handle business image */}
+            <img 
+            className="business-image"
+            alt = "izakaya"
+            src = { 
+              biz.id===1 && bizImg[0] || 
+              biz.id===2 && bizImg[1] ||
+              biz.id===3 && bizImg[2] ||
+              biz.id===4 && bizImg[3] ||
+              biz.id===5 && bizImg[4] ||
+              biz.id===6 && bizImg[5] ||
+              biz.id===7 && bizImg[6] ||
+              biz.id===8 && bizImg[7] ||
+              biz.id===9 && bizImg[8] ||
+              biz.di===10 && bizImg[9]
+            }
             />
+
             <div className="location-name">{biz.name}</div>
             <div className="location-city info">
               <FontAwesomeIcon
@@ -91,7 +122,7 @@ export default function List() {
           </div>
         ))}
       </div>
-      <Map />
+      <Map bizImgPic={bizImg}/>
 
 
       <div id="mobile-location-container">
