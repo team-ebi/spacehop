@@ -1,17 +1,21 @@
 import React from "react";
 import Team from "../Team/Team";
 import "./About.css";
-import logo from "../../images/logo.png";
+import cornerLogo from "../../images/spacehop-name.png";
 import OurProduct from "../OurProduct/OurProduct";
 
 export default function About() {
   return (
     <div id="about-container">
       <div className="corner-logo-container">
-        <img className="corner-logo" alt="spacehop-logo" src={logo}></img>
+        <img
+          className="corner-logo web"
+          alt="spacehop-logo"
+          src={cornerLogo}
+        ></img>
       </div>
-      <OurProduct/>
-      <Team/>
+      <OurProduct />
+      <Team />
     </div>
   );
 }

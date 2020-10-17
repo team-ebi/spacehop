@@ -175,18 +175,6 @@
   margin-top: 30px;
   width: 100%;
 }
-.MuiFormControl-root {
-  width: 100%;
-}
-.MuiInputBase-input {
-  text-indent: 20px;
-}
-.MuiInputBase-input {
-  text-indent: 20px;
-}
-.MuiInput-underline {
-  border-bottom: none;
-}
 @media (max-width: 700px) {
   #bizcard-container {
     margin-top: 0px;

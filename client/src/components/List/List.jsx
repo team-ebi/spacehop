@@ -11,7 +11,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./List.css";
 import Slider from "react-slick";
-import logo from "../../images/logo.png";
+import cornerLogo from "../../images/spacehop-name.png";
+
 
 export default function List() {
   const { businesses } = useContext(BusinessContext);
@@ -24,7 +25,7 @@ export default function List() {
   return (
     <div id="list-container">
       <div className="corner-logo-container">
-        <img className="corner-logo" alt="spacehop-logo" src={logo}></img>
+        <img className="corner-logo web" alt="spacehop-logo" src={cornerLogo}></img>
       </div>
       <div className="back-button-container">
         <button id="back" onClick={handleEditSearch}>

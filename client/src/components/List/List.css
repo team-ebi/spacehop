@@ -12,10 +12,11 @@
 .corner-logo-container {
   width: 100%;
   display: flex;
+  padding: 5px;
   justify-content: center;
 }
-.corner-logo {
-  width: 200px;
+.web {
+  display: none;
 }
 .back-button-container {
   width: 100%;
@@ -168,6 +169,9 @@
   }
   .corner-logo {
     width: 100px;
+  }
+  .web {
+    display: flex;
   }
   header {
     padding-top: 20px;

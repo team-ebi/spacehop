@@ -7,7 +7,6 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 // import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "./Search.css";
 import { BusinessContext } from "../useContext/BusinessContext";
 import { UserContext } from "../useContext/UserContext";
 import {
@@ -23,6 +22,7 @@ import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { DatePicker, TimePicker } from "@material-ui/pickers";
 import moment from "moment";
+import "./Search.css";
 
 require("dotenv").config();
 
@@ -42,7 +42,7 @@ export default function Search() {
   // may or may not need coordinates
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
 
-  // context will be passed to bizCard 
+  // context will be passed to bizCard
   const { date, setDate } = useContext(DateContext);
   const { startTime, setStartTime } = useContext(StartTimeContext);
   const { endTime, setEndTime } = useContext(EndTimeContext);
@@ -173,6 +173,9 @@ export default function Search() {
                 disablePast={true}
                 cancelLabel={false}
                 okLabel={false}
+                InputProps={{
+                  disableUnderline: true,
+                }}
               />
             </ThemeProvider>
           </div>
@@ -184,9 +187,12 @@ export default function Search() {
                 label="Start Time"
                 className="date-input"
                 value={startTime}
-                onChange={(time) => setStartTime(time)}
+                onChange={(time) => setStartTime(time.startOf('hour'))}
                 disablePast={true}
                 views={["hours"]}
+                InputProps={{
+                  disableUnderline: true,
+                }}
               />
             </ThemeProvider>
           </div>
@@ -198,9 +204,12 @@ export default function Search() {
                 label="End Time"
                 className="date-input"
                 value={endTime}
-                onChange={(time) => setEndTime(time)}
+                onChange={(time) => setEndTime(time.startOf('hour'))}
                 disablePast={true}
-                views={["hours", "minutes"]}
+                views={["hours"]}
+                InputProps={{
+                  disableUnderline: true,
+                }}
               />
             </ThemeProvider>
           </div>

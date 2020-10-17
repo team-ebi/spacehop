@@ -8,9 +8,6 @@ header:not(#results-header) {
     padding-top: 40px;
     text-align: center;
 }
-.corner-logo{
-  margin: 0 auto;
-}
 @media (max-width: 700px) {
   #about-container {
     top: 0;

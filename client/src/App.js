@@ -31,9 +31,9 @@ export default function App() {
   const [authState, setAuthState] = useState(null);
   const [user, setUser] = useState(null);
   const [location, setLocation] = useState("");
-  const [date, setDate] = useState(moment().format());
-  const [startTime, setStartTime] = useState(moment().format());
-  const [endTime, setEndTime] = useState(moment().format());
+  const [date, setDate] = useState(null);
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null);
 
   // checks if user is signed in and fetches user data
   // whenever authUI state changes
