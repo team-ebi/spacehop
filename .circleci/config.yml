@@ -11,7 +11,7 @@ jobs:
           command: sudo apt-get install -y postgresql-client
       - run:
           name: create user of postgres
-          command: sudo psql -c "create role testuser login password '1234';" -U postgres
+          command: sudo psql -c "create role testuser;" -U postgres
       - run:
           name: create database for test
           command: sudo psql -c 'create database spacehoptest;' -U postgres
