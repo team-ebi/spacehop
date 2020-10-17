@@ -10,7 +10,7 @@ jobs:
       - checkout
       - run:
           name: Install .env 
-          command: - echo "NODE_ENV=$test" >> .env
+          command: echo "NODE_ENV=$test" >> .env
           path: server
       - run:
           name: Install yarn dependencies
