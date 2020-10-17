@@ -11,6 +11,14 @@ jobs:
           command: yarn install --ignore-engines
           path: server
       - run:
+          name: create user of postgres
+          command: psql -c "create role testuser login password '1234';" -U postgres
+          path: server
+      - run:
+          name: create database for test
+          command: psql -c 'create database spacehoptest;' -U postgres
+          path: server
+      - run:
           name: Test backend
           command: yarn run test:ci
           path: server
