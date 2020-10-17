@@ -28,6 +28,7 @@ describe("firstendpoint", () => {
   let request;
   const connection = require('knex')(config);
 
+  //migrate and seed to database before each test
   beforeEach(async () => {
     request = chai.request(server);
 
@@ -35,16 +36,19 @@ describe("firstendpoint", () => {
     await connection.seed.run();
   });
 
+  //delete all data after each test
   afterEach(async () => {
     await connection.migrate.rollback()
   })
 
+  //just test
   it("just test", async () => {
     const res = await request.get("/api/businesses/test")
     const result = res.text;
     expect(result).to.equal("working");
   });
 
+  //count all businesses
   it("count", async () => {
     const res = await request.get("/api/businesses/data")
     const result = res.body;
