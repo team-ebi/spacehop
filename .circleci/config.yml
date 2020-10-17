@@ -6,6 +6,7 @@ jobs:
       - image: circleci/postgres:9.6.2-alpine
         environment:
           POSTGRES_DB: spacehoptest
+          POSTGRES_USER: testuser
     steps:
       - checkout
       - run:
