@@ -14,7 +14,7 @@ const credentials = new aws.Credentials({
 });
 aws.config.credentials = credentials;
 
-// Get all foler from bucket
+// Get all folder from bucket
 const listObjects = (bucket) => {
   const listObjects = new Promise((resolve, reject) => {
     bucket.listObjects((error, data) => {
