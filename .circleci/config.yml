@@ -7,8 +7,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install yarn dependencies
-          command: yarn install --ignore-engines
+          name: install postgres
+          command: apt-get install -y postgresql-client
           path: server
       - run:
           name: create user of postgres
@@ -17,6 +17,10 @@ jobs:
       - run:
           name: create database for test
           command: psql -c 'create database spacehoptest;' -U postgres
+          path: server
+      - run:
+          name: Install yarn dependencies
+          command: yarn install --ignore-engines
           path: server
       - run:
           name: Test backend
