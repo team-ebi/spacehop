@@ -22,10 +22,6 @@ const config = {
   }
 };
 
-function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 const server = setupServer();
 
 describe("firstendpoint", () => {
@@ -50,7 +46,6 @@ describe("firstendpoint", () => {
   });
 
   it("count", async () => {
-    await delay(500);
     const res = await request.get("/api/businesses/data")
     const result = res.body;
     expect(result.length).to.equal(8);

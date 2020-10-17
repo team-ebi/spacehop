@@ -5,13 +5,14 @@ jobs:
       - image: circleci/node:10
       - image: circleci/postgres:9.6.2-alpine
         environment:
-          POSTGRES_DB: spacehoptest
           POSTGRES_USER: testuser
+          POSTGRES_DB: spacehoptest
+
     steps:
       - checkout
       - run:
           name: Install .env 
-          command: echo "NODE_ENV=$test" >> .env
+          command: echo "NODE_ENV=test" >> .env
           path: server
       - run:
           name: Install yarn dependencies
