@@ -6,9 +6,8 @@ chai.should();
 const { setupServer } = require("../src/server");
 
 const config = {
-  client: 'postgres',
+  client: 'postgresql',
   // debug: true,
-  client: 'pg',
   connection: {
     host : 'localhost',
     database : 'spacehoptest',
