@@ -25,6 +25,7 @@
     "dev": "nodemon ./server/src/index.js",
     "lint": "eslint --fix --ext .js .",
     "test": "mocha test --exit",
+    "test:ci": "mkdir -p test-results && mocha test --exit --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/file.xml",
     "makeMigration": "knex migrate:make",
     "migrate": "knex migrate:latest",
     "migrate:up": "knex migrate:up",
