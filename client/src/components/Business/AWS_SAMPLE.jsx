@@ -13,7 +13,7 @@ export default function AWS() {
     .then(result => {
       // base64 data
       console.log(result.data);
-      setImages(images.concat(result.data))
+      setImages(images.concat(result.data));
     });
   }, []);
 
