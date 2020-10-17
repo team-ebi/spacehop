@@ -90,56 +90,6 @@ export default function List() {
           </div>
         ))}
       </div>
-
-      <div id="mobile-location-container">
-        <Slider dots={true} slidesToShow={1} swipe={true}>
-          {/* Mapping through businesses to display each bizcard */}
-          {businesses.map((biz) => (
-            <div
-              className="location-cell"
-              onClick={() => {
-                history.push(`/booking/${biz.name}`, { state: biz });
-              }}
-              key={biz.name +  biz.id}
-            >
-              <img
-                className="business-image"
-                alt="izakaya"
-                src="https://media.timeout.com/images/105393878/image.jpg"
-              />
-              <div className="location-name">{biz.name}</div>
-              <div className="location-city info">
-                <FontAwesomeIcon
-                  className="list-icon"
-                  icon={faMapPin}
-                  size="lg"
-                  color="darkslategrey"
-                />
-                {biz.address_city}
-              </div>
-              <div className="location-type info">
-                <FontAwesomeIcon
-                  className="list-icon"
-                  icon={faBuilding}
-                  size="lg"
-                  color="darkslategrey"
-                />
-                {biz.business_type[0].toUpperCase() +
-                  biz.business_type.slice(1)}
-              </div>
-              <div className="location-price info">
-                <FontAwesomeIcon
-                  className="list-icon"
-                  icon={faYenSign}
-                  size="lg"
-                  color="darkslategrey"
-                />
-                {Number(biz.price).toLocaleString()}
-              </div>
-            </div>
-          ))}
-        </Slider>
-      </div>
     </div>
   );
 }

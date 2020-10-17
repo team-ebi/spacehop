@@ -38,11 +38,11 @@ const theme = createMuiTheme({
 });
 
 export default function Search() {
-  const [location, setLocation] = useState("");
   // may or may not need coordinates
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
 
   // context will be passed to bizCard
+  const { location, setLocation } = useContext(LocationContext);
   const { date, setDate } = useContext(DateContext);
   const { startTime, setStartTime } = useContext(StartTimeContext);
   const { endTime, setEndTime } = useContext(EndTimeContext);
@@ -190,6 +190,8 @@ export default function Search() {
                 onChange={(time) => setStartTime(time.startOf('hour'))}
                 disablePast={true}
                 views={["hours"]}
+                cancelLabel={false}
+                okLabel={false}
                 InputProps={{
                   disableUnderline: true,
                 }}
@@ -207,6 +209,8 @@ export default function Search() {
                 onChange={(time) => setEndTime(time.startOf('hour'))}
                 disablePast={true}
                 views={["hours"]}
+                cancelLabel={false}
+                okLabel={false}
                 InputProps={{
                   disableUnderline: true,
                 }}

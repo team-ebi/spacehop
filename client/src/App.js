@@ -24,7 +24,6 @@ import { Auth } from "aws-amplify";
 import axios from "axios";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
-import moment from "moment";
 
 export default function App() {
   const [businesses, setBusinesses] = useState(null);

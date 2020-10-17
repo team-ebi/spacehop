@@ -246,6 +246,9 @@ export default function BizCard({ props }) {
                         disablePast={true}
                         cancelLabel={false}
                         okLabel={false}
+                        InputProps={{
+                          disableUnderline: true,
+                        }}
                       />
                     </ThemeProvider>
                   </div>
@@ -260,7 +263,12 @@ export default function BizCard({ props }) {
                           value={startTime}
                           onChange={(time) => setStartTime(time)}
                           disablePast={true}
+                          cancelLabel={false}
+                          okLabel={false}
                           views={["hours"]}
+                          InputProps={{
+                            disableUnderline: true,
+                          }}
                         />
                       </ThemeProvider>
                     </div>
@@ -274,7 +282,12 @@ export default function BizCard({ props }) {
                           value={endTime}
                           onChange={(time) => setEndTime(time)}
                           disablePast={true}
-                          views={["hours", "minutes"]}
+                          views={["hours"]}
+                          cancelLabel={false}
+                          okLabel={false}
+                          InputProps={{
+                            disableUnderline: true,
+                          }}
                         />
                       </ThemeProvider>
                     </div>

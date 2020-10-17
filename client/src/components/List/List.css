@@ -83,9 +83,6 @@
 .icon {
   padding-left: 10px;
 }
-#mobile-location-container {
-  display: none;
-}
 .slick-slider {
   width: 50%;
   margin-left: 25%;
@@ -106,10 +103,15 @@
 }
 @media (max-width: 700px) {
   #location-container {
-    display: none;
+    flex-flow: row wrap;
+    margin-left: 30px;
+    padding-top: 0px;
   }
-  #mobile-location-container {
-    display: flex;
+  .location-cell {
+    width: 300px;
+  }
+  #results-header-container {
+    margin-bottom: 20px;
   }
   #list-container {
     top: 0;
@@ -139,9 +141,6 @@
   }
   .slick-slide {
     outline: none;
-  }
-  .location-cell {
-    width: 200px;
   }
   .slick-slider {
     width: 300px;
