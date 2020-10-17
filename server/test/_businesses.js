@@ -24,7 +24,14 @@ function getDbConnection() {
 const config = {
   client: 'postgres',
   // debug: true,
-  connection: `postgres://${process.env.USER}@127.0.0.1:5432/spacehoptest`,
+  client: 'pg',
+  connection: {
+    host : 'localhost',
+    database : 'spacehoptest',
+    port: "5432",
+    password: "",
+    user: ""
+  },
   migrations: {
     directory: './test/migrationsForTest'
   },
