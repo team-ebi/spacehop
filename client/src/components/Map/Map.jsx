@@ -32,8 +32,8 @@ function Map(){
                         {
                             "name":item.name,
                             "location":{
-                                "lat":Number(item.location[0].lat),
-                                "lng":Number(item.location[0].lng)
+                                "lat":Number(item.location_lat),
+                                "lng":Number(item.location_lng)
                             },
                             "price":item.price,
                             "capacity":item.capacity

@@ -9,10 +9,8 @@
     "business_type": "izakaya",
     "capacity": "1-10",
     "price": 20000,
-    "location":[{
-      "lat":"35.658022",
-      "lng":"139.699277"
-    }],
+    "location_lat":"35.658022",
+    "location_lng":"139.699277",
     "all_reservations": [
       {
         "id": 1,
@@ -66,10 +64,8 @@
     "business_type": "izakaya",
     "capacity": "10-20",
     "price": 30000,
-    "location":[{
-      "lat":"35.658031",
-      "lng":"139.700146"
-    }],
+    "location_lat":"35.658031",
+    "location_lng":"139.700146",
     "all_reservations": [],
     "all_availabilities": [
       {
@@ -96,10 +92,8 @@
     "business_type": "izakaya",
     "capacity": "10-20",
     "price": 30000,
-    "location":[{
-      "lat":"35.659774",
-      "lng":"139.702002"
-    }],
+    "location_lat":"35.659774",
+    "location_lng":"139.702002",
     "all_reservations": [],
     "all_availabilities": [
       {
@@ -132,10 +126,8 @@
     "business_type": "bar",
     "capacity": "1-10",
     "price": 20000,
-    "location":[{
-      "lat":"35.660898",
-      "lng":"139.702034"
-    }],
+    "location_lat":"35.660898",
+    "location_lng":"139.702034",
     "all_reservations": [],
     "all_availabilities": [
       {
@@ -174,10 +166,8 @@
     "business_type": "izakaya",
     "capacity": "10-20",
     "price": 30000,
-    "location":[{
-      "lat":"35.661325",
-      "lng":"139.700725"
-    }],
+    "location_lat":"35.661325",
+    "location_lng":"139.700725",
     "all_reservations": [],
     "all_availabilities": [
       {
@@ -216,10 +206,8 @@
     "business_type": "izakaya",
     "capacity": "10-20",
     "price": 30000,
-    "location":[{
-      "lat":"35.663478",
-      "lng":"139.701079"
-    }],
+    "location_lat":"35.663478",
+    "location_lng":"139.701079",
     "all_reservations": [],
     "all_availabilities": [
       {
@@ -246,10 +234,8 @@
     "business_type": "izakaya",
     "capacity": "10-20",
     "price": 30000,
-    "location":[{
-      "lat":"35.656429",
-      "lng":"139.695978"
-    }],
+    "location_lat":"35.656429",
+    "location_lng":"139.695978",
     "all_reservations": [],
     "all_availabilities": [
       {
@@ -282,10 +268,8 @@
     "business_type": "bar",
     "capacity": "1-10",
     "price": 20000,
-    "location":[{
-      "lat":"35.658602",
-      "lng":"139.705351"
-    }],
+    "location_lat":"35.658602",
+    "location_lng":"139.705351",
     "all_reservations": [],
     "all_availabilities": [
       {
@@ -312,10 +296,8 @@
     "business_type": "bar",
     "capacity": "1-10",
     "price": 20000,
-    "location":[{
-      "lat":"35.665815",
-      "lng":"139.702266"
-    }],
+    "location_lat":"35.665815",
+    "location_lng":"139.702266",
     "all_reservations": [],
     "all_availabilities": [
       {
@@ -348,10 +330,8 @@
     "business_type": "izakaya",
     "capacity": "10-20",
     "price": 30000,
-    "location":[{
-      "lat":"35.655511",
-      "lng":"139.704111"
-    }],
+    "location_lat":"35.655511",
+    "location_lng":"139.704111",
     "all_reservations": [],
     "all_availabilities": [
       {

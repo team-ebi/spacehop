@@ -6,7 +6,8 @@ import flag from '../../images/hopper_flag.png';
 function BizCard_Map({biz}){
 
     //add lat, lng to biz temporarily 
-    biz.location = [{ lat:35.659871, lng:139.700662 }]
+    biz.location_lat = 35.659871
+    biz.location_lng = 139.700662
     //add picture image 
     biz.img ="https://i.ibb.co/zhvKgwy/1280px-Bar-P1030319.jpg"
 
@@ -23,7 +24,7 @@ function BizCard_Map({biz}){
       
     //default center should be same as selected location 
       const defaultCenter = {
-        lat:biz.location[0].lat, lng:biz.location[0].lng
+        lat:biz.location_lat, lng:biz.location_lng
       }
 
       return (
