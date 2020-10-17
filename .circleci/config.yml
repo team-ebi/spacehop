@@ -4,20 +4,17 @@ jobs:
     docker:
       - image: circleci/node:10
       - image: circleci/postgres:9.6.2-alpine
-          environment:
-          POSTGRES_USER: testuser
-          POSTGRES_DB: circle_test
-          POSTGRES_PASSWORD: ""
     steps:
       - checkout
       - run:
           name: install postgres
           command: sudo apt-get install -y postgresql-client
-          path: server
+      - run:
+          name: create user of postgres
+          command: sudo psql -c "create role testuser login password '1234';" -U postgres
       - run:
           name: create database for test
           command: sudo psql -c 'create database spacehoptest;' -U postgres
-          path: server
       - run:
           name: Install yarn dependencies
           command: yarn install --ignore-engines
