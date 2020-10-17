@@ -41,6 +41,8 @@ header:not(#results-header) {
 @media (max-width: 700px) {
   #team {
     overflow: scroll;
+    bottom: 65px;
+    padding-bottom: 100px;
   }
   #team-container {
     margin-top: 0px;

@@ -75,6 +75,7 @@ h2 {
 }
 .menu-item:hover {
   border-top: solid #80CC37;
+  outline: none;
 }
 .auth-window {
   display: flex;

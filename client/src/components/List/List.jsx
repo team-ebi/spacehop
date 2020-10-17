@@ -24,7 +24,7 @@ export default function List() {
 
   return (
     <div id="list-container">
-      <div className="corner-logo-container">
+      <div className="corner-logo-container list-logo">
         <img className="corner-logo web" alt="spacehop-logo" src={cornerLogo}></img>
       </div>
       <div className="back-button-container">

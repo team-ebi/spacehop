@@ -129,6 +129,9 @@
       #efefbb
     ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   }
+  #list-logo-container {
+    padding: 20px;
+  }
   #results-length {
     text-align: center;
     width: 100%;
@@ -166,7 +169,12 @@
     z-index: 100
   }
   .corner-logo-container {
-    top: 0;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+  .corner-logo-container:not(.list-logo) {
+    margin-top: -30px;    
   }
   .back-text {
     margin-left: 5px;
@@ -174,7 +182,7 @@
   }
   .corner-logo {
     width: 100px;
-    margin: auto;
+    margin-right: 20px;
   }
   .back-icon {
     display: flex;

@@ -33,6 +33,9 @@
     cursor: pointer;
     text-decoration: underline;
 }
+#biz-photo-file {
+    display: none;
+}
 .attribute {
     margin-left: 15px;
     margin-bottom: 15px;

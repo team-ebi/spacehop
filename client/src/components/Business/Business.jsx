@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { UserContext } from "../useContext/UserContext";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,6 +30,7 @@ function Business() {
   const [bizType, setBizType] = useState("");
   const [capacity, setCapacity] = useState(0);
   const [price, setPrice] = useState(0);
+  const [images, setImages] = useState([]);
   const [availability, setAvailability] = useState({
     Sunday: { startTime: "", endTime: "" },
     Monday: { startTime: "", endTime: "" },
@@ -219,6 +220,19 @@ function Business() {
     return history.goBack();
   }
 
+  // create ref for input button
+  const hiddenFileInput = useRef(null);
+
+  // open file for image upload
+  function openFile() {
+    hiddenFileInput.current.click();
+  }
+
+  // upload image
+  function uploadImage() {
+    // insert yusuke's code
+  }
+
   return (
     <div id="biz-profile-container">
       <div className="back-icon" onClick={goBack}>
@@ -278,7 +292,18 @@ function Business() {
                   />
                 </div>
                 <div className="upload-btn-container">
-                  <button className="upload-img-button">Upload Image</button>
+                  <button className="upload-img-button" onClick={openFile}>
+                    Update Photos
+                  </button>
+                  <input
+                    name="business_photos"
+                    ref={hiddenFileInput}
+                    accept="image/*"
+                    type="file"
+                    id="biz-photo-file"
+                    onInput={uploadImage}
+                    hidden=""
+                  ></input>
                 </div>
               </div>
               <div id="biz-details">

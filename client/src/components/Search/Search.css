@@ -155,8 +155,12 @@
   }
   #location-input {
     font-size: 16px;
-    margin-top: 5px;
     font-family: "Roboto", sans-serif;
+    width: 100%;
+  }
+  #location-input:focus {
+    border: solid #80cc37;
+    outline: none;
   }
   .date-input {
     font-size: 16px;
@@ -212,6 +216,7 @@
     height: 30px;
   }
   #location-input {
-    width: 260px;
+    width: 280px;
+    margin-left: -8px;
   }
 }
