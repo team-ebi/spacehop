@@ -4,21 +4,6 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 chai.should();
 const { setupServer } = require("../src/server");
-const db = require('knex');
-
-function getDbConnection() {
-  return db({
-    client: 'postgres',
-    debug: true,
-    connection: {
-      host: "localhost",
-      database: "postgres",
-      port: "5432",
-      password: "",
-      user: "",
-    }
-  });
-}
 
 const config = {
   client: 'postgres',
@@ -35,46 +20,29 @@ const config = {
 const server = setupServer();
 
 describe("firstendpoint", () => {
-  const dbConnectionBefore = getDbConnection();
   let request;
 
-  beforeEach((done) => {
+  const connection = require('knex')(config);
+  beforeEach(async () => {
     request = chai.request(server);
-    const knexBeforeEach = require('knex')(config);
 
-    knexBeforeEach.migrate.latest()
-      .then(() => {
-        return knexBeforeEach.seed.run();
-      })
-      .then(() => {
-        return knexBeforeEach.destroy();
-      })
-      .then(() => {
-        done();
-      })
-      .catch(err => done(err));
+    await connection.migrate.latest()
+    await connection.seed.run();
   });
 
-  afterEach((done) => {
-    const knexAfterEach = require('knex')(config);
-    knexAfterEach.migrate.rollback()
-      .then(() => {
-        knexAfterEach.destroy();
-        done();
-      })
+  afterEach(async () => {
+    await connection.migrate.rollback()
+  })
 
-      .catch(err => done(err));
-  });
+it("just test", async () => {
+  const res = await request.get("/api/businesses/test")
+  const result = res.text;
+  expect(result).to.equal("working");
+});
 
-  it("just test", async () => {
-    const res = await request.get("/api/businesses/test")
-    const result = res.text;
-    expect(result).to.equal("working");
-  });
-
-  it("count", async () => {
-    const res = await request.get("/api/businesses/data")
-    const result = res.body;
-    expect(result.length).to.equal(8);
-  });
+it("count", async () => {
+  const res = await request.get("/api/businesses/data")
+  const result = res.body;
+  expect(result.length).to.equal(8);
+});
 });
