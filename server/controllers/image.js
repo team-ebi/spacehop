@@ -55,7 +55,7 @@ const deleteObjects = (bucket, objects) => {
 }
 
 // Get images by business id
-router.post("/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   const folderName = req.params.id;
   const bucket = new aws.S3({
     params: {

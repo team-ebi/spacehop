@@ -7,7 +7,7 @@ export default function AWS() {
   useEffect(() => {
     // Get all image by business id
     axios({
-      method: "post",
+      method: "get",
       url: "http://localhost:4000/api/image/1",
     })
     .then(result => {
