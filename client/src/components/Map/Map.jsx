@@ -1,7 +1,7 @@
 import React,{useState, useEffect, useContext} from 'react';
 import { BusinessContext } from "../useContext/BusinessContext";
 import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
-import flag from '../../images/registration-mark.png'; 
+import flag from '../../images/hopper_flag.png'; 
 import sampleData from "./sampledata.json"; 
 
 function Map(){
@@ -13,9 +13,15 @@ function Map(){
     };
 
     const [locations, setLocations] = useState([]); 
+    
+    //[we need modify here] temporarily I add picture image but it should be  removed later 
+    //add picture image 
+    selected.img ="https://i.ibb.co/zhvKgwy/1280px-Bar-P1030319.jpg"
+    console.log("selected?", selected); 
+
 
     //everytime when this page is rendered, update locations 
-    //only selected data should be shown here □
+    //[we need update here ] only selected data should be shown
     useEffect(
         ()=>{
             function handleBusinesses(){
@@ -28,7 +34,9 @@ function Map(){
                             "location":{
                                 "lat":Number(item.location[0].lat),
                                 "lng":Number(item.location[0].lng)
-                            }
+                            },
+                            "price":item.price,
+                            "capacity":item.capacity
                         }
                     )
                 }));
@@ -41,6 +49,7 @@ function Map(){
         height: "80vh",
         width: "80%"};
       
+        //default Center is set around Shibuya station 
       const defaultCenter = {
         lat:35.659871, lng:139.700662
       }
@@ -70,7 +79,10 @@ function Map(){
                       onCloseClick={
                           ()=>setSelected({})
                       }>
-                      <p>Name: {selected.name}</p>
+                        <p>Name: {selected.name}<br/>
+                        {<img src={selected.img} style={{width:"10",height:"auto"}} />}<br/>
+                        Price: {selected.price}<br/>
+                        Capacity: {selected.capacity}</p>
                       </InfoWindow>
                   )}
               </GoogleMap>
