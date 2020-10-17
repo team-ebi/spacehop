@@ -109,6 +109,20 @@ export default function BizCard({ props }) {
       });
   }
 
+    //add images to businesses 
+    const bizImg=[
+      "https://i.ibb.co/1Gt0qc9/patrick-tomasso-GXXYk-Swnd-P4-unsplash.jpg",
+      "https://i.ibb.co/x27y0Y9/news-img-20181031133646137.jpg",
+      "https://i.ibb.co/pxJ8G27/images.jpg",
+      "https://i.ibb.co/6yxxX0C/file-20200624-132988-168jsqs.jpg",
+      "https://i.ibb.co/jbM3fBX/eyecatch-1.jpg",
+      "https://i.ibb.co/H2H0pdt/bokaal2.jpg",
+      "https://i.ibb.co/KLRfnwM/92449ba604a5c01f3adc696f1dbb1fdd.jpg",
+      "https://i.ibb.co/2jRcJV9/1280px-Bar-P1030319.jpg",
+      "https://i.ibb.co/M90Jchv/09aa053e522cc9a55786c19cb14ed1a66e6ad418.jpg",
+      "https://i.ibb.co/0GNRP3m/73aa46fa721fd4274d8aca444af8ac88.jpg"
+          ]
+
   return (
     <div id="bizcard-container">
       <div className="corner-logo-container">
@@ -118,11 +132,24 @@ export default function BizCard({ props }) {
         {/* Elements helps load stripe */}
         <Elements stripe={stripePromise}>
           <div id="image-cell">
+
+            {/* handle picture image */}
             <img
               id="bizcard-image"
               alt='izakaya'
-              src="https://www.japan-guide.com/g9/2005_01b.jpg"
-            />
+              src = { 
+                biz.id===1 && bizImg[0] || 
+                biz.id===2 && bizImg[1] ||
+                biz.id===3 && bizImg[2] ||
+                biz.id===4 && bizImg[3] ||
+                biz.id===5 && bizImg[4] ||
+                biz.id===6 && bizImg[5] ||
+                biz.id===7 && bizImg[6] ||
+                biz.id===8 && bizImg[7] ||
+                biz.id===9 && bizImg[8] ||
+                biz.di===10 && bizImg[9]
+              }
+              />
           </div>
           <BizCard_Map bizData={biz}/>
           <div>
