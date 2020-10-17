@@ -9,8 +9,8 @@ const config = {
   client: 'postgresql',
   // debug: true,
   connection: {
-    host : 'localhost',
-    database : 'spacehoptest',
+    host: 'localhost',
+    database: 'spacehoptest',
     port: "5432",
     user: "testuser",
   },
@@ -24,7 +24,7 @@ const config = {
 
 const server = setupServer();
 
-describe("businesses", () => {
+describe("users", () => {
   let request;
   const connection = require('knex')(config);
 
@@ -43,15 +43,37 @@ describe("businesses", () => {
 
   //just test
   it("just test", async () => {
-    const res = await request.get("/api/businesses/test")
+    const res = await request.get("/api/users/test");
     const result = res.text;
     expect(result).to.equal("working");
   });
 
-  //count all businesses
+  //count all users
   it("count", async () => {
-    const res = await request.get("/api/businesses/data")
+    const res = await request.get("/api/users/data");
     const result = res.body;
-    expect(result.length).to.equal(8);
+    expect(result.length).to.equal(30);
+  });
+
+  //resister user
+  it("count", async () => {
+
+    const first_name= "taro";
+    const last_name= "test";
+    const email= "test@test.com";
+    const phone= "1234567890";
+
+    const data = {
+      first_name,
+      last_name,
+      email,
+      phone
+    }
+    await request.post("/api/users").send(data);
+    const users = await connection.select("*").table("users");
+    expect(users.length).to.equal(31);
+
+    const addedUser = await connection.select("*").table("users").where({ first_name,last_name,email,phone });
+    expect(addedUser.length).to.equal(1);
   });
 });
