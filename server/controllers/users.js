@@ -75,6 +75,7 @@ router.post("/account/", async (req, res) => {
 
     reservationInfo[0].created_at=moment(reservationInfo[0].created_at).format('YYYY-MM-DD')
     
+    //format to YYYY-MM-DD
     for(elm of reservationInfo){
       elm.date=moment(elm.date).format('YYYY-MM-DD');
       elm.created_at=moment(elm.created_at).format('YYYY-MM-DD');
