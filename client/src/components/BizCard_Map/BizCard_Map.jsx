@@ -3,13 +3,13 @@ import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import flag from '../../images/hopper_flag.png'; 
 
 
-function BizCard_Map({biz}){
+function BizCard_Map({bizData}){
 
-    //add lat, lng to biz temporarily 
-    biz.location_lat = 35.659871
-    biz.location_lng = 139.700662
+    //add lat, lng to bizData temporarily 
+    bizData.location_lat = 35.659871
+    bizData.location_lng = 139.700662
     //add picture image 
-    biz.img ="https://i.ibb.co/zhvKgwy/1280px-Bar-P1030319.jpg"
+    bizData.img ="https://i.ibb.co/zhvKgwy/1280px-Bar-P1030319.jpg"
 
     const[selected, setSelected]=useState({});
 
@@ -24,7 +24,7 @@ function BizCard_Map({biz}){
       
     //default center should be same as selected location 
       const defaultCenter = {
-        lat:biz.location_lat, lng:biz.location_lng
+        lat:bizData.location_lat, lng:bizData.location_lng
       }
 
       return (
@@ -34,11 +34,11 @@ function BizCard_Map({biz}){
               zoom={16}
               center={defaultCenter}>
                 <Marker
-                key={biz.name}
+                key={bizData.name}
                 position={defaultCenter}
                 icon={flag}
                 onClick ={
-                    ()=>onSelect(biz)
+                    ()=>onSelect(bizData)
                 } />
 
 

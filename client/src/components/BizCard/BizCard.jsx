@@ -124,7 +124,7 @@ export default function BizCard({ props }) {
               src="https://www.japan-guide.com/g9/2005_01b.jpg"
             />
           </div>
-          <BizCard_Map biZ={biz}/>
+          <BizCard_Map bizData={biz}/>
           <div>
             <div id="bizcard-name">
               <h2>{biz.name}</h2>
