@@ -49,27 +49,27 @@ export default function About() {
           <img id="cafe" src={imgPic} alt="cafe" />
         </div>
         <div className="textField">
-          <p>
+          <p className="about-copy">
             Spacehop is our team's vision for a mobile-friendly web app that
             seeks to help two types of users in today's pandemic-impacted
             society:
           </p>
-          <p>
+          <p className="about-copy">
             1. Small businesses that have suffered a loss in business due to the
             pandemic and have under-utilized spaces that can be rented out for
             alternative use.
           </p>
-          <p>
+          <p className="about-copy">
             2. Workers who are now required to work remotely but want to get out
             of their house from time to time
           </p>
 
-          <p>
+          <p className="about-copy">
             With Spacehop, remote workers can conveniently search for places to
             work from for the day. These spaces can range from izakayas, concert
             venues, exercise studios, and more!
           </p>
-          <p>
+          <p className="about-copy">
             The pandemic may not last forever, but remote work will be here to
             stay.
           </p>

@@ -270,9 +270,13 @@ export default function Nav() {
                 Profile
               </button>
             )}
-            <button className="menu-item" onClick={aboutHandler}>
-              About
-            </button>
+
+           {/* only display message button if user IS logged in */}
+           {user && user.attributes && (
+              <button className="menu-item" onClick={messageHandler}>
+                Inbox
+              </button>
+            )}
 
             {/* only display profile button if user IS logged in */}
             {user && user.attributes && (
@@ -280,6 +284,14 @@ export default function Nav() {
                 Business Page
               </button>
             )}
+
+            <button className="menu-item" onClick={aboutHandler}>
+              About
+            </button>
+
+            <button className="menu-item" onClick={teamHandler}>
+              Team
+            </button>
 
             {/* only display signout button if user IS logged in */}
             {user && user.attributes && (

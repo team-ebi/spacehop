@@ -16,6 +16,22 @@
     width: 20%;
     display: flex;
     justify-content: center;
+    flex-flow: row wrap;
+}
+.biz-img-preview {
+    height: 150px;
+}
+.upload-btn-container {
+    width: 100%;
+    text-align: center;
+}
+.upload-img-button {
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+    cursor: pointer;
+    text-decoration: underline;
 }
 .attribute {
     margin-left: 15px;
@@ -261,5 +277,11 @@ input.checkbox-body{
     .availability-input{
         width:300px;
         margin-bottom: 25px;
+    }
+    .timeslots {
+        height: 20px;
+    }
+    .upload-btn-container {
+        margin-bottom: 20px;
     }
 }

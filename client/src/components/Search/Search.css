@@ -124,6 +124,7 @@
     top: 0;
     bottom: 65px;
     position: fixed;
+    padding-bottom: 50px;
     background: #efefbb; /* fallback for old browsers */
     background: -webkit-linear-gradient(
       to bottom,

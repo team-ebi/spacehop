@@ -36,7 +36,7 @@ color: darkslategrey;
   width: 80%;
   margin: 0 auto;
 }
-p {
+.about-copy {
   font-size: 16px;
   line-height: 20px;
   word-wrap: break-word;

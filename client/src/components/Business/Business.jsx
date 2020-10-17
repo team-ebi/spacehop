@@ -12,7 +12,6 @@ import "./Business.css";
 //miku edit below for availability section
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import moment from "moment";
 
 function Business() {
   // user email used to fetch data from db
@@ -55,8 +54,8 @@ function Business() {
   const [displayBizPage, setDisplayBizPage] = useState(false);
   const [displayInputs, setDisplayInputs] = useState(false);
   const [submittedForm, setSubmittedForm] = useState(false);
-  const [displayAvailInputs, setDisplayAvailInputs] = useState(false);
 
+  // states for upcoming reservation - not yet implemented
   const [display, setDisplay] = useState("upcoming");
   const [dimUpcoming, setDimUpcoming] = useState("");
   const [dimPast, setDimPast] = useState("dim");
@@ -271,11 +270,16 @@ function Business() {
             <div id="profile-info">
               {/* this is a generic user image, but we can also change to something else */}
               <div id="biz-img">
-                <FontAwesomeIcon
-                  icon={faUserCircle}
-                  size="8x"
-                  color="darkslategrey"
-                />
+                <div className="biz-img-preview">
+                  <FontAwesomeIcon
+                    icon={faUserCircle}
+                    size="8x"
+                    color="darkslategrey"
+                  />
+                </div>
+                <div className="upload-btn-container">
+                  <button className="upload-img-button">Upload Image</button>
+                </div>
               </div>
               <div id="biz-details">
                 {/* user has a profile, displayInputs is false */}

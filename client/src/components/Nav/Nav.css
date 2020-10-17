@@ -55,6 +55,9 @@ h2 {
   margin-top: -5px;
   overflow: hidden;
 }
+.menu-item:last-child {
+  border-bottom: none;
+}
 .menu-item {
   width: 100%;
   text-align: center;
@@ -71,7 +74,7 @@ h2 {
   max-height: 30px;
 }
 .menu-item:hover {
-  background-color: lightgrey;
+  border-top: solid #80CC37;
 }
 .auth-window {
   display: flex;
