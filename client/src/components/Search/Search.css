@@ -91,40 +91,6 @@
 .time {
   width: 20%;
 }
-.react-datepicker-wrapper {
-  width: 100%;
-  display: flex;
-}
-.react-datepicker__day:hover,
-.react-datepicker__day--selected,
-.react-datepicker__day--in-selecting-range,
-.react-datepicker__day--in-range,
-.react-datepicker__month-text--selected,
-.react-datepicker__month-text--in-selecting-range,
-.react-datepicker__month-text--in-range,
-.react-datepicker__quarter-text--selected,
-.react-datepicker__quarter-text--in-selecting-range,
-.react-datepicker__quarter-text--in-range,
-.react-datepicker__year-text--selected,
-.react-datepicker__year-text--in-selecting-range,
-.react-datepicker__year-text--in-range,
-.react-datepicker__day--keyboard-selected {
-  background-color: #80cc37;
-  color: black;
-}
-.react-datepicker__time-container
-  .react-datepicker__time
-  .react-datepicker__time-box
-  ul.react-datepicker__time-list
-  .react-datepicker__time-list-item--selected
-  li.react-datepicker__time-list-item--selected:hover {
-  background-color: #80cc37;
-  color: black;
-}
-.react-datepicker {
-  border-radius: 20px;
-  overflow: hidden;
-}
 #search-button-container {
   width: 5%;
 }
@@ -156,6 +122,7 @@
 
   #search-container {
     top: 0;
+    bottom: 65px;
     position: fixed;
     background: #efefbb; /* fallback for old browsers */
     background: -webkit-linear-gradient(
@@ -192,6 +159,10 @@
   }
   .date-input {
     font-size: 16px;
+  }
+  #search-button-container {
+    width: 100%;
+    margin-top: 20px;
   }
   #search-button {
     border-radius: 100px;

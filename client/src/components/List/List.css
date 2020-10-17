@@ -13,7 +13,6 @@
   width: 100%;
   display: flex;
   padding: 5px;
-  justify-content: center;
 }
 .web {
   display: none;
@@ -101,6 +100,9 @@
 
   box-shadow: 0 4px 8px lightgrey;
 }
+.back-icon {
+  display: none;
+}
 @media (max-width: 700px) {
   #location-container {
     flex-flow: row wrap;
@@ -164,10 +166,22 @@
     z-index: 100
   }
   .corner-logo-container {
-    justify-content: flex-start;
+    top: 0;
+  }
+  .back-text {
+    margin-left: 5px;
+    color: darkslategrey;
   }
   .corner-logo {
     width: 100px;
+    margin: auto;
+  }
+  .back-icon {
+    display: flex;
+    width: auto;
+    text-align: left;
+    left: 0;
+    padding: 5px;
   }
   .web {
     display: flex;

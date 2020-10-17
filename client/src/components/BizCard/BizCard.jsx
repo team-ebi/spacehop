@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import Auth from "../Auth/Auth";
 import "./BizCard.css";
 import "../Nav/Nav.css";
@@ -10,6 +11,7 @@ import {
   faYenSign,
   faMapPin,
   faUsers,
+  faArrowCircleLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { UserContext } from "../useContext/UserContext";
 import {
@@ -26,7 +28,7 @@ import Rating from "@material-ui/lab/Rating";
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { DatePicker, TimePicker } from "@material-ui/pickers";
-import moment from "moment";
+import cornerLogo from "../../images/spacehop-name.png";
 
 const theme = createMuiTheme({
   palette: {
@@ -133,10 +135,28 @@ export default function BizCard({ props }) {
       });
   }
 
+  // initializing react router's useHistory hook
+  const history = useHistory();
+  function goBack() {
+    return history.goBack();
+  }
+
   return (
     <div id="bizcard-container">
+      <div className="back-icon" onClick={goBack}>
+        <FontAwesomeIcon
+          icon={faArrowCircleLeft}
+          size="lg"
+          color="darkslategrey"
+        />
+        <span className="back-text">Back</span>
+      </div>
       <div className="corner-logo-container">
-        <img className="corner-logo" alt="spacehop-logo" src={logo}></img>
+        <img
+          className="corner-logo web"
+          alt="spacehop-logo"
+          src={cornerLogo}
+        ></img>
       </div>
       <div id="bizcard-location-container">
         {/* Elements helps load stripe */}
@@ -150,16 +170,16 @@ export default function BizCard({ props }) {
           </div>
           <div>
             <div id="bizcard-name">
-              <h2>{biz.name}</h2>
+              <h2 id="bizcard-name-text">{biz.name}</h2>
+              <Rating
+                id="bizcard-rating"
+                name="half-rating-read"
+                defaultValue={Math.ceil(biz.avg * 2) / 2}
+                precision={0.5}
+                readOnly
+                size="medium"
+              />
             </div>
-            <Rating
-              id="bizcard-rating"
-              name="half-rating-read"
-              defaultValue={Math.ceil(biz.avg * 2) / 2}
-              precision={0.5}
-              readOnly
-              size="medium"
-            />
             <div id="bizcard-location-cell">
               <div id="info-cell">
                 <div id="bizcard-location">
@@ -216,10 +236,23 @@ export default function BizCard({ props }) {
                 </div>
                 <hr className="divider" />
                 <div id="bizcard-user-review">
-                  <h2 id="reviews-header">Reviews</h2>
-                  {userReviews.map((review) => {
-                    return <li key={review.id}>{`"${review.comment}"`}</li>;
-                  })}
+                  <div id="reviews-header">Reviews</div>
+                  {userReviews.length &&
+                    userReviews.map((review) => {
+                      return (
+                        <>
+                          <div
+                            key={review.id}
+                            className="bizcard-review"
+                          >{`"${review.comment}"`}</div>
+                        </>
+                      );
+                    })}
+                  {!userReviews.length && (
+                    <div className="bizcard-review">
+                      No reviews for this space yet.
+                    </div>
+                  )}
                 </div>
               </div>
 

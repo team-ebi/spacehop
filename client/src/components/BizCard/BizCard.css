@@ -30,17 +30,21 @@
   width: 800px;
   height: 400px;
   object-fit: cover;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px lightgrey;
+  box-shadow: 0 4px 8px grey;
 }
-
+#bizcard-name-text {
+  margin-bottom: 15px;
+}
 #bizcard-rating{
   line-height: 20px;
   padding-bottom: 20px;
   display: flex;
   flex-flow: row nowrap;
 }
-
+.bizcard-review {
+  margin-bottom: 10px;
+  margin-left: 20px;
+}
 #bizcard-location,
 #bizcard-type,
 #bizcard-price,
@@ -61,8 +65,12 @@
   width: 800px;
 }
 #reviews-header{
-  padding-top: 20px;
-  padding-bottom: 15px;
+  padding-left: 20px;
+  font-weight: 700;
+  font-size: 20px;
+  color: darkslategrey;
+  margin-bottom: 20px;
+  font-family: "Poetsen One";
 }
 #info-cell {
   width: 50%;
@@ -84,6 +92,7 @@
   font-weight: 700;
   font-size: 20px;
   color: darkslategrey;
+  font-family: "Poetsen One";
 }
 .divider {
   width: 80%;
@@ -179,6 +188,7 @@
   #bizcard-container {
     margin-top: 0px;
     padding-top: 0px;
+    padding-bottom: 50px;
     position: static;
     background: #efefbb; /* fallback for old browsers */
     background: -webkit-linear-gradient(

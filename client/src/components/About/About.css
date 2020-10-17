@@ -7,6 +7,104 @@
 header:not(#results-header) {
     padding-top: 40px;
     text-align: center;
+    padding-bottom: 30px;
+}
+#OurProduct-container{
+  display: flex;
+  flex-direction: column;
+}
+h4{
+  margin-bottom:50px;
+  text-align: left;
+  line-height: 25px;
+  font-size: 20px;
+font-weight: 700;
+font-family: "Poetsen One";
+color: darkslategrey;
+}
+#imgPic-container{
+  display: flex;
+  flex-direction: row;
+}
+#cafe{
+  height: auto;
+  width: 50%;
+  margin-left: 50px;
+  box-shadow: 0 4px 8px grey;
+}
+.textField{
+  width: 80%;
+  margin: 0 auto;
+}
+p {
+  font-size: 16px;
+  line-height: 20px;
+  word-wrap: break-word;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.lastLine-container{
+  display: flex;
+  flex-direction: row;
+}
+#lastLine{
+  font-size: 250%;
+  line-height: 50px;
+  margin-top: 30px;
+  margin-bottom: 70px;
+  margin-left:20%;
+  font-weight: 600;
+  color: #73b930;;
+}
+#frog{
+  height: auto;
+  width: 20%;
+  margin: 0 auto;
+
+}
+#about-opener {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-content: center;
+}
+
+
+@media (max-width: 700px) {
+  #about-container {
+    padding-bottom: 100px;
+    padding-top: 0px;
+  }
+  h3{
+      font-size: 16px;
+      line-height: 20px;
+      word-wrap: break-word;
+      margin-top: 30px;
+  }
+  #about-opener {
+    flex-flow: row wrap;
+  }
+  #subheader {
+    margin-left: 20px;
+  }
+  #lastLine{
+      font-size: 180%;
+      margin-top: 30px;
+      margin-bottom: 40px;
+      text-align: center;
+      color: #73b930; 
+      margin-left:0;
+  }
+  #cafe {
+    width: 100%;
+    margin-left: 0;
+  }
+  #frog{
+      height: auto;
+      width: 50%;
+      margin: 0 auto;
+  }
+  
 }
 @media (max-width: 700px) {
   #about-container {
