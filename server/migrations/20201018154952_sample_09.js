@@ -26,8 +26,8 @@ exports.up = function (knex) {
       table.integer("capacity");
       table.integer("price");
       table.string("stripe_price_id");
-      table.float("location_lat");
-      table.float("location_lng");
+      table.float("lat");
+      table.float("lng");
 
       table.foreign("user_id")
       .references("id")
