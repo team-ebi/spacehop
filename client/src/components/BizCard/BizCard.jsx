@@ -183,70 +183,74 @@ export default function BizCard({ props }) {
             </div>
             <div id="bizcard-location-cell">
               <div id="info-cell">
-                <div id="bizcard-location">
-                  <FontAwesomeIcon
-                    className="icon"
-                    icon={faMapPin}
-                    size="lg"
-                    color="darkslategrey"
-                  />
-                  <div>
-                    {biz.address_street} <br />
-                    {biz.address_city}, {biz.address_zip}
+                <div id="details">
+                  <div className="details-section">
+                    <div id="bizcard-location">
+                      <FontAwesomeIcon
+                        className="icon"
+                        icon={faMapPin}
+                        size="lg"
+                        color="darkslategrey"
+                      />
+                      <div>
+                        {biz.address_street} <br />
+                        {biz.address_city}, {biz.address_zip}
+                      </div>
+                    </div>
+
+                    <div id="bizcard-phone">
+                      <FontAwesomeIcon
+                        className="icon"
+                        icon={faPhone}
+                        size="lg"
+                        color="darkslategrey"
+                      />
+                      <div>{biz.phone}</div>
+                    </div>
                   </div>
-                </div>
-                <div id="bizcard-phone">
-                  <FontAwesomeIcon
-                    className="icon"
-                    icon={faPhone}
-                    size="lg"
-                    color="darkslategrey"
-                  />
-                  <div>{biz.phone}</div>
-                </div>
+                  <div>
+                    <div id="bizcard-type">
+                      <FontAwesomeIcon
+                        className="icon"
+                        icon={faBuilding}
+                        size="lg"
+                        color="darkslategrey"
+                      />
+                      {biz.business_type[0].toUpperCase() +
+                        biz.business_type.slice(1)}
+                    </div>
 
-                <div id="bizcard-type">
-                  <FontAwesomeIcon
-                    className="icon"
-                    icon={faBuilding}
-                    size="lg"
-                    color="darkslategrey"
-                  />
-                  {biz.business_type[0].toUpperCase() +
-                    biz.business_type.slice(1)}
-                </div>
+                    <div id="bizcard-capacity">
+                      <FontAwesomeIcon
+                        className="icon"
+                        icon={faUsers}
+                        size="lg"
+                        color="darkslategrey"
+                      />
+                      {biz.capacity}
+                    </div>
 
-                <div id="bizcard-capacity">
-                  <FontAwesomeIcon
-                    className="icon"
-                    icon={faUsers}
-                    size="lg"
-                    color="darkslategrey"
-                  />
-                  {biz.capacity}
-                </div>
-
-                <div id="bizcard-price info">
-                  <FontAwesomeIcon
-                    className="icon"
-                    icon={faYenSign}
-                    size="lg"
-                    color="darkslategrey"
-                  />
-                  {Number(biz.price).toLocaleString()}
+                    <div id="bizcard-price info">
+                      <FontAwesomeIcon
+                        className="icon"
+                        icon={faYenSign}
+                        size="lg"
+                        color="darkslategrey"
+                      />
+                      {Number(biz.price).toLocaleString()}
+                    </div>
+                  </div>
                 </div>
                 <hr className="divider" />
                 <div id="bizcard-user-review">
                   <div id="reviews-header">Reviews</div>
                   {userReviews.length &&
                     userReviews.map((review) => (
-                          <div
-                            key={review.id}
-                            className="bizcard-review"
-                          >{`"${review.comment}"`}</div>
-                      
-                      )
-                    )}
+                      <div
+                        key={review.id}
+                        className="bizcard-review"
+                      >{`"${review.comment}"`}</div>
+                    ))}
                   {!userReviews.length && (
                     <div className="bizcard-review">
                       No reviews for this space yet.

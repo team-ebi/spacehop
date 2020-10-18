@@ -188,6 +188,19 @@
   margin-bottom: 20px;
   color: lightgrey;
 }
+#details {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+}
+.details-section {
+  width: 100%;
+}
+#details {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+}
 @media (max-width: 700px) {
   #bizcard-container {
     margin-top: 0px;
@@ -205,6 +218,10 @@
       rgb(230, 228, 245),
       #efefbb
     ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+  .details-section {
+    width: 50%;
+    margin-left: 30px;
   }
   #bizcard-image {
     width: 100%;
