@@ -1,14 +1,12 @@
-require("dotenv").config();
-const knex = require("./config.js");
-
-knex.schema
-.dropTableIfExists("ratings")
-.dropTableIfExists("availability")
-.dropTableIfExists("reservations")
-.dropTableIfExists("businesses")
-.dropTableIfExists("users")
-.then(() => {
+exports.up = function (knex) {
   return knex.schema
+  .dropTableIfExists("ratings")
+  .dropTableIfExists("availability")
+  .dropTableIfExists("reservations")
+  .dropTableIfExists("businesses")
+  .dropTableIfExists("users")
+  .then(() => {
+    return knex.schema
     .createTable("users", (table) => {
       table.increments("id");
       table.string("first_name");
@@ -31,8 +29,7 @@ knex.schema
       table.float("lat");
       table.float("lng");
 
-      table
-      .foreign("user_id")
+      table.foreign("user_id")
       .references("id")
       .inTable("users")
       .onDelete("CASCADE");
@@ -44,8 +41,7 @@ knex.schema
       table.integer("start_hour");
       table.integer("end_hour");
 
-      table
-      .foreign("business_id")
+      table.foreign("business_id")
       .references("id")
       .inTable("businesses")
       .onDelete("CASCADE");
@@ -58,8 +54,7 @@ knex.schema
       table.integer("business_id").unsigned().notNullable();
       table.integer("user_id").unsigned().notNullable();
 
-      table
-      .foreign("business_id")
+      table.foreign("business_id")
       .references("id")
       .inTable("businesses")
       .onDelete("CASCADE");
@@ -77,10 +72,9 @@ knex.schema
       table.integer("point").unsigned().notNullable();
       table.string("comment");
 
-      table.unique(["business_id", "user_id"]);
+      table.unique(["business_id","user_id"])
 
-      table
-      .foreign("business_id")
+      table.foreign("business_id")
       .references("id")
       .inTable("businesses")
       .onDelete("CASCADE");
@@ -91,5 +85,14 @@ knex.schema
       .inTable("users")
       .onDelete("CASCADE");
     });
-})
-.then(() => process.exit());
+  });
+};
+
+exports.down = function (knex) {
+  return knex.schema
+    .dropTable("ratings")
+    .dropTable("availability")
+    .dropTable("reservations")
+    .dropTable("businesses")
+    .dropTable("users")
+};
