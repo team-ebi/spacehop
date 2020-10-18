@@ -28,6 +28,8 @@ knex.schema
       table.integer("capacity");
       table.integer("price");
       table.string("stripe_price_id");
+      table.float("lat");
+      table.float("lng");
 
       table
       .foreign("user_id")
