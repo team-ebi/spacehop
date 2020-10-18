@@ -22,10 +22,8 @@ import {
 } from "../useContext/Search";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import logo from "../../images/logo.png";
 import Rating from "@material-ui/lab/Rating";
-import BizCard_Map from "../BizCard_Map/BizCard_Map";
-
+import Map from "../Map/Map";
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { DatePicker, TimePicker } from "@material-ui/pickers";
@@ -61,6 +59,8 @@ export default function BizCard({ props }) {
 
   // props passed to router's useHistory
   const biz = props.location.state.state;
+  const mapProps = [];
+  mapProps.push(biz);
 
   //publishable stripe API key
   const stripePromise = loadStripe(
@@ -169,7 +169,6 @@ export default function BizCard({ props }) {
               src="https://www.japan-guide.com/g9/2005_01b.jpg"
             />
           </div>
-          <BizCard_Map props={biz}/>
           <div>
             <div id="bizcard-name">
               <h2 id="bizcard-name-text">{biz.name}</h2>
@@ -240,16 +239,14 @@ export default function BizCard({ props }) {
                 <div id="bizcard-user-review">
                   <div id="reviews-header">Reviews</div>
                   {userReviews.length &&
-                    userReviews.map((review) => {
-                      return (
-                        <>
+                    userReviews.map((review) => (
                           <div
                             key={review.id}
                             className="bizcard-review"
                           >{`"${review.comment}"`}</div>
-                        </>
-                      );
-                    })}
+                      
+                      )
+                    )}
                   {!userReviews.length && (
                     <div className="bizcard-review">
                       No reviews for this space yet.
@@ -351,6 +348,8 @@ export default function BizCard({ props }) {
                 )}
               </div>
             </div>
+            <hr className="map-divider"></hr>
+            <Map businesses={mapProps} forBizCard={true} />
           </div>
         </Elements>
       </div>

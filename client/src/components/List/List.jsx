@@ -15,27 +15,9 @@ import cornerLogo from "../../images/spacehop-name.png";
 import Map from "../Map/Map";
 
 export default function List() {
-  // const { businesses } = useContext(BusinessContext);
+  const { businesses } = useContext(BusinessContext);
   const history = useHistory();
   const [displayMap, setDisplayMap] = useState(false)
-  const businesses = [{
-    id: 1,
-    user_id: 2,
-    name: "Ebi-chan",
-    address_street: "3-2-22 Shibuya",
-    address_city: "Shibuya",
-    address_zip: "150-0002",
-    phone: "0123-456-789",
-    business_type: "Izakaya",
-    capacity: 20,
-    price: 20000,
-    stripe_price_id: "price_1HblppCjwFEQ1pgcJ7QPY9Nd",
-    business_id: 1,
-    day: "Monday",
-    start_hour: 11,
-    end_hour: 17,
-    avg: 4.2,
-  }];
 
   function handleEditSearch() {
     return history.push("/");
@@ -122,7 +104,7 @@ export default function List() {
           </div>
         ))}
       </div>
-      {displayMap && <Map />}
+      {displayMap && <Map businesses={businesses} forBizCard={false}/>}
     </div>
   );
 }

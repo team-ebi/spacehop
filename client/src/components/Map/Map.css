@@ -1,0 +1,12 @@
+#map-container {
+    width: 100%;
+}
+.map-window-img {
+    height: 100px;
+    object-fit: cover;
+    overflow: hidden;
+}
+  @media (max-width: 700px) {
+   
+  }
+  
