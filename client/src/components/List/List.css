@@ -176,6 +176,9 @@ input:checked + .slider:before {
   font-size: 16px;
   line-height: 20px;
 }
+.bizcard-info {
+  margin-top: 30px;
+}
 @media (max-width: 700px) {
   #location-container {
     flex-flow: row wrap;
@@ -220,8 +223,26 @@ input:checked + .slider:before {
   }
   .slick-slider {
     width: 300px;
+  }
+  .slick-slider:not(.list) {
     margin-left: 35px;
   }
+  .list {
+    margin-left: 0px;
+    width: 300px;
+    height: 200px;
+  }
+  .list-img-container {
+    width: 300px;
+    height: 200px;
+    margin-left: 0px;
+    overflow: hidden
+  }
+  .list-image {
+    object-fit: cover;
+   width: 300px;
+   height: 200px;
+ }
   .slick-slide {
     width: 250px;
     overflow: hidden;

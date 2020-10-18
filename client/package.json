@@ -5,6 +5,7 @@
   "proxy": "http://localhost:4000",
   "secure": "false",
   "dependencies": {
+    "aws-sdk": "^2.771.0",
     "@aws-amplify/ui-components": "^0.8.6",
     "@aws-amplify/ui-react": "^0.2.23",
     "@date-io/moment": "1.x",

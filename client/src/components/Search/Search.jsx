@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { listObjects } from "../../utils/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import PlacesAutocomplete, {
@@ -58,7 +59,7 @@ export default function Search() {
   const handleLocationSelect = async (value) => {
     const results = await geocodeByAddress(value);
     const latLng = await getLatLng(results[0]);
-    console.log(latLng)
+    console.log(latLng);
     setLocation(value);
     setCoordinates(latLng);
   };
@@ -90,10 +91,20 @@ export default function Search() {
     const selectedEndtime = new Date(endTime).getHours();
 
     // set data to axios.get(http://) then get filtered data
-    const res = await axios.get(
+    let res = await axios.get(
       `${baseUrl}/api/availability/?day=${selectedDay}&address_city=${selectedLocation}&start_hour=${selectedStartTime}&end_hour=${selectedEndtime}`
     );
 
+    for (const biz of res.data) {
+      const arrayOfPhotoObjects = await listObjects(biz.id);
+      const result = arrayOfPhotoObjects
+        // map to pull keys only
+        .map(obj => obj.Key);
+        console.log(result);
+      biz.images = result;
+    }
+  
+    console.log(res.data)
     // set businesses state
     setBusinesses(res.data);
     // open list
@@ -187,7 +198,7 @@ export default function Search() {
                 label="Start Time"
                 className="date-input"
                 value={startTime}
-                onChange={(time) => setStartTime(time.startOf('hour'))}
+                onChange={(time) => setStartTime(time.startOf("hour"))}
                 disablePast={true}
                 views={["hours"]}
                 cancelLabel={false}
@@ -206,7 +217,7 @@ export default function Search() {
                 label="End Time"
                 className="date-input"
                 value={endTime}
-                onChange={(time) => setEndTime(time.startOf('hour'))}
+                onChange={(time) => setEndTime(time.startOf("hour"))}
                 disablePast={true}
                 views={["hours"]}
                 cancelLabel={false}
@@ -220,7 +231,11 @@ export default function Search() {
           {/* when this button is clicked, list of available
         businesses will be displayed */}
           <div id="search-button-container">
-            <button id="search-button" onClick={getSelectedData}>
+            <button
+              id="search-button"
+              alt="search button"
+              onClick={getSelectedData}
+            >
               <div>
                 <FontAwesomeIcon icon={faSearch} size="lg" />
               </div>

@@ -2,16 +2,15 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { UserContext } from "../useContext/UserContext";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowCircleLeft,
-  faImages
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowCircleLeft, faImages } from "@fortawesome/free-solid-svg-icons";
 import cornerLogo from "../../images/spacehop-name.png";
 import axios from "axios";
-import "./Business.css";
-//miku edit below for availability section
 import DatePicker from "react-datepicker";
+import Slider from "react-slick";
 import "react-datepicker/dist/react-datepicker.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "./Business.css";
 
 function Business() {
   // user email used to fetch data from db
@@ -30,7 +29,6 @@ function Business() {
   const [bizType, setBizType] = useState("");
   const [capacity, setCapacity] = useState(0);
   const [price, setPrice] = useState(0);
-  const [images, setImages] = useState([]);
   const [availability, setAvailability] = useState({
     Sunday: { startTime: "", endTime: "" },
     Monday: { startTime: "", endTime: "" },
@@ -40,6 +38,8 @@ function Business() {
     Friday: { startTime: "", endTime: "" },
     Saturday: { startTime: "", endTime: "" },
   });
+
+  const [images, setImages] = useState([]);
 
   const daysOfWeek = [
     "Sunday",
@@ -100,6 +100,16 @@ function Business() {
             update.startTime = date1;
             update.endTime = date2;
             setAvailability({ ...availability, update });
+          }
+
+          // Get all image by business id
+          const bizImages = await axios({
+            method: "get",
+            url: `${baseUrl}/api/images/${biz.id}`,
+          });
+
+          if (bizImages.data.length > 0) {
+            setImages(bizImages.data);
           }
         } else {
           setDisplayInputs(false);
@@ -229,8 +239,28 @@ function Business() {
   }
 
   // upload image
-  function uploadImage() {
-    // insert yusuke's code
+  async function uploadImage(event) {
+    const formData = new FormData();
+    formData.append("image", event.target.files[0], event.target.files[0].name);
+
+    // Post image by business id
+    await axios({
+      method: "post",
+      url: `${baseUrl}/api/images/${userBusiness.id}`,
+      data: formData,
+      config: { headers: { "Content-Type": "multipart/form-data" } },
+    });
+    console.log("finished posting image")
+    
+    const res = await axios({
+      method: "get",
+      url: `${baseUrl}/api/images/${userBusiness.id}`,
+    });
+    console.log("finished fetching new images");
+    
+    console.log("before: ", images);
+     setImages(res.data);
+     console.log("after: ", images);
   }
 
   return (
@@ -285,11 +315,24 @@ function Business() {
               {/* this is a generic user image, but we can also change to something else */}
               <div id="biz-img">
                 <div className="biz-img-preview">
-                  <FontAwesomeIcon
-                    icon={faImages}
-                    size="8x"
-                    color="darkslategrey"
-                  />
+                  {images.length === 0 && (
+                    <FontAwesomeIcon
+                      icon={faImages}
+                      size="8x"
+                      color="darkslategrey"
+                    />
+                  )}
+                  {images.length > 0 && (
+                    <Slider dots={true} slidesToShow={1} swipe={true}>
+                      {images.map((image, index) => (
+                        <img
+                          src={`data:image;base64,${image}`}
+                          key={userBusiness.id + index}
+                          id="bizprofile-img"
+                        />
+                      ))}
+                    </Slider>
+                  )}
                 </div>
                 <div className="upload-btn-container">
                   <button className="upload-img-button" onClick={openFile}>
