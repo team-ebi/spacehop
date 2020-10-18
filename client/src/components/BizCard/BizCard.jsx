@@ -15,7 +15,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { UserContext } from "../useContext/UserContext";
 import {
-  LocationContext,
   DateContext,
   StartTimeContext,
   EndTimeContext,
@@ -120,7 +119,7 @@ export default function BizCard({ props }) {
       return () => ac.abort(); // Abort fetch on unmount
     }
     getRating();
-  }, [biz.business_id]);
+  }, [baseUrl, biz.business_id]);
 
   //post reservation to database
   async function reservationHandler() {

@@ -21,7 +21,6 @@ import logo from "../../images/logo.png";
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { DatePicker, TimePicker } from "@material-ui/pickers";
-import moment from "moment";
 import "./Search.css";
 
 require("dotenv").config();
@@ -59,6 +58,7 @@ export default function Search() {
   const handleLocationSelect = async (value) => {
     const results = await geocodeByAddress(value);
     const latLng = await getLatLng(results[0]);
+    console.log(latLng)
     setLocation(value);
     setCoordinates(latLng);
   };

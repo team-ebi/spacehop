@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import "./App.css";
 import { BusinessContext } from "./components/useContext/BusinessContext";
@@ -18,7 +18,6 @@ import About from "./components/About/About";
 import Team from "./components/Team/Team";
 import Business from "./components/Business/Business";
 import BizCard from "./components/BizCard/BizCard";
-import Success from "./components/Success/Success";
 import { onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Auth } from "aws-amplify";
 import axios from "axios";
@@ -105,8 +104,6 @@ export default function App() {
                               <BizCard props={propTypes} />
                             )}
                           />
-
-                          <Route path="/success" exact component={Success} />
                         </Switch>
                       </MuiPickersUtilsProvider>
                     </EndTimeContext.Provider>
