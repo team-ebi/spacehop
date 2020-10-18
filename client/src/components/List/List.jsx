@@ -9,10 +9,10 @@ import {
   faYenSign,
   faImages,
 } from "@fortawesome/free-solid-svg-icons";
-import "./List.css";
 import cornerLogo from "../../images/spacehop-name.png";
 import Map from "../Map/Map";
 import Image from "../Image/Image";
+import "./List.css";
 
 export default function List() {
   const { businesses } = useContext(BusinessContext);

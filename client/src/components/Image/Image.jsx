@@ -3,6 +3,7 @@ import { getSingleObject } from "../../utils/index";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "../List/List.css";
 
 export default function Image({ photos, bizId, arrows }) {
   const [images, setImages] = useState([]); // state should just be data, don't put jsx
