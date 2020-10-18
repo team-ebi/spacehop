@@ -3,8 +3,8 @@ import { UserContext } from "../useContext/UserContext";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faUserCircle,
   faArrowCircleLeft,
+  faImages
 } from "@fortawesome/free-solid-svg-icons";
 import cornerLogo from "../../images/spacehop-name.png";
 import axios from "axios";
@@ -286,7 +286,7 @@ function Business() {
               <div id="biz-img">
                 <div className="biz-img-preview">
                   <FontAwesomeIcon
-                    icon={faUserCircle}
+                    icon={faImages}
                     size="8x"
                     color="darkslategrey"
                   />
