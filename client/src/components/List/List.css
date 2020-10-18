@@ -158,19 +158,19 @@ input:checked + .slider:before {
 }
 .list {
   margin-left: 0px;
-  width: 600px;
-  height: 400px;
+  width: 250px;
+  height: 150px;
 }
 .list-img-container {
-  width: 600px;
-  height: 400px;
+  width: 250px;
+  height: 150px;
   margin-left: 0px;
   overflow: hidden
 }
 .list-image {
   object-fit: cover;
-  width: 600px;
-  height: 400px;
+  width: 250px;
+  height: 150px;
 }
 .slick-prev:before {
   margin-left: -40px;
@@ -205,7 +205,6 @@ input:checked + .slider:before {
   .location-cell {
     width: 300px;
   }
-
   #list-container {
     top: 0;
     background: #efefbb; /* fallback for old browsers */
@@ -226,9 +225,6 @@ input:checked + .slider:before {
   #results-length {
     text-align: center;
     width: 100%;
-  }
-  .slick-dots {
-    bottom: 0px;
   }
   #back {
     margin-top: 20px;

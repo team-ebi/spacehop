@@ -17,7 +17,7 @@ export default function Image({ photos, bizId, arrows }) {
       }
     }
     addImages(photos);
-  }, [photos]);
+  }, []);
 
   return (
     <Slider dots={true} className="list" slidesToShow={1} swipe={true} arrows={arrows}>

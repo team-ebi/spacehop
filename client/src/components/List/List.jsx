@@ -89,7 +89,7 @@ export default function List() {
                 }}
               >
                 <div className="location-name">{biz.name}</div>
-                <div className="location-city info">
+                <div className="location-city info listed-info">
                   <FontAwesomeIcon
                     className="list-icon"
                     icon={faMapPin}

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from "../Image/Image";
 import { useHistory } from "react-router-dom";
 import { GoogleMap, Marker, InfoWindow } from "@react-google-maps/api";
 import flag from "../../images/hopper_flag.png";
@@ -8,6 +9,7 @@ import {
   faBuilding,
   faYenSign,
 } from "@fortawesome/free-solid-svg-icons";
+import "./Map.css";
 
 function Map({ businesses, forBizCard }) {
   // state for when a marker is selected
@@ -15,10 +17,6 @@ function Map({ businesses, forBizCard }) {
 
   // intializing router
   const history = useHistory();
-
-  //[we need modify here] temporarily I add picture image but it should be  removed later
-  //add picture image
-  selected.img = "https://i.ibb.co/zhvKgwy/1280px-Bar-P1030319.jpg";
 
   const mapStyles = {
     margin: "0 auto",
@@ -64,7 +62,7 @@ function Map({ businesses, forBizCard }) {
             >
               <div className="location-name">{selected.name}</div>
               <div>
-                <img src={selected.img} className="map-window-img" />
+                <Image photos={selected.images} key={selected.id} arrows={false}/>
               </div>
               <div className="location-city info">
                 <FontAwesomeIcon

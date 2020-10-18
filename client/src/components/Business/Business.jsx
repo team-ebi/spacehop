@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
+import { listObjects, saveObject } from "../../utils/index";
+import Image from "../Image/Image";
 import { UserContext } from "../useContext/UserContext";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -29,6 +31,7 @@ function Business() {
   const [bizType, setBizType] = useState("");
   const [capacity, setCapacity] = useState(0);
   const [price, setPrice] = useState(0);
+  const [images, setImages] = useState([]);
   const [availability, setAvailability] = useState({
     Sunday: { startTime: "", endTime: "" },
     Monday: { startTime: "", endTime: "" },
@@ -38,8 +41,6 @@ function Business() {
     Friday: { startTime: "", endTime: "" },
     Saturday: { startTime: "", endTime: "" },
   });
-
-  const [images, setImages] = useState([]);
 
   const daysOfWeek = [
     "Sunday",
@@ -78,6 +79,15 @@ function Business() {
         });
         if (res.data.length > 0) {
           const biz = res.data[0];
+
+          // fetch images from s3
+          const arrayOfPhotoObjects = await listObjects(biz.id);
+          const result = arrayOfPhotoObjects
+            // map to pull keys only
+            .map((obj) => obj.Key);
+          biz.images = result;
+          setImages(result);
+
           setDisplayInputs(false);
           setDisplayBizPage(true);
           setUserBusiness(biz);
@@ -100,16 +110,6 @@ function Business() {
             update.startTime = date1;
             update.endTime = date2;
             setAvailability({ ...availability, update });
-          }
-
-          // Get all image by business id
-          const bizImages = await axios({
-            method: "get",
-            url: `${baseUrl}/api/images/${biz.id}`,
-          });
-
-          if (bizImages.data.length > 0) {
-            setImages(bizImages.data);
           }
         } else {
           setDisplayInputs(false);
@@ -240,27 +240,14 @@ function Business() {
 
   // upload image
   async function uploadImage(event) {
-    const formData = new FormData();
-    formData.append("image", event.target.files[0], event.target.files[0].name);
+    event.persist();
+    // save new image
+    const saveImg = await saveObject(userBusiness.id, event.target.files[0]);
+    console.log(saveImg);
 
-    // Post image by business id
-    await axios({
-      method: "post",
-      url: `${baseUrl}/api/images/${userBusiness.id}`,
-      data: formData,
-      config: { headers: { "Content-Type": "multipart/form-data" } },
-    });
-    console.log("finished posting image")
-    
-    const res = await axios({
-      method: "get",
-      url: `${baseUrl}/api/images/${userBusiness.id}`,
-    });
-    console.log("finished fetching new images");
-    
-    console.log("before: ", images);
-     setImages(res.data);
-     console.log("after: ", images);
+    // add image to carousel
+    setImages([event.target.files[0].name, ...images])
+    console.log(images);
   }
 
   return (
@@ -323,15 +310,11 @@ function Business() {
                     />
                   )}
                   {images.length > 0 && (
-                    <Slider dots={true} slidesToShow={1} swipe={true}>
-                      {images.map((image, index) => (
-                        <img
-                          src={`data:image;base64,${image}`}
-                          key={userBusiness.id + index}
-                          id="bizprofile-img"
-                        />
-                      ))}
-                    </Slider>
+                    <Image
+                      photos={images}
+                      bizId={userBusiness.id}
+                      arrows={true}
+                    />
                   )}
                 </div>
                 <div className="upload-btn-container">

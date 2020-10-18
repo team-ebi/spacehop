@@ -100,11 +100,9 @@ export default function Search() {
       const result = arrayOfPhotoObjects
         // map to pull keys only
         .map(obj => obj.Key);
-        console.log(result);
       biz.images = result;
     }
   
-    console.log(res.data)
     // set businesses state
     setBusinesses(res.data);
     // open list

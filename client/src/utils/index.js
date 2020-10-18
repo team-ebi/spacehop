@@ -58,11 +58,17 @@ export function getSingleObject(bizId, key) {
   return getSingleObject;
 }
 
-export function saveObject(bucket, file) {
+export function saveObject(bizId, file) {
+  const bucket = new aws.S3({
+    params: {
+      Bucket: bucketName,
+    },
+  });
+
   const saveObject = new Promise((resolve, reject) => {
     bucket.putObject(
       {
-        Key: file.name,
+        Key: `${bizId}/${file.name}`,
         Body: file,
         ACL: "public-read",
       },

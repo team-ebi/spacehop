@@ -7,6 +7,11 @@
     overflow: hidden;
 }
   @media (max-width: 700px) {
-   
+   .location-city:not(.listed-info) {
+       margin-top: 30px;
+   }
+   .gm-style .gm-style-iw {
+       max-width: 300px !important;
+   }
   }
   
