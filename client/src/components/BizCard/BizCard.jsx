@@ -24,6 +24,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import logo from "../../images/logo.png";
 import Rating from "@material-ui/lab/Rating";
+import BizCard_Map from "../BizCard_Map/BizCard_Map";
 
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
@@ -168,6 +169,7 @@ export default function BizCard({ props }) {
               src="https://www.japan-guide.com/g9/2005_01b.jpg"
             />
           </div>
+          <BizCard_Map props={biz}/>
           <div>
             <div id="bizcard-name">
               <h2 id="bizcard-name-text">{biz.name}</h2>

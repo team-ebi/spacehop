@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { BusinessContext } from "../useContext/BusinessContext";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,11 +12,30 @@ import "slick-carousel/slick/slick-theme.css";
 import "./List.css";
 import Slider from "react-slick";
 import cornerLogo from "../../images/spacehop-name.png";
-
+import Map from "../Map/Map";
 
 export default function List() {
-  const { businesses } = useContext(BusinessContext);
+  // const { businesses } = useContext(BusinessContext);
   const history = useHistory();
+  const [displayMap, setDisplayMap] = useState(false)
+  const businesses = [{
+    id: 1,
+    user_id: 2,
+    name: "Ebi-chan",
+    address_street: "3-2-22 Shibuya",
+    address_city: "Shibuya",
+    address_zip: "150-0002",
+    phone: "0123-456-789",
+    business_type: "Izakaya",
+    capacity: 20,
+    price: 20000,
+    stripe_price_id: "price_1HblppCjwFEQ1pgcJ7QPY9Nd",
+    business_id: 1,
+    day: "Monday",
+    start_hour: 11,
+    end_hour: 17,
+    avg: 4.2,
+  }];
 
   function handleEditSearch() {
     return history.push("/");
@@ -25,7 +44,11 @@ export default function List() {
   return (
     <div id="list-container">
       <div className="corner-logo-container list-logo">
-        <img className="corner-logo web" alt="spacehop-logo" src={cornerLogo}></img>
+        <img
+          className="corner-logo web"
+          alt="spacehop-logo"
+          src={cornerLogo}
+        ></img>
       </div>
       <div className="back-button-container">
         <button id="back" onClick={handleEditSearch}>
@@ -34,16 +57,25 @@ export default function List() {
       </div>
       <header id="results-header-container">
         <h1 id="results-length">
-          {businesses.length === 0 && "Sorry, no results. Please edit your search."}
+          {businesses.length === 0 &&
+            "Sorry, no results. Please edit your search."}
           {businesses.length === 1 && "Check out this space..."}
-          {businesses.length > 1 && `Check out these ${businesses.length} spaces...`}
+          {businesses.length > 1 &&
+            `Check out these ${businesses.length} spaces...`}
         </h1>
       </header>
-
+      {businesses.length > 0 && (<div className="toggle-switch-container">
+        <span className="toggle-text">List</span>
+        <label class="switch">
+          <input type="checkbox" onChange={() => setDisplayMap(!displayMap)}/>
+          <span class="slider round"></span>
+        </label>
+       <span className="toggle-text">Map</span>
+      </div>)}
       {/* this div will display on web with min-width 700px */}
       <div id="location-container">
         {/* Mapping through businesses to display each bizcard */}
-        {businesses.map((biz) => (
+        {!displayMap && businesses.map((biz) => (
           <div
             className="location-cell"
             // when user clicks on cell, they will be rerouted to
@@ -90,6 +122,7 @@ export default function List() {
           </div>
         ))}
       </div>
+      {displayMap && <Map />}
     </div>
   );
 }
