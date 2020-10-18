@@ -175,4 +175,61 @@ router.get("/data", async (req, res) => {
   res.send(allBusinessesInfo);
 });
 
+// Get selected business's data
+router.get("/:id/:date", async (req, res) => {
+
+  const id = req.params.id;
+  const date = req.params.date;
+  const datedate = new Date(date);
+
+  //get day as number(0-6)
+  const dayOfNum = datedate.getDay();
+
+  const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Tursday", "Friday", "Saturday"]
+
+  //convert number to string
+  const day = dayArray[dayOfNum];
+
+  const BusinessesInfo = await db
+    .select("businesses.capacity", "availability.day", "availability.start_hour", "availability.end_hour")
+    .from("businesses")
+    .join("availability", { "availability.business_id": "businesses.id" })
+    .where("businesses.id", id)
+    .andWhere("availability.day", day);
+
+  //if there is a data
+  if (BusinessesInfo.length === 1) {
+    const start_hour = Number(BusinessesInfo[0].start_hour);
+    const end_hour = Number(BusinessesInfo[0].end_hour);
+    const capacity = Number(BusinessesInfo[0].capacity);
+
+    let timeObj = {};
+    let reservationsAlready;
+
+    //search each hour's left seats
+    for (let i = start_hour; i < end_hour; i++) {
+      reservationsAlready = await db
+        .count({ count: '*' })
+        .from("reservations")
+        .where({
+          "date": date,
+          "business_id": id,
+        })
+        .where("start_at", "<=", i)
+        .andWhere("end_at", ">=", i + 1);
+      const timeScale = String(i)+"-"+String(i+1);
+      timeObj[timeScale] = capacity - Number(reservationsAlready[0].count);
+    }
+
+    //example
+    // {"12-13": 19,"13-14": 19,"14-15": 19,"15-16": 19,"16-17": 18}
+
+    res.send(timeObj);
+  }else{
+    //if not open that day, return empty object
+    res.send({});
+  }
+
+});
+
 module.exports = router;
