@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Auth from "../Auth/Auth";
+import Image from "../Image/Image";
 import "./BizCard.css";
 import "../Nav/Nav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -162,11 +163,7 @@ export default function BizCard({ props }) {
         {/* Elements helps load stripe */}
         <Elements stripe={stripePromise}>
           <div id="image-cell">
-            <img
-              id="bizcard-image"
-              alt="izakaya"
-              src="https://www.japan-guide.com/g9/2005_01b.jpg"
-            />
+            <Image photos={biz.images} bizId={biz.id} arrows={true}/>
           </div>
           <div>
             <div id="bizcard-name">

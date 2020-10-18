@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-export default function Image({ photos, bizId }) {
+export default function Image({ photos, bizId, arrows }) {
   const [images, setImages] = useState([]); // state should just be data, don't put jsx
 
   // get 64bit data from each string element (key) in allPhotos array
@@ -19,7 +19,7 @@ export default function Image({ photos, bizId }) {
   }, [photos]);
 
   return (
-    <Slider dots={true} className="list" slidesToShow={1} swipe={true} arrows={false}>
+    <Slider dots={true} className="list" slidesToShow={1} swipe={true} arrows={arrows}>
       {images.map((image) => (
           <div className="list-img-container" >
               <img

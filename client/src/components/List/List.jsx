@@ -80,7 +80,7 @@ export default function List() {
                 />
               )}
               {biz.images.length > 0 && (
-                <Image photos={biz.images} bizId={biz.id} />
+                <Image photos={biz.images} bizId={biz.id} arrows={false} />
               )}
               <div
               className="bizcard-info"
