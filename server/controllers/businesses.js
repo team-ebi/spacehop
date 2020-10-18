@@ -179,11 +179,10 @@ router.get("/data", async (req, res) => {
 router.get("/:id/:date", async (req, res) => {
 
   const id = req.params.id;
-  const date = req.params.date;
-  const datedate = new Date(date);
+  const date = new Date(req.params.date);
 
   //get day as number(0-6)
-  const dayOfNum = datedate.getDay();
+  const dayOfNum = date.getDay();
 
   const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Tursday", "Friday", "Saturday"]
 

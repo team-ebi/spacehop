@@ -1,4 +1,4 @@
-exports.seed = function(knex) {
+exports.seed = function (knex) {
   return knex("reservations").del()
     .then(function () {
       return knex("reservations").insert([
@@ -92,7 +92,47 @@ exports.seed = function(knex) {
           user_id: 15,
           start_at: 15,
           end_at: 17
-        }
+        }, {
+          date: "2020-11-02",
+          price: 20000,
+          created_at: "2020-10-01",
+          business_id: 3,
+          user_id: 1,
+          start_at: 12,
+          end_at: 17
+        }, {
+          date: "2020-11-02",
+          price: 20000,
+          created_at: "2020-10-01",
+          business_id: 3,
+          user_id: 2,
+          start_at: 12,
+          end_at: 17
+        }, {
+          date: "2020-11-02",
+          price: 20000,
+          created_at: "2020-10-01",
+          business_id: 3,
+          user_id: 3,
+          start_at: 12,
+          end_at: 17
+        }, {
+          date: "2020-11-02",
+          price: 20000,
+          created_at: "2020-10-01",
+          business_id: 3,
+          user_id: 4,
+          start_at: 12,
+          end_at: 17
+        }, {
+          date: "2020-11-02",
+          price: 20000,
+          created_at: "2020-10-01",
+          business_id: 3,
+          user_id: 5,
+          start_at: 12,
+          end_at: 17
+        } 
       ]);
     });
 };
