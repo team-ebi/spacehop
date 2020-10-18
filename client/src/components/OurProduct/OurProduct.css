@@ -1,0 +1,82 @@
+#OurProduct-container{
+    display: flex;
+    flex-direction: column;
+}
+
+header{
+    margin-bottom: 50px;
+}
+h4{
+    margin-bottom:50px;
+    text-align: center;
+    line-height: 25px;
+    font-size: 20px;
+  font-weight: 700;
+  font-family: "Poetsen One";
+  color: darkslategrey;
+}
+#imgPic-container{
+    display: flex;
+    flex-direction: row;
+}
+#cafe{
+    height: auto;
+    width: 100%;
+    margin: 0 auto;
+}
+.textField{
+    width: 80%;
+    margin: 0 auto;
+}
+h3{
+    font-size: 16px;
+    line-height: 20px;
+    word-wrap: break-word;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.lastLine-container{
+    display: flex;
+    flex-direction: row;
+}
+#lastLine{
+    font-size: 250%;
+    line-height: 50px;
+    margin-top: 30px;
+    margin-bottom: 70px;
+    margin-left:20%;
+    font-weight: 600;
+    color: #73b930;;
+}
+#frog{
+    height: auto;
+    width: 20%;
+    margin: 0 auto;
+
+}
+
+
+@media (max-width: 700px) {
+    h3{
+        font-size: 16px;
+        line-height: 20px;
+        word-wrap: break-word;
+        margin-top: 30px;
+    }
+    #lastLine{
+        font-size: 180%;
+        margin-top: 30px;
+        margin-bottom: 40px;
+        text-align: center;
+        color: #73b930; 
+        margin-left:0;
+    }
+    #frog{
+        height: auto;
+        width: 50%;
+        margin: 0 auto;
+    }
+    
+    
+    
+}

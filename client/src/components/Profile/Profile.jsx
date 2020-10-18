@@ -1,33 +1,48 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../useContext/UserContext";
-import { Button, Container, Row, Col, Image } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import FutureBookings from "../BookingsAll/BookingsAll";
-import { Auth } from "aws-amplify";
 import "./Profile.css";
+import axios from "axios";
 
 function Profile() {
   const { user } = useContext(UserContext);
   const [givenName, setGivenName] = useState("");
   const [familyName, setFamilyName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState();
+  const [phone, setPhone] = useState("");
   const [displayInputs, setDisplayInputs] = useState(false);
 
+  // will connect to aws or default to loalhost
+  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000";
+
   useEffect(() => {
-    if (user) {
-      setGivenName(user.attributes.given_name);
-      setFamilyName(user.attributes.family_name);
-      setEmail(user.attributes.email);
-      setPhone(user.attributes.phone_number);
+    async function fetchUser() {
+      if (user) {
+        let req = axios.get(`${baseUrl}/api/users/${user.attributes.email}`);
+        let res = await req;
+        let data = res.data;
+        setGivenName(data[0].first_name);
+        setFamilyName(data[0].last_name);
+        setEmail(data[0].email);
+        setPhone(data[0].phone);
+      }
     }
+    fetchUser();
   }, [user]);
 
   // this function should pull from component state and
   // post to db + update user pool
   async function updateProfile() {
-   
+    axios.patch(`${baseUrl}/api/users/`, {
+      first_name: givenName,
+      last_name: familyName,
+      email: email,
+      phone: phone,
+    });
+
+    setDisplayInputs(false);
   }
 
   return (
@@ -42,7 +57,7 @@ function Profile() {
         Profile
       </h2>
       <div id="section-container">
-        <main>
+        <main id="main">
           <div id="profile-info">
             <div id="profile-img">
               <FontAwesomeIcon
@@ -55,9 +70,7 @@ function Profile() {
               <div className="detail">
                 <div id="profile-categories">First Name: </div>
                 {!displayInputs && (
-                  <div className="attribute">
-                    {user && user.attributes.given_name}
-                  </div>
+                  <div className="attribute">{user && givenName}</div>
                 )}
                 {displayInputs && (
                   <div className="attribute">
@@ -72,9 +85,7 @@ function Profile() {
               <div className="detail">
                 <div id="profile-categories">Last Name: </div>
                 {!displayInputs && (
-                  <div className="attribute">
-                    {user && user.attributes.family_name}
-                  </div>
+                  <div className="attribute">{user && familyName}</div>
                 )}
                 {displayInputs && (
                   <div className="attribute">
@@ -89,26 +100,16 @@ function Profile() {
               <div className="detail">
                 <div id="profile-categories">Email: </div>
                 {!displayInputs && (
-                  <div className="attribute">
-                    {user && user.attributes.email}
-                  </div>
+                  <div className="attribute">{user && email}</div>
                 )}
                 {displayInputs && (
-                  <div className="attribute">
-                    <input
-                      className="profile-input"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </div>
+                  <div className="attribute">{user && email}</div>
                 )}
               </div>
               <div className="detail">
                 <div id="profile-categories">Phone Number: </div>
                 {!displayInputs && (
-                  <div className="attribute">
-                    {user && user.attributes.phone_number}
-                  </div>
+                  <div className="attribute">{user && phone}</div>
                 )}
                 {displayInputs && (
                   <div className="attribute">
@@ -154,9 +155,6 @@ function Profile() {
           <FutureBookings />
         </section>
       </div>
-
-      {/* future bookings is set in the middle of this code */}
-      {/* future booking has its own branch : futureBookings */}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Auth from "../Auth/Auth";
 import "./BizCard.css";
 import "../Nav/Nav.css";
@@ -32,15 +32,10 @@ export default function BizCard({ props }) {
   const [displayLogin, setDisplayLogin] = useState(false);
   const [pickDate, setPickDate] = useState(false);
   const [pickFuture, setPickFuture] = useState(false);
+  const [userReviews, setUserReviews] = useState([]);
 
   // props passed to router's useHistory
   const biz = props.location.state.state;
-
-  //url for server
-
-  const url =
-    process.env.BACKEND_URL ||
-    "http://localhost:4000/api/stripecheckout/checkoutsession";
 
   //publishable stripe API key
   const stripePromise = loadStripe(
@@ -78,28 +73,35 @@ export default function BizCard({ props }) {
             },
           ],
           mode: "payment",
-          successUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/profile",
+          successUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
           cancelUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
         })
         .then(() => {
           reservationHandler();
         });
-    } catch (error) {
+    } catch {
       alert("Payment Error");
     }
   }
 
+  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000"
+
+  useEffect(() => {
+    async function getRating(){
+      let res = await axios.get(`${baseUrl}/api/ratings/${biz.business_id}`);
+      setUserReviews(res.data);
+    }
+    getRating();
+  }, [baseUrl, biz.business_id]);
+
   //post reservation to database
   async function reservationHandler() {
     await axios
-      .post("/api/reservations/", {
+      .post(`${baseUrl}/api/reservations/`, {
         email: user.attributes.email,
         date: bookingDate,
-        price: biz.price,
+        price: biz.price, 
         business_id: biz.id,
-      })
-      .then(function (response) {
-        console.log(response);
       })
       .catch(function (error) {
         console.log(error);
@@ -109,7 +111,7 @@ export default function BizCard({ props }) {
   return (
     <div id="bizcard-container">
       <div className="corner-logo-container">
-        <img className="corner-logo" src={logo}></img>
+        <img className="corner-logo" alt="spacehop-logo" src={logo}></img>
       </div>
       <div id="bizcard-location-container">
         {/* Elements helps load stripe */}
@@ -117,12 +119,12 @@ export default function BizCard({ props }) {
           <div id="image-cell">
             <img
               id="bizcard-image"
+              alt='izakaya'
               src="https://www.japan-guide.com/g9/2005_01b.jpg"
             />
           </div>
           <div>
             <div id="bizcard-name">
-              {console.log(biz)}
               <h2>{biz.name}</h2>
             </div>
             <Rating
@@ -187,6 +189,13 @@ export default function BizCard({ props }) {
                   />
                   {Number(biz.price).toLocaleString()}
                 </div>
+                <hr className="divider" />
+                <div id="bizcard-user-review">
+                  <h2 id="reviews-header">Reviews</h2>
+                  {userReviews.map((review) => {
+                    return <li key={review.id}>{`"${review.comment}"`}</li>;
+                  })}
+                </div>
               </div>
 
               <hr className="divider" id="mobile-divider"></hr>
@@ -197,7 +206,7 @@ export default function BizCard({ props }) {
                 <div id="booking-price">
                   ¥{Number(biz.price).toLocaleString()}
                 </div>
-                <hr className="divider" id="booking-divider"></hr>
+                {/* <hr className="divider" id="booking-divider"></hr> */}
                 <div id="booking-subheader">{"Date & Time:"}</div>
                 <div id="datetime-container">
                   <div className="booking-time" id="booking-date-container">

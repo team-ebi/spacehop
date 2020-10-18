@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import "./App.css";
 import { BusinessContext } from "./components/useContext/BusinessContext";
@@ -27,19 +27,19 @@ export default function App() {
   useEffect(() => {
     return onAuthUIStateChange((nextAuthState, authData) => {
       setAuthState(nextAuthState);
-      console.log("authstate:", authState);
       setUser(authData);
-      console.log("USER:", user);
     });
-  }, []);
+  }, [authState, user]);
+
+  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000"
 
   useEffect(() => {
     async function checkDatabaseForUser() {
       if (user && user.attributes) {
         const email = user.attributes.email;
-        const userExists = await axios.get(`/api/users/${email}`)
-        if (!userExists.length) {
-          await axios.post("/api/users/", {
+        const userExists = await axios.get(`${baseUrl}/api/users/${email}`)
+        if (userExists.length === 0) {
+          await axios.post(`${baseUrl}/api/users/`, {
             first_name: user.attributes.given_name,
             last_name: user.attributes.family_name,
             email: email,

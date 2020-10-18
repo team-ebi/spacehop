@@ -7,12 +7,15 @@
 }
 #profile-info {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     width: 100%;
     height: 300px;
+    justify-content: center;
 }
 #biz-img {
-    width: 200px;
+    width: 20%;
+    display: flex;
+    justify-content: center;
 }
 .attribute {
     margin-left: 15px;
@@ -41,7 +44,7 @@
   height: 50px;
   border-radius: 40px;
   box-shadow: 0 4px 8px lightgrey;
-  margin-top: 70px;
+  margin-top: 50px;
   cursor: pointer;
   font-size: 16px;
 }
@@ -63,11 +66,12 @@
 }
 #section-container {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     margin-top: 40px;
+    justify-content: center;
 }
 main {
-    width: 50%;
+    width: 100%;
     border-right: solid lightgrey;
     border-width: 1px;
 }
@@ -80,11 +84,113 @@ section {
 #biz-details {
     display: flex;
     flex-flow: column wrap;
+    width: 70%;
 }
 #add-biz-container {
     display: flex;
     justify-content: center;
     margin-bottom: 100px;
+}
+
+#availability-input-container{
+    display: flex;
+    width:80%;
+    /* justify-content: space-evenly; */
+    margin-left: 10%;
+    flex-flow: row nowrap;
+}
+.availability-input{
+    margin: 5px;
+    width:150px;
+    padding:10px;
+    background-color: white;
+    border-radius: 20px;
+    border: solid lightgrey;
+    border-width: 1px;
+    box-shadow:0px 4px 4px lightgrey;
+}
+#weekly-available-title{
+    font-weight: 600;
+    font-size: 16px;
+    /* margin-left: 20%; */
+    line-height: 20px;
+    width: 150px;
+    margin:0 auto;
+    margin-top: 30px;
+    margin-bottom: 15px;
+
+}
+.availability-day{
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+}
+.availability-checkbox{
+   width: 100%;
+   text-align: center;
+}
+input.checkbox-body{
+    margin: 10px;
+    width:30px;
+    padding:10px;
+    transform: scale(1.8);
+}
+.availability-startTime {
+    display: flex;
+    justify-content: center;
+    width:100%;
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    flex-flow: row wrap;
+    padding-left: 2px;
+
+}
+.availability-endTime{
+    display: flex;
+    justify-content: center;
+    width:100%;
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    flex-flow: row wrap;
+    padding-left: 2px;
+}
+.avail-time-input{
+    width:120px;
+    border-radius: 10px;
+    border: none;
+    text-indent: 5px;
+    width: 90%;
+    height: 30px;
+    font-size: 16px;
+    border: solid grey;
+    border-width: 1px;
+
+}
+#thanks {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 20px;
+}
+#availability-container {
+    width: 100%;
+    display: flex;
+}
+.availability-label {
+    width: 100%;
+}
+.timeslots {
+    height: 30px;
+}
+.unavailable {
+    color: darkslategrey;
+    font-weight: 700;
+}
+#biz-res-title{
+    width: 100%;
 }
 @media (max-width: 700px) {
     #biz-profile-container {
@@ -111,6 +217,7 @@ section {
     #profile-info {
         width: 100%;
         flex-flow: row wrap;
+        justify-content: center;
     }
     #add-button {
         margin-top: 20px;
@@ -135,6 +242,7 @@ section {
         margin-left: 0;
         display: flex;
         justify-content: center;
+        width: 100%;
     }
     #biz-details {
         flex-flow: row wrap;
@@ -143,5 +251,15 @@ section {
     }
     #profile-info {
         height: auto;
+    }
+    #availability-input-container{
+        flex-flow:row-wrap; 
+        justify-content: center;
+        display: block;
+        margin-left: 25px;
+    }
+    .availability-input{
+        width:300px;
+        margin-bottom: 25px;
     }
 }

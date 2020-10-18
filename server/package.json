@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "cors": "^2.8.5",
     "@stripe/stripe-js": "^1.9.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "eslint": "^7.11.0",
     "express": "^4.17.1",
     "knex": "^0.21.6",
+    "lint": "^0.7.0",
+    "mocha-junit-reporter": "^2.0.0",
     "moment": "^2.29.1",
     "pg": "^8.4.1",
     "stripe": "^8.108.0"
@@ -22,7 +25,8 @@
     "start": "node ./src/index.js",
     "dev": "nodemon ./server/src/index.js",
     "lint": "eslint --fix --ext .js .",
-    "test": "mocha test && yarn lint",
+    "test": "mocha test --exit",
+    "test:ci": "mkdir -p test-results && mocha test --exit --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/file.xml",
     "makeMigration": "knex migrate:make",
     "migrate": "knex migrate:latest",
     "migrate:up": "knex migrate:up",
@@ -30,6 +34,8 @@
     "makeSeed": "knex seed:make",
     "seed": "knex seed:run",
     "aws:migrate": "node aws/migration.js",
-    "aws:seed": "node aws/seed.js"
+    "aws:seed": "node aws/seed.js",
+    "migrate:test": "knex migrate:latest --env test",
+    "seed:test": "knex seed:run --env test"
   }
 }
