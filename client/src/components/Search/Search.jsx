@@ -1,3 +1,5 @@
+// miku
+import LoadingSign from "../LoadingSign/LoadingSign"; 
 import React, { useState, useContext } from "react";
 import { listObjects } from "../../utils/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,6 +25,7 @@ import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { DatePicker, TimePicker } from "@material-ui/pickers";
 import "./Search.css";
+import moment from "moment"; 
 
 require("dotenv").config();
 
@@ -54,6 +57,9 @@ export default function Search() {
 
   //variable to access routes history
   const history = useHistory();
+
+  //manage loadint state 
+  const [loading, setLoading] = useState(""); 
 
   // handles location update when location is selected in input
   const handleLocationSelect = async (value) => {
@@ -93,12 +99,21 @@ export default function Search() {
     const selectedStartTime = new Date(startTime).getHours();
 
     // parse time from selected start time
-    const selectedEndtime = new Date(endTime).getHours();
+    const selectedEndTime = new Date(endTime).getHours();
+  
+    console.log("selecteddate",selectedDate);
+    // console.log("selectedday",selectedDay);
 
     // set data to axios.get(http://) then get filtered data
+    // const res = await axios.get(
+    //   `${baseUrl}/api/availability/?date=${selectedDate}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`
+    // );
     const res = await axios.get(
+
       `${baseUrl}/api/availability/?date=${dateToSend}&address_city=${selectedLocation}&start_hour=${selectedStartTime}&end_hour=${selectedEndtime}`
+
     );
+
 
     for (const biz of res.data) {
       const arrayOfPhotoObjects = await listObjects(biz.id)
@@ -112,9 +127,22 @@ export default function Search() {
   
     // set businesses state
     setBusinesses(res.data);
+
     // open list
-    return history.push("/list");
-  }
+    return ( history.push("/list") );
+    }
+
+    function showLoading(){
+      return(setLoading(
+        <div className="loadingSign" style = {{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+        <LoadingSign /></div>)
+      )
+    }
+
+    function handleEvent(e){
+      getSelectedData();
+      showLoading();
+    }
 
   return (
     <div id="search-container">
@@ -143,7 +171,7 @@ export default function Search() {
                 getInputProps,
                 suggestions,
                 getSuggestionItemProps,
-                loading,
+                loading=true,
               }) => (
                 <div>
                   <input
@@ -151,7 +179,9 @@ export default function Search() {
                     {...getInputProps({ placeholder: "Where to?" })}
                   />
                   <div id="autocomplete-selections">
-                    {loading ? <div>...loading</div> : null}
+                    {/* miku */}
+                    {loading ? <div className="loadingSign" style = {{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}><LoadingSign /></div>: null}
+                    {/* {loading?<h1>hello world</h1>:null} */}
 
                     {/* this will delay autofill options as user types */}
                     {suggestions.map((suggestion) => {
@@ -239,8 +269,9 @@ export default function Search() {
             <button
               id="search-button"
               alt="search button"
-              onClick={getSelectedData}
+              onClick={handleEvent}
             >
+              {loading}
               <div>
                 <FontAwesomeIcon icon={faSearch} size="lg" />
               </div>
