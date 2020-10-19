@@ -22,15 +22,15 @@ export default function Messages({ selectedMessage, setSelectedMessage, messages
         </div>
         <form onSubmit={(e)=>{
           e.preventDefault()
-          let newMsg = [
+          let newMsg = 
             {
               sender: user.attributes.email,
               message: e.target.message_input.value
             }
-          ] 
+          
           console.log(messages)
           console.log(newMsg)
-          setMessages(...messages, newMsg)
+          setMessages([...messages, newMsg])
           console.log("new messages, " + messages)
         }} className="submit-container">
           <input name="message_input" id="send-message-input" type="text" />
