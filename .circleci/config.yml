@@ -42,7 +42,7 @@ jobs:
             NO_PARALLEL: true
           when: always
 
-        - run:
+      - run:
           name: ls
           command: ls
           path: client
