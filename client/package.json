@@ -41,8 +41,9 @@
   },
   "scripts": {
     "start": "react-scripts start --env production",
-    "build": "react-scripts build",
+    "build": "react-scripts build",  
     "test": "react-scripts test",
+    "test:ci": "mkdir -p test-results && react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

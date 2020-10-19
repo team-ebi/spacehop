@@ -33,10 +33,10 @@ jobs:
           path: client
       - run:
           name: Test frontend
-          command: yarn run test
+          command: yarn run test:ci
           path: client
           environment:
-            JUNIT_REPORT_PATH: ./junit/
+            JUNIT_REPORT_PATH: ./test-results/
             JUNIT_REPORT_NAME: test-results.xml
             DISABLE_SOURCEMAP: true
             NO_PARALLEL: true
@@ -48,6 +48,6 @@ jobs:
           path: client
 
       - store_test_results:
-          path: client/junit
+          path: client/test-results
       - store_artifacts:
-          path: client/junit
+          path: client/test-results
