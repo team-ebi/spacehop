@@ -1,31 +1,55 @@
 import React, { useState, useContext } from "react";
+import { listObjects } from "../../utils/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "./Search.css";
 import { BusinessContext } from "../useContext/BusinessContext";
 import { UserContext } from "../useContext/UserContext";
+import {
+  LocationContext,
+  DateContext,
+  StartTimeContext,
+  EndTimeContext,
+} from "../useContext/Search";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import logo from "../../images/logo.png";
+import { createMuiTheme } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
+import { DatePicker, TimePicker } from "@material-ui/pickers";
+import "./Search.css";
+
 require("dotenv").config();
 
-export default function Search() {
-  const [location, setLocation] = useState("");
-  // may or may not need coordinates
-  const [ coordinates, setCoordinates] = useState({ lat: null, lng: null });
-  const [selectedDate, setSelectedDate] = useState("");
-  const { user } = useContext(UserContext);
-  const [selectedStartTime, setSelectedStartTime] = useState("");
-  const [selectedEndTime, setSelectedEndTime] = useState("");
-  const { setBusinesses } = useContext(BusinessContext);
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#80cc37",
+    },
+    secondary: {
+      main: "#000",
+    },
+  },
+});
 
-  //change backend server target 
+export default function Search() {
+  // may or may not need coordinates
+  const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
+
+  // context will be passed to bizCard
+  const { location, setLocation } = useContext(LocationContext);
+  const { date, setDate } = useContext(DateContext);
+  const { startTime, setStartTime } = useContext(StartTimeContext);
+  const { endTime, setEndTime } = useContext(EndTimeContext);
+  const { setBusinesses } = useContext(BusinessContext);
+  const { user } = useContext(UserContext);
+
+  //change backend server target
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 
   //variable to access routes history
@@ -35,6 +59,7 @@ export default function Search() {
   const handleLocationSelect = async (value) => {
     const results = await geocodeByAddress(value);
     const latLng = await getLatLng(results[0]);
+    console.log(latLng);
     setLocation(value);
     setCoordinates(latLng);
   };
@@ -45,7 +70,7 @@ export default function Search() {
     // parse the location
     const selectedLocation = location.split(",")[0];
 
-    const date = new Date(selectedDate);
+    const selectedDate = new Date(date);
 
     // parse day from selected date
     const week = [
@@ -57,21 +82,29 @@ export default function Search() {
       "Friday",
       "Saturday",
     ];
-    const selectedDay = week[date.getDay()];
+    const selectedDay = week[selectedDate.getDay()];
 
     // parse time from selected start time
-    const startTime = new Date(selectedStartTime).getHours();
+    const selectedStartTime = new Date(startTime).getHours();
 
     // parse time from selected start time
-    const endTime = new Date(selectedEndTime).getHours();
-
-    console.log("process.env:",process.env);
+    const selectedEndtime = new Date(endTime).getHours();
 
     // set data to axios.get(http://) then get filtered data
     const res = await axios.get(
       `${baseUrl}/api/availability/?date=${selectedDate}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`
     );
 
+    for (const biz of res.data) {
+      const arrayOfPhotoObjects = await listObjects(biz.id)
+      .then(result => result.filter(obj => obj.Key[obj.Key.length - 1] !== "/").map(obj => obj.Key))
+      .then(result => biz.images = result);
+      // const result = arrayOfPhotoObjects
+        // map to pull keys only
+        // .map(obj => obj.Key);
+      // biz.images = result;
+    }
+  
     // set businesses state
     setBusinesses(res.data);
     // open list
@@ -124,7 +157,10 @@ export default function Search() {
                         padding: "7px",
                       };
                       return (
-                        <div key={suggestion} {...getSuggestionItemProps(suggestion, { style })}>
+                        <div
+                          key={suggestion}
+                          {...getSuggestionItemProps(suggestion, { style })}
+                        >
                           {suggestion.description}
                         </div>
                       );
@@ -138,45 +174,68 @@ export default function Search() {
           {/* datepicker will update selectedDate state */}
           <div className="input time">
             {/* select date */}
-            <DatePicker
-              className="date-input"
-              selected={selectedDate}
-              placeholderText="When?"
-              onChange={(date) => setSelectedDate(date)}
-            />
+            <ThemeProvider theme={theme}>
+              <DatePicker
+                autoOk
+                label="Date"
+                value={date}
+                onChange={(date) => setDate(date)}
+                animateYearScrolling
+                disablePast={true}
+                cancelLabel={false}
+                okLabel={false}
+                InputProps={{
+                  disableUnderline: true,
+                }}
+              />
+            </ThemeProvider>
           </div>
           <div className="input time">
             {/* select start time */}
-            <DatePicker
-              className="date-input"
-              selected={selectedStartTime}
-              placeholderText="Start time?"
-              onChange={(startTime) => setSelectedStartTime(startTime)}
-              showTimeSelect
-              showTimeSelectOnly
-              timeIntervals={60}
-              timeCaption="Time"
-              dateFormat="h:mm aa"
-            />
+            <ThemeProvider theme={theme}>
+              <TimePicker
+                autoOk
+                label="Start Time"
+                className="date-input"
+                value={startTime}
+                onChange={(time) => setStartTime(time.startOf("hour"))}
+                disablePast={true}
+                views={["hours"]}
+                cancelLabel={false}
+                okLabel={false}
+                InputProps={{
+                  disableUnderline: true,
+                }}
+              />
+            </ThemeProvider>
           </div>
           <div className="input time">
             {/* select end time */}
-            <DatePicker
-              className="date-input"
-              selected={selectedEndTime}
-              placeholderText="End time?"
-              onChange={(endTime) => setSelectedEndTime(endTime)}
-              showTimeSelect
-              showTimeSelectOnly
-              timeIntervals={60}
-              timeCaption="Time"
-              dateFormat="h:mm aa"
-            />
+            <ThemeProvider theme={theme}>
+              <TimePicker
+                autoOk
+                label="End Time"
+                className="date-input"
+                value={endTime}
+                onChange={(time) => setEndTime(time.startOf("hour"))}
+                disablePast={true}
+                views={["hours"]}
+                cancelLabel={false}
+                okLabel={false}
+                InputProps={{
+                  disableUnderline: true,
+                }}
+              />
+            </ThemeProvider>
           </div>
           {/* when this button is clicked, list of available
         businesses will be displayed */}
           <div id="search-button-container">
-            <button id="search-button" onClick={getSelectedData}>
+            <button
+              id="search-button"
+              alt="search button"
+              onClick={getSelectedData}
+            >
               <div>
                 <FontAwesomeIcon icon={faSearch} size="lg" />
               </div>
