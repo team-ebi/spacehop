@@ -15,7 +15,7 @@ jobs:
           command: echo "NODE_ENV=test" >> .env
           path: server
       - run:
-          name: Install yarn dependencies
+          name: Install yarn dependencies(backend)
           command: yarn install --ignore-engines
           path: server
       - run:
@@ -24,5 +24,15 @@ jobs:
           path: server
       - store_test_results:
           path: server/test-results
+      - run:
+          name: Install yarn dependencies(frontend)
+          command: yarn install --ignore-engines
+          path: client
+      - run:
+          name: Test frontend
+          command: yarn run test:ci
+          path: client
+      - store_test_results:
+          path: client/test-results
       - store_artifacts:
           path: test-results
