@@ -30,17 +30,21 @@
   width: 800px;
   height: 400px;
   object-fit: cover;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px lightgrey;
+  box-shadow: 0 4px 8px grey;
 }
-
+#bizcard-name-text {
+  margin-bottom: 15px;
+}
 #bizcard-rating{
   line-height: 20px;
   padding-bottom: 20px;
   display: flex;
   flex-flow: row nowrap;
 }
-
+.bizcard-review {
+  margin-bottom: 10px;
+  margin-left: 20px;
+}
 #bizcard-location,
 #bizcard-type,
 #bizcard-price,
@@ -61,8 +65,12 @@
   width: 800px;
 }
 #reviews-header{
-  padding-top: 20px;
-  padding-bottom: 15px;
+  padding-left: 20px;
+  font-weight: 700;
+  font-size: 20px;
+  color: darkslategrey;
+  margin-bottom: 20px;
+  font-family: "Poetsen One";
 }
 #info-cell {
   width: 50%;
@@ -84,6 +92,7 @@
   font-weight: 700;
   font-size: 20px;
   color: darkslategrey;
+  font-family: "Poetsen One";
 }
 .divider {
   width: 80%;
@@ -175,10 +184,28 @@
   margin-top: 30px;
   width: 100%;
 }
+.map-divider {
+  margin-bottom: 20px;
+  color: lightgrey;
+}
+#details {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+}
+.details-section {
+  width: 100%;
+}
+#details {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+}
 @media (max-width: 700px) {
   #bizcard-container {
     margin-top: 0px;
     padding-top: 0px;
+    padding-bottom: 50px;
     position: static;
     background: #efefbb; /* fallback for old browsers */
     background: -webkit-linear-gradient(
@@ -191,6 +218,10 @@
       rgb(230, 228, 245),
       #efefbb
     ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+  .details-section {
+    width: 50%;
+    margin-left: 30px;
   }
   #bizcard-image {
     width: 100%;

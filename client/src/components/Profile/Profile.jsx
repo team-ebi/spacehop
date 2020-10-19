@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../useContext/UserContext";
+import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUserCircle,
+  faArrowCircleLeft,
+} from "@fortawesome/free-solid-svg-icons";
 import FutureBookings from "../BookingsAll/BookingsAll";
+import cornerLogo from "../../images/spacehop-name.png";
 import "./Profile.css";
 import axios from "axios";
 
@@ -15,7 +20,7 @@ function Profile() {
   const [displayInputs, setDisplayInputs] = useState(false);
 
   // will connect to aws or default to loalhost
-  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000";
+  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 
   useEffect(() => {
     async function fetchUser() {
@@ -45,8 +50,29 @@ function Profile() {
     setDisplayInputs(false);
   }
 
+  // initializing react router's useHistory hook
+  const history = useHistory();
+  function goBack() {
+    return history.goBack();
+  }
+
   return (
     <div id="user-profile-container">
+      <div className="back-icon" onClick={goBack}>
+        <FontAwesomeIcon
+          icon={faArrowCircleLeft}
+          size="lg"
+          color="darkslategrey"
+        />
+        <span className="back-text">Back</span>
+      </div>
+      <div className="corner-logo-container">
+        <img
+          className="corner-logo web"
+          alt="spacehop-logo"
+          src={cornerLogo}
+        ></img>
+      </div>
       <h2
         style={{
           padding: "20px 10px",
