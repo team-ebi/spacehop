@@ -2,12 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../useContext/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import BookingsAll from "../BookingsAll/BookingsAll";
 import axios from "axios";
 import "./Business.css";
 //miku edit below for availability section
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
 
 function Business() {
   // user email used to fetch data from db
@@ -26,151 +26,158 @@ function Business() {
   const [bizType, setBizType] = useState("");
   const [capacity, setCapacity] = useState(0);
   const [price, setPrice] = useState(0);
-  const [availability, setAvailability] = useState([]);
+  const [availability, setAvailability] = useState({
+    Sunday: { startTime: "", endTime: "" },
+    Monday: { startTime: "", endTime: "" },
+    Tuesday: { startTime: "", endTime: "" },
+    Wednesday: { startTime: "", endTime: "" },
+    Thursday: { startTime: "", endTime: "" },
+    Friday: { startTime: "", endTime: "" },
+    Saturday: { startTime: "", endTime: "" },
+  });
 
-  //miku edit below for availability section
-  const [sundayStart, setSundayStart] = useState(null);
-  const [sundayEnd, setSundayEnd] = useState(null);
-  const [mondayStart, setMondayStart] = useState(null);
-  const [mondayEnd, setMondayEnd] = useState(null);
-  const [tuesStart, setTuesStart] = useState(null);
-  const [tuesEnd, setTuesEnd] = useState(null);
-  const [wedStart, setWedStart] = useState(null);
-  const [wedEnd, setWedEnd] = useState(null);
-  const [thursStart, setThursStart] = useState(null);
-  const [thursEnd, setThursEnd] = useState(null);
-  const [friStart, setFriStart] = useState(null);
-  const [friEnd, setFriEnd] = useState(null);
-  const [satStart, setSatStart] = useState(null);
-  const [satEnd, setSatEnd] = useState(null);
+  const daysOfWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
 
   // will either display user's biz profile or a form to register business
   const [displayBizPage, setDisplayBizPage] = useState(false);
   const [displayInputs, setDisplayInputs] = useState(false);
   const [submittedForm, setSubmittedForm] = useState(false);
+  const [displayAvailInputs, setDisplayAvailInputs] = useState(false);
+
+  const [display, setDisplay] = useState("upcoming");
+  const [dimUpcoming, setDimUpcoming] = useState("");
+  const [dimPast, setDimPast] = useState("dim");
 
   // will connect to aws or default to loalhost
   const baseUrl = process.env.BACKEND_URL || "http://localhost:4000";
 
   // fetch user's business
-  // BACKEND ENDPOINT IN PROGRESS
   useEffect(() => {
-    fetchUserBiz();
-  }, []);
+    async function fetchUserBiz() {
+      // check if user is logged in
+      if (user) {
+        // check to see if user has a business associated with their account
+        // if so, set userBusiness to their business
+        const res = await axios({
+          method: "POST",
+          url: `${baseUrl}/api/users/account`,
+          data: { email: user.attributes.email },
+        });
+        if (res.data.length > 0) {
+          const biz = res.data[0];
+          setDisplayInputs(false);
+          setDisplayBizPage(true);
+          setUserBusiness(biz);
+          setSubmittedForm(false);
+          setBusinessName(biz.name);
+          setAddressStreet(biz.address_street);
+          setAddressCity(biz.address_city);
+          setAddressZip(biz.address_zip);
+          setPhone(biz.phone);
+          setBizType(biz.business_type);
+          setCapacity(biz.capacity);
+          setPrice(biz.price);
 
-  async function fetchUserBiz() {
-    // check if user is logged in
-    if (user) {
-      // check to see if user has a business associated with their account
-      // if so, set userBusiness to their business
-      const res = await axios.get(`/api/users/business`, {email: user.attributes.email});
-      if (res.data.length > 0) {
-        setUserBusiness(res.data);
-        setSubmittedForm(false);
-        setDisplayInputs(false);
-        setDisplayBizPage(true);
-        setBusinessName(res.data.name);
-        setAddressStreet(res.data.address_street);
-        setAddressCity(res.data.address_city);
-        setAddressZip(res.data.address_zip);
-        setPhone(res.data.phone);
-        setBizType(res.data.business_type);
-        setCapacity(res.data.capacity);
-        setPrice(res.data.price);
+          for (const avail of biz.availabilities) {
+            const update = availability[avail.day];
+            const date1 = new Date();
+            const date2 = new Date();
+            date1.setHours(avail.start_hour, 0);
+            date2.setHours(avail.end_hour, 0);
+            update.startTime = date1;
+            update.endTime = date2;
+            setAvailability({ ...availability, update });
+          }
+        } else {
+          setDisplayInputs(false);
+        }
       }
     }
-  }
+    fetchUserBiz();
+  }, [user]);
 
   // if the user adds their business,
   // this function should pull from component state and
   // patch to db
-  async function updateBizTable() {
+  async function updateBusinessDetails() {
     try {
-      for (const day of availability) {
-        if (day["day"] === "Monday" && !day["start_hour"] && !day["end_hour"]) {
-          const startHour = new Date(mondayStart).getHours();
-          const endHour = new Date(mondayEnd).getHours();
-          day["start_hour"] = startHour;
-          day["end_hour"] = endHour;
-          setAvailability([...availability, day]);
-        } else if (
-          day["day"] === "Tuesday" &&
-          !day["start_hour"] &&
-          !day["end_hour"]
+      let res;
+
+      // parse availability
+      const availArray = [];
+      // loop through availabilities to post/patch to db
+      for (const day in availability) {
+        const obj = {};
+        if (
+          availability[day].startTime &&
+          availability[day].endTime &&
+          day !== "update"
         ) {
-          const startHour = new Date(tuesStart).getHours();
-          const endHour = new Date(tuesEnd).getHours();
-          day["start_hour"] = startHour;
-          day["end_hour"] = endHour;
-          setAvailability([...availability, day]);
-        } else if (
-          day["day"] === "Wednesday" &&
-          !day["start_hour"] &&
-          !day["end_hour"]
-        ) {
-          const startHour = new Date(wedStart).getHours();
-          const endHour = new Date(wedEnd).getHours();
-          day["start_hour"] = startHour;
-          day["end_hour"] = endHour;
-          setAvailability([...availability, day]);
-        } else if (
-          day["day"] === "Thursday" &&
-          !day["start_hour"] &&
-          !day["end_hour"]
-        ) {
-          const startHour = new Date(thursStart).getHours();
-          const endHour = new Date(thursEnd).getHours();
-          day["start_hour"] = startHour;
-          day["end_hour"] = endHour;
-          setAvailability([...availability, day]);
-        } else if (
-          day["day"] === "Friday" &&
-          !day["start_hour"] &&
-          !day["end_hour"]
-        ) {
-          const startHour = new Date(friStart).getHours();
-          const endHour = new Date(friEnd).getHours();
-          day["start_hour"] = startHour;
-          day["end_hour"] = endHour;
-          setAvailability([...availability, day]);
-        } else if (
-          day["day"] === "Saturday" &&
-          !day["start_hour"] &&
-          !day["end_hour"]
-        ) {
-          const startHour = new Date(satStart).getHours();
-          const endHour = new Date(satEnd).getHours();
-          day["start_hour"] = startHour;
-          day["end_hour"] = endHour;
-          setAvailability([...availability, day]);
-        } else if (
-          day["day"] === "Sunday" &&
-          !day["start_hour"] &&
-          !day["end_hour"]
-        ) {
-          const startHour = new Date(sundayStart).getHours();
-          const endHour = new Date(sundayEnd).getHours();
-          day["start_hour"] = startHour;
-          day["end_hour"] = endHour;
-          setAvailability([...availability, day]);
+          obj.day = day;
+          obj.start_hour = availability[day].startTime.getHours();
+          obj.end_hour = availability[day].endTime.getHours();
+          availArray.push(obj);
         }
       }
-      const res = await axios.post(`${baseUrl}/api/businesses/`, {
-        email: user.attributes.email,
-        name: businessName,
-        address_street: addressStreet,
-        address_city: addressCity,
-        address_zip: addressZip,
-        phone: phone,
-        business_type: bizType,
-        capacity: capacity,
-        price: price,
-        availability: availability
-      });
-      console.log(res.data);
-      setSubmittedForm(true);
+      // if user business already exists, send patch request
+      if (userBusiness) {
+        res = await axios.patch(`${baseUrl}/api/businesses/`, {
+          email: user.attributes.email,
+          name: businessName,
+          address_street: addressStreet,
+          address_city: addressCity,
+          address_zip: addressZip,
+          phone: phone,
+          business_type: bizType,
+          capacity: capacity,
+          price: price,
+        });
+        const avail = await axios.patch(
+          `${baseUrl}/api/availability/${userBusiness.id}`,
+          {
+            availabilities: availArray,
+          }
+        );
+        res.data[0].availability = avail;
+      }
+
+      // if user business does not exist, send post request
+      else if (!userBusiness) {
+        console.log("posting")
+        res = await axios.post(`${baseUrl}/api/businesses/`, {
+          email: user.attributes.email,
+          name: businessName,
+          address_street: addressStreet,
+          address_city: addressCity,
+          address_zip: addressZip,
+          phone: phone,
+          business_type: bizType,
+          capacity: capacity,
+          price: price,
+          availability: availArray,
+        });
+        console.log("finish posting", res.data[0]);
+        setSubmittedForm(true);
+      }
+      
+      setUserBusiness(res.data[0]);
+      setBusinessName(res.data[0].name);
+      setAddressStreet(res.data[0].address_street);
+      setAddressCity(res.data[0].address_city);
+      setAddressZip(res.data[0].address_zip);
+      setPhone(res.data[0].phone);
+      setBizType(res.data[0].business_type);
+      setCapacity(res.data[0].capacity);
+      setPrice(res.data[0].price);
       setDisplayInputs(false);
-      fetchUserBiz();
     } catch (err) {
       alert("There was an error with your request. Please try again later.");
     }
@@ -184,10 +191,22 @@ function Business() {
     setDisplayBizPage(false);
   }
 
-  function updateAvailableDay(e) {
-    const availDay = e.target.value;
-    const newAvail = { day: availDay };
-    setAvailability([...availability, newAvail]);
+  function updateAvailability(time, selectedDay, type) {
+    const update = availability[selectedDay];
+    update[type] = time;
+    setAvailability({ ...availability, update });
+  }
+
+  function displayUpcoming() {
+    setDisplay("upcoming");
+    setDimPast("dim");
+    setDimUpcoming("");
+  }
+
+  function displayPast() {
+    setDisplay("past");
+    setDimPast("");
+    setDimUpcoming("dim");
   }
 
   return (
@@ -390,294 +409,85 @@ function Business() {
               </div>
             </div>
 
-            {/* NOTE TO MIKU!! input for availability should go here */}
             {/* datepicker will update business available  state */}
-            <div id="weekly-available-title">
-              <p>Weekly availablility: </p>
-            </div>
-
-            <div id="availability-input-container">
-              <div className="availability-input">
-                <div className="availability-day">Sun.</div>
-                <div className="availability-checkbox">
-                  <input
-                    className="checkbox-body"
-                    type="checkbox"
-                    value="Sunday"
-                    onInput={updateAvailableDay}
-                  />
-                </div>
-                <div className="availability-time">
-                  <div className="availability-startTime">
-                    <DatePicker
-                      className="avail-time-input"
-                      value={sundayStart}
-                      placeholderText="Start time?"
-                      key="Sunday"
-                      onChange={(time) => setSundayStart(time)}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={60}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                    />
-                  </div>
-                  <div className="availability-endTime">
-                    <DatePicker
-                      className="avail-time-input"
-                      selected={sundayEnd}
-                      placeholderText="End time?"
-                      onChange={(endTime) => setSundayEnd(endTime)}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={60}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="availability-input">
-                <div className="availability-day">Mon.</div>
-                <div className="availability-checkbox">
-                  <input
-                    className="checkbox-body"
-                    type="checkbox"
-                    value="Monday"
-                    onInput={updateAvailableDay}
-                  />
-                </div>
-                <div className="availability-time">
-                  <div className="availability-startTime">
-                    <DatePicker
-                      className="avail-time-input"
-                      selected={mondayStart}
-                      placeholderText="Start time?"
-                      onChange={(time) => setMondayStart(time)}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={60}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                    />
-                  </div>
-                  <div className="availability-endTime">
-                    <DatePicker
-                      className="avail-time-input"
-                      selected={mondayEnd}
-                      placeholderText="End time?"
-                      onChange={(endTime) => setMondayEnd(endTime)}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={60}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="availability-input">
-                <div className="availability-day">Tue.</div>
-                <div className="availability-checkbox">
-                  <input
-                    className="checkbox-body"
-                    type="checkbox"
-                    value="Tuesday"
-                    onInput={updateAvailableDay}
-                  />
-                </div>
-                <div className="availability-time">
-                  <div className="availability-startTime">
-                    <DatePicker
-                      className="avail-time-input"
-                      selected={tuesStart}
-                      placeholderText="Start time?"
-                      onChange={(startTime) => setTuesStart(startTime)}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={60}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                    />
-                  </div>
-                  <div className="availability-endTime">
-                    <DatePicker
-                      className="avail-time-input"
-                      selected={tuesEnd}
-                      placeholderText="End time?"
-                      onChange={(endTime) => setTuesEnd(endTime)}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={60}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="availability-input">
-                <div className="availability-day">Wed.</div>
-                <div className="availability-checkbox">
-                  <input
-                    className="checkbox-body"
-                    type="checkbox"
-                    value="Wednesday"
-                    onInput={updateAvailableDay}
-                  />
-                </div>
-                <div className="availability-time">
-                  <div className="availability-startTime">
-                    <DatePicker
-                      className="avail-time-input"
-                      selected={wedStart}
-                      placeholderText="Start time?"
-                      onChange={(startTime) => setWedStart(startTime)}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={60}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                    />
-                  </div>
-                  <div className="availability-endTime">
-                    <DatePicker
-                      className="avail-time-input"
-                      selected={wedEnd}
-                      placeholderText="End time?"
-                      onChange={(endTime) => setWedEnd(endTime)}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={60}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="availability-input">
-                <div className="availability-day">Thu.</div>
-                <div className="availability-checkbox">
-                  <input
-                    className="checkbox-body"
-                    type="checkbox"
-                    value="Thursday"
-                    onInput={updateAvailableDay}
-                  />
-                </div>
-                <div className="availability-time">
-                  <div className="availability-startTime">
-                    <DatePicker
-                      className="avail-time-input"
-                      selected={thursStart}
-                      placeholderText="Start time?"
-                      onChange={(startTime) => setThursStart(startTime)}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={60}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                    />
-                  </div>
-                  <div className="availability-endTime">
-                    <DatePicker
-                      className="avail-time-input"
-                      selected={thursEnd}
-                      placeholderText="End time?"
-                      onChange={(endTime) => setThursEnd(endTime)}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={60}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="availability-input">
-                <div className="availability-day">Fri.</div>
-                <div className="availability-checkbox">
-                  <input
-                    className="checkbox-body"
-                    type="checkbox"
-                    value="Friday"
-                    onInput={updateAvailableDay}
-                  />
-                </div>
-                <div className="availability-time">
-                  <div className="availability-startTime">
-                    <DatePicker
-                      className="avail-time-input"
-                      selected={friStart}
-                      placeholderText="Start time?"
-                      onChange={(startTime) => setFriStart(startTime)}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={60}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                    />
-                  </div>
-                  <div className="availability-endTime">
-                    <DatePicker
-                      className="avail-time-input"
-                      selected={friEnd}
-                      placeholderText="End time?"
-                      onChange={(endTime) => setFriEnd(endTime)}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={60}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="availability-input">
-                <div className="availability-day">Sat.</div>
-                <div className="availability-checkbox">
-                  <input
-                    className="checkbox-body"
-                    type="checkbox"
-                    value="Saturday"
-                    onInput={updateAvailableDay}
-                  />
-                </div>
-                <div className="availability-time">
-                  <div className="availability-startTime">
-                    <DatePicker
-                      className="avail-time-input"
-                      selected={satStart}
-                      placeholderText="Start time?"
-                      onChange={(startTime) => setSatStart(startTime)}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={60}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                    />
-                  </div>
-                  <div className="availability-endTime">
-                    <DatePicker
-                      className="avail-time-input"
-                      selected={satEnd}
-                      placeholderText="End time?"
-                      onChange={(endTime) => setSatEnd(endTime)}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      timeIntervals={60}
-                      timeCaption="Time"
-                      dateFormat="h:mm aa"
-                    />
-                  </div>
-                </div>
+            <div id="availability-container">
+              <div id="weekly-available-title">
+                <p>Weekly availablility: </p>
               </div>
             </div>
+
+            {(displayInputs || userBusiness) && (
+              <div id="availability-input-container">
+                {daysOfWeek.map((day) => (
+                  <div className="availability-input" key={day}>
+                    <div className="availability-day">{day}</div>
+                    <div className="availability-time">
+                      <div className="availability-startTime">
+                        <label className="availability-label">Start Time</label>
+                        {displayInputs && (
+                          <DatePicker
+                            className="avail-time-input"
+                            selected={availability[day].startTime}
+                            name={day}
+                            onChange={(time) =>
+                              updateAvailability(time, day, "startTime")
+                            }
+                            showTimeSelect
+                            showTimeSelectOnly
+                            timeIntervals={60}
+                            timeCaption="Start Time"
+                            dateFormat="h:mm aa"
+                          />
+                        )}
+                        {(!displayInputs && userBusiness) && (
+                          <div>
+                            {availability[day].startTime && (
+                              <p className="timeslots">
+                                {availability[day].startTime.getHours() + ":00"}
+                              </p>
+                            )}
+                            {!availability[day].startTime && (
+                              <p className="unavailable timeslots">X</p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                      <div className="availability-endTime">
+                        <label className="availability-label">End Time</label>
+                        {displayInputs && (
+                          <DatePicker
+                            className="avail-time-input"
+                            selected={availability[day].endTime}
+                            name={day}
+                            onChange={(time) => {
+                              updateAvailability(time, day, "endTime");
+                            }}
+                            showTimeSelect
+                            showTimeSelectOnly
+                            timeIntervals={60}
+                            timeCaption="End Time"
+                            dateFormat="h:mm aa"
+                            returnValue="end"
+                          />
+                        )}
+                        {!displayInputs && (
+                          <div>
+                            {availability[day].endTime && (
+                              <p className="timeslots">
+                                {availability[day].endTime.getHours() + ":00"}
+                              </p>
+                            )}
+                            {!availability[day].endTime && (
+                              <p className="unavailable timeslots">X</p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
 
             <div id="edit-button-container">
               {/* this button will display only if user is not in editing mode */}
@@ -690,7 +500,7 @@ function Business() {
               {/* this button will display only if user is editing details
         when clicked, it should post new details to user pool and db */}
               {displayInputs && (
-                <button className="edit-button" onClick={updateBizTable}>
+                <button className="edit-button" onClick={updateBusinessDetails}>
                   Save
                 </button>
               )}
@@ -714,13 +524,53 @@ function Business() {
           </main>
           <hr id="profile-divider"></hr>
           {/* <section>
-            <BookingsAll />
+            <div id="availability-container">
+              <div id="biz-res-title">
+                <p>Upcoming Reservations:</p>
+              </div>
+              <div id="biz-reservations">
+                {userBusiness && userBusiness.reservations.length === 0 && (
+                  <p>No upcoming reservations</p>
+                )}
+
+                {userBusiness && userBusiness.reservations.length > 0 && (
+                  <>
+                    <div id="upcoming-past-button-container">
+                      <button
+                        className={`selected-button ${dimUpcoming}`}
+                        onClick={displayUpcoming}
+                      >
+                        Upcoming
+                      </button>
+                      <button
+                        className={`selected-button ${dimPast}`}
+                        onClick={displayPast}
+                      >
+                        Past
+                      </button>
+                    </div>
+                    <div id="res-table">
+                      {userBusiness.reservations
+                        .filter((booking) => {
+                          const today = new Date();
+                          const resDate = new Date(booking.date);
+                          if (display === "past") {
+                            return resDate < today;
+                          } else {
+                            return resDate >= today;
+                          }
+                        })
+                        .map((booking) => (
+                          <div>{booking.name}</div>
+                        ))}
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
           </section> */}
         </div>
       )}
-
-      {/* future bookings is set in the middle of this code */}
-      {/* future booking has its own branch : futureBookings */}
     </div>
   );
 }

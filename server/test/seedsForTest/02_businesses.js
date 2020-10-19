@@ -12,9 +12,7 @@ exports.seed = function(knex) {
           capacity: 20,
           price: 20000,
           user_id: 2,
-          stripe_price_id: "price_1HblppCjwFEQ1pgcJ7QPY9Nd",
-          lat: 35.658022,
-          lng: 139.699277
+          stripe_price_id: "price_1HblppCjwFEQ1pgcJ7QPY9Nd" 
         },
         {
           name: "Narukiyo",
@@ -26,9 +24,7 @@ exports.seed = function(knex) {
           capacity: 10,
           price: 10000,
           user_id: 21,
-          stripe_price_id: "price_1HblqRCjwFEQ1pgcARvCsFXq",
-          lat: 35.658031,
-          lng: 139.700146
+          stripe_price_id: "price_1HblqRCjwFEQ1pgcARvCsFXq"
         },
         {
           name: "Kinka Bar",
@@ -40,9 +36,7 @@ exports.seed = function(knex) {
           capacity: 5,
           price: 5000,
           user_id: 22,
-          stripe_price_id: "price_1HblrNCjwFEQ1pgcXdtUQq8I",
-          lat: 35.659774,
-          lng: 139.702002
+          stripe_price_id: "price_1HblrNCjwFEQ1pgcXdtUQq8I" 
         },
         {
           name: "Mikkeller Bar",
@@ -54,9 +48,7 @@ exports.seed = function(knex) {
           capacity: 30,
           price: 30000,
           user_id: 23,
-          stripe_price_id: "price_1HbJmgCjwFEQ1pgcoclpmXNO",
-          lat: 35.660898,
-          lng: 139.702034
+          stripe_price_id: "price_1HbJmgCjwFEQ1pgcoclpmXNO"
         },
         {
           name: "Dancing Crab Restaurant",
@@ -68,9 +60,7 @@ exports.seed = function(knex) {
           capacity: 30,
           price: 30000,
           user_id: 24,
-          stripe_price_id: "price_1HbJqfCjwFEQ1pgcOxl1Ihpv",
-          lat: 35.661325,
-          lng: 139.700725
+          stripe_price_id: "price_1HbJqfCjwFEQ1pgcOxl1Ihpv"
         },
         {
           name: "Jazz Cafe",
@@ -82,9 +72,7 @@ exports.seed = function(knex) {
           capacity: 10,
           price: 10000,
           user_id: 25,
-          stripe_price_id: "price_1HbJpnCjwFEQ1pgctBSWj8RX",
-          lat: 35.663478,
-          lng: 139.701079
+          stripe_price_id: "price_1HbJpnCjwFEQ1pgctBSWj8RX"
         },
         {
           name: "Shibuya Golden Bar",
@@ -96,9 +84,7 @@ exports.seed = function(knex) {
           capacity: 5,
           price: 5000,
           user_id: 26,
-          stripe_price_id: "price_1HbJqfCjwFEQ1pgcOxl1Ihpv",
-          lat: 35.656429,
-          lng: 139.695978
+          stripe_price_id: "price_1HbJqfCjwFEQ1pgcOxl1Ihpv"
         },
         {
           name: "Macchan",
@@ -110,9 +96,7 @@ exports.seed = function(knex) {
           capacity: 10,
           price: 10000,
           user_id: 27,
-          stripe_price_id: "price_1HblvRCjwFEQ1pgcNzZjIWEL",
-          lat: 35.658602,
-          lng: 139.705351
+          stripe_price_id: "price_1HblvRCjwFEQ1pgcNzZjIWEL"
         }
       ]);
     });

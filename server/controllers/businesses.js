@@ -7,31 +7,31 @@ router.get("/test", async (req, res) => {
 });
 
 // Get business info by id with ratings
-router.get("/:id", async (req, res) => {
-  const id = req.params.id;
+// router.get("/:id", async (req, res) => {
+//   const id = req.params.id;
 
-  const averageRating = await db.avg('point')
-    .from('ratings')
-    .where('business_id', '=', id)
+//   const averageRating = await db.avg('point')
+//     .from('ratings')
+//     .where('business_id', '=', id)
 
-  //Get each rating & comment
-  const comments = await db
-    .select("point", "comment", "users.first_name", "users.last_name")
-    .table("ratings")
-    .where('business_id', '=', id)
-    .join("users", { "ratings.user_id": "users.id" })
+//   //Get each rating & comment
+//   const comments = await db
+//     .select("point", "comment", "users.first_name", "users.last_name")
+//     .table("ratings")
+//     .where('business_id', '=', id)
+//     .join("users", { "ratings.user_id": "users.id" })
 
-  const business = await db
-    .select("*")
-    .table("businesses")
-    .where('id', '=', id)
+//   const business = await db
+//     .select("*")
+//     .table("businesses")
+//     .where('id', '=', id)
 
-  //add average point to business data
-  business[0]['avg'] = averageRating[0]['avg'];
-  business[0]['comments'] = comments;
+//   //add average point to business data
+//   business[0]['avg'] = averageRating[0]['avg'];
+//   business[0]['comments'] = comments;
 
-  res.send(business[0]);
-});
+//   res.send(business[0]);
+// });
 
 // Create business account by email
 /*
@@ -65,24 +65,19 @@ router.post("/", async (req, res) => {
   const business_type = req.body.business_type;
   const capacity = req.body.capacity;
   const price = req.body.price;
-  
+
   // Information need for creating availability
   const availabilities = req.body.availability;
 
   // Get user id by email
-  const user = await db
-    .select("*")
-    .table("users")
-    .where({
-      email
-    });
+  const user = await db.select("*").table("users").where({email});
   const user_id = user[0]["id"];
-  
+
   // Create business account, then create availability
   const business = await db
     .select("*")
     .table("businesses")
-    .returning("id")
+    .returning("*")
     .insert({
       user_id,
       name,
@@ -93,27 +88,89 @@ router.post("/", async (req, res) => {
       business_type,
       capacity,
       price,
-      stripe_price_id
     });
 
-  const business_id = business[0];
+  // get new business id 
+  const business_id = business[0].id;
+
+  // loop through availabilities and insert each one into availability table
   for (const availability of availabilities) {
     await db.select("*").table("availability").insert({
       business_id,
       day: availability.day,
       start_hour: availability.start_hour,
-      end_hour: availability.end_hour
+      end_hour: availability.end_hour,
     });
   }
 
-  res.send("Business account and availability is created!");
+  // fetch all availabilities
+  const availability = await db
+    .select("*")
+    .table("availability")
+    .where({ business_id });
+
+  // add availability to business data that will be sent in response
+  business[0]["availability"] = availability;
+
+  res.send(business);
+});
+
+// Edit business info by email
+router.patch("/", async (req, res) => {
+  const email = req.body.email;
+
+  // get user details from user table by email
+  const user = await db
+    .select("*")
+    .returning("id")
+    .table("users")
+    .where({ email });
+
+  const user_id = user[0]["id"];
+
+  const updateInfo = req.body;
+  delete updateInfo.email;
+
+  // update business info for user
+  const businessInfo = await db
+    .select("*")
+    .returning("*")
+    .table("businesses")
+    .where({ user_id })
+    .update(updateInfo);
+
+  // get business id to fetch all reservations to be sent in response
+  const business_id = businessInfo[0]["id"];
+
+  const reservationInfo = await db
+    .select("*")
+    .table("reservations")
+    .where({ business_id });
+
+  // Combine business and reservation info
+  businessInfo[0]["reservations"] = reservationInfo;
+
+  res.send(businessInfo);
+});
+
+// Delete user by email
+router.delete("/", async (req, res) => {
+  const email = req.body.email;
+  const user = await db
+    .select("*")
+    .returning("id")
+    .table("users")
+    .where({ email });
+  const user_id = user[0]["id"];
+
+  await db.table("businesses").where({ user_id }).del();
+
+  res.send("Business information deleted");
 });
 
 // Get all business data
 router.get("/data", async (req, res) => {
-  const allBusinessesInfo = await db
-    .select("*")
-    .table("businesses");
+  const allBusinessesInfo = await db.select("*").table("businesses");
 
   res.send(allBusinessesInfo);
 });
