@@ -63,6 +63,7 @@ export default function BizCard({ props }) {
   mapProps.push(biz);
 
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
+  const frontUrl = process.env.FRONTEND_URL || "http://localhost:3000";
 
   //publishable stripe API key
   const stripePromise = loadStripe(
@@ -73,7 +74,7 @@ export default function BizCard({ props }) {
   // if user is not logged in, login page will be displayed
   // handles stripe checkout and redirects to checkout page
   // will post new reservation to db
-  async function stripeCheckoutHandler() {
+  function stripeCheckoutHandler() {
     if (!date || !startTime || !endTime) {
       setPickDate(true);
       setPickFuture(false);
@@ -90,21 +91,23 @@ export default function BizCard({ props }) {
       return;
     }
     try {
-      const stripe = await stripePromise;
-      const { error } = await stripe
-        .redirectToCheckout({
-          lineItems: [
-            {
-              price: biz.stripe_price_id,
-              quantity: 1,
-            },
-          ],
-          mode: "payment",
-          successUrl: "http://localhost:3000/profile",
-          cancelUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
+      stripePromise
+        .then((stripe) => {
+          stripe.redirectToCheckout({
+            lineItems: [
+              {
+                price: biz.stripe_price_id,
+                quantity: 1,
+              },
+            ],
+            mode: "payment",
+            successUrl: `${frontUrl}/profile`,
+            cancelUrl: `${frontUrl}`,
+          });
+        })
+        .then((result) => {
+          reservationHandler();
         });
-
-      reservationHandler();
     } catch {
       alert("Payment Error");
     }
@@ -123,19 +126,25 @@ export default function BizCard({ props }) {
 
   //post reservation to database
   async function reservationHandler() {
-    console.log("starting to post to res table")
-   try { await axios
-      .post(`${baseUrl}/api/reservations/`, {
+    const start_at= new Date(startTime);
+    const start_at_send=start_at.getHours();
+    const end_at= new Date(endTime);
+    const end_at_send=end_at.getHours();
+    console.log("starting to post to res table");
+    try {
+      await axios.post(`${baseUrl}/api/reservations/`, {
         email: user.attributes.email,
         date: date,
         price: biz.price,
         business_id: biz.id,
+        start_at: start_at_send,
+        end_at: end_at_send,
       });
-      console.log("finished posting to res table")
-   } catch (error) {
-    console.log(error);
-    };
-};
+      console.log("finished posting to res table");
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   // initializing react router's useHistory hook
   const history = useHistory();
@@ -164,7 +173,7 @@ export default function BizCard({ props }) {
         {/* Elements helps load stripe */}
         <Elements stripe={stripePromise}>
           <div id="image-cell">
-            <Image photos={biz.images} bizId={biz.id} arrows={true}/>
+            <Image photos={biz.images} bizId={biz.id} arrows={true} />
           </div>
           <div>
             <div id="bizcard-name">
