@@ -63,7 +63,7 @@ function Business() {
   const [dimPast, setDimPast] = useState("dim");
 
   // will connect to aws or default to loalhost
-  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000";
+  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 
   // fetch user's business
   useEffect(() => {
@@ -241,13 +241,28 @@ function Business() {
   // upload image
   async function uploadImage(event) {
     event.persist();
+
+    const formData = new FormData();
+    // formData.append("image", event.target.files[0], event.target.files[0].name);
+
+    // Post image by business id
+    // await axios({
+    //   method: "post",
+    //   url: `${baseUrl}/api/images/${userBusiness.id}`,
+    //   data: formData,
+    //   config: { headers: { "Content-Type": "multipart/form-data" } }
+    // })
+
+    // console.log(event.target)
     // save new image
     const saveImg = await saveObject(userBusiness.id, event.target.files[0]);
-    console.log(saveImg);
-
+    console.log("POSTED: ", saveImg);
+    
     // add image to carousel
-    setImages([event.target.files[0].name, ...images])
-    console.log(images);
+    setImages(images.concat(event.target.files[0].name));
+    
+    console.log("IMAGES: ", images);
+    
   }
 
   return (

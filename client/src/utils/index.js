@@ -14,7 +14,7 @@ export function listObjects(bizId) {
     params: {
       Bucket: bucketName,
       Prefix: `${bizId}/`,
-    },
+    }
   });
   const listObjects = new Promise((resolve, reject) => {
     bucket.listObjects((error, data) => {
@@ -56,7 +56,7 @@ export function saveObject(bizId, file) {
   const saveObject = new Promise((resolve, reject) => {
     bucket.putObject(
       {
-        Key: `${bizId}/${file.name}`,
+        Key: bizId + file.name,
         Body: file,
         ACL: "public-read",
       },

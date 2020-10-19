@@ -96,11 +96,13 @@ export default function Search() {
     );
 
     for (const biz of res.data) {
-      const arrayOfPhotoObjects = await listObjects(biz.id);
-      const result = arrayOfPhotoObjects
+      const arrayOfPhotoObjects = await listObjects(biz.id)
+      .then(result => result.filter(obj => obj.Key[obj.Key.length - 1] !== "/").map(obj => obj.Key))
+      .then(result => biz.images = result);
+      // const result = arrayOfPhotoObjects
         // map to pull keys only
-        .map(obj => obj.Key);
-      biz.images = result;
+        // .map(obj => obj.Key);
+      // biz.images = result;
     }
   
     // set businesses state

@@ -62,6 +62,8 @@ export default function BizCard({ props }) {
   const mapProps = [];
   mapProps.push(biz);
 
+  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
+
   //publishable stripe API key
   const stripePromise = loadStripe(
     "pk_test_51HU0G2CjwFEQ1pgcvOchnwo0Gsb2seN5a3xGz8Q2iCvlVUjHkSCV7UZHy3NfeobxNNMeGwmiosi3UBxjbKcSjGZ000hENfQW0F"
@@ -98,18 +100,16 @@ export default function BizCard({ props }) {
             },
           ],
           mode: "payment",
-          successUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
+          successUrl: "http://localhost:3000/profile",
           cancelUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
-        })
-        .then(() => {
-          reservationHandler();
         });
+
+      reservationHandler();
     } catch {
       alert("Payment Error");
     }
   }
 
-  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000";
 
   useEffect(() => {
     const ac = new AbortController();
@@ -124,17 +124,19 @@ export default function BizCard({ props }) {
 
   //post reservation to database
   async function reservationHandler() {
-    await axios
+    console.log("starting to post to res table")
+   try { await axios
       .post(`${baseUrl}/api/reservations/`, {
         email: user.attributes.email,
         date: date,
         price: biz.price,
         business_id: biz.id,
-      })
-      .catch(function (error) {
-        console.log(error);
       });
-  }
+      console.log("finished posting to res table")
+   } catch (error) {
+    console.log(error);
+    };
+};
 
   // initializing react router's useHistory hook
   const history = useHistory();
