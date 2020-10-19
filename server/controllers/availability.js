@@ -7,7 +7,6 @@ router.get("/test", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  // const day = req.query.day;
   const address_city = req.query.address_city;
   const start_hour = req.query.start_hour;
   const end_hour = req.query.end_hour;
