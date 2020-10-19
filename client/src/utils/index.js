@@ -3,7 +3,6 @@ require("dotenv").config();
 
 // AWS S3 configuration
 const bucketName = process.env.REACT_APP_S3_BUCKET_NAME;
-
 aws.config.credentials = new aws.Credentials({
   accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY,
   secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
@@ -19,12 +18,7 @@ export function listObjects(bizId) {
   });
   const listObjects = new Promise((resolve, reject) => {
     bucket.listObjects((error, data) => {
-      if (error) {
-        console.error("error: ", error);
-        return;
-      }
-
-      resolve(data.Contents);
+        error ? console.log(error) : resolve(data.Contents);
     });
   });
 
@@ -45,14 +39,8 @@ export function getSingleObject(bizId, key) {
         Key: key,
       },
       (error, data) => {
-        if (error) {
-          console.error("error: ", error);
-          return;
-        }
-
-        resolve(data.Body.toString("base64"));
-      }
-    );
+        error ? console.log(error) : resolve(data.Body.toString("base64"));
+    });
   });
 
   return getSingleObject;
