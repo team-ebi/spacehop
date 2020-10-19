@@ -75,10 +75,26 @@ export default function Search() {
   async function getSelectedData() {
     // parse the location
     const selectedLocation = location.split(",")[0];
+    
+    const selectedDate = new Date(date);
+    const sendyear = selectedDate.getFullYear();
+    const sendmonth = selectedDate.getMonth()+1;
+    const senddate = selectedDate.getDate();
 
-    const selectedDate = moment().format("YYYY-MM-DD");
-    console.log(selectedDate); 
- 
+    const dateToSend=String(sendyear)+"-"+String(sendmonth)+"-"+String(senddate);
+
+    // parse day from selected date
+    const week = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const selectedDay = week[selectedDate.getDay()];
+
     // parse time from selected start time
     const selectedStartTime = new Date(startTime).getHours();
 
@@ -93,7 +109,9 @@ export default function Search() {
     //   `${baseUrl}/api/availability/?date=${selectedDate}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`
     // );
     const res = await axios.get(
-      `${baseUrl}/api/availability/?date=${selectedDate}&address_city=${selectedLocation}&start_hour=${selectedStartTime}&end_hour=${selectedEndTime}`
+
+      `${baseUrl}/api/availability/?date=${dateToSend}&address_city=${selectedLocation}&start_hour=${selectedStartTime}&end_hour=${selectedEndtime}`
+
     );
 
 
