@@ -36,11 +36,7 @@ jobs:
           command: yarn run test:ci
           path: client
           environment:
-            JUNIT_REPORT_PATH: ./test-results/
-            JUNIT_REPORT_NAME: test-results.xml
-            DISABLE_SOURCEMAP: true
-            NO_PARALLEL: true
-          when: always
+            JEST_JUNIT_OUTPUT_DIR: ./test-results/
 
       - run:
           name: ls
