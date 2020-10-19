@@ -91,8 +91,8 @@ export default function Search() {
     const selectedEndtime = new Date(endTime).getHours();
 
     // set data to axios.get(http://) then get filtered data
-    let res = await axios.get(
-      `${baseUrl}/api/availability/?day=${selectedDay}&address_city=${selectedLocation}&start_hour=${selectedStartTime}&end_hour=${selectedEndtime}`
+    const res = await axios.get(
+      `${baseUrl}/api/availability/?date=${selectedDate}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`
     );
 
     for (const biz of res.data) {
