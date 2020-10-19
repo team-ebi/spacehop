@@ -13,6 +13,7 @@ import { UserContext } from "../useContext/UserContext";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import logo from "../../images/logo.png";
+import gif from "../../images/f043f7472c62b49fee750ab0ded6ce40.gif"; 
 require("dotenv").config();
 
 export default function Search() {
@@ -113,7 +114,8 @@ export default function Search() {
                     {...getInputProps({ placeholder: "Where to?" })}
                   />
                   <div id="autocomplete-selections">
-                    {loading ? <div>...loading</div> : null}
+                    {/* {loading ? <div>...loading</div> : null} */}
+
 
                     {/* this will delay autofill options as user types */}
                     {suggestions.map((suggestion) => {
