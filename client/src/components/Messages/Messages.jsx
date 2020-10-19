@@ -1,10 +1,7 @@
-import React, { useState, useContext } from "react";
-import "./Messages.css";
+import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import moment from "moment";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { UserContext } from "../useContext/UserContext";
-import axios from "axios";
 
 export default function Messages({ selectedThread }) {
   const { user } = useContext(UserContext);
