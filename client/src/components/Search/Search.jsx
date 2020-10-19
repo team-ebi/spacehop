@@ -110,7 +110,7 @@ export default function Search() {
     // );
     const res = await axios.get(
 
-      `${baseUrl}/api/availability/?date=${dateToSend}&address_city=${selectedLocation}&start_hour=${selectedStartTime}&end_hour=${selectedEndtime}`
+      `${baseUrl}/api/availability/?date=${dateToSend}&address_city=${selectedLocation}&start_hour=${selectedStartTime}&end_hour=${selectedEndTime}`
 
     );
 

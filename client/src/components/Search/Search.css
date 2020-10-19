@@ -128,7 +128,7 @@
     bottom: 65px;
     position: fixed;
     padding-bottom: 50px;
-    background: #efefbb; /* fallback for old browsers */
+    background: #9e9e84; /* fallback for old browsers */
     background: -webkit-linear-gradient(
       to bottom,
       rgb(230, 228, 245),
