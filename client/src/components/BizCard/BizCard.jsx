@@ -40,6 +40,7 @@ const theme = createMuiTheme({
   },
 });
 
+
 require("dotenv").config();
 
 export default function BizCard({ props }) {
@@ -69,6 +70,9 @@ export default function BizCard({ props }) {
     "pk_test_51HU0G2CjwFEQ1pgcvOchnwo0Gsb2seN5a3xGz8Q2iCvlVUjHkSCV7UZHy3NfeobxNNMeGwmiosi3UBxjbKcSjGZ000hENfQW0F"
   );
 
+  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000";
+  const frontUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+
   // will not run if user hasn't selected date or date is in the past
   // if user is not logged in, login page will be displayed
   // handles stripe checkout and redirects to checkout page
@@ -90,26 +94,28 @@ export default function BizCard({ props }) {
       return;
     }
     try {
-      const stripe = await stripePromise;
-      const { error } = await stripe
-        .redirectToCheckout({
-          lineItems: [
-            {
-              price: biz.stripe_price_id,
-              quantity: 1,
-            },
-          ],
-          mode: "payment",
-          successUrl: "http://localhost:3000/profile",
-          cancelUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
-        });
 
-      reservationHandler();
+      stripePromise
+        .then((stripe) => {
+          stripe.redirectToCheckout({
+            lineItems: [
+              {
+                price: biz.stripe_price_id,
+                quantity: 1,
+              },
+            ],
+            mode: "payment",
+            successUrl: `${frontUrl}/profile`,
+            cancelUrl: `${frontUrl}`,
+          });
+        })
+        .then((result) => {
+          reservationHandler();
+        });
     } catch {
       alert("Payment Error");
     }
   }
-
 
   useEffect(() => {
     const ac = new AbortController();
@@ -124,13 +130,20 @@ export default function BizCard({ props }) {
 
   //post reservation to database
   async function reservationHandler() {
-    console.log("starting to post to res table")
-   try { await axios
+    const start_at= bookingStartTime.getHours();
+    const end_at=bookingEndTime.getHours()
+    try{
+    await axios
       .post(`${baseUrl}/api/reservations/`, {
         email: user.attributes.email,
-        date: date,
+        date: bookingDate,
         price: biz.price,
         business_id: biz.id,
+        start_at: start_at,
+        end_at: end_at,
+      })
+      .catch(function (error) {
+        console.log(error);
       });
       console.log("finished posting to res table")
    } catch (error) {
@@ -165,7 +178,15 @@ export default function BizCard({ props }) {
         {/* Elements helps load stripe */}
         <Elements stripe={stripePromise}>
           <div id="image-cell">
+<<<<<<< HEAD
             <Image photos={biz.images} bizId={biz.id} arrows={true}/>
+=======
+            <img
+              id="bizcard-image"
+              alt="izakaya"
+              src="https://www.japan-guide.com/g9/2005_01b.jpg"
+            />
+>>>>>>> d9713efe1f9dcb0b4b74148b006b1bca09f9eee4
           </div>
           <div>
             <div id="bizcard-name">
