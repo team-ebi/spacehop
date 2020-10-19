@@ -56,7 +56,7 @@ export function saveObject(bizId, file) {
   const saveObject = new Promise((resolve, reject) => {
     bucket.putObject(
       {
-        Key: bizId + file.name,
+        Key: `${bizId}/${file.name}`,
         Body: file,
         ACL: "public-read",
       },

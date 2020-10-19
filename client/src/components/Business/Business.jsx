@@ -241,25 +241,12 @@ function Business() {
   // upload image
   async function uploadImage(event) {
     event.persist();
-
-    const formData = new FormData();
-    // formData.append("image", event.target.files[0], event.target.files[0].name);
-
-    // Post image by business id
-    // await axios({
-    //   method: "post",
-    //   url: `${baseUrl}/api/images/${userBusiness.id}`,
-    //   data: formData,
-    //   config: { headers: { "Content-Type": "multipart/form-data" } }
-    // })
-
-    // console.log(event.target)
     // save new image
     const saveImg = await saveObject(userBusiness.id, event.target.files[0]);
     console.log("POSTED: ", saveImg);
     
     // add image to carousel
-    setImages(images.concat(event.target.files[0].name));
+    setImages(images.concat(`${userBusiness.id}/${event.target.files[0].name}`));
     
     console.log("IMAGES: ", images);
     

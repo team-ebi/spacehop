@@ -10,8 +10,8 @@ export default function Image({ photos, bizId, arrows }) {
 
   // get 64bit data from each string element (key) in allPhotos array
   useEffect(() => {
+    setImages([]);
     async function addImages(photoArray) {
-      setImages([]);
       for (const key of photoArray) {
         const bits = await getSingleObject(bizId, key);
         setImages((state) => [...state, { bits, key }]);
