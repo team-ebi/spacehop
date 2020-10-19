@@ -27,7 +27,7 @@ describe("List", () => {
     ).toBeVisible();
   });
 
-  it("should render a message if there is one result", () => {
+  xit("should render a message if there is one result", () => {
     const oneBiz = [
       {
         name: "Spacehop Cafe",
@@ -49,7 +49,7 @@ describe("List", () => {
     expect(getByText("Check out this space...")).toBeVisible();
   });
 
-  it("should render a message if there is more than one result", () => {
+  xit("should render a message if there is more than one result", () => {
     const twoBiz = [
       {
         name: "Spacehop Cafe",

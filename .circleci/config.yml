@@ -1,3 +1,5 @@
+
+
 version: 2
 jobs:
   build:
@@ -15,7 +17,7 @@ jobs:
           command: echo "NODE_ENV=test" >> .env
           path: server
       - run:
-          name: Install yarn dependencies
+          name: Install yarn dependencies(backend)
           command: yarn install --ignore-engines
           path: server
       - run:
@@ -26,3 +28,18 @@ jobs:
           path: server/test-results
       - store_artifacts:
           path: test-results
+
+      - run:
+          name: Install yarn dependencies(frontend)
+          command: yarn install --ignore-engines
+          path: client
+      - run:
+          name: Test frontend
+          command: yarn run test:ci
+          path: client
+          environment:
+            JEST_JUNIT_OUTPUT_DIR: ./test-results/
+      - store_test_results:
+          path: client/test-results
+      - store_artifacts:
+          path: client/test-results
