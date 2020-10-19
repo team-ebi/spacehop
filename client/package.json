@@ -1,3 +1,5 @@
+
+
 {
   "name": "spacehop-client",
   "version": "0.1.0",
@@ -30,6 +32,7 @@
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^3.0.0",
     "jest-dom": "^4.0.0",
+    "jest-junit": "^12.0.0",
     "moment": "^2.29.1",
     "react": "^16.13.1",
     "react-addons-shallow-compare": "^15.6.2",
@@ -51,6 +54,7 @@
     "start": "react-scripts start --env production",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:ci": "mkdir -p test-results && react-scripts test --ci --runInBand --reporters=default --reporters=jest-junit",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
