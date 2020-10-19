@@ -90,6 +90,23 @@ knex.schema
       .references("id")
       .inTable("users")
       .onDelete("CASCADE");
+    })
+    .createTable("messages", (table) => {
+      table.increments("id");
+      table.integer("user_id");
+      table.integer("business_id");
+      table.text("message");
+
+      table
+      .foreign("user_id")
+      .references("id")
+      .inTable("users")
+      .onDelete("CASCADE");
+
+      table.foreign("business_id")
+      .references("id")
+      .inTable("businesses")
+      .onDelete("CASCADE");
     });
 })
 .then(() => process.exit());
