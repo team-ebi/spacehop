@@ -25,6 +25,7 @@ import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { DatePicker, TimePicker } from "@material-ui/pickers";
 import "./Search.css";
+import moment from "moment"; 
 
 require("dotenv").config();
 
@@ -50,12 +51,15 @@ export default function Search() {
   const { endTime, setEndTime } = useContext(EndTimeContext);
   const { setBusinesses } = useContext(BusinessContext);
   const { user } = useContext(UserContext);
+
   //change backend server target
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 
-
   //variable to access routes history
   const history = useHistory();
+
+  //manage loadint state 
+  const [loading, setLoading] = useState(""); 
 
   // handles location update when location is selected in input
   const handleLocationSelect = async (value) => {
@@ -72,26 +76,17 @@ export default function Search() {
     // parse the location
     const selectedLocation = location.split(",")[0];
 
-    const selectedDate = new Date(date);
-
-    // parse day from selected date
-    const week = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    const selectedDay = week[selectedDate.getDay()];
-
+    const selectedDate = moment().format("YYYY-MM-DD");
+    console.log(selectedDate); 
+ 
     // parse time from selected start time
     const selectedStartTime = new Date(startTime).getHours();
 
     // parse time from selected start time
     const selectedEndTime = new Date(endTime).getHours();
   
+    console.log("selecteddate",selectedDate);
+    // console.log("selectedday",selectedDay);
 
     // set data to axios.get(http://) then get filtered data
     // const res = await axios.get(
@@ -114,9 +109,22 @@ export default function Search() {
   
     // set businesses state
     setBusinesses(res.data);
+
     // open list
-    return history.push("/list");
-  }
+    return ( history.push("/list") );
+    }
+
+    function showLoading(){
+      return(setLoading(
+        <div className="loadingSign" style = {{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+        <LoadingSign /></div>)
+      )
+    }
+
+    function handleEvent(e){
+      getSelectedData();
+      showLoading();
+    }
 
   return (
     <div id="search-container">
@@ -145,7 +153,7 @@ export default function Search() {
                 getInputProps,
                 suggestions,
                 getSuggestionItemProps,
-                loading,
+                loading=true,
               }) => (
                 <div>
                   <input
@@ -154,10 +162,8 @@ export default function Search() {
                   />
                   <div id="autocomplete-selections">
                     {/* miku */}
-                    {loading ? <div className="loadingSign" style = {{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
-                      <LoadingSign />
-                    </div> : null }
-
+                    {loading ? <div className="loadingSign" style = {{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}><LoadingSign /></div>: null}
+                    {/* {loading?<h1>hello world</h1>:null} */}
 
                     {/* this will delay autofill options as user types */}
                     {suggestions.map((suggestion) => {
@@ -245,8 +251,9 @@ export default function Search() {
             <button
               id="search-button"
               alt="search button"
-              onClick={getSelectedData}
+              onClick={handleEvent}
             >
+              {loading}
               <div>
                 <FontAwesomeIcon icon={faSearch} size="lg" />
               </div>
