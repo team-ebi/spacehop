@@ -20,16 +20,19 @@ router.post("/", async (req, res) => {
 
     const date = req.body.date;
     const price = req.body.price;
-    const created_at = moment().format("YYYY-MM-DD"); // Current date
+    const start_at = req.body.start_at;
+    const end_at = req.body.end_at;
+    // created_at is set as default to today so needless to define.
     const business_id = req.body.business_id;
     const user_id = user[0]["id"];
 
     const register = await db.select("*").table("reservations").insert({
       date,
       price,
-      created_at,
       business_id,
       user_id,
+      start_at,
+      end_at
     });
 
     res.send("New reservation created!");
