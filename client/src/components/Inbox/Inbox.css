@@ -6,9 +6,7 @@
   right: 0;
   bottom: 0;
 }
-#main-inbox {
-  width: 100%;
-}
+
 #inbox {
   display: flex;
   flex-flow: row nowrap;
@@ -58,6 +56,7 @@
   width: 30%;
   height: 100%;
   overflow-y: scroll;
+  background-color: transparent;
 }
 .single-preview {
   display: flex;
@@ -154,6 +153,7 @@
     flex-flow: row wrap;
     bottom: 65px;
     overflow-y: scroll;
+    
   }
   .mobile-inbox {
     display: inline;
@@ -163,7 +163,23 @@
   }
     #message-preview-container {
       width: 100%;
-      overflow: scroll;
+      height: 480px;
+      top: 100px;
+      bottom: 65px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      background: #efefbb; /* fallback for old browsers */
+      background: -webkit-linear-gradient(
+        to bottom,
+        rgb(230, 228, 245),
+        #efefbb
+      ); /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(
+        to bottom,
+        rgb(230, 228, 245),
+        #efefbb
+      ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  
     }
     .inbox-subheader {
       text-align: left;

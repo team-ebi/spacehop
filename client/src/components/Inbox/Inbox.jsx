@@ -82,7 +82,6 @@ export default function Inbox() {
       )}
 
       {/* this is the  main section with both inbox and selected message sections */}
-      <main id="main-inbox">
         {/* this is the main inbox section that lists out all messages */}
         <div id="inbox">
           {/* web version */}
@@ -253,7 +252,6 @@ export default function Inbox() {
             </div>
           )}
         </div>
-      </main>
     </div>
   );
 }

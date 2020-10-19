@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { UserContext } from "../useContext/UserContext";
+import "../Inbox/Inbox.css";
 
 export default function Messages({ selectedThread }) {
   const { user } = useContext(UserContext);
