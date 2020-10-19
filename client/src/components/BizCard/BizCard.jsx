@@ -90,7 +90,7 @@ export default function BizCard({ props }) {
   }
 
   useEffect(() => {
-    async function getRating() {
+    async function getRating(){
       let res = await axios.get(`${baseUrl}/api/ratings/${biz.business_id}`);
       setUserReviews(res.data);
     }

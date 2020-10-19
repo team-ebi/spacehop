@@ -21,7 +21,6 @@ export default function FutureBookings() {
       try {
         if (user) {
           const reservations = await axios.get(`${baseUrl}/api/reservations/${user.attributes.email}`);
-          console.log("res: ", reservations);
           setFutureBookings(reservations.data);
         }
       } catch (err) {

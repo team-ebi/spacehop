@@ -78,7 +78,7 @@ export default function BookingSingle({ booking, display }) {
         {/* adding ':00' to start and end times */}
         <div id="booking-time">
           <FontAwesomeIcon icon={faClock} size="1x" color="darkslategrey" />
-          {"  " + booking.start_hour}:00 - {booking.end_hour}:00
+          {"  " + booking.start_at}:00 - {booking.end_at}:00
         </div>
       </div>
 
