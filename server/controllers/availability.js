@@ -38,7 +38,7 @@ router.get("/", async (req, res) => {
   let filteredAvailability = []
 
   for (let elm of availability) {
-    console.log(elm);
+    // console.log(elm);
     const id = Number(elm.id);
     const start_hour = Number(elm.start_hour);
     const end_hour = Number(elm.end_hour);
