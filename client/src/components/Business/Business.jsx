@@ -1,12 +1,18 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
+import { listObjects, saveObject } from "../../utils/index";
+import Image from "../Image/Image";
 import { UserContext } from "../useContext/UserContext";
+import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faArrowCircleLeft, faImages } from "@fortawesome/free-solid-svg-icons";
+import cornerLogo from "../../images/spacehop-name.png";
 import axios from "axios";
-import "./Business.css";
 import DatePicker from "react-datepicker";
+import Slider from "react-slick";
 import "react-datepicker/dist/react-datepicker.css";
-import moment from "moment";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "./Business.css";
 
 function Business() {
   // user email used to fetch data from db
@@ -25,6 +31,7 @@ function Business() {
   const [bizType, setBizType] = useState("");
   const [capacity, setCapacity] = useState(0);
   const [price, setPrice] = useState(0);
+  const [images, setImages] = useState([]);
   const [availability, setAvailability] = useState({
     Sunday: { startTime: "", endTime: "" },
     Monday: { startTime: "", endTime: "" },
@@ -49,14 +56,14 @@ function Business() {
   const [displayBizPage, setDisplayBizPage] = useState(false);
   const [displayInputs, setDisplayInputs] = useState(false);
   const [submittedForm, setSubmittedForm] = useState(false);
-  const [displayAvailInputs, setDisplayAvailInputs] = useState(false);
 
+  // states for upcoming reservation - not yet implemented
   const [display, setDisplay] = useState("upcoming");
   const [dimUpcoming, setDimUpcoming] = useState("");
   const [dimPast, setDimPast] = useState("dim");
 
   // will connect to aws or default to loalhost
-  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000";
+  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 
   // fetch user's business
   useEffect(() => {
@@ -72,6 +79,15 @@ function Business() {
         });
         if (res.data.length > 0) {
           const biz = res.data[0];
+
+          // fetch images from s3
+          const arrayOfPhotoObjects = await listObjects(biz.id);
+          const result = arrayOfPhotoObjects
+            // map to pull keys only
+            .map((obj) => obj.Key);
+          biz.images = result;
+          setImages(result);
+
           setDisplayInputs(false);
           setDisplayBizPage(true);
           setUserBusiness(biz);
@@ -150,7 +166,7 @@ function Business() {
 
       // if user business does not exist, send post request
       else if (!userBusiness) {
-        console.log("posting")
+        console.log("posting");
         res = await axios.post(`${baseUrl}/api/businesses/`, {
           email: user.attributes.email,
           name: businessName,
@@ -166,7 +182,7 @@ function Business() {
         console.log("finish posting", res.data[0]);
         setSubmittedForm(true);
       }
-      
+
       setUserBusiness(res.data[0]);
       setBusinessName(res.data[0].name);
       setAddressStreet(res.data[0].address_street);
@@ -208,8 +224,52 @@ function Business() {
     setDimUpcoming("dim");
   }
 
+  // initializing react router's useHistory hook
+  const history = useHistory();
+  function goBack() {
+    return history.goBack();
+  }
+
+  // create ref for input button
+  const hiddenFileInput = useRef(null);
+
+  // open file for image upload
+  function openFile() {
+    hiddenFileInput.current.click();
+  }
+
+  // upload image
+  async function uploadImage(event) {
+    event.persist();
+    // save new image
+    const saveImg = await saveObject(userBusiness.id, event.target.files[0]);
+    console.log("POSTED: ", saveImg);
+    
+    // add image to carousel
+    setImages(images.concat(`${userBusiness.id}/${event.target.files[0].name}`));
+    
+    console.log("IMAGES: ", images);
+    
+  }
+
   return (
     <div id="biz-profile-container">
+      <div className="back-icon" onClick={goBack}>
+        <FontAwesomeIcon
+          icon={faArrowCircleLeft}
+          size="lg"
+          color="darkslategrey"
+        />
+        <span className="back-text">Back</span>
+      </div>
+      <div className="corner-logo-container">
+        <img
+          className="corner-logo web"
+          alt="spacehop-logo"
+          src={cornerLogo}
+        ></img>
+      </div>
+
       {/* this is the header */}
       <h2
         style={{
@@ -243,11 +303,36 @@ function Business() {
             <div id="profile-info">
               {/* this is a generic user image, but we can also change to something else */}
               <div id="biz-img">
-                <FontAwesomeIcon
-                  icon={faUserCircle}
-                  size="8x"
-                  color="darkslategrey"
-                />
+                <div className="biz-img-preview">
+                  {images.length === 0 && (
+                    <FontAwesomeIcon
+                      icon={faImages}
+                      size="8x"
+                      color="darkslategrey"
+                    />
+                  )}
+                  {images.length > 0 && (
+                    <Image
+                      photos={images}
+                      bizId={userBusiness.id}
+                      arrows={true}
+                    />
+                  )}
+                </div>
+                <div className="upload-btn-container">
+                  <button className="upload-img-button" onClick={openFile}>
+                    Update Photos
+                  </button>
+                  <input
+                    name="business_photos"
+                    ref={hiddenFileInput}
+                    accept="image/*"
+                    type="file"
+                    id="biz-photo-file"
+                    onInput={uploadImage}
+                    hidden=""
+                  ></input>
+                </div>
               </div>
               <div id="biz-details">
                 {/* user has a profile, displayInputs is false */}
@@ -438,7 +523,7 @@ function Business() {
                             dateFormat="h:mm aa"
                           />
                         )}
-                        {(!displayInputs && userBusiness) && (
+                        {!displayInputs && userBusiness && (
                           <div>
                             {availability[day].startTime && (
                               <p className="timeslots">

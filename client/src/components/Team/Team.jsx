@@ -1,15 +1,40 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import "./Team.css";
+import cornerLogo from "../../images/spacehop-name.png";
 import nori from "../../images/nori.png";
 import miku from "../../images/miku.png";
 import tanner from "../../images/tanner.png";
 import yusuke from "../../images/yusuke.png";
 import cat from "../../images/cat.png";
 import hopper from "../../images/hopper.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function Team() {
+  // initializing react router's useHistory hook
+  const history = useHistory();
+  function goBack() {
+    return history.goBack();
+  }
+
   return (
     <div id="team-container">
+      <div className="back-icon" onClick={goBack}>
+        <FontAwesomeIcon
+          icon={faArrowCircleLeft}
+          size="lg"
+          color="darkslategrey"
+        />
+        <span className="back-text">Back</span>
+      </div>
+      <div className="corner-logo-container">
+        <img
+          className="corner-logo web"
+          alt="spacehop-logo"
+          src={cornerLogo}
+        ></img>
+      </div>
       <header>
         <h1>meet the team</h1>
       </header>
