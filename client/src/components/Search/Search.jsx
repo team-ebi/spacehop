@@ -50,9 +50,9 @@ export default function Search() {
   const { endTime, setEndTime } = useContext(EndTimeContext);
   const { setBusinesses } = useContext(BusinessContext);
   const { user } = useContext(UserContext);
-
   //change backend server target
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
+
 
   //variable to access routes history
   const history = useHistory();
@@ -90,12 +90,17 @@ export default function Search() {
     const selectedStartTime = new Date(startTime).getHours();
 
     // parse time from selected start time
-    const selectedEndtime = new Date(endTime).getHours();
+    const selectedEndTime = new Date(endTime).getHours();
+  
 
     // set data to axios.get(http://) then get filtered data
+    // const res = await axios.get(
+    //   `${baseUrl}/api/availability/?date=${selectedDate}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`
+    // );
     const res = await axios.get(
-      `${baseUrl}/api/availability/?date=${selectedDate}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`
+      `${baseUrl}/api/availability/?date=${selectedDate}&address_city=${selectedLocation}&start_hour=${selectedStartTime}&end_hour=${selectedEndTime}`
     );
+
 
     for (const biz of res.data) {
       const arrayOfPhotoObjects = await listObjects(biz.id)

@@ -109,10 +109,10 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
   return knex.schema
+    .dropTable("messages")
     .dropTable("ratings")
     .dropTable("availability")
     .dropTable("reservations")
     .dropTable("businesses")
     .dropTable("users")
-    .dropTable("messages")
 };
