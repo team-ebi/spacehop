@@ -24,15 +24,24 @@ jobs:
           path: server
       - store_test_results:
           path: server/test-results
+      - store_artifacts:
+          path: test-results
+
       - run:
           name: Install yarn dependencies(frontend)
           command: yarn install --ignore-engines
           path: client
       - run:
           name: Test frontend
-          command: yarn run test:ci
+          command: yarn run test
           path: client
+          environment:
+            JUNIT_REPORT_PATH: ./junit/
+            JUNIT_REPORT_NAME: test-results.xml
+            DISABLE_SOURCEMAP: true
+            NO_PARALLEL: true
+          when: always
       - store_test_results:
-          path: client/test-results
+          path: client/junit
       - store_artifacts:
-          path: test-results
+          path: client/junit

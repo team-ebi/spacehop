@@ -43,7 +43,6 @@
     "start": "react-scripts start --env production",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test:ci": "mkdir -p test-results && react-scripts test --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/file.xml",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
