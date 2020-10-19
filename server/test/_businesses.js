@@ -24,7 +24,7 @@ const config = {
 
 const server = setupServer();
 
-describe("firstendpoint", () => {
+describe("businesses", () => {
   let request;
   const connection = require('knex')(config);
 

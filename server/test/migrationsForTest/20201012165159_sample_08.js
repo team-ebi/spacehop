@@ -50,7 +50,7 @@ exports.up = function (knex) {
                     table.increments("id");
                     table.date("date");
                     table.integer("price");
-                    table.date("created_at");
+                    table.date('created_at').notNullable().defaultTo(knex.fn.now());
                     table.integer("business_id").unsigned().notNullable();
                     table.integer("user_id").unsigned().notNullable();
 
