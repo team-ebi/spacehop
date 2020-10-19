@@ -114,4 +114,5 @@ exports.down = function (knex) {
     .dropTable("reservations")
     .dropTable("businesses")
     .dropTable("users")
+    .dropTable("messages")
 };
