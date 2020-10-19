@@ -42,6 +42,6 @@ jobs:
             NO_PARALLEL: true
           when: always
       - store_test_results:
-          path: client/junit
+          path: junit
       - store_artifacts:
-          path: client/junit
+          path: junit
