@@ -18,6 +18,7 @@ import DatePicker from "react-datepicker";
 import logo from "../../images/logo.png";
 import Rating from "@material-ui/lab/Rating";
 
+
 require("dotenv").config();
 
 export default function BizCard({ props }) {
@@ -42,6 +43,9 @@ export default function BizCard({ props }) {
     "pk_test_51HU0G2CjwFEQ1pgcvOchnwo0Gsb2seN5a3xGz8Q2iCvlVUjHkSCV7UZHy3NfeobxNNMeGwmiosi3UBxjbKcSjGZ000hENfQW0F"
   );
 
+  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000";
+  const frontUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+
   // will not run if user hasn't selected date or date is in the past
   // if user is not logged in, login page will be displayed
   // handles stripe checkout and redirects to checkout page
@@ -63,20 +67,21 @@ export default function BizCard({ props }) {
       return;
     }
     try {
-      const stripe = await stripePromise;
-      const { error } = await stripe
-        .redirectToCheckout({
-          lineItems: [
-            {
-              price: biz.stripe_price_id,
-              quantity: 1,
-            },
-          ],
-          mode: "payment",
-          successUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
-          cancelUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
+      stripePromise
+        .then((stripe) => {
+          stripe.redirectToCheckout({
+            lineItems: [
+              {
+                price: biz.stripe_price_id,
+                quantity: 1,
+              },
+            ],
+            mode: "payment",
+            successUrl: `${frontUrl}/profile`,
+            cancelUrl: `${frontUrl}`,
+          });
         })
-        .then(() => {
+        .then((result) => {
           reservationHandler();
         });
     } catch {
@@ -84,10 +89,8 @@ export default function BizCard({ props }) {
     }
   }
 
-  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000"
-
   useEffect(() => {
-    async function getRating(){
+    async function getRating() {
       let res = await axios.get(`${baseUrl}/api/ratings/${biz.business_id}`);
       setUserReviews(res.data);
     }
@@ -96,12 +99,16 @@ export default function BizCard({ props }) {
 
   //post reservation to database
   async function reservationHandler() {
+    const start_at= bookingStartTime.getHours();
+    const end_at=bookingEndTime.getHours()
     await axios
       .post(`${baseUrl}/api/reservations/`, {
         email: user.attributes.email,
         date: bookingDate,
-        price: biz.price, 
+        price: biz.price,
         business_id: biz.id,
+        start_at: start_at,
+        end_at: end_at,
       })
       .catch(function (error) {
         console.log(error);
@@ -119,7 +126,7 @@ export default function BizCard({ props }) {
           <div id="image-cell">
             <img
               id="bizcard-image"
-              alt='izakaya'
+              alt="izakaya"
               src="https://www.japan-guide.com/g9/2005_01b.jpg"
             />
           </div>

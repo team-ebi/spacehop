@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
       email,
     });
 
-    const date = req.body.date;
+    const date = req.body.date.substr(0,10);
     const price = req.body.price;
     const start_at = req.body.start_at;
     const end_at = req.body.end_at;
