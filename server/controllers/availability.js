@@ -7,10 +7,20 @@ router.get("/test", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  const day = req.query.day;
+  // const day = req.query.day;
   const address_city = req.query.address_city;
   const start_hour = req.query.start_hour;
   const end_hour = req.query.end_hour;
+
+  const date = new Date(req.query.date);
+
+  //get day as number(0-6)
+  const dayOfNum = date.getDay();
+
+  const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Tursday", "Friday", "Saturday"]
+
+  //convert number to string
+  const day = dayArray[dayOfNum];
 
   // Get all availability
   const availability = await db
@@ -24,8 +34,44 @@ router.get("/", async (req, res) => {
     .where("start_hour", "<=", start_hour)
     .andWhere("end_hour", ">=", end_hour);
 
+
+  let filteredAvailability = []
+
+  for (let elm of availability) {
+    // console.log(elm);
+    const id = Number(elm.id);
+    const start_hour = Number(elm.start_hour);
+    const end_hour = Number(elm.end_hour);
+    const capacity = Number(elm.capacity);
+    let flag = false;
+
+    //search each hour's left seats
+    for (let i = start_hour; i < end_hour; i++) {
+      const reservationCount = await db
+        .count({ count: '*' })
+        .from("reservations")
+        .where({
+          "date": date,
+          "business_id": id,
+        })
+        .where("start_at", "<=", i)
+        .andWhere("end_at", ">=", i + 1);
+        
+      //Not appear in list if full.
+      if (Number(reservationCount[0].count) === capacity) {
+        flag = true;
+        break;
+      }
+    }
+
+    //appear in list if not full all time.
+    if (!flag) {
+      filteredAvailability.push(elm)
+    }
+  }
+
   // Calculate average point for each business in array
-  for (const business of availability) {
+  for (const business of filteredAvailability) {
     const avgRating = await db
       .avg("point")
       .from("ratings")
@@ -34,7 +80,7 @@ router.get("/", async (req, res) => {
     business["avg"] = Number(avgRating[0].avg);
   }
 
-  res.send(availability);
+  res.send(filteredAvailability);
 });
 
 router.get("/data", async (req, res) => {

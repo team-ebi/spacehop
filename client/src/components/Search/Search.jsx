@@ -69,7 +69,7 @@ export default function Search() {
 
     // set data to axios.get(http://) then get filtered data
     const res = await axios.get(
-      `${baseUrl}/api/availability/?day=${selectedDay}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`
+      `${baseUrl}/api/availability/?date=${selectedDate}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`
     );
 
     // set businesses state
