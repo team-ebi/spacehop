@@ -103,7 +103,11 @@ export default function Inbox() {
       >
         Inbox
       </h2>
-
+      {displayMobileMsg && (
+        <div id="back-inbox-container">
+          <button className="back-to-inbox mobile-inbox" onClick={() => setDisplayMobileMsg(false)}>Back to Inbox</button>
+        </div>
+      )}
       {/* this is the  main section with both inbox and selected message sections */}
       <main id="main-inbox">
         {/* this is the main inbox section that lists out all messages */}

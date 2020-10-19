@@ -189,7 +189,7 @@
       padding: 2px;
     }
     .message-body-container {
-      height: 43%;
+      height: 42%;
       width: 94%;
     }
     .msg-input-area {
@@ -197,5 +197,22 @@
     }
     #send-message-input {
       height: 40px;
+      margin-bottom: 5px;
+    }
+    .back-to-inbox {
+      width: 100px;
+      border: none;
+      background-color: #73b930;
+      border-radius: 10px;
+      margin-right: 5px;
+      cursor: pointer;
+      text-align: center;
+      height: 20px;
+      box-shadow: 0 4px 8px lightgrey;
+    }
+    #back-inbox-container {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
     }
 }
