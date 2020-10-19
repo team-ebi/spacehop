@@ -12,7 +12,7 @@ function Registration() {
   //state of email
   const [email, setEmail] = useState("");
 
-  const baseUrl = `${process.env.BACKEND_URL} || "http://localhost:4000"`
+  const baseUrl = `${process.env.REACT_APP_BACKEND_URL} || "http://localhost:4000"`
 
   //get first name by onchange
   function getFirstName(e) {

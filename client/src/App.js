@@ -13,9 +13,12 @@ import Team from "./components/Team/Team";
 import Business from "./components/Business/Business";
 import BizCard from "./components/BizCard/BizCard";
 import Success from "./components/Success/Success";
+import Inbox from "./components/Inbox/Inbox";
+import Messages from "./components/Messages/Messages";
 import { onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Auth } from "aws-amplify";
 import axios from "axios";
+require("dotenv").config();
 
 export default function App() {
   const [businesses, setBusinesses] = useState(null);
@@ -31,26 +34,26 @@ export default function App() {
     });
   }, [authState, user]);
 
-  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000"
+  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 
   useEffect(() => {
     async function checkDatabaseForUser() {
       if (user && user.attributes) {
         const email = user.attributes.email;
-        const userExists = await axios.get(`${baseUrl}/api/users/${email}`)
+        const userExists = await axios.get(`${baseUrl}/api/users/${email}`);
         if (userExists.length === 0) {
           await axios.post(`${baseUrl}/api/users/`, {
             first_name: user.attributes.given_name,
             last_name: user.attributes.family_name,
             email: email,
             phone: user.attributes.phone_number,
-          })
-          console.log("posted new user to db")
+          });
+          console.log("posted new user to db");
         }
       }
-    };
+    }
     checkDatabaseForUser();
-  }, [user])
+  }, [user]);
 
   // fetches current user at initial render
   // will remember last login
@@ -79,6 +82,8 @@ export default function App() {
                 <Route path="/about" exact component={About} />
                 <Route path="/team" exact component={Team} />
                 <Route path="/business" exact component={Business} />
+                <Route path="/inbox" exact component={Inbox} />
+                <Route path="/inbox/message" exact component={Messages} />
                 <Route path="/list" exact component={List} />
                 <Route
                   path="/booking/:name"

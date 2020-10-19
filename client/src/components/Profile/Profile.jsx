@@ -15,7 +15,8 @@ function Profile() {
   const [displayInputs, setDisplayInputs] = useState(false);
 
   // will connect to aws or default to loalhost
-  const baseUrl = process.env.BACKEND_URL || "http://localhost:4000";
+  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
+  
 
   useEffect(() => {
     async function fetchUser() {
