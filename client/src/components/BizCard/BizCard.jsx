@@ -110,7 +110,6 @@ export default function BizCard({ props }) {
     }
   }
 
-
   useEffect(() => {
     const ac = new AbortController();
     async function getRating() {

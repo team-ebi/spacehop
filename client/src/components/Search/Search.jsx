@@ -91,18 +91,14 @@ export default function Search() {
     const selectedEndtime = new Date(endTime).getHours();
 
     // set data to axios.get(http://) then get filtered data
-    let res = await axios.get(
-      `${baseUrl}/api/availability/?day=${selectedDay}&address_city=${selectedLocation}&start_hour=${selectedStartTime}&end_hour=${selectedEndtime}`
+    const res = await axios.get(
+      `${baseUrl}/api/availability/?date=${selectedDate}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`
     );
 
     for (const biz of res.data) {
       const arrayOfPhotoObjects = await listObjects(biz.id)
       .then(result => result.filter(obj => obj.Key[obj.Key.length - 1] !== "/").map(obj => obj.Key))
       .then(result => biz.images = result);
-      // const result = arrayOfPhotoObjects
-        // map to pull keys only
-        // .map(obj => obj.Key);
-      // biz.images = result;
     }
   
     // set businesses state

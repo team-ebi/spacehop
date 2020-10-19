@@ -21,7 +21,7 @@ function Profile() {
 
   // will connect to aws or default to loalhost
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
-
+  
   useEffect(() => {
     async function fetchUser() {
       if (user) {
