@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./Messages.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import moment from 'moment'
+import { UserContext } from "../useContext/UserContext";
 
-export default function Messages({ selectedMessage, setSelectedMessage }) {
+
+export default function Messages({ selectedMessage, setSelectedMessage, messages, setMessages }) {
+ const { user } = useContext(UserContext);
   return (
     <>
       {/* <h1 id="selected-message-header">Message</h1> */}
@@ -19,7 +22,16 @@ export default function Messages({ selectedMessage, setSelectedMessage }) {
         </div>
         <form onSubmit={(e)=>{
           e.preventDefault()
-          console.log(e.target.message_input.value)
+          let newMsg = [
+            {
+              sender: user.attributes.email,
+              message: e.target.message_input.value
+            }
+          ] 
+          console.log(messages)
+          console.log(newMsg)
+          setMessages(...messages, newMsg)
+          console.log("new messages, " + messages)
         }} className="submit-container">
           <input name="message_input" id="send-message-input" type="text" />
           <button type="submit">
