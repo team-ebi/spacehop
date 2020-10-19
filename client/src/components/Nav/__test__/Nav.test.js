@@ -16,7 +16,7 @@ function TestWrapper({ children, userContext }) {
   }
 
   describe("List", () => {
-    it("should render a generiic welcome message if no user is signed in", () => {
+    xit("should render a generiic welcome message if no user is signed in", () => {
       const { getByText } = render(
         <TestWrapper userContext={{}}>
           <Nav />
