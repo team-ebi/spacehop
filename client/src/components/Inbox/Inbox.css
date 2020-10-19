@@ -6,7 +6,6 @@
   right: 0;
   bottom: 0;
   overflow: scroll;
-  position: absolute;
 }
 #main-inbox {
   width: 100%;
@@ -131,7 +130,6 @@
 }
 @media (max-width: 700px) {
   #inbox-container {
-    position: absolute;
     overflow: hidden;
     max-height: 100vh;
     padding-top: 5px;
@@ -152,6 +150,8 @@
   }
   #inbox {
     flex-flow: row wrap;
+    bottom: 65px;
+    overflow-y: scroll;
   }
   .mobile-inbox {
     display: flex;
@@ -161,6 +161,7 @@
     }
     #message-preview-container {
       width: 100%;
+      overflow-scroll:
     }
     .inbox-subheader {
       text-align: left;
@@ -179,6 +180,7 @@
       display: absolute;
       bottom: 65px;
       width: 90%;
+      height: 90%;
     }
     #message-box {
       margin-top: -20px;
@@ -214,5 +216,12 @@
       width: 100%;
       display: flex;
       justify-content: flex-end;
+      z-index: 120;
+    }
+    .inbox-header {
+      width: 150px;
+    }
+    .biz-name-message {
+      width: 150px;
     }
 }

@@ -4,36 +4,35 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 import { UserContext } from "../useContext/UserContext";
+import axios from "axios";
 
-export default function Messages({ props, selectedThread }) {
+export default function Messages({ selectedThread }) {
   const { user } = useContext(UserContext);
-  const thread = props;
-  console.log(props)
 
   return (
     <>
       {/* <h1 id="selected-message-header">Message</h1> */}
       <div id="message-box">
         <div className="inbox-header">
-          <p className="biz-name-message"><span className="to">To: </span> {selectedThread.biz}</p>
+          <p className="biz-name-message"><span className="to">To: </span>Business Name</p>
         </div>
         <hr className="divider" />
 
         <div className="message-body-container">
           {selectedThread.message.map((msg) => {
-            if (msg.user_messages) {
+            if (msg.user_message) {
               return (
                 <div className="msg right">
                   <div className="msg-name">You</div>
-                  <span className="recipient">{msg.user_messages}</span>
+                  <span className="recipient">{msg.user_message}</span>
                 </div>
               );
             } else {
               return (
                 <div className="msg left">
-                  <div className="msg-name">{selectedThread.biz}</div>
+                  <div className="msg-name">Business Name</div>
                   <span className="other-messenger">
-                    {msg.business_messages}
+                    {msg.business_message}
                   </span>
                 </div>
               );

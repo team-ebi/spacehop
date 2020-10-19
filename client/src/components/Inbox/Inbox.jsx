@@ -9,68 +9,38 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import cornerLogo from "../../images/spacehop-name.png";
 import Messages from "../Messages/Messages";
+import axios from "axios";
 import "./Inbox.css";
 
 export default function Inbox() {
   const history = useHistory();
   const { user } = useContext(UserContext);
   const [displayMobileMsg, setDisplayMobileMsg] = useState(false);
+  const [selectedThread, setSelectedThread] = useState(null);
+  const [allMessages, setAllMessages] = useState([]);
 
-  const messages = [
-    { user_messages: "Hello, do you have wi-fi at the izakaya?" },
-    { business_messages: "Yes, we have unlimited wi-fi" },
-    { user_messages: "Sounds good! Thank you for responding." },
-    {
-      user_messages:
-        "I am sorry, I have one more question - Do you have many electrical outlets at the izakaya?",
-    },
-    {
-      business_messages:
-        "No problem! Yes we have many easily accessible outlets here and also have extension cords.",
-    },
-    { user_messages: "Oh, okay thank you. I will see you soon!" },
-    {
-      user_messages:
-        "Hello, I am sorry to message you but I think I forgot my laptop charger at your izakaya. Has anyone seen it?",
-    },
-    {
-      business_messages:
-        "Oh no, we are sorry to hear that! We will check if it is here now! We will get back to you soon.",
-    },
-    { user_messages: "Thank you so much." },
-    {
-      business_messages:
-        "We have found your laptop charger! Would you like us to send it to you?",
-    },
-    {
-      user_messages:
-        "Oh great! Thank you so much. I can come pick it up later today. Thank you again.",
-    },
-    { business_messages: "Okay, sounds great. See you later." },
-  ];
+  // will connect to aws or default to localhost
+  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 
-  const [allMessages, setAllMessages] = useState([
-    { user: 1, biz: "Ebi-Chan", message: messages },
-    { user: 1, biz: "Macchan", message: messages },
-    { user: 1, biz: "Maku", message: messages },
-    { user: 1, biz: "Ebi-Chan2", message: messages },
-    { user: 1, biz: "Macchan2", message: messages },
-    { user: 1, biz: "Maku2", message: messages },
-    { user: 1, biz: "Ebi-Chan3", message: messages },
-    { user: 1, biz: "Macchan3", message: messages },
-    { user: 1, biz: "Maku3", message: messages },
-  ]);
-  const [selectedThread, setSelectedThread] = useState({
-    user: 1,
-    biz: "Ebi-Chan",
-    message: messages,
-  });
-  const [test, setTest] = useState(null);
 
-  // fetch all of user's messages
-  useEffect(() => {}, []);
+  useEffect(() => {
 
-  function openMessage() {}
+    async function fetchMessage() {
+      if (user) {
+        let req = axios.get(`${baseUrl}/api/messages/${user.attributes.email}`);
+        let res = await req;
+        let data = res.data;
+        let result = data.map(thread => {
+          const parsedMsg = JSON.parse(thread.message);
+          thread.message = parsedMsg;
+          return thread;
+        })
+        setAllMessages(result)
+      }
+    }
+    fetchMessage();
+  }, [user]);
+
 
   function goBack() {
     return history.goBack();
@@ -140,14 +110,15 @@ export default function Inbox() {
                     >
                       <option>Select a recipient.</option>
                       {allMessages.map((thread) => (
-                        <option value={thread}>{thread.biz}</option>
+                        <option value={thread}>{thread.business_id}</option>
                       ))}
                     </select>
                   </div>
                 </div>
 
                 {/* map over all message to display in the inbox list */}
-                {allMessages.map((thread, index) => (
+                {allMessages.map((thread, index) => 
+                   (
                   <div
                     className="single-preview"
                     onClick={() => {
@@ -164,11 +135,11 @@ export default function Inbox() {
                       />
                     </div>
                     <div className="message-preview">
-                      <div className="biz-name-messenger">{thread.biz}</div>
+                      <div className="biz-name-messenger">Business Name Here</div>
                       <div className="preview">
                         {thread.message[0].business_message
-                          ? thread.message[0].business_messages
-                          : thread.message[0].user_messages}
+                          ? thread.message[0].business_message
+                          : thread.message[0].user_message}
                       </div>
                     </div>
                   </div>
