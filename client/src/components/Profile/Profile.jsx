@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { listObjects, getSingleObject, saveObject, deleteObjects } from "../../utils/index";
+import {
+  listObjects,
+  getSingleObject,
+  saveObject,
+  deleteObjects,
+} from "../../utils/index";
 import { UserContext } from "../useContext/UserContext";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,6 +16,7 @@ import FutureBookings from "../BookingsAll/BookingsAll";
 import cornerLogo from "../../images/spacehop-name.png";
 import "./Profile.css";
 import axios from "axios";
+import LoadingSign from "../LoadingSign/LoadingSign";
 
 function Profile() {
   const { user } = useContext(UserContext);
@@ -23,7 +29,10 @@ function Profile() {
 
   // will connect to aws or default to loalhost
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
-  
+
+  //handle loading sign
+  const [loadingImg, setLoadingImg] = useState(false);
+
   useEffect(() => {
     async function fetchUser() {
       if (user) {
@@ -37,9 +46,11 @@ function Profile() {
 
         // fetch images from s3
         const arrayOfPhotoObjects = await listObjects(data[0].email)
-        .then(result => result.map(elem => getSingleObject(email, elem.Key)))
-        .then(result => Promise.all(result));
-        setImage(arrayOfPhotoObjects);
+          .then((result) =>
+            result.map((elem) => getSingleObject(email, elem.Key))
+          )
+          .then((result) => Promise.all(result));
+        setImage(arrayOfPhotoObjects[0]);
       }
     }
     fetchUser();
@@ -62,18 +73,30 @@ function Profile() {
   async function uploadImage(event) {
     event.persist();
     try {
-      const isList = await listObjects(email);
-      await isList.map(elem => getSingleObject(email, elem.Key))
-      .then(result => Promise.all(result));
+      //set loading sign
+      setLoadingImg(true);
+
+      const isList = await listObjects(email)
+      await isList.map(elem => ({ "Key": elem.Key }))
+      .then(result => deleteObjects(email, result));
+
     
       await saveObject(email, event.target.files[0]);
-      const newImg = await getSingleObject(email, `${email}/${event.target.files[0].name}`);
-  
+      const newImg = await getSingleObject(
+        email,
+        `${email}/${event.target.files[0].name}`
+      );
+
       setImage(newImg);
     } catch {
       await saveObject(email, event.target.files[0]);
-      const newImg = await getSingleObject(email, `${email}/${event.target.files[0].name}`);
+      const newImg = await getSingleObject(
+        email,
+        `${email}/${event.target.files[0].name}`
+      );
       setImage(newImg);
+      //close loading sign
+      setLoadingImg(false);
     }
   }
 
@@ -84,7 +107,7 @@ function Profile() {
   function openFile() {
     hiddenFileInput.current.click();
   }
-  
+
   // initializing react router's useHistory hook
   const history = useHistory();
   function goBack() {
@@ -121,33 +144,35 @@ function Profile() {
         <main id="main">
           <div id="profile-info">
             <div id="profile-img">
-              {/* <img src={`data:image;base64,${image}`} /> */}
-              {
-                image.length === 0
-                ? <FontAwesomeIcon
+              <div className="user-img-preview">
+                {image.length === 0 && (
+                  <FontAwesomeIcon
                     icon={faUserCircle}
                     size="8x"
                     color="darkslategrey"
                   />
-                : <img
-                    src={`data:image;base64,${image}`}
-                    id="img-circle"
-                   />
-              }
-            <div className="upload-btn-container">
-              <button className="upload-img-button" onClick={openFile}>
-                Upload Photo
-              </button>
-              <input
-                name="user_photo"
-                ref={hiddenFileInput}
-                accept="image/*"
-                type="file"
-                id="user-photo-file"
-                onInput={uploadImage}
-                hidden=""
-              ></input>
-            </div>
+                )}
+                {image.length > 0 && (
+                  <img src={`data:image;base64,${image}`} id="img-circle" />
+                )}
+              </div>
+              <div className="upload-btn-container">
+                <button className="upload-img-button" onClick={openFile}>
+                  Upload Photo
+                </button>
+                <input
+                  name="user_photo"
+                  ref={hiddenFileInput}
+                  accept="image/*"
+                  type="file"
+                  id="user-photo-file"
+                  onInput={uploadImage}
+                  hidden=""
+                ></input>
+              </div>
+              {loadingImg && (<div className="loadingSign" style = {{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+              <LoadingSign />
+            </div>)}
             </div>
             <div id="profile-details">
               <div className="detail">

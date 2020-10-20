@@ -115,7 +115,7 @@ export default function List() {
                     size="lg"
                     color="darkslategrey"
                   />
-                  {Number(biz.price).toLocaleString()}
+                  {Number(biz.price).toLocaleString() + "/ hour"}
                 </div>
               </div>
             </div>
