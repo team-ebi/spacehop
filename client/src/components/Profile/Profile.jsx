@@ -19,7 +19,7 @@ function Profile() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [displayInputs, setDisplayInputs] = useState(false);
-  const [image, setImage] = useState([]);
+  const [image, setImage] = useState(null);
 
   // will connect to aws or default to loalhost
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
@@ -67,10 +67,9 @@ function Profile() {
     .then(result => deleteObjects(result));
   
     const saveImg = await saveObject(email, event.target.files[0]);
-    console.log(saveImg);
+    const newImg = await getSingleObject(email, `${email}/${event.target.files[0].name}`);
 
-    // need to update state
-    setImage(`${email}/${event.target.files[0].name}`);
+    setImage(newImg);
   }
 
   // create ref for input button
