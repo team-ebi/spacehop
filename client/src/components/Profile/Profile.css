@@ -31,6 +31,9 @@
     margin-bottom: 20px;
     margin-top: 10px;
 }
+#img-circle {
+    border-radius: 50%;
+}
 .attribute {
     margin-left: 15px;
     margin-bottom: 15px;
