@@ -55,6 +55,9 @@ h2 {
   margin-top: -5px;
   overflow: hidden;
 }
+.menu-item:last-child {
+  border-bottom: none;
+}
 .menu-item {
   width: 100%;
   text-align: center;
@@ -71,10 +74,8 @@ h2 {
   max-height: 30px;
 }
 .menu-item:hover {
-  background-color: lightgrey;
-}
-#login {
-  font-weight: 700;
+  border-top: solid #80CC37;
+  outline: none;
 }
 .auth-window {
   display: flex;
@@ -104,6 +105,9 @@ h2 {
 #mobile-welcome {
   display: none;
 }
+#mobile-menu {
+  display: none;
+}
 @media (max-width: 700px) {
   nav {
     top: auto;
@@ -111,9 +115,11 @@ h2 {
     position: fixed;
     z-index: 100;
     width: 100%;
+    height: 65px;
   }
   #navbar {
     justify-content: space-evenly;
+    height: 65px;
   }
   #welcome {
     display: none;
@@ -124,18 +130,26 @@ h2 {
   #mobile-bar {
     display: flex;
     flex-flow: row nowrap;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
   }
   .menu-item {
-    display: inline-block;
-    white-space: nowrap;
     border: none;
-    border-right: solid grey;
-    border-width: 1px;
     text-align: center;
     padding: 10px;
+    width: 90px;
+    height: 100%;
+    max-height: none;
   }
   .menu-item:last-child {
     border-right: none;
+  }
+  .nav-label {
+    width: 100%;
+    font-size: 12px;
+    line-height: 14px;
+    padding-top: 8px;
   }
   #logout-item {
     width: 50px;
@@ -159,5 +173,45 @@ h2 {
     align-self: center;
     margin-left: 0;
     height: 450px;
+  }
+  #home-button {
+    display: none;
+  }
+  #mobile-menu {
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-start;
+    width: 50vw;
+    background-color: #fff;
+    position: fixed;
+    right: 0;
+    bottom: 75px;
+    transition: transform .3s ease-in-out;
+    overflow: scroll;
+    z-index: 95;
+    border-left: solid lightgrey;
+    border-width: 1px;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px grey;
+  } 
+  #mobile-menu.hideMenu {
+    transform: translate3d(100vw, 0, 0);
+  }
+   
+  #mobile-menu.show {
+    transform: translate3d(0vw, 0, 0);
+    overflow: hidden;
+  }
+  .mobile-menu-item {
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    border: none;
+    text-align: left;
+    background-color: transparent;
+    font-family: "Roboto", sans-serif;
+  }
+  .mobile-menu-text {
+    margin-left: 10px;
   }
 }
