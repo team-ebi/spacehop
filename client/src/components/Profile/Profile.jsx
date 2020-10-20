@@ -76,11 +76,11 @@ function Profile() {
       //set loading sign
       setLoadingImg(true);
 
-      const isList = await listObjects(email);
-      await isList
-        .map((elem) => getSingleObject(email, elem.Key))
-        .then((result) => Promise.all(result));
+      const isList = await listObjects(email)
+      await isList.map(elem => ({ "Key": elem.Key }))
+      .then(result => deleteObjects(email, result));
 
+    
       await saveObject(email, event.target.files[0]);
       const newImg = await getSingleObject(
         email,
@@ -145,7 +145,6 @@ function Profile() {
           <div id="profile-info">
             <div id="profile-img">
               <div className="user-img-preview">
-                {/* <img src={`data:image;base64,${image}`} /> */}
                 {image.length === 0 && (
                   <FontAwesomeIcon
                     icon={faUserCircle}
