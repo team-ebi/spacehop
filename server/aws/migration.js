@@ -2,6 +2,7 @@ require("dotenv").config();
 const knex = require("./config.js");
 
 knex.schema
+.dropTableIfExists("messages")
 .dropTableIfExists("ratings")
 .dropTableIfExists("availability")
 .dropTableIfExists("reservations")
@@ -53,8 +54,10 @@ knex.schema
     .createTable("reservations", (table) => {
       table.increments("id");
       table.date("date");
+      table.integer("start_at");
+      table.integer("end_at");
       table.integer("price");
-      table.date("created_at");
+      table.date("created_at").defaultTo(knex.fn.now());
       table.integer("business_id").unsigned().notNullable();
       table.integer("user_id").unsigned().notNullable();
 
@@ -103,7 +106,8 @@ knex.schema
       .inTable("users")
       .onDelete("CASCADE");
 
-      table.foreign("business_id")
+      table
+      .foreign("business_id")
       .references("id")
       .inTable("businesses")
       .onDelete("CASCADE");
