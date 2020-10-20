@@ -12,7 +12,7 @@ export default function Messages({ selectedThread }) {
       {/* <h1 id="selected-message-header">Message</h1> */}
       <div id="message-box">
         <div className="inbox-header">
-          <p className="biz-name-message"><span className="to">To: </span>Business Name</p>
+          <p className="biz-name-message"><span className="to">To: </span>{selectedThread.business_name}</p>
         </div>
         <hr className="divider" />
 
@@ -28,7 +28,7 @@ export default function Messages({ selectedThread }) {
             } else {
               return (
                 <div className="msg left">
-                  <div className="msg-name">Business Name</div>
+                  <div className="msg-name">{selectedThread.business_name}</div>
                   <span className="other-messenger">
                     {msg.business_message}
                   </span>

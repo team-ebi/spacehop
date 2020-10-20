@@ -113,7 +113,7 @@ export default function Inbox() {
                   >
                     <option>Select a recipient.</option>
                     {allMessages.map((thread) => (
-                      <option value={thread}>{thread.business_id}</option>
+                      <option value={thread}>{thread.business_name}</option>
                     ))}
                   </select>
                 </div>
@@ -137,7 +137,7 @@ export default function Inbox() {
                     />
                   </div>
                   <div className="message-preview">
-                    <div className="biz-name-messenger">Business Name Here</div>
+                    <div className="biz-name-messenger">{thread.business_name}</div>
                     <div className="preview">
                       {thread.message[0].business_message
                         ? thread.message[0].business_message
@@ -178,7 +178,7 @@ export default function Inbox() {
                     >
                       <option>Select a recipient.</option>
                       {allMessages.map((thread) => (
-                        <option value={thread}>{thread.business_id}</option>
+                        <option value={thread}>{thread.business_name}</option>
                       ))}
                     </select>
                   </div>
@@ -203,7 +203,7 @@ export default function Inbox() {
                     </div>
                     <div className="message-preview">
                       <div className="biz-name-messenger">
-                        Business Name Here
+                        {thread.business_name}
                       </div>
                       <div className="preview">
                         {thread.message[0].business_message
@@ -236,8 +236,8 @@ export default function Inbox() {
                 >
                   <option>Select a recipient.</option>
                   {allMessages.map((thread) => (
-                    <option key={thread.business_id} value={thread}>
-                      {thread.business_id}
+                    <option key={thread.business_name} value={thread}>
+                      {thread.business_name}
                     </option>
                   ))}
                 </select>
