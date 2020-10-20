@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { listObjects, getSingleObject, saveObject } from "../../utils/index";
 import { UserContext } from "../useContext/UserContext";
 import { useHistory } from "react-router-dom";
@@ -58,6 +58,21 @@ function Profile() {
     setDisplayInputs(false);
   }
 
+  // upload image
+  async function uploadImage(event) {
+    event.persist();
+    const saveImg = await saveObject(email, event.target.files[0]);
+    setImage(`${email}/${event.target.files[0].name}`);
+  }
+
+  // create ref for input button
+  const hiddenFileInput = useRef(null);
+
+  // open file for image upload
+  function openFile() {
+    hiddenFileInput.current.click();
+  }
+  
   // initializing react router's useHistory hook
   const history = useHistory();
   function goBack() {
@@ -100,6 +115,20 @@ function Profile() {
                 size="8x"
                 color="darkslategrey"
               /> */}
+            <div className="upload-btn-container">
+              <button className="upload-img-button" onClick={openFile}>
+                Upload Photo
+              </button>
+              <input
+                name="user_photo"
+                ref={hiddenFileInput}
+                accept="image/*"
+                type="file"
+                id="user-photo-file"
+                onInput={uploadImage}
+                hidden=""
+              ></input>
+            </div>
             </div>
             <div id="profile-details">
               <div className="detail">
