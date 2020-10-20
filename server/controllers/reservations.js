@@ -25,29 +25,34 @@ router.post("/", async (req, res) => {
       id:business_id,
     });
 
-    const hourlyPrice=businessData[0].price
+    const hourlyPrice=Number(businessData[0].price)
 
     //set format of YYYY-MM-DD
     const date = req.body.date.substr(0,10);
-    const start_at = req.body.start_at;
-    const end_at = req.body.end_at;
+    const start_at = Number(req.body.start_at);
+    const end_at = Number(req.body.end_at);
 
-    //set total price
-    const price = Number(hourlyPrice)*(Number(end_at)-Number(start_at));
+    if(end_at<=start_at){
+      res.send("Incorrect start & end times!!!");
+    }else{
+      //set total price
+      const price = hourlyPrice*(end_at-start_at);
+  
+      // created_at is set as default to today so needless to define.
+      const user_id = user[0]["id"];
+  
+      const register = await db.select("*").table("reservations").insert({
+        date,
+        price,
+        business_id,
+        user_id,
+        start_at,
+        end_at
+      });
+  
+      res.send("New reservation created!");
+    }
 
-    // created_at is set as default to today so needless to define.
-    const user_id = user[0]["id"];
-
-    const register = await db.select("*").table("reservations").insert({
-      date,
-      price,
-      business_id,
-      user_id,
-      start_at,
-      end_at
-    });
-
-    res.send("New reservation created!");
   } catch {
     res.sendStatus(500);
   }
