@@ -20,6 +20,7 @@ router.post("/", async (req, res) => {
 
     const business_id = req.body.business_id;
 
+    //get business data and pick up hourly price
     const businessData = await db.select("price").table("businesses").where({
       id:business_id,
     });
@@ -33,7 +34,6 @@ router.post("/", async (req, res) => {
 
     //set total price
     const price = Number(hourlyPrice)*(Number(end_at)-Number(start_at));
-    console.log(price);
 
     // created_at is set as default to today so needless to define.
     const user_id = user[0]["id"];
