@@ -306,6 +306,7 @@ function Business() {
                 <div className="biz-img-preview">
                   {images.length === 0 && (
                     <FontAwesomeIcon
+                      className="default-biz-profile"
                       icon={faImages}
                       size="8x"
                       color="darkslategrey"

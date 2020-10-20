@@ -110,7 +110,7 @@ export default function Search() {
     // );
     const res = await axios.get(
 
-      `${baseUrl}/api/availability/?date=${dateToSend}&address_city=${selectedLocation}&start_hour=${selectedStartTime}&end_hour=${selectedEndtime}`
+      `${baseUrl}/api/availability/?date=${dateToSend}&address_city=${selectedLocation}&start_hour=${selectedStartTime}&end_hour=${selectedEndTime}`
 
     );
 
@@ -119,10 +119,6 @@ export default function Search() {
       const arrayOfPhotoObjects = await listObjects(biz.id)
       .then(result => result.filter(obj => obj.Key[obj.Key.length - 1] !== "/").map(obj => obj.Key))
       .then(result => biz.images = result);
-      // const result = arrayOfPhotoObjects
-        // map to pull keys only
-        // .map(obj => obj.Key);
-      // biz.images = result;
     }
   
     // set businesses state

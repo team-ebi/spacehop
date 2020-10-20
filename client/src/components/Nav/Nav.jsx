@@ -106,7 +106,7 @@ export default function Nav() {
   // will close menu window if it's open
   function messageHandler() {
     setDisplayMenu(false);
-    // return history.push("/messages");
+    return history.push("/inbox");
   }
 
   async function signoutHandler() {
