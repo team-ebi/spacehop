@@ -62,9 +62,14 @@ function Profile() {
   async function uploadImage(event) {
     event.persist();
     try {
-      const isList = await listObjects(email);
-      await isList.map(elem => getSingleObject(email, elem.Key))
-      .then(result => Promise.all(result));
+      // const isList = await listObjects(email);
+      // await isList.map(elem => getSingleObject(email, elem.Key))
+      // .then(result => Promise.all(result));
+
+      const isList = await listObjects(email)
+      await isList.map(elem => ({ "Key": elem.Key }))
+      .then(result => deleteObjects(email, result));
+
     
       await saveObject(email, event.target.files[0]);
       const newImg = await getSingleObject(email, `${email}/${event.target.files[0].name}`);
