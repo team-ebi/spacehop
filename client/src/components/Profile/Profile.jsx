@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { listObjects, getSingleObject, saveObject } from "../../utils/index";
+import { listObjects, getSingleObject, saveObject, deleteObjects } from "../../utils/index";
 import { UserContext } from "../useContext/UserContext";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -39,7 +39,7 @@ function Profile() {
         const arrayOfPhotoObjects = await listObjects(data[0].email)
         .then(result => result.map(elem => getSingleObject(email, elem.Key)))
         .then(result => Promise.all(result));
-        setImage(arrayOfPhotoObjects.slice(1));
+        setImage(arrayOfPhotoObjects);
       }
     }
     fetchUser();
@@ -61,7 +61,15 @@ function Profile() {
   // upload image
   async function uploadImage(event) {
     event.persist();
+
+    await listObjects(email)
+    .then(result => result.map(elem => ({ "Key": elem.Key }) ))
+    .then(result => deleteObjects(result));
+  
     const saveImg = await saveObject(email, event.target.files[0]);
+    console.log(saveImg);
+
+    // need to update state
     setImage(`${email}/${event.target.files[0].name}`);
   }
 
