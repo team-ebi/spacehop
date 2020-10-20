@@ -1,5 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import Auth from "../Auth/Auth";
+import Image from "../Image/Image";
 import "./BizCard.css";
 import "../Nav/Nav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,23 +12,44 @@ import {
   faYenSign,
   faMapPin,
   faUsers,
+  faArrowCircleLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { UserContext } from "../useContext/UserContext";
+import {
+  DateContext,
+  StartTimeContext,
+  EndTimeContext,
+} from "../useContext/Search";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import DatePicker from "react-datepicker";
-import logo from "../../images/logo.png";
 import Rating from "@material-ui/lab/Rating";
+import Map from "../Map/Map";
+import { createMuiTheme } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
+import { DatePicker, TimePicker } from "@material-ui/pickers";
+import cornerLogo from "../../images/spacehop-name.png";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#80cc37",
+    },
+    secondary: {
+      main: "#000",
+    },
+  },
+});
 
 require("dotenv").config();
 
 export default function BizCard({ props }) {
   const { user } = useContext(UserContext);
 
-  // state will be updated when user selects date and time for booking
-  const [bookingDate, setBookingDate] = useState(null);
-  const [bookingStartTime, setBookingStartTime] = useState(null);
-  const [bookingEndTime, setBookingEndTime] = useState(null);
+  // useContext will pull from previous search
+  //  will be updated if user selects new date and time for booking
+  const { date, setDate } = useContext(DateContext);
+  const { startTime, setStartTime } = useContext(StartTimeContext);
+  const { endTime, setEndTime } = useContext(EndTimeContext);
 
   // these are just to conditionally render elements
   const [displayLogin, setDisplayLogin] = useState(false);
@@ -36,7 +59,15 @@ export default function BizCard({ props }) {
 
   // props passed to router's useHistory
   const biz = props.location.state.state;
+  const mapProps = [];
+  mapProps.push(biz);
 
+<<<<<<< HEAD
+=======
+  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
+  const frontUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+
+>>>>>>> 706b347cecbf26cd0f5c461d11835fe8dfd36c03
   //publishable stripe API key
   const stripePromise = loadStripe(
     "pk_test_51HU0G2CjwFEQ1pgcvOchnwo0Gsb2seN5a3xGz8Q2iCvlVUjHkSCV7UZHy3NfeobxNNMeGwmiosi3UBxjbKcSjGZ000hENfQW0F"
@@ -46,14 +77,14 @@ export default function BizCard({ props }) {
   // if user is not logged in, login page will be displayed
   // handles stripe checkout and redirects to checkout page
   // will post new reservation to db
-  async function stripeCheckoutHandler() {
-    if (!bookingDate || !bookingStartTime || !bookingEndTime) {
+  function stripeCheckoutHandler() {
+    if (!date || !startTime || !endTime) {
       setPickDate(true);
       setPickFuture(false);
       return;
     }
     const today = new Date();
-    if (bookingDate < today) {
+    if (date < today) {
       setPickDate(false);
       setPickFuture(true);
       return;
@@ -63,20 +94,21 @@ export default function BizCard({ props }) {
       return;
     }
     try {
-      const stripe = await stripePromise;
-      const { error } = await stripe
-        .redirectToCheckout({
-          lineItems: [
-            {
-              price: biz.stripe_price_id,
-              quantity: 1,
-            },
-          ],
-          mode: "payment",
-          successUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
-          cancelUrl: "https://master.dlm7uq8ifxap1.amplifyapp.com/",
+      stripePromise
+        .then((stripe) => {
+          stripe.redirectToCheckout({
+            lineItems: [
+              {
+                price: biz.stripe_price_id,
+                quantity: 1,
+              },
+            ],
+            mode: "payment",
+            successUrl: `${frontUrl}/profile`,
+            cancelUrl: `${frontUrl}`,
+          });
         })
-        .then(() => {
+        .then((result) => {
           reservationHandler();
         });
     } catch {
@@ -84,117 +116,155 @@ export default function BizCard({ props }) {
     }
   }
 
-  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000"
-
   useEffect(() => {
-    async function getRating(){
+    const ac = new AbortController();
+    async function getRating() {
       let res = await axios.get(`${baseUrl}/api/ratings/${biz.business_id}`);
       setUserReviews(res.data);
+
+      return () => ac.abort(); // Abort fetch on unmount
     }
     getRating();
   }, [baseUrl, biz.business_id]);
 
   //post reservation to database
   async function reservationHandler() {
-    await axios
-      .post(`${baseUrl}/api/reservations/`, {
+    const start_at= new Date(startTime);
+    const start_at_send=start_at.getHours();
+    const end_at= new Date(endTime);
+    const end_at_send=end_at.getHours();
+    console.log("starting to post to res table");
+    try {
+      await axios.post(`${baseUrl}/api/reservations/`, {
         email: user.attributes.email,
-        date: bookingDate,
-        price: biz.price, 
+        date: date,
+        price: biz.price,
         business_id: biz.id,
-      })
-      .catch(function (error) {
-        console.log(error);
+        start_at: start_at_send,
+        end_at: end_at_send,
       });
+      console.log("finished posting to res table");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // initializing react router's useHistory hook
+  const history = useHistory();
+  function goBack() {
+    return history.goBack();
   }
 
   return (
     <div id="bizcard-container">
+      <div className="back-icon" onClick={goBack}>
+        <FontAwesomeIcon
+          icon={faArrowCircleLeft}
+          size="lg"
+          color="darkslategrey"
+        />
+        <span className="back-text">Back</span>
+      </div>
       <div className="corner-logo-container">
-        <img className="corner-logo" alt="spacehop-logo" src={logo}></img>
+        <img
+          className="corner-logo web"
+          alt="spacehop-logo"
+          src={cornerLogo}
+        ></img>
       </div>
       <div id="bizcard-location-container">
         {/* Elements helps load stripe */}
         <Elements stripe={stripePromise}>
           <div id="image-cell">
-            <img
-              id="bizcard-image"
-              alt='izakaya'
-              src="https://www.japan-guide.com/g9/2005_01b.jpg"
-            />
+            <Image photos={biz.images} bizId={biz.id} arrows={true} />
           </div>
           <div>
             <div id="bizcard-name">
-              <h2>{biz.name}</h2>
+              <h2 id="bizcard-name-text">{biz.name}</h2>
+              <Rating
+                id="bizcard-rating"
+                name="half-rating-read"
+                defaultValue={Math.ceil(biz.avg * 2) / 2}
+                precision={0.5}
+                readOnly
+                size="medium"
+              />
             </div>
-            <Rating
-              id="bizcard-rating"
-              name="half-rating-read"
-              defaultValue={Math.ceil(biz.avg * 2) / 2}
-              precision={0.5}
-              readOnly
-              size="medium"
-            />
             <div id="bizcard-location-cell">
               <div id="info-cell">
-                <div id="bizcard-location">
-                  <FontAwesomeIcon
-                    className="icon"
-                    icon={faMapPin}
-                    size="lg"
-                    color="darkslategrey"
-                  />
-                  <div>
-                    {biz.address_street} <br />
-                    {biz.address_city}, {biz.address_zip}
+                <div id="details">
+                  <div className="details-section">
+                    <div id="bizcard-location">
+                      <FontAwesomeIcon
+                        className="icon"
+                        icon={faMapPin}
+                        size="lg"
+                        color="darkslategrey"
+                      />
+                      <div>
+                        {biz.address_street} <br />
+                        {biz.address_city}, {biz.address_zip}
+                      </div>
+                    </div>
+
+                    <div id="bizcard-phone">
+                      <FontAwesomeIcon
+                        className="icon"
+                        icon={faPhone}
+                        size="lg"
+                        color="darkslategrey"
+                      />
+                      <div>{biz.phone}</div>
+                    </div>
                   </div>
-                </div>
-                <div id="bizcard-phone">
-                  <FontAwesomeIcon
-                    className="icon"
-                    icon={faPhone}
-                    size="lg"
-                    color="darkslategrey"
-                  />
-                  <div>{biz.phone}</div>
-                </div>
+                  <div>
+                    <div id="bizcard-type">
+                      <FontAwesomeIcon
+                        className="icon"
+                        icon={faBuilding}
+                        size="lg"
+                        color="darkslategrey"
+                      />
+                      {biz.business_type[0].toUpperCase() +
+                        biz.business_type.slice(1)}
+                    </div>
 
-                <div id="bizcard-type">
-                  <FontAwesomeIcon
-                    className="icon"
-                    icon={faBuilding}
-                    size="lg"
-                    color="darkslategrey"
-                  />
-                  {biz.business_type[0].toUpperCase() +
-                    biz.business_type.slice(1)}
-                </div>
+                    <div id="bizcard-capacity">
+                      <FontAwesomeIcon
+                        className="icon"
+                        icon={faUsers}
+                        size="lg"
+                        color="darkslategrey"
+                      />
+                      {biz.capacity}
+                    </div>
 
-                <div id="bizcard-capacity">
-                  <FontAwesomeIcon
-                    className="icon"
-                    icon={faUsers}
-                    size="lg"
-                    color="darkslategrey"
-                  />
-                  {biz.capacity}
-                </div>
-
-                <div id="bizcard-price info">
-                  <FontAwesomeIcon
-                    className="icon"
-                    icon={faYenSign}
-                    size="lg"
-                    color="darkslategrey"
-                  />
-                  {Number(biz.price).toLocaleString()}
+                    <div id="bizcard-price info">
+                      <FontAwesomeIcon
+                        className="icon"
+                        icon={faYenSign}
+                        size="lg"
+                        color="darkslategrey"
+                      />
+                      {Number(biz.price).toLocaleString()}
+                    </div>
+                  </div>
                 </div>
                 <hr className="divider" />
                 <div id="bizcard-user-review">
-                  <h2 id="reviews-header">Reviews</h2>
-                  {userReviews.map((review) => {
-                    return <li key={review.id}>{`"${review.comment}"`}</li>;
-                  })}
+                  <div id="reviews-header">Reviews</div>
+                  {userReviews.length &&
+                    userReviews.map((review) => (
+                      <div
+                        key={review.id}
+                        className="bizcard-review"
+                      >{`"${review.comment}"`}</div>
+                    ))}
+                  {!userReviews.length && (
+                    <div className="bizcard-review">
+                      No reviews for this space yet.
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -210,39 +280,61 @@ export default function BizCard({ props }) {
                 <div id="booking-subheader">{"Date & Time:"}</div>
                 <div id="datetime-container">
                   <div className="booking-time" id="booking-date-container">
-                    <DatePicker
-                      className="booking-date-input"
-                      selected={bookingDate}
-                      placeholderText="When?"
-                      onChange={(date) => setBookingDate(date)}
-                    />
+                    <ThemeProvider theme={theme}>
+                      <DatePicker
+                        autoOk
+                        className="booking-date-input"
+                        label="Date"
+                        value={date}
+                        onChange={(date) => setDate(date)}
+                        animateYearScrolling
+                        disablePast={true}
+                        cancelLabel={false}
+                        okLabel={false}
+                        InputProps={{
+                          disableUnderline: true,
+                        }}
+                      />
+                    </ThemeProvider>
                   </div>
                   <div id="booking-time-container">
                     <div className="booking-time single-time-container">
-                      <DatePicker
-                        className="booking-date-input booking-time"
-                        selected={bookingStartTime}
-                        placeholderText="Start time?"
-                        onChange={(startTime) => setBookingStartTime(startTime)}
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeIntervals={60}
-                        timeCaption="Time"
-                        dateFormat="h:mm aa"
-                      />
+                      <ThemeProvider theme={theme}>
+                        <TimePicker
+                          autoOk
+                          className="booking-date-input booking-time"
+                          label="Start Time"
+                          className="date-input"
+                          value={startTime}
+                          onChange={(time) => setStartTime(time)}
+                          disablePast={true}
+                          cancelLabel={false}
+                          okLabel={false}
+                          views={["hours"]}
+                          InputProps={{
+                            disableUnderline: true,
+                          }}
+                        />
+                      </ThemeProvider>
                     </div>
                     <div className="booking-time single-time-container">
-                      <DatePicker
-                        className="booking-date-input booking-time"
-                        selected={bookingEndTime}
-                        placeholderText="End time?"
-                        onChange={(endTime) => setBookingEndTime(endTime)}
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeIntervals={60}
-                        timeCaption="Time"
-                        dateFormat="h:mm aa"
-                      />
+                      <ThemeProvider theme={theme}>
+                        <TimePicker
+                          autoOk
+                          className="booking-date-input booking-time"
+                          label="End Time"
+                          className="date-input"
+                          value={endTime}
+                          onChange={(time) => setEndTime(time)}
+                          disablePast={true}
+                          views={["hours"]}
+                          cancelLabel={false}
+                          okLabel={false}
+                          InputProps={{
+                            disableUnderline: true,
+                          }}
+                        />
+                      </ThemeProvider>
                     </div>
                   </div>
                 </div>
@@ -269,6 +361,8 @@ export default function BizCard({ props }) {
                 )}
               </div>
             </div>
+            <hr className="map-divider"></hr>
+            <Map businesses={mapProps} forBizCard={true} />
           </div>
         </Elements>
       </div>

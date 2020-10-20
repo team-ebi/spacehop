@@ -134,9 +134,10 @@ tr {
 }
 @media (max-width: 700px) {
     .single-booking-container {
-        width: 100%;
+        width: 90%;
         padding-left: 0px;
         margin-bottom: 60px;
+        margin-left: 12px;
     }
     #res-table {
         width: 100%;

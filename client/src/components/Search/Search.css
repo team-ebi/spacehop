@@ -26,7 +26,7 @@
   display: flex;
   height: 100px;
   border-radius: 50px;
-  width: 70%;
+  width: 80%;
   box-shadow: 0 4px 8px lightgrey;
   z-index: 10;
   align-self: flex-start;
@@ -91,42 +91,27 @@
 .time {
   width: 20%;
 }
-.react-datepicker-wrapper {
-  width: 100%;
-  display: flex;
-}
-.react-datepicker__day:hover,
-.react-datepicker__day--selected,
-.react-datepicker__day--in-selecting-range,
-.react-datepicker__day--in-range,
-.react-datepicker__month-text--selected,
-.react-datepicker__month-text--in-selecting-range,
-.react-datepicker__month-text--in-range,
-.react-datepicker__quarter-text--selected,
-.react-datepicker__quarter-text--in-selecting-range,
-.react-datepicker__quarter-text--in-range,
-.react-datepicker__year-text--selected,
-.react-datepicker__year-text--in-selecting-range,
-.react-datepicker__year-text--in-range,
-.react-datepicker__day--keyboard-selected {
-  background-color: #80cc37;
-  color: black;
-}
-.react-datepicker__time-container
-  .react-datepicker__time
-  .react-datepicker__time-box
-  ul.react-datepicker__time-list
-  .react-datepicker__time-list-item--selected
-  li.react-datepicker__time-list-item--selected:hover {
-  background-color: #80cc37;
-  color: black;
-}
-.react-datepicker {
-  border-radius: 20px;
-  overflow: hidden;
-}
 #search-button-container {
   width: 5%;
+}
+.MuiFormControl-root {
+  width: 100%;
+}
+.MuiInputBase-input {
+  text-indent: 20px;
+  border-bottom: none;
+}
+.MuiInput-underline {
+  border-bottom: none;
+}
+.MuiInputLabel-formControl {
+  text-indent: 20px;
+}
+.MuiInput-underline:before {
+  border-bottom: none;
+}
+#loadingSign {
+  display: block;
 }
 @media (min-height: 700px) and (max-height: 850px) {
   #search-bar-container {
@@ -140,8 +125,10 @@
 
   #search-container {
     top: 0;
+    bottom: 65px;
     position: fixed;
-    background: #efefbb; /* fallback for old browsers */
+    padding-bottom: 50px;
+    background: #9e9e84; /* fallback for old browsers */
     background: -webkit-linear-gradient(
       to bottom,
       rgb(230, 228, 245),
@@ -171,10 +158,19 @@
   }
   #location-input {
     font-size: 16px;
-    margin-top: 5px;
+    font-family: "Roboto", sans-serif;
+    width: 100%;
+  }
+  #location-input:focus {
+    border: solid #80cc37;
+    outline: none;
   }
   .date-input {
     font-size: 16px;
+  }
+  #search-button-container {
+    width: 100%;
+    margin-top: 20px;
   }
   #search-button {
     border-radius: 100px;
@@ -184,8 +180,12 @@
   #search-text {
     display: none;
   }
+  .MuiInput-underline:before {
+    border-bottom: none;
+  }
 }
-@media (max-width: 500px) {
+
+@media (max-width: 400px) and (max-height: 820px) {
   #logo-container {
     height: 180px;
     width: 100%;
@@ -198,7 +198,7 @@
   }
   .input {
     height: 30px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
   #autocomplete-selections {
     z-index: 100;
@@ -214,12 +214,18 @@
   }
   #search-button-container {
     width: 100%;
-    margin-top: 20px;
+    padding: 10px;
   }
   #search-button {
     height: 30px;
   }
   #location-input {
-    width: 300px;
+    width: 280px;
+    margin-left: -8px;
   }
+  #loadingSign {
+    width:250px
+  }
+  
 }
+
