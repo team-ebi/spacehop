@@ -8,7 +8,6 @@ import { faArrowCircleLeft, faImages } from "@fortawesome/free-solid-svg-icons";
 import cornerLogo from "../../images/spacehop-name.png";
 import axios from "axios";
 import DatePicker from "react-datepicker";
-import Slider from "react-slick";
 import "react-datepicker/dist/react-datepicker.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -253,12 +252,10 @@ function Business() {
       event.persist();
       // save new image
       const saveImg = await saveObject(userBusiness.id, event.target.files[0]);
-      console.log("POSTED: ", saveImg);
       
       // add image to carousel
       setImages(images.concat(`${userBusiness.id}/${event.target.files[0].name}`));
       
-      console.log("IMAGES: ", images);  
     }catch(error){console.log(error)}
 
       //close loading sign  

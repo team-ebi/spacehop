@@ -94,7 +94,7 @@ exports.seed = function(knex) {
         },
         {
           business_id: 4,
-          user_id: 1,
+          user_id: 5,
           point: 3,
           comment: "Business owner is very kind. Will work here again soon!"
         },

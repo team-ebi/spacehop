@@ -12,7 +12,7 @@ exports.seed = function(knex) {
           capacity: 10,
           price: 500,
           user_id: 2,
-          stripe_price_id: "price_1HblppCjwFEQ1pgcJ7QPY9Nd",
+          stripe_price_id: "price_1HeDrbCjwFEQ1pgcaleBzV6c",
           lat: 35.658022,
           lng: 139.699277
         },
@@ -26,7 +26,7 @@ exports.seed = function(knex) {
           capacity: 8,
           price: 400,
           user_id: 21,
-          stripe_price_id: "price_1HblqRCjwFEQ1pgcARvCsFXq",
+          stripe_price_id: "price_1HeDsYCjwFEQ1pgcUvzFg9Ei",
           lat: 35.658031,
           lng: 139.700146
         },
@@ -40,7 +40,7 @@ exports.seed = function(knex) {
           capacity: 5,
           price: 250,
           user_id: 22,
-          stripe_price_id: "price_1HblrNCjwFEQ1pgcXdtUQq8I",
+          stripe_price_id: "price_1HeDtVCjwFEQ1pgchBC7KGjr",
           lat: 35.659774,
           lng: 139.702002
         },
@@ -54,7 +54,7 @@ exports.seed = function(knex) {
           capacity: 15,
           price: 600,
           user_id: 23,
-          stripe_price_id: "price_1HbJmgCjwFEQ1pgcoclpmXNO",
+          stripe_price_id: "price_1HeDu9CjwFEQ1pgc0zUOnng5",
           lat: 35.660898,
           lng: 139.702034
         },
@@ -68,7 +68,7 @@ exports.seed = function(knex) {
           capacity: 10,
           price: 350,
           user_id: 24,
-          stripe_price_id: "price_1HbJqfCjwFEQ1pgcOxl1Ihpv",
+          stripe_price_id: "price_1HeDueCjwFEQ1pgcqSA3wyX8",
           lat: 35.661325,
           lng: 139.700725
         },
@@ -82,7 +82,7 @@ exports.seed = function(knex) {
           capacity: 10,
           price: 100,
           user_id: 25,
-          stripe_price_id: "price_1HbJpnCjwFEQ1pgctBSWj8RX",
+          stripe_price_id: "price_1HeDvCCjwFEQ1pgcriuBWYuT",
           lat: 35.663478,
           lng: 139.701079
         },
@@ -96,7 +96,7 @@ exports.seed = function(knex) {
           capacity: 5,
           price: 1000,
           user_id: 26,
-          stripe_price_id: "price_1HbJqfCjwFEQ1pgcOxl1Ihpv",
+          stripe_price_id: "price_1HeDvlCjwFEQ1pgcTbOKbyJk",
           lat: 35.656429,
           lng: 139.695978
         },
@@ -110,7 +110,7 @@ exports.seed = function(knex) {
           capacity: 10,
           price: 800,
           user_id: 27,
-          stripe_price_id: "price_1HblvRCjwFEQ1pgcNzZjIWEL",
+          stripe_price_id: "price_1HeDwKCjwFEQ1pgci1e0I5El",
           lat: 35.658602,
           lng: 139.705351
         }
