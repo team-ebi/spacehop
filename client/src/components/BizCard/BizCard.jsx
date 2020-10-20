@@ -62,12 +62,9 @@ export default function BizCard({ props }) {
   const mapProps = [];
   mapProps.push(biz);
 
-<<<<<<< HEAD
-=======
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
   const frontUrl = process.env.FRONTEND_URL || "http://localhost:3000";
 
->>>>>>> 706b347cecbf26cd0f5c461d11835fe8dfd36c03
   //publishable stripe API key
   const stripePromise = loadStripe(
     "pk_test_51HU0G2CjwFEQ1pgcvOchnwo0Gsb2seN5a3xGz8Q2iCvlVUjHkSCV7UZHy3NfeobxNNMeGwmiosi3UBxjbKcSjGZ000hENfQW0F"
