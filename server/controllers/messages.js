@@ -27,7 +27,9 @@ router.get("/:user", async (req, res) => {
   //   }
   // }
   // messages[0].message = JSON.stringify(parsedMessages);
-  messages[0]["business_name"] = business_name;
+  for (const message of messages) {
+    message["business_name"] = business_name;
+  }
   res.send(messages);
 });
 

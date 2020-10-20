@@ -11,10 +11,19 @@
             "src": "logo.png",
             "type": "image/png",
             "sizes": "170x170"
+        },
+        {
+            "src": "spacehop-name.png",
+            "type": "image/png",
+            "sizes": "500x112"
+        },
+        {
+            "src": "s512_choju45_0009_0.png",
+            "type": "image/png",
+            "sizes": "422x512"
         }
     ],
     "start_url": ".",
     "display": "fullscreen",
     "theme_color": "darkslategrey",
-    "background_color": "rgb(250, 238, 238)"
 }
