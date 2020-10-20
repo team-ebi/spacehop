@@ -9,7 +9,7 @@ const moment = require("moment");
 
 //Make a Reservation
 router.post("/", async (req, res) => {
-  //ex) req.body = { "email": "potato@dog.com", "date": "2020-12-30", "price": 1000, "business_id": 1 }
+  //ex) req.body = { "email": "potato@dog.com", "date": "2020-12-30", "business_id": 1,"start_at":12,"end_at":17 }
 
   // Get user id that matches with req.body.email
   try {
@@ -18,12 +18,24 @@ router.post("/", async (req, res) => {
       email,
     });
 
+    const business_id = req.body.business_id;
+
+    const businessData = await db.select("price").table("businesses").where({
+      id:business_id,
+    });
+
+    const hourlyPrice=businessData[0].price
+
+    //set format of YYYY-MM-DD
     const date = req.body.date.substr(0,10);
-    const price = req.body.price;
     const start_at = req.body.start_at;
     const end_at = req.body.end_at;
+
+    //set total price
+    const price = Number(hourlyPrice)*(Number(end_at)-Number(start_at));
+    console.log(price);
+
     // created_at is set as default to today so needless to define.
-    const business_id = req.body.business_id;
     const user_id = user[0]["id"];
 
     const register = await db.select("*").table("reservations").insert({
