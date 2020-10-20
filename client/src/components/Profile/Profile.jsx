@@ -19,7 +19,7 @@ function Profile() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [displayInputs, setDisplayInputs] = useState(false);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState([]);
 
   // will connect to aws or default to loalhost
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
@@ -61,15 +61,20 @@ function Profile() {
   // upload image
   async function uploadImage(event) {
     event.persist();
-
-    await listObjects(email)
-    .then(result => result.map(elem => ({ "Key": elem.Key }) ))
-    .then(result => deleteObjects(result));
+    try {
+      const isList = await listObjects(email);
+      isList.map(elem => ({ "Key": elem.Key }))
+      .then(result => deleteObjects(result));
+    
+      await saveObject(email, event.target.files[0]);
+      const newImg = await getSingleObject(email, `${email}/${event.target.files[0].name}`);
   
-    const saveImg = await saveObject(email, event.target.files[0]);
-    const newImg = await getSingleObject(email, `${email}/${event.target.files[0].name}`);
-
-    setImage(newImg);
+      setImage(newImg);
+    } catch {
+      await saveObject(email, event.target.files[0]);
+      const newImg = await getSingleObject(email, `${email}/${event.target.files[0].name}`);
+      setImage(newImg);
+    }
   }
 
   // create ref for input button
@@ -116,12 +121,16 @@ function Profile() {
         <main id="main">
           <div id="profile-info">
             <div id="profile-img">
-              <img src={`data:image;base64,${image}`} />
-              {/* <FontAwesomeIcon
-                icon={faUserCircle}
-                size="8x"
-                color="darkslategrey"
-              /> */}
+              {/* <img src={`data:image;base64,${image}`} /> */}
+              {
+                image.length === 0
+                ? <FontAwesomeIcon
+                    icon={faUserCircle}
+                    size="8x"
+                    color="darkslategrey"
+                  />
+                : <img src={`data:image;base64,${image}`} />
+              }
             <div className="upload-btn-container">
               <button className="upload-img-button" onClick={openFile}>
                 Upload Photo
