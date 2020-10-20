@@ -153,7 +153,6 @@
     flex-flow: row wrap;
     bottom: 65px;
     overflow-y: scroll;
-    
   }
   .mobile-inbox {
     display: inline;
@@ -161,9 +160,9 @@
   #selected-message-container {
       display: none;
   }
-    #message-preview-container {
+  #message-preview-container {
       width: 100%;
-      height: 480px;
+      height: 625px;
       top: 100px;
       bottom: 65px;
       overflow-y: scroll;
@@ -250,5 +249,8 @@
 @media (max-height: 700px) {
   .message-body-container {
     height: 33%;
+  }
+  #message-preview-container {
+    height: 480px;
   }
 }
