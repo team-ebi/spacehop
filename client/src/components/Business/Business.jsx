@@ -13,6 +13,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Business.css";
+import LoadingSign from "../LoadingSign/LoadingSign"
 
 function Business() {
   // user email used to fetch data from db
@@ -61,6 +62,9 @@ function Business() {
   const [display, setDisplay] = useState("upcoming");
   const [dimUpcoming, setDimUpcoming] = useState("");
   const [dimPast, setDimPast] = useState("dim");
+
+  //handle loading sign
+  const [loadingImg, setLoadingImg] = useState(false);  
 
   // will connect to aws or default to loalhost
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
@@ -240,17 +244,28 @@ function Business() {
 
   // upload image
   async function uploadImage(event) {
-    event.persist();
-    // save new image
-    const saveImg = await saveObject(userBusiness.id, event.target.files[0]);
-    console.log("POSTED: ", saveImg);
+
+    try{
+
+      //set loading sign 
+      setLoadingImg(true); 
+
+      event.persist();
+      // save new image
+      const saveImg = await saveObject(userBusiness.id, event.target.files[0]);
+      console.log("POSTED: ", saveImg);
+      
+      // add image to carousel
+      setImages(images.concat(`${userBusiness.id}/${event.target.files[0].name}`));
+      
+      console.log("IMAGES: ", images);  
+    }catch(error){console.log(error)}
+
+      //close loading sign  
+      setLoadingImg(false); 
+    }
     
-    // add image to carousel
-    setImages(images.concat(`${userBusiness.id}/${event.target.files[0].name}`));
-    
-    console.log("IMAGES: ", images);
-    
-  }
+
 
   return (
     <div id="biz-profile-container">
@@ -606,6 +621,10 @@ function Business() {
                 soon to complete the verification process.
               </div>
             )}
+            {loadingImg ? <div className="loadingSign" style = {{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+              <LoadingSign />
+            </div> : null 
+              }
           </main>
           <hr id="profile-divider"></hr>
           {/* <section>
