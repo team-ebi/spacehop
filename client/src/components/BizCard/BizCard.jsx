@@ -28,6 +28,8 @@ import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { DatePicker, TimePicker } from "@material-ui/pickers";
 import cornerLogo from "../../images/spacehop-name.png";
+import moment from "moment";
+
 
 const theme = createMuiTheme({
   palette: {
@@ -56,6 +58,7 @@ export default function BizCard({ props }) {
   const [pickDate, setPickDate] = useState(false);
   const [pickFuture, setPickFuture] = useState(false);
   const [userReviews, setUserReviews] = useState([]);
+  const [hoursBooked, setHoursBooked] = useState()
 
   // props passed to router's useHistory
   const biz = props.location.state.state;
@@ -69,6 +72,15 @@ export default function BizCard({ props }) {
   const stripePromise = loadStripe(
     "pk_test_51HU0G2CjwFEQ1pgcvOchnwo0Gsb2seN5a3xGz8Q2iCvlVUjHkSCV7UZHy3NfeobxNNMeGwmiosi3UBxjbKcSjGZ000hENfQW0F"
   );
+
+  
+  //get difference between hours to send to stripe to get price
+  function hoursHandler() {
+  const date1 = new Date(startTime*1000)
+  const date2 = new Date(endTime * 1000)
+  const hours = Math.round((Math.abs(date1 - date2) / 36e5) / 1000);
+  return hours;
+  }
 
   // will not run if user hasn't selected date or date is in the past
   // if user is not logged in, login page will be displayed
@@ -97,7 +109,7 @@ export default function BizCard({ props }) {
             lineItems: [
               {
                 price: biz.stripe_price_id,
-                quantity: 1,
+                quantity: hoursHandler(),
               },
             ],
             mode: "payment",
