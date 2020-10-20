@@ -1,4 +1,3 @@
-// miku
 import LoadingSign from "../LoadingSign/LoadingSign"; 
 import React, { useState, useContext } from "react";
 import { listObjects } from "../../utils/index";
@@ -175,9 +174,7 @@ export default function Search() {
                     {...getInputProps({ placeholder: "Where to?" })}
                   />
                   <div id="autocomplete-selections">
-                    {/* miku */}
                     {loading ? <div className="loadingSign" style = {{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}><LoadingSign /></div>: null}
-                    {/* {loading?<h1>hello world</h1>:null} */}
 
                     {/* this will delay autofill options as user types */}
                     {suggestions.map((suggestion) => {
