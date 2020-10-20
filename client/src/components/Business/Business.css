@@ -311,6 +311,8 @@ input.checkbox-body{
         overflow: hidden;
         width: 300px;
         height: 90%;
+        display: flex;
+        justify-content: center;
     }
     .bizprofile-img {
         height: 200px;

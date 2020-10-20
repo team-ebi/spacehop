@@ -23,6 +23,9 @@ import { Auth } from "aws-amplify";
 import axios from "axios";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
+import Inbox from "./components/Inbox/Inbox";
+import Messages from "./components/Messages/Messages";
+require("dotenv").config();
 
 export default function App() {
   const [businesses, setBusinesses] = useState(null);
@@ -97,6 +100,8 @@ export default function App() {
                           <Route path="/about" exact component={About} />
                           <Route path="/team" exact component={Team} />
                           <Route path="/business" exact component={Business} />
+                          <Route path="/inbox" exact component={Inbox} />
+                          <Route path="/inbox/message" exact component={Messages} />
                           <Route path="/list" exact component={List} />
                           <Route
                             path="/booking/:name"

@@ -39,7 +39,7 @@ export default function BookingSingle({ booking, display }) {
   // will run if user changes
   useEffect(() => {
     fetchReview();
-  }, [user]);
+  }, [user, display]);
 
   // will post review to db
   async function postReview() {

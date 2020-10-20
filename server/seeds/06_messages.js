@@ -132,13 +132,13 @@ exports.seed = function(knex) {
   return knex("messages").del().then(function () {
     return knex("messages").insert([
       { user_id: 1, business_id: 1, message: strigify},
-      { user_id: 1, business_id: 2, message: strigify},
-      { user_id: 1, business_id: 3, message: strigify},
-      { user_id: 1, business_id: 4, message: strigify},
-      { user_id: 1, business_id: 5, message: strigify},
-      { user_id: 1, business_id: 6, message: strigify},
-      { user_id: 1, business_id: 7, message: strigify},
-      { user_id: 1, business_id: 8, message: strigify}
+      { user_id: 1, business_id: 2, message: strigify2},
+      { user_id: 1, business_id: 3, message: strigify3},
+      { user_id: 1, business_id: 4, message: strigify4},
+      { user_id: 1, business_id: 5, message: strigify5},
+      { user_id: 1, business_id: 6, message: strigify6},
+      { user_id: 1, business_id: 7, message: strigify7},
+      { user_id: 1, business_id: 8, message: strigify8}
     ]);
   });
 };

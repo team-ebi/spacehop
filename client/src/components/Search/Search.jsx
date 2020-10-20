@@ -75,17 +75,13 @@ export default function Search() {
   async function getSelectedData() {
     // parse the location
     const selectedLocation = location.split(",")[0];
-    
-    const selectedDate = new Date(date);
     const sendyear = selectedDate.getFullYear();
     const sendmonth = selectedDate.getMonth()+1;
     const senddate = selectedDate.getDate();
 
-<<<<<<< HEAD
+
     const selectedDate = new Date(date);
-=======
     const dateToSend=String(sendyear)+"-"+String(sendmonth)+"-"+String(senddate);
->>>>>>> b571b4c976f94bbb54f2eed4169794900444fbf1
 
     // parse day from selected date
     const week = [
@@ -114,7 +110,7 @@ export default function Search() {
     // );
     const res = await axios.get(
 
-      `${baseUrl}/api/availability/?date=${dateToSend}&address_city=${selectedLocation}&start_hour=${selectedStartTime}&end_hour=${selectedEndtime}`
+      `${baseUrl}/api/availability/?date=${dateToSend}&address_city=${selectedLocation}&start_hour=${selectedStartTime}&end_hour=${selectedEndTime}`
 
     );
 
@@ -122,10 +118,6 @@ export default function Search() {
       const arrayOfPhotoObjects = await listObjects(biz.id)
       .then(result => result.filter(obj => obj.Key[obj.Key.length - 1] !== "/").map(obj => obj.Key))
       .then(result => biz.images = result);
-      // const result = arrayOfPhotoObjects
-        // map to pull keys only
-        // .map(obj => obj.Key);
-      // biz.images = result;
     }
   
     // set businesses state
