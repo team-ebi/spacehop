@@ -6,7 +6,6 @@
   right: 0;
   bottom: 0;
 }
-
 #inbox {
   display: flex;
   flex-flow: row nowrap;
@@ -126,11 +125,16 @@
 #send-message-input:focus {
   outline: none;
 }
-.mobile-inbox {
+.mobile-version {
   display: none;
 }
-
-@media (max-width: 400px) and (max-height: 815px) {
+#send-input-icon {
+  cursor: pointer;
+}
+#mobile-selected-message-container {
+  display: none;
+}
+@media (max-height: 815px) {
   #inbox-container {
     overflow: hidden;
     max-height: 100vh;
@@ -154,7 +158,8 @@
     bottom: 65px;
     overflow-y: scroll;
   }
-  .mobile-inbox {
+
+  .mobile-version {
     display: inline;
   }
   #selected-message-container {
@@ -166,19 +171,7 @@
       top: 100px;
       bottom: 65px;
       overflow-y: scroll;
-      overflow-x: hidden;
-      background: #efefbb; /* fallback for old browsers */
-      background: -webkit-linear-gradient(
-        to bottom,
-        rgb(230, 228, 245),
-        #efefbb
-      ); /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(
-        to bottom,
-        rgb(230, 228, 245),
-        #efefbb
-      ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  
+      overflow-x: hidden;  
     }
     .inbox-subheader {
       text-align: left;
@@ -244,6 +237,9 @@
     }
     .web-version {
       display: none;
+    }
+    #mobile-selected-message-container {
+      display: flex;
     }
 }
 @media (max-height: 700px) {

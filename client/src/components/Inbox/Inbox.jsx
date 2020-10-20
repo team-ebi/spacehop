@@ -15,13 +15,14 @@ import "./Inbox.css";
 export default function Inbox() {
   const history = useHistory();
   const { user } = useContext(UserContext);
-  const [displayMobileMsg, setDisplayMobileMsg] = useState(false);
-  const [selectedThread, setSelectedThread] = useState(null);
+  const [selectedThread, setSelectedThread] = useState("");
   const [allMessages, setAllMessages] = useState([]);
+  const [displayInboxList, setDisplayInboxList] = useState(true);
 
   // will connect to aws or default to localhost
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 
+  // will fetch all of user's email messages
   useEffect(() => {
     async function fetchMessage() {
       if (user) {
@@ -39,6 +40,7 @@ export default function Inbox() {
     fetchMessage();
   }, [user]);
 
+  // will go back to previous
   function goBack() {
     return history.goBack();
   }
@@ -70,155 +72,29 @@ export default function Inbox() {
       >
         Inbox
       </h2>
-      {displayMobileMsg && (
-        <div id="back-inbox-container">
-          <button
-            className="back-to-inbox mobile-inbox"
-            onClick={() => setDisplayMobileMsg(false)}
-          >
-            Back to Inbox
-          </button>
-        </div>
-      )}
 
-      {/* this is the  main section with both inbox and selected message sections */}
-        {/* this is the main inbox section that lists out all messages */}
-        <div id="inbox">
-          {/* web version */}
-          <div id="message-preview-container" className="web-version">
-            <>
-              <div>
-                <h4 className="inbox-subheader">Messages</h4>
-              </div>
+      {/* when clicked, will display only the inbox */}
+      <div id="back-inbox-container" className="mobile-version">
+        <button
+          className="back-to-inbox"
+          onClick={() => setDisplayInboxList(true)}
+        >
+          Back to Inbox
+        </button>
+      </div>
 
-              {/* show this here only on mobile 
-                otherwise, show it above Message component */}
-              <div className="write-new mobile-inbox">
-                <div className="new-msg-icon mobile-inbox">
-                  <FontAwesomeIcon
-                    icon={faEdit}
-                    size="2x"
-                    color="darkslategrey"
-                  />
-                </div>
-                <div className="dropdown-bookings mobile-inbox">
-                  <label for="all-bookings mobile-inbox"> To: </label>
-                  <select
-                    className="bookings mobile-inbox"
-                    name="bookings"
-                    onChange={(e) => {
-                      setSelectedThread(e.target.value);
-                      setDisplayMobileMsg(true);
-                    }}
-                  >
-                    <option>Select a recipient.</option>
-                    {allMessages.map((thread) => (
-                      <option value={thread}>{thread.business_name}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              {/* map over all message to display in the inbox list */}
-              {allMessages.map((thread, index) => (
-                <div
-                  className="single-preview"
-                  onClick={() => {
-                    setSelectedThread(thread);
-                    setDisplayMobileMsg(true);
-                  }}
-                >
-                  <div className="inbox-profile-container">
-                    <FontAwesomeIcon
-                      className="icon"
-                      icon={faUserCircle}
-                      size="lg"
-                      color="darkslategrey"
-                    />
-                  </div>
-                  <div className="message-preview">
-                    <div className="biz-name-messenger">{thread.business_name}</div>
-                    <div className="preview">
-                      {thread.message[0].business_message
-                        ? thread.message[0].business_message
-                        : thread.message[0].user_message}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </>
-          </div>
-
-          {/* mobile version of inbox list, take up whole page*/}
-          {!displayMobileMsg && (
-            <div id="message-preview-container" className="mobile-inbox">
-              <>
-                <div>
-                  <h4 className="inbox-subheader">Messages</h4>
-                </div>
-
-                {/* show this here only on mobile */}
-                <div className="write-new mobile-inbox">
-                  <div className="new-msg-icon mobile-inbox">
-                    <FontAwesomeIcon
-                      icon={faEdit}
-                      size="2x"
-                      color="darkslategrey"
-                    />
-                  </div>
-                  <div className="dropdown-bookings mobile-inbox">
-                    <label for="all-bookings mobile-inbox"> To: </label>
-                    <select
-                      className="bookings mobile-inbox"
-                      name="bookings"
-                      onChange={(e) => {
-                        setSelectedThread(e.target.value);
-                        setDisplayMobileMsg(true);
-                      }}
-                    >
-                      <option>Select a recipient.</option>
-                      {allMessages.map((thread) => (
-                        <option value={thread}>{thread.business_name}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                {/* map over all message to display in the inbox list */}
-                {allMessages.map((thread, index) => (
-                  <div
-                    className="single-preview"
-                    onClick={() => {
-                      setSelectedThread(thread);
-                      setDisplayMobileMsg(true);
-                    }}
-                  >
-                    <div className="inbox-profile-container">
-                      <FontAwesomeIcon
-                        className="icon"
-                        icon={faUserCircle}
-                        size="lg"
-                        color="darkslategrey"
-                      />
-                    </div>
-                    <div className="message-preview">
-                      <div className="biz-name-messenger">
-                        {thread.business_name}
-                      </div>
-                      <div className="preview">
-                        {thread.message[0].business_message
-                          ? thread.message[0].business_message
-                          : thread.message[0].user_message}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </>
+      {/* main section of inbox page that has inbox list and selected message */}
+      <div id="inbox">
+        {/* inbox that lists preview of user's messages */}
+        {displayInboxList && (
+        <div id="message-preview-container" className="mobile-version">
+          <>
+            <div>
+              <h4 className="inbox-subheader">Messages</h4>
             </div>
-          )}
 
-          <div id="selected-message-container" className="web-version">
-            <div className="write-new">
+            {/* this dropdown menu should only show on mobile version */}
+            <div className="write-new mobile">
               <div className="new-msg-icon">
                 <FontAwesomeIcon
                   icon={faEdit}
@@ -243,15 +119,136 @@ export default function Inbox() {
                 </select>
               </div>
             </div>
-            {selectedThread && <Messages selectedThread={selectedThread} />}
-          </div>
 
-          {displayMobileMsg && selectedThread && (
-            <div className="mobile-inbox">
-              <Messages selectedThread={selectedThread} />
+            {/* map over all message to display in the inbox list */}
+            {allMessages.map((thread, index) => (
+              <div
+                className="single-preview"
+                onClick={() => {
+                  setSelectedThread(thread);
+                  setDisplayInboxList(false);
+                }}
+              >
+                <div className="inbox-profile-container">
+                  <FontAwesomeIcon
+                    className="icon"
+                    icon={faUserCircle}
+                    size="lg"
+                    color="darkslategrey"
+                  />
+                </div>
+                <div className="message-preview">
+                  <div className="biz-name-messenger">
+                    {thread.business_name}
+                  </div>
+                  <div className="preview">
+                    {thread.message[0].business_message
+                      ? thread.message[0].business_message
+                      : thread.message[0].user_message}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </>
+        </div>)}
+
+        {/* this web version will stay on same page */}
+        <div id="message-preview-container" className="web-version">
+          <>
+            <div>
+              <h4 className="inbox-subheader">Messages</h4>
             </div>
-          )}
+            {/* this dropdown menu should only show on mobile version */}
+            <div className="write-new mobile-version">
+              <div className="new-msg-icon">
+                <FontAwesomeIcon
+                  icon={faEdit}
+                  size="2x"
+                  color="darkslategrey"
+                />
+              </div>
+              <div className="dropdown-bookings">
+                <label for="all-bookings"> To: </label>
+                <select
+                  value={selectedThread}
+                  className="bookings"
+                  name="bookings"
+                  onChange={(e) => setSelectedThread(e.target.value)}
+                >
+                  <option>Select a recipient.</option>
+                  {allMessages.map((thread) => (
+                    <option key={thread.business_name} value={thread}>
+                      {thread.business_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* map over all message to display in the inbox list */}
+            {allMessages.map((thread, index) => (
+              <div
+                className="single-preview"
+                onClick={() => {
+                  setSelectedThread(thread);
+                  setDisplayInboxList(false);
+                }}
+              >
+                <div className="inbox-profile-container">
+                  <FontAwesomeIcon
+                    className="icon"
+                    icon={faUserCircle}
+                    size="lg"
+                    color="darkslategrey"
+                  />
+                </div>
+                <div className="message-preview">
+                  <div className="biz-name-messenger">
+                    {thread.business_name}
+                  </div>
+                  <div className="preview">
+                    {thread.message[0].business_message
+                      ? thread.message[0].business_message
+                      : thread.message[0].user_message}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </>
         </div>
+
+        {/* this section shows the opened message window for selected message */}
+        <div id="selected-message-container">
+          <div className="write-new">
+            <div className="new-msg-icon">
+              <FontAwesomeIcon icon={faEdit} size="2x" color="darkslategrey" />
+            </div>
+            <div className="dropdown-bookings">
+              <label for="all-bookings"> To: </label>
+              <select
+                value={selectedThread}
+                className="bookings"
+                name="bookings"
+                onChange={(e) => setSelectedThread(e.target.value)}
+              >
+                <option>Select a recipient</option>
+                {allMessages.map((thread) => (
+                  <option key={thread.business_name} value={thread}>
+                    {thread.business_name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          {selectedThread && <Messages selectedThread={selectedThread} />}
+        </div>
+
+        {/* mobile version of message container */}
+        {!displayInboxList && 
+        <div id="mobile-selected-message-container">
+          {selectedThread && <Messages selectedThread={selectedThread} />}
+        </div>}
+      </div>
     </div>
   );
 }
