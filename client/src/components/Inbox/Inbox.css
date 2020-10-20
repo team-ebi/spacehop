@@ -31,14 +31,15 @@
 }
 .recipient {
   background-color: rgb(228, 224, 224);
-  padding: 5px;
+  padding: 8px;
   border-radius: 10px;
-  margin: 5px;
+  margin: 10px;
   text-align: right;
   width: auto;
 }
 .right:not(.left) {
   text-align: right;
+  padding-right: 7px;
 }
 .other-messenger {
   padding: 5px;
@@ -106,7 +107,7 @@
 .msg-input-area {
   display: flex;
   align-items: center;
-  width: 94%;
+  width: 98%;
   border-radius: 20px;
   height: 60px;
   margin-right: 10px;
@@ -191,7 +192,7 @@
       width: 100%;
     }
     #message-box {
-      margin-top: -20px;
+      margin-top: 0px;
       width: 100%;
       padding: 0px;
     }
@@ -207,6 +208,7 @@
     .msg-input-area {
       height: 40px;
       bottom: 65px;
+      width: 96%
     }
     #send-message-input {
       height: 40px;
@@ -230,7 +232,7 @@
     }
     .inbox-header {
       margin-left: 50px;
-      z-index: 1000
+      z-index: 100
     }
     .biz-name-message {
       width: 150px;
@@ -240,13 +242,17 @@
     }
     #mobile-selected-message-container {
       display: flex;
+      overflow-y: hidden;
     }
 }
 @media (max-height: 700px) {
   .message-body-container {
-    height: 33%;
+    height: 30%;
   }
   #message-preview-container {
     height: 480px;
+  }
+  #mobile-selected-message-container {
+    overflow-y: hidden;
   }
 }

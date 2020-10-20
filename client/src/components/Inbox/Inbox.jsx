@@ -22,6 +22,17 @@ export default function Inbox() {
   // will connect to aws or default to localhost
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 
+  function updateSelected(e) {
+    const businessId = Number(e.target.value);
+    for (const message of allMessages) {
+      if (message.business_id === businessId) {
+        setSelectedThread(message);
+        setDisplayInboxList(false);
+        return;
+      }
+    }
+  }
+
   // will fetch all of user's email messages
   useEffect(() => {
     async function fetchMessage() {
@@ -108,11 +119,11 @@ export default function Inbox() {
                   value={selectedThread}
                   className="bookings"
                   name="bookings"
-                  onChange={(e) => setSelectedThread(e.target.value)}
+                  onChange={updateSelected}
                 >
-                  <option>Select a recipient.</option>
+                  <option>Select a recipient</option>
                   {allMessages.map((thread) => (
-                    <option key={thread.business_name} value={thread}>
+                    <option key={"mobile" + thread.business_id} value={thread.business_id}>
                       {thread.business_name}
                     </option>
                   ))}
@@ -142,9 +153,9 @@ export default function Inbox() {
                     {thread.business_name}
                   </div>
                   <div className="preview">
-                    {thread.message[0].business_message
-                      ? thread.message[0].business_message
-                      : thread.message[0].user_message}
+                    {thread.message[thread.message.length - 1].business_message
+                      ? thread.message[thread.message.length - 1].business_message
+                      : thread.message[thread.message.length - 1].user_message}
                   </div>
                 </div>
               </div>
@@ -158,33 +169,7 @@ export default function Inbox() {
             <div>
               <h4 className="inbox-subheader">Messages</h4>
             </div>
-            {/* this dropdown menu should only show on mobile version */}
-            <div className="write-new mobile-version">
-              <div className="new-msg-icon">
-                <FontAwesomeIcon
-                  icon={faEdit}
-                  size="2x"
-                  color="darkslategrey"
-                />
-              </div>
-              <div className="dropdown-bookings">
-                <label for="all-bookings"> To: </label>
-                <select
-                  value={selectedThread}
-                  className="bookings"
-                  name="bookings"
-                  onChange={(e) => setSelectedThread(e.target.value)}
-                >
-                  <option>Select a recipient.</option>
-                  {allMessages.map((thread) => (
-                    <option key={thread.business_name} value={thread}>
-                      {thread.business_name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
+            
             {/* map over all message to display in the inbox list */}
             {allMessages.map((thread, index) => (
               <div
@@ -207,9 +192,9 @@ export default function Inbox() {
                     {thread.business_name}
                   </div>
                   <div className="preview">
-                    {thread.message[0].business_message
-                      ? thread.message[0].business_message
-                      : thread.message[0].user_message}
+                    {thread.message[thread.message.length - 1].business_message
+                      ? thread.message[thread.message.length - 1].business_message
+                      : thread.message[thread.message.length - 1].user_message}
                   </div>
                 </div>
               </div>
@@ -217,7 +202,7 @@ export default function Inbox() {
           </>
         </div>
 
-        {/* this section shows the opened message window for selected message */}
+        {/* this section shows the opened message window for selected message for web*/}
         <div id="selected-message-container">
           <div className="write-new">
             <div className="new-msg-icon">
@@ -229,11 +214,11 @@ export default function Inbox() {
                 value={selectedThread}
                 className="bookings"
                 name="bookings"
-                onChange={(e) => setSelectedThread(e.target.value)}
+                onChange={updateSelected}
               >
                 <option>Select a recipient</option>
                 {allMessages.map((thread) => (
-                  <option key={thread.business_name} value={thread}>
+                  <option key={"web" + thread.business_name} value={thread.business_id}>
                     {thread.business_name}
                   </option>
                 ))}
