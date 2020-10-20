@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { listObjects, getSingleObject, saveObject } from "../../utils/index";
 import { UserContext } from "../useContext/UserContext";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,6 +19,7 @@ function Profile() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [displayInputs, setDisplayInputs] = useState(false);
+  const [image, setImage] = useState([]);
 
   // will connect to aws or default to loalhost
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
@@ -32,6 +34,12 @@ function Profile() {
         setFamilyName(data[0].last_name);
         setEmail(data[0].email);
         setPhone(data[0].phone);
+
+        // fetch images from s3
+        const arrayOfPhotoObjects = await listObjects(data[0].email)
+        .then(result => result.map(elem => getSingleObject(email, elem.Key)))
+        .then(result => Promise.all(result));
+        setImage(arrayOfPhotoObjects.slice(1));
       }
     }
     fetchUser();
@@ -86,11 +94,12 @@ function Profile() {
         <main id="main">
           <div id="profile-info">
             <div id="profile-img">
-              <FontAwesomeIcon
+              <img src={`data:image;base64,${image}`} />
+              {/* <FontAwesomeIcon
                 icon={faUserCircle}
                 size="8x"
                 color="darkslategrey"
-              />
+              /> */}
             </div>
             <div id="profile-details">
               <div className="detail">
