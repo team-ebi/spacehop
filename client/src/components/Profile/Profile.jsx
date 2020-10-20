@@ -40,6 +40,7 @@ function Profile() {
         .then(result => result.map(elem => getSingleObject(email, elem.Key)))
         .then(result => Promise.all(result));
         setImage(arrayOfPhotoObjects);
+        console.log(arrayOfPhotoObjects);
       }
     }
     fetchUser();
@@ -63,8 +64,8 @@ function Profile() {
     event.persist();
     try {
       const isList = await listObjects(email);
-      isList.map(elem => ({ "Key": elem.Key }))
-      .then(result => deleteObjects(result));
+      await isList.map(elem => getSingleObject(email, elem.Key))
+      .then(result => Promise.all(result));
     
       await saveObject(email, event.target.files[0]);
       const newImg = await getSingleObject(email, `${email}/${event.target.files[0].name}`);
@@ -129,7 +130,10 @@ function Profile() {
                     size="8x"
                     color="darkslategrey"
                   />
-                : <img src={`data:image;base64,${image}`} />
+                : <img
+                    src={`data:image;base64,${image}`}
+                    id="img-circle"
+                   />
               }
             <div className="upload-btn-container">
               <button className="upload-img-button" onClick={openFile}>
