@@ -90,7 +90,7 @@ function Map({ businesses, forBizCard }) {
                   size="lg"
                   color="darkslategrey"
                 />
-                {Number(selected.price).toLocaleString()}
+                {Number(selected.price).toLocaleString() + "/ hour"}
               </div>
             </div>
           </InfoWindow>
