@@ -99,6 +99,7 @@ knex.schema
       table.integer("user_id");
       table.integer("business_id");
       table.text("message");
+      table.timestamp("created_at");
 
       table
       .foreign("user_id")
