@@ -30,7 +30,7 @@ router.get("/:user", async (req, res) => {
     user_messages[i]["business_name"] = business[0].name;
   }
 
-  objToSend["user"] = user_messages;
+  objToSend["user_messages"] = user_messages;
 
   const business = await db
     .select("*")
@@ -60,7 +60,7 @@ router.get("/:user", async (req, res) => {
 
     }
 
-    objToSend["business"] = business_messages;
+    objToSend["business_messages"] = business_messages;
   }
 
   res.send(objToSend);
