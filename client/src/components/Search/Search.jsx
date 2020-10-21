@@ -52,7 +52,7 @@ export default function Search() {
   const { user } = useContext(UserContext);
 
   //change backend server target
-  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
+  const baseUrl = "http://localhost:4000";
 
   //variable to access routes history
   const history = useHistory();

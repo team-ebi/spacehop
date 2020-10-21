@@ -29,6 +29,14 @@ import { ThemeProvider } from "@material-ui/styles";
 import { DatePicker, TimePicker } from "@material-ui/pickers";
 import cornerLogo from "../../images/spacehop-name.png";
 import moment from "moment";
+import { makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 
 const theme = createMuiTheme({
   palette: {
@@ -57,7 +65,7 @@ export default function BizCard({ props }) {
   const [pickDate, setPickDate] = useState(false);
   const [pickFuture, setPickFuture] = useState(false);
   const [userReviews, setUserReviews] = useState([]);
-  const [totalPrice, setTotalPrice] = useState("");
+  const [capacity, setCapacity] = useState("");
 
   // props passed to router's useHistory
   const biz = props.location.state.state;
@@ -128,11 +136,51 @@ export default function BizCard({ props }) {
     async function getRating() {
       let res = await axios.get(`${baseUrl}/api/ratings/${biz.business_id}`);
       setUserReviews(res.data);
-
+      let ratingsRes = await axios.get(
+        `http://localhost:4000/api/businesses/1/2020-11-02`
+      );
+      console.log("HERE     " + ratingsRes.data);
+      setCapacity(ratingsRes.data);
       return () => ac.abort(); // Abort fetch on unmount
     }
     getRating();
   }, [baseUrl, biz.business_id]);
+
+  console.log(capacity["12-13"]);
+
+  const useStyles = makeStyles({
+    table: {
+      minWidth: 100,
+    },
+  });
+  const classes = useStyles();
+
+  function createData(name, calories, fat, carbs, protein) {
+    return { name, calories, fat, carbs, protein };
+  }
+
+  const rows = [];
+  function test() {
+    for (const hour in capacity) {
+      console.log(hour + capacity[hour]);
+      rows.push(createData(hour + ":", capacity[hour]));
+      console.log(rows);
+    }
+  }
+
+  test();
+
+  //rows for table
+  // const rows = [
+  //   createData(
+  //     "Open Space:",
+  //     capacity["12-13"],
+  //     capacity["13-14"],
+  //     capacity["14-15"],
+  //     capacity["15-16"],
+  //     capacity["16-17"]
+  //   ),
+  // ];
 
   //post reservation to database
   async function reservationHandler() {
@@ -273,6 +321,31 @@ export default function BizCard({ props }) {
                     </div>
                   )}
                 </div>
+                <div id="reviews-header">{"Availability "}</div>
+                <TableContainer className="availability-table" component={Paper}>
+                  <Table
+                    className={classes.table}
+                    size="small"
+                    aria-label="a dense table"
+                  >
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Hours</TableCell>
+                        <TableCell align="right">Seats Open</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {rows.map((row) => (
+                        <TableRow key={row.name}>
+                          <TableCell component="th" scope="row">
+                            {row.name}
+                          </TableCell>
+                          <TableCell align="right">{row.calories}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               </div>
 
               <hr className="divider" id="mobile-divider"></hr>
