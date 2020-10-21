@@ -50,7 +50,7 @@ function Profile() {
             result.map((elem) => getSingleObject(email, elem.Key))
           )
           .then((result) => Promise.all(result));
-        setImage(arrayOfPhotoObjects[0]);
+        setImage(arrayOfPhotoObjects);
       }
     }
     fetchUser();
