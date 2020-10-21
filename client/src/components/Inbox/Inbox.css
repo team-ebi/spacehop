@@ -163,7 +163,9 @@
     bottom: 65px;
     overflow-y: scroll;
   }
-
+  .dropdown-bookings {
+    width: 250px;
+  }
   .mobile-version {
     display: inline;
   }
