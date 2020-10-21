@@ -116,7 +116,7 @@ router.patch("/:user/:biz", async (req, res) => {
     .select("*")
     .table("users")
     .where({ email });
-
+  
   const user_id = user[0].id;
   const business_id = 1;
   const updatedMessage = req.body;

@@ -139,10 +139,16 @@
 #mobile-selected-message-container {
   display: none;
 }
+.inbox-toggle {
+  margin-bottom: 10px;
+  display:flex;
+  justify-content: center;
+}
 @media (max-height: 815px) {
   #inbox-container {
     overflow: hidden;
-    max-height: 100vh;
+    bottom: 65px;
+    position: absolute;
     padding-top: 5px;
     top: 0;
     background: #efefbb; /* fallback for old browsers */
@@ -206,9 +212,10 @@
       padding: 2px;
     }
     .message-body-container {
-      height: 470px;
+      height: 480px;
       width: 94%;
       padding: 10px;
+      padding-bottom: 5px;
       overflow-y: scroll;
     }
     .msg-input-area {
@@ -255,7 +262,7 @@
 }
 @media (max-height: 700px) {
   .message-body-container {
-    height: 320px;
+    height: 335px;
   }
   #message-preview-container {
     height: 480px;
@@ -263,4 +270,5 @@
   #mobile-selected-message-container {
     overflow-y: hidden;
   }
+
 }

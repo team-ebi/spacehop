@@ -32,10 +32,21 @@ export default function Messages({ selectedThread, displayMessages }) {
     // patching thread in messages db
     const newSelectedThread = selectedThread;
     newSelectedThread["message"] = newThread;
-    await axios.patch(
-      `${baseUrl}/api/messages/${user.attributes.email}/${selectedThread.business_id}`,
-      newSelectedThread
-    );
+
+    // if displaying userMessage, then patch from user as sender
+    if (displayMessages === "userMessages") {
+      await axios.patch(
+        `${baseUrl}/api/messages/${user.attributes.email}/${selectedThread.business_id}`,
+        newSelectedThread
+      );
+    }
+    else if (displayMessages === "businessMessages") {
+      // if displaying businessMessages, then patch from business as sender
+      await axios.patch(
+        `${baseUrl}/api/messages/${selectedThread.email}/${userBusiness.id}`,
+        newSelectedThread
+      );
+    }
   }
 
   return (
@@ -55,6 +66,7 @@ export default function Messages({ selectedThread, displayMessages }) {
         <ScrollToBottom className="message-body-container">
           {updatedThread &&
             updatedThread.map((msg) => {
+              // if displaying userMessages, sender will be the user
               if (displayMessages === "userMessages" && msg.user_message) {
                 return (
                   <div className="msg right">
@@ -76,6 +88,8 @@ export default function Messages({ selectedThread, displayMessages }) {
                     </span>
                   </div>
                 );
+
+                // if displaying businessMessages, sender will be the business
               } else if (
                 displayMessages === "businessMessages" &&
                 msg.business_message
@@ -106,8 +120,8 @@ export default function Messages({ selectedThread, displayMessages }) {
             name="message-input"
             id="send-message-input"
             type="text"
-            value={newMessage.user_message}
-            onInput={(e) => setNewMessage({ user_message: e.target.value })}
+            value={displayMessages === "userMessages" ? newMessage.user_message : newMessage.business_message}
+            onInput={(e) => displayMessages === "userMessages" ? setNewMessage({ user_message: e.target.value }) : setNewMessage({ business_message: e.target.value })}
           />
           <div id="send-input-icon">
             <FontAwesomeIcon

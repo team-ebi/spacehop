@@ -108,7 +108,7 @@ export default function Inbox() {
       <div className="inbox-buttons">
         {/* this switch will appear if user has business */}
         {userBusiness && (
-          <div className="toggle-switch-container inbox-toggle">
+          <div className="inbox-toggle">
             <span className="toggle-text">User</span>
             <label className="switch">
               <input
