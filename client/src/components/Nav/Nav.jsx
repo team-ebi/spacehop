@@ -17,6 +17,9 @@ import {
 import Auth from "../Auth/Auth";
 import { Auth as AuthUser } from "aws-amplify";
 import "./Nav.css";
+//miku
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.scss'; 
 
 export default function Nav() {
   // these states manage display for modal windows for menu, login, and signup
@@ -264,11 +267,19 @@ export default function Nav() {
               </button>
             )}
 
+            {/* miku */}
             {/* only display profile button if user IS logged in */}
+            <Swiper>
             {user && user.attributes && (
+              <SwiperSlide>
+              {/* <button className="menu-item" onClick={profileHandler}>
+                Profile
+              </button> */}
               <button className="menu-item" onClick={profileHandler}>
                 Profile
               </button>
+
+              </SwiperSlide>
             )}
 
            {/* only display message button if user IS logged in */}
@@ -302,6 +313,8 @@ export default function Nav() {
               //   <AmplifySignOut buttonText="Log out" />
               // </div>
             )}
+
+            </Swiper>
           </div>
         )}
 
