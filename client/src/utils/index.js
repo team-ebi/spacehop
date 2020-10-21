@@ -75,7 +75,12 @@ export function saveObject(bizId, file) {
 }
 
 // Delete folder
-const deleteObjects = (bucket, objects) => {
+export function deleteObjects(objects) {
+  const bucket = new aws.S3({
+    params: {
+      Bucket: bucketName,
+    },
+  });
   const deleteObjects = new Promise((resolve, reject) => {
     bucket.deleteObjects(
       { Delete: { Objects: objects, Quiet: true } },

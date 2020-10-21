@@ -98,7 +98,7 @@
 #section-container {
     display: flex;
     flex-flow: row wrap;
-    margin-top: 40px;
+    margin-top: 20px;
     justify-content: center;
 }
 main {
