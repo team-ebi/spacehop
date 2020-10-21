@@ -25,7 +25,7 @@ function Profile() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [displayInputs, setDisplayInputs] = useState(false);
-  const [image, setImage] = useState([]);
+  const [image, setImage] = useState(null);
 
   // will connect to aws or default to loalhost
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
@@ -50,7 +50,7 @@ function Profile() {
             result.map((elem) => getSingleObject(email, elem.Key))
           )
           .then((result) => Promise.all(result));
-        setImage(arrayOfPhotoObjects);
+        setImage(arrayOfPhotoObjects[0]);
       }
     }
     fetchUser();
@@ -76,9 +76,10 @@ function Profile() {
       //set loading sign
       setLoadingImg(true);
 
-      const isList = await listObjects(email)
+      const isList = await listObjects(email);
+      console.log("isList :", isList);
       await isList.map(elem => ({ "Key": elem.Key }))
-      .then(result => deleteObjects(email, result));
+      .then(result => deleteObjects(result));
 
     
       await saveObject(email, event.target.files[0]);
@@ -145,14 +146,14 @@ function Profile() {
           <div id="profile-info">
             <div id="profile-img">
               <div className="user-img-preview">
-                {image.length === 0 && (
+                {!image && (
                   <FontAwesomeIcon
                     icon={faUserCircle}
                     size="8x"
                     color="darkslategrey"
                   />
                 )}
-                {image.length > 0 && (
+                {image && (
                   <img src={`data:image;base64,${image}`} id="img-circle" />
                 )}
               </div>
