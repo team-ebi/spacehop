@@ -49,8 +49,8 @@ function Profile() {
           .then((result) =>
             result.map((elem) => getSingleObject(email, elem.Key))
           )
-          .then((result) => Promise.all(result));
-        setImage(arrayOfPhotoObjects[0]);
+          .then((result) => Promise.all(result.slice(-1)));
+        setImage(arrayOfPhotoObjects);
       }
     }
     fetchUser();
