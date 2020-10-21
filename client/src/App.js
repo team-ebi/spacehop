@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import "./App.css";
-import { BusinessContext } from "./components/useContext/BusinessContext";
+import {
+  BusinessContext,
+  UserBusinessContext,
+} from "./components/useContext/BusinessContext";
 import { UserContext } from "./components/useContext/UserContext";
 import { AuthStateContext } from "./components/useContext/AuthStateContext";
 import {
@@ -29,6 +32,7 @@ require("dotenv").config();
 
 export default function App() {
   const [businesses, setBusinesses] = useState(null);
+  const [userBusiness, setUserBusiness] = useState(null);
   const [authState, setAuthState] = useState(null);
   const [user, setUser] = useState(null);
   const [location, setLocation] = useState("");
@@ -80,41 +84,69 @@ export default function App() {
     init();
   }, []);
 
+  useEffect(() => {
+    async function checkUserBiz() {
+      if (user) {
+        // check to see if user has a business associated with their account
+        // if so, set userBusiness to their business
+        const res = await axios({
+          method: "POST",
+          url: `${baseUrl}/api/users/account`,
+          data: { email: user.attributes.email },
+        });
+        setUserBusiness(res.data[0])
+      }
+    };
+    checkUserBiz();
+  }, [user]);
+
   return (
     <BrowserRouter>
       <div className="App">
         <UserContext.Provider value={{ user, setUser }}>
           <AuthStateContext.Provider value={{ authState, setAuthState }}>
             <BusinessContext.Provider value={{ businesses, setBusinesses }}>
-              <LocationContext.Provider value={{ location, setLocation }}>
-                <DateContext.Provider value={{ date, setDate }}>
-                  <StartTimeContext.Provider
-                    value={{ startTime, setStartTime }}
-                  >
-                    <EndTimeContext.Provider value={{ endTime, setEndTime }}>
-                      <MuiPickersUtilsProvider utils={MomentUtils}>
-                        <Nav />
-                        <Switch>
-                          <Route path="/" exact component={Search} />
-                          <Route path="/profile" exact component={Profile} />
-                          <Route path="/about" exact component={About} />
-                          <Route path="/team" exact component={Team} />
-                          <Route path="/business" exact component={Business} />
-                          <Route path="/inbox" exact component={Inbox} />
-                          <Route path="/inbox/message" exact component={Messages} />
-                          <Route path="/list" exact component={List} />
-                          <Route
-                            path="/booking/:name"
-                            render={(propTypes) => (
-                              <BizCard props={propTypes} />
-                            )}
-                          />
-                        </Switch>
-                      </MuiPickersUtilsProvider>
-                    </EndTimeContext.Provider>
-                  </StartTimeContext.Provider>
-                </DateContext.Provider>
-              </LocationContext.Provider>
+              <UserBusinessContext.Provider
+                value={{ userBusiness, setUserBusiness }}
+              >
+                <LocationContext.Provider value={{ location, setLocation }}>
+                  <DateContext.Provider value={{ date, setDate }}>
+                    <StartTimeContext.Provider
+                      value={{ startTime, setStartTime }}
+                    >
+                      <EndTimeContext.Provider value={{ endTime, setEndTime }}>
+                        <MuiPickersUtilsProvider utils={MomentUtils}>
+                          <Nav />
+                          <Switch>
+                            <Route path="/" exact component={Search} />
+                            <Route path="/profile" exact component={Profile} />
+                            <Route path="/about" exact component={About} />
+                            <Route path="/team" exact component={Team} />
+                            <Route
+                              path="/business"
+                              exact
+                              component={Business}
+                            />
+                            <Route path="/inbox" exact component={Inbox} />
+                            <Route
+                              path="/inbox/message"
+                              exact
+                              component={Messages}
+                            />
+                            <Route path="/list" exact component={List} />
+                            <Route
+                              path="/booking/:name"
+                              render={(propTypes) => (
+                                <BizCard props={propTypes} />
+                              )}
+                            />
+                          </Switch>
+                        </MuiPickersUtilsProvider>
+                      </EndTimeContext.Provider>
+                    </StartTimeContext.Provider>
+                  </DateContext.Provider>
+                </LocationContext.Provider>
+              </UserBusinessContext.Provider>
             </BusinessContext.Provider>
           </AuthStateContext.Provider>
         </UserContext.Provider>

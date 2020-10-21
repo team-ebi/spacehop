@@ -97,7 +97,7 @@
   left: -50px;
 }
 .slick-prev:before, .slick-next:before {
-  color: #73b930;
+  color: #80cc37;
 }
 
 .back-icon {
@@ -275,7 +275,7 @@ input:checked + .slider:before {
   .slick-next:before, .slick-prev:before {
     font-size: 30px;
     z-index: 100;
-    color: #73b930;
+    color: #80cc37;
   }
   .corner-logo-container {
     display: flex;

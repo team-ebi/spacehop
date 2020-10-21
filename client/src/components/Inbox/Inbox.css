@@ -104,6 +104,10 @@
 .inbox-subheader {
   text-align: center;
 }
+.inbox-buttons {
+  display: flex;
+  flex-flow: row nowrap;
+}
 .msg-input-area {
   display: flex;
   align-items: center;
@@ -200,7 +204,7 @@
       padding: 2px;
     }
     .message-body-container {
-      height: 45%;
+      height: 470px;
       width: 94%;
       padding: 10px;
       overflow-y: scroll;
@@ -217,12 +221,12 @@
     .back-to-inbox {
       width: 100px;
       border: none;
-      background-color: #73b930;
-      border-radius: 10px;
+      background-color: #80cc37;
+      border-radius: 30px;
       margin-right: 5px;
       cursor: pointer;
       text-align: center;
-      height: 20px;
+      height: 35px;
       box-shadow: 0 4px 8px lightgrey;
     }
     #back-inbox-container {
@@ -235,7 +239,9 @@
       z-index: 100
     }
     .biz-name-message {
-      width: 150px;
+      width: 300px;
+      display: flex;
+      flex-flow: row nowrap;
     }
     .web-version {
       display: none;
@@ -247,7 +253,7 @@
 }
 @media (max-height: 700px) {
   .message-body-container {
-    height: 30%;
+    height: 320px;
   }
   #message-preview-container {
     height: 480px;
