@@ -131,23 +131,30 @@ export default function BizCard({ props }) {
     }
   }
 
+  //convert date to a string to fetch from databasee
+  const selectedDate = new Date(date);
+  const sendyear = selectedDate.getFullYear();
+  const sendmonth = selectedDate.getMonth() + 1;
+  const senddate = selectedDate.getDate();
+
+  const dateToSend =
+    String(sendyear) + "-" + String(sendmonth) + "-" + String(senddate);
+
   useEffect(() => {
     const ac = new AbortController();
     async function getRating() {
       let res = await axios.get(`${baseUrl}/api/ratings/${biz.business_id}`);
       setUserReviews(res.data);
-      let ratingsRes = await axios.get(
-        `http://localhost:4000/api/businesses/1/2020-11-02`
+      let availabilityRes = await axios.get(
+        `http://localhost:4000/api/businesses/${biz.id}/${dateToSend}`
       );
-      console.log("HERE     " + ratingsRes.data);
-      setCapacity(ratingsRes.data);
+      setCapacity(availabilityRes.data);
       return () => ac.abort(); // Abort fetch on unmount
     }
     getRating();
   }, [baseUrl, biz.business_id]);
 
-  console.log(capacity["12-13"]);
-
+  //styles for table
   const useStyles = makeStyles({
     table: {
       minWidth: 100,
@@ -155,32 +162,20 @@ export default function BizCard({ props }) {
   });
   const classes = useStyles();
 
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
+  //create data for table
+  function createData(name, seat) {
+    return { name, seat };
   }
 
+  //create rows for table
   const rows = [];
-  function test() {
+  function availabilityHandler() {
     for (const hour in capacity) {
-      console.log(hour + capacity[hour]);
       rows.push(createData(hour + ":", capacity[hour]));
-      console.log(rows);
     }
   }
+  availabilityHandler();
 
-  test();
-
-  //rows for table
-  // const rows = [
-  //   createData(
-  //     "Open Space:",
-  //     capacity["12-13"],
-  //     capacity["13-14"],
-  //     capacity["14-15"],
-  //     capacity["15-16"],
-  //     capacity["16-17"]
-  //   ),
-  // ];
 
   //post reservation to database
   async function reservationHandler() {
@@ -321,8 +316,12 @@ export default function BizCard({ props }) {
                     </div>
                   )}
                 </div>
-                <div id="reviews-header">{"Availability "}</div>
-                <TableContainer className="availability-table" component={Paper}>
+                {date ? <div id="reviews-header">{"Availability "}</div> : console.log('no') }
+                {date ?   
+                <TableContainer
+                  className="availability-table"
+                  component={Paper}
+                >
                   <Table
                     className={classes.table}
                     size="small"
@@ -340,12 +339,12 @@ export default function BizCard({ props }) {
                           <TableCell component="th" scope="row">
                             {row.name}
                           </TableCell>
-                          <TableCell align="right">{row.calories}</TableCell>
+                          <TableCell align="right">{row.seat}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
                   </Table>
-                </TableContainer>
+                </TableContainer> : console.log('no')}
               </div>
 
               <hr className="divider" id="mobile-divider"></hr>
