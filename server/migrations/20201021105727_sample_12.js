@@ -1,5 +1,6 @@
 exports.up = function(knex) {
   return knex.schema
+    .dropTableIfExists("messages")
     .dropTableIfExists("ratings")
     .dropTableIfExists("availability")
     .dropTableIfExists("reservations")
