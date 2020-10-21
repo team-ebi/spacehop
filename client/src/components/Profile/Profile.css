@@ -105,6 +105,9 @@ section {
 #profile-divider {
     display: none;
 }
+.inbox-toggle {
+    margin-left: 10px;
+}
 @media (max-width: 700px) {
     #user-profile-container {
         padding-top: 0px;

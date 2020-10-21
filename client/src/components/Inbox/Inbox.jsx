@@ -18,7 +18,8 @@ export default function Inbox() {
   const { user } = useContext(UserContext);
   const { userBusiness, setUserBusiness } = useContext(UserBusinessContext);
   const [selectedThread, setSelectedThread] = useState("");
-  const [allMessages, setAllMessages] = useState([]);
+  const [allUserMessages, setAllUserMessages] = useState([]);
+  const [allBusinessMessages, setAllBusinessMessages] = useState([]);
   const [displayInboxList, setDisplayInboxList] = useState(true);
   const [displayMessages, setDisplayMessages] = useState("userMessages");
 
@@ -27,7 +28,14 @@ export default function Inbox() {
 
   function updateSelected(e) {
     const businessId = Number(e.target.value);
-    for (const message of allMessages) {
+    for (const message of allUserMessages) {
+      if (message.business_id === businessId) {
+        setSelectedThread(message);
+        setDisplayInboxList(false);
+        return;
+      }
+    }
+    for (const message of allBusinessMessages) {
       if (message.business_id === businessId) {
         setSelectedThread(message);
         setDisplayInboxList(false);
@@ -43,12 +51,22 @@ export default function Inbox() {
         let req = axios.get(`${baseUrl}/api/messages/${user.attributes.email}`);
         let res = await req;
         let data = res.data;
-        let result = data.map((thread) => {
+        let businessResults;
+        let userResults = data.user_messages.map((thread) => {
           const parsedMsg = JSON.parse(thread.message);
           thread.message = parsedMsg;
           return thread;
         });
-        setAllMessages(result);
+        setAllUserMessages(userResults);
+        
+        if (data.business_messages.length > 0) {
+          businessResults = data.business_messages.map((thread) => {
+            const parsedMsg = JSON.parse(thread.message);
+            thread.message = parsedMsg;
+            return thread;
+          });
+        }
+        setAllBusinessMessages(businessResults)
       }
     }
     fetchMessage();
@@ -143,7 +161,15 @@ export default function Inbox() {
                     onChange={updateSelected}
                   >
                     <option>Select a recipient</option>
-                    {allMessages.map((thread) => (
+                    {displayMessages === "userMessages" && allUserMessages.map((thread) => (
+                      <option
+                        key={"mobile" + thread.business_id}
+                        value={thread.business_id}
+                      >
+                        {thread.business_name}
+                      </option>
+                    ))}
+                     {displayMessages === "businessMessages" && allBusinessMessages.map((thread) => (
                       <option
                         key={"mobile" + thread.business_id}
                         value={thread.business_id}
@@ -156,7 +182,38 @@ export default function Inbox() {
               </div>
 
               {/* map over all message to display in the inbox list */}
-              {allMessages.map((thread, index) => (
+              {displayMessages === "userMessages" && allUserMessages.map((thread, index) => (
+                <div
+                  className="single-preview"
+                  onClick={() => {
+                    setSelectedThread(thread);
+                    setDisplayInboxList(false);
+                  }}
+                >
+                  <div className="inbox-profile-container">
+                    <FontAwesomeIcon
+                      className="icon"
+                      icon={faUserCircle}
+                      size="lg"
+                      color="darkslategrey"
+                    />
+                  </div>
+                  <div className="message-preview">
+                    <div className="biz-name-messenger">
+                      {thread.business_name}
+                    </div>
+                    <div className="preview">
+                      {thread.message[thread.message.length - 1]
+                        .business_message
+                        ? thread.message[thread.message.length - 1]
+                            .business_message
+                        : thread.message[thread.message.length - 1]
+                            .user_message}
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {displayMessages === "businessMessages" && allBusinessMessages.map((thread, index) => (
                 <div
                   className="single-preview"
                   onClick={() => {
@@ -199,7 +256,36 @@ export default function Inbox() {
             </div>
 
             {/* map over all message to display in the inbox list */}
-            {allMessages.map((thread, index) => (
+            {displayMessages === "userMessages" && allUserMessages.map((thread, index) => (
+              <div
+                className="single-preview"
+                onClick={() => {
+                  setSelectedThread(thread);
+                  setDisplayInboxList(false);
+                }}
+              >
+                <div className="inbox-profile-container">
+                  <FontAwesomeIcon
+                    className="icon"
+                    icon={faUserCircle}
+                    size="lg"
+                    color="darkslategrey"
+                  />
+                </div>
+                <div className="message-preview">
+                  <div className="biz-name-messenger">
+                    {thread.business_name}
+                  </div>
+                  <div className="preview">
+                    {thread.message[thread.message.length - 1].business_message
+                      ? thread.message[thread.message.length - 1]
+                          .business_message
+                      : thread.message[thread.message.length - 1].user_message}
+                  </div>
+                </div>
+              </div>
+            ))}
+            {displayMessages === "businessMessages" && allBusinessMessages.map((thread, index) => (
               <div
                 className="single-preview"
                 onClick={() => {
@@ -246,7 +332,15 @@ export default function Inbox() {
                 onChange={updateSelected}
               >
                 <option>Select a recipient</option>
-                {allMessages.map((thread) => (
+                {displayMessages === "userMessages" && allUserMessages.map((thread) => (
+                  <option
+                    key={"web" + thread.business_name}
+                    value={thread.business_id}
+                  >
+                    {thread.business_name}
+                  </option>
+                ))}
+                   {displayMessages === "businessMessages" && allBusinessMessages.map((thread) => (
                   <option
                     key={"web" + thread.business_name}
                     value={thread.business_id}
