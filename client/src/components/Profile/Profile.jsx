@@ -149,7 +149,7 @@ function Profile() {
                 {!image && (
                   <FontAwesomeIcon
                     icon={faUserCircle}
-                    size="8x"
+                    size="10x"
                     color="darkslategrey"
                   />
                 )}
