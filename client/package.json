@@ -43,6 +43,7 @@
     "react-places-autocomplete": "^7.3.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-scroll-to-bottom": "^4.0.0",
     "react-slick": "^0.27.11",
     "react-test-renderer": "^16.13.1",
     "react-time-range-slider": "^1.1.2",
