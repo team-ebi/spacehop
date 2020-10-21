@@ -9,7 +9,7 @@ const moment = require("moment");
 
 //Make a Reservation
 router.post("/", async (req, res) => {
-  //ex) req.body = { "email": "potato@dog.com", "date": "2020-12-30", "price": 1000, "business_id": 1 }
+  //ex) req.body = { "email": "potato@dog.com", "date": "2020-12-30", "business_id": 1,"start_at":12,"end_at":17 }
 
   // Get user id that matches with req.body.email
   try {
@@ -18,24 +18,41 @@ router.post("/", async (req, res) => {
       email,
     });
 
-    const date = req.body.date.substr(0,10);
-    const price = req.body.price;
-    const start_at = req.body.start_at;
-    const end_at = req.body.end_at;
-    // created_at is set as default to today so needless to define.
     const business_id = req.body.business_id;
-    const user_id = user[0]["id"];
 
-    const register = await db.select("*").table("reservations").insert({
-      date,
-      price,
-      business_id,
-      user_id,
-      start_at,
-      end_at
+    //get business data and pick up hourly price
+    const businessData = await db.select("price").table("businesses").where({
+      id:business_id,
     });
 
-    res.send("New reservation created!");
+    const hourlyPrice=Number(businessData[0].price)
+
+    //set format of YYYY-MM-DD
+    const date = req.body.date.substr(0,10);
+    const start_at = Number(req.body.start_at);
+    const end_at = Number(req.body.end_at);
+
+    if(end_at<=start_at){
+      res.send("Incorrect start & end times!!!");
+    }else{
+      //set total price
+      const price = hourlyPrice*(end_at-start_at);
+  
+      // created_at is set as default to today so needless to define.
+      const user_id = user[0]["id"];
+  
+      const register = await db.select("*").table("reservations").insert({
+        date,
+        price,
+        business_id,
+        user_id,
+        start_at,
+        end_at
+      });
+  
+      res.send("New reservation created!");
+    }
+
   } catch {
     res.sendStatus(500);
   }
