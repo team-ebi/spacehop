@@ -142,7 +142,13 @@ const messages = () => {
           { user_id: 1, business_id: 5, message: stringify5, created_at: createAt },
           { user_id: 1, business_id: 6, message: stringify6, created_at: createAt },
           { user_id: 1, business_id: 7, message: stringify7, created_at: createAt },
-          { user_id: 1, business_id: 8, message: stringify8, created_at: createAt }
+          { user_id: 1, business_id: 8, message: stringify8, created_at: createAt },
+          { user_id: 3, business_id: 1, message: stringify6, created_at: createAt },
+          { user_id: 4, business_id: 1, message: stringify7, created_at: createAt },
+          { user_id: 5, business_id: 1, message: stringify8, created_at: createAt },
+          { user_id: 2, business_id: 3, message: stringify6, created_at: createAt },
+          { user_id: 2, business_id: 4, message: stringify7, created_at: createAt },
+          { user_id: 2, business_id: 5, message: stringify8, created_at: createAt }
         ])
         .then(() => process.exit());
     });
