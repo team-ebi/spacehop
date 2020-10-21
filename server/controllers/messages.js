@@ -57,6 +57,7 @@ router.get("/:user", async (req, res) => {
 
         business_messages[i]["user_first_name"] = user[0].first_name;
         business_messages[i]["user_last_name"] = user[0].last_name;
+        business_messages[i]["email"] = user[0].email;
 
     }
 
