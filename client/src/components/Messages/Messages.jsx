@@ -39,8 +39,7 @@ export default function Messages({ selectedThread, displayMessages }) {
         `${baseUrl}/api/messages/${user.attributes.email}/${selectedThread.business_id}`,
         newSelectedThread
       );
-    }
-    else if (displayMessages === "businessMessages") {
+    } else if (displayMessages === "businessMessages") {
       // if displaying businessMessages, then patch from business as sender
       await axios.patch(
         `${baseUrl}/api/messages/${selectedThread.email}/${userBusiness.id}`,
@@ -71,7 +70,9 @@ export default function Messages({ selectedThread, displayMessages }) {
                 return (
                   <div className="msg right">
                     <div className="msg-name">You</div>
-                    <span className="recipient">{msg.user_message}</span>
+                    <div className="sender-chat-bubble">
+                      <span className="recipient">{msg.user_message}</span>
+                    </div>
                   </div>
                 );
               } else if (
@@ -83,9 +84,11 @@ export default function Messages({ selectedThread, displayMessages }) {
                     <div className="msg-name">
                       {selectedThread.business_name}
                     </div>
-                    <span className="other-messenger">
-                      {msg.business_message}
-                    </span>
+                    <div className="other-chat-bubble">
+                      <span className="other-messenger">
+                        {msg.business_message}
+                      </span>
+                    </div>
                   </div>
                 );
 
@@ -97,7 +100,9 @@ export default function Messages({ selectedThread, displayMessages }) {
                 return (
                   <div className="msg right">
                     <div className="msg-name">You</div>
-                    <span className="recipient">{msg.business_message}</span>
+                    <div className="sender-chat-bubble">
+                      <span className="recipient">{msg.business_message}</span>
+                    </div>
                   </div>
                 );
               } else if (
@@ -109,7 +114,11 @@ export default function Messages({ selectedThread, displayMessages }) {
                     <div className="msg-name">
                       {`${selectedThread.user_first_name} ${selectedThread.user_last_name}`}
                     </div>
-                    <span className="other-messenger">{msg.user_message}</span>
+                    <div className="other-chat-bubble">
+                      <span className="other-messenger">
+                        {msg.user_message}
+                      </span>
+                    </div>
                   </div>
                 );
               }
@@ -120,8 +129,16 @@ export default function Messages({ selectedThread, displayMessages }) {
             name="message-input"
             id="send-message-input"
             type="text"
-            value={displayMessages === "userMessages" ? newMessage.user_message : newMessage.business_message}
-            onInput={(e) => displayMessages === "userMessages" ? setNewMessage({ user_message: e.target.value }) : setNewMessage({ business_message: e.target.value })}
+            value={
+              displayMessages === "userMessages"
+                ? newMessage.user_message
+                : newMessage.business_message
+            }
+            onInput={(e) =>
+              displayMessages === "userMessages"
+                ? setNewMessage({ user_message: e.target.value })
+                : setNewMessage({ business_message: e.target.value })
+            }
           />
           <div id="send-input-icon">
             <FontAwesomeIcon
