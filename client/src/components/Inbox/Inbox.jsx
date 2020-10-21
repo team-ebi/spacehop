@@ -52,9 +52,9 @@ export default function Inbox() {
         let res = await req;
         let data = res.data;
         let businessResults;
-        console.log("data :", data);
+        console.log("data :", typeof data.user_messages[0].created_at);
         let userResults = data.user_messages
-          .sort((a, b) => b.created_at - a.created_at)
+          .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
           .map((thread) => {
             const parsedMsg = JSON.parse(thread.message);
             thread.message = parsedMsg;
@@ -64,7 +64,7 @@ export default function Inbox() {
 
         if (data.business_messages && data.business_messages.length > 0) {
           businessResults = data.business_messages
-            .sort((a, b) => b.created_at - a.created_at)
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
             .map((thread) => {
               const parsedMsg = JSON.parse(thread.message);
               thread.message = parsedMsg;
@@ -75,7 +75,7 @@ export default function Inbox() {
       }
     }
     fetchMessage();
-  }, [user]);
+  }, [user, displayMessages, displayInboxList]);
 
   // will go back to previous
   function goBack() {
@@ -170,7 +170,9 @@ export default function Inbox() {
                   >
                     <option>Select a recipient</option>
                     {displayMessages === "userMessages" &&
-                      allUserMessages.map((thread) => (
+                      allUserMessages
+                        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                        .map((thread) => (
                         <option
                           key={"mobile" + thread.business_id}
                           value={thread.business_id}
@@ -179,7 +181,9 @@ export default function Inbox() {
                         </option>
                       ))}
                     {displayMessages === "businessMessages" &&
-                      allBusinessMessages.map((thread) => (
+                      allBusinessMessages
+                        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                        .map((thread) => (
                         <option
                           key={"mobile" + thread.business_id}
                           value={thread.business_id}
@@ -193,7 +197,9 @@ export default function Inbox() {
 
               {/* map over all message to display in the inbox list */}
               {displayMessages === "userMessages" &&
-                allUserMessages.map((thread, index) => (
+                allUserMessages
+                  .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                  .map((thread, index) => (
                   <div
                     className="single-preview"
                     onClick={() => {
@@ -225,7 +231,9 @@ export default function Inbox() {
                   </div>
                 ))}
               {displayMessages === "businessMessages" &&
-                allBusinessMessages.map((thread, index) => (
+                allBusinessMessages
+                  .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                  .map((thread, index) => (
                   <div
                     className="single-preview"
                     onClick={() => {

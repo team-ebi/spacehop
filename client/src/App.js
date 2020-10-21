@@ -87,7 +87,6 @@ export default function App() {
   useEffect(() => {
     async function checkUserBiz() {
       if (user) {
-        console.log("RUNNING")
         // check to see if user has a business associated with their account
         // if so, set userBusiness to their business
         const res = await axios({
