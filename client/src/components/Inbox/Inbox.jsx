@@ -3,11 +3,7 @@ import { UserContext } from "../useContext/UserContext";
 import { UserBusinessContext } from "../useContext/BusinessContext";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUserCircle,
-  faArrowCircleLeft,
-  faEdit,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUserCircle, faArrowCircleLeft, faEdit } from "@fortawesome/free-solid-svg-icons";
 import cornerLogo from "../../images/spacehop-name.png";
 import Messages from "../Messages/Messages";
 import axios from "axios";
@@ -26,8 +22,11 @@ export default function Inbox() {
   // will connect to aws or default to localhost
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 
+  // this is for dropdown menu, will check each message's biz id 
+  // and see if it matches value of option selected
   function updateSelected(e) {
     const businessId = Number(e.target.value);
+    // checking all user messages
     for (const message of allUserMessages) {
       if (message.business_id === businessId) {
         setSelectedThread(message);
@@ -35,6 +34,7 @@ export default function Inbox() {
         return;
       }
     }
+    // checking all biz messages
     for (const message of allBusinessMessages) {
       if (message.business_id === businessId) {
         setSelectedThread(message);
@@ -44,7 +44,7 @@ export default function Inbox() {
     }
   }
 
-  // will fetch all of user's email messages
+  // will fetch all of user's messages
   useEffect(() => {
     async function fetchMessage() {
       if (user) {
@@ -52,7 +52,8 @@ export default function Inbox() {
         let res = await req;
         let data = res.data;
         let businessResults;
-        console.log("data :", typeof data.user_messages[0].created_at);
+        // sorting from most recent to oldest
+        // mapping through to parse each message thread
         let userResults = data.user_messages
           .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
           .map((thread) => {
@@ -62,6 +63,7 @@ export default function Inbox() {
           });
         setAllUserMessages(userResults);
 
+        // if user is also a biz owner, then will do the same for biz messages
         if (data.business_messages && data.business_messages.length > 0) {
           businessResults = data.business_messages
             .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
@@ -122,6 +124,7 @@ export default function Inbox() {
                     ? setDisplayMessages("businessMessages")
                     : setDisplayMessages("userMessages");
                   setDisplayInboxList(true);
+                  setSelectedThread(null);
                 }}
               />
               <span className="slider round"></span>
@@ -169,6 +172,7 @@ export default function Inbox() {
                     onChange={updateSelected}
                   >
                     <option>Select a recipient</option>
+                    {/* will go through all user messages */}
                     {displayMessages === "userMessages" &&
                       allUserMessages
                         .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
@@ -180,6 +184,8 @@ export default function Inbox() {
                           {thread.business_name}
                         </option>
                       ))}
+                      {/* if user is biz owner, will go through biz messages if switch is toggled
+                      to display businesses */}
                     {displayMessages === "businessMessages" &&
                       allBusinessMessages
                         .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
@@ -195,13 +201,14 @@ export default function Inbox() {
                 </div>
               </div>
 
-              {/* map over all message to display in the inbox list */}
+              {/* map over all user message to display in the inbox list */}
               {displayMessages === "userMessages" &&
                 allUserMessages
                   .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-                  .map((thread, index) => (
+                  .map((thread) => (
                   <div
                     className="single-preview"
+                    key={"mobile-version" + thread.business_name}
                     onClick={() => {
                       setSelectedThread(thread);
                       setDisplayInboxList(false);
@@ -233,9 +240,10 @@ export default function Inbox() {
               {displayMessages === "businessMessages" &&
                 allBusinessMessages
                   .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-                  .map((thread, index) => (
+                  .map((thread) => (
                   <div
                     className="single-preview"
+                    key={"mobile-version" + thread.user_last_name}
                     onClick={() => {
                       setSelectedThread(thread);
                       setDisplayInboxList(false);
@@ -277,9 +285,12 @@ export default function Inbox() {
 
             {/* map over all message to display in the inbox list */}
             {displayMessages === "userMessages" &&
-              allUserMessages.map((thread, index) => (
+              allUserMessages
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                .map((thread) => (
                 <div
                   className="single-preview"
+                  key={"web-version" + thread.business_name}
                   onClick={() => {
                     setSelectedThread(thread);
                     setDisplayInboxList(false);
@@ -309,9 +320,12 @@ export default function Inbox() {
                 </div>
               ))}
             {displayMessages === "businessMessages" &&
-              allBusinessMessages.map((thread, index) => (
+              allBusinessMessages
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                .map((thread) => (
                 <div
                   className="single-preview"
+                  key={"web-version" + thread.user_first_name}
                   onClick={() => {
                     setSelectedThread(thread);
                     setDisplayInboxList(false);
@@ -359,18 +373,22 @@ export default function Inbox() {
               >
                 <option>Select a recipient</option>
                 {displayMessages === "userMessages" &&
-                  allUserMessages.map((thread) => (
+                  allUserMessages
+                    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                    .map((thread) => (
                     <option
                       key={"web" + thread.business_name}
-                      value={thread.business_id}
+                      value={thread.business_name}
                     >
                       {thread.business_name}
                     </option>
                   ))}
                 {displayMessages === "businessMessages" &&
-                  allBusinessMessages.map((thread) => (
+                  allBusinessMessages
+                    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                    .map((thread) => (
                     <option
-                      key={"web" + thread.business_name}
+                      key={"web" + thread.user_first_name}
                       value={thread.business_id}
                     >
                       {thread.user_first_name + " " + thread.user_last_name}
