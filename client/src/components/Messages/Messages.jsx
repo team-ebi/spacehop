@@ -65,7 +65,7 @@ export default function Messages({ selectedThread, displayMessages }) {
 
         <ScrollToBottom className="message-body-container">
           {updatedThread &&
-            updatedThread.map((msg) => {
+            updatedThread.map((msg, index) => {
               // if displaying userMessages, sender will be the user
               if (displayMessages === "userMessages" && msg.user_message) {
                 return (

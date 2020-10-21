@@ -176,9 +176,9 @@ export default function Inbox() {
                     {displayMessages === "userMessages" &&
                       allUserMessages
                         .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-                        .map((thread) => (
+                        .map((thread, index) => (
                         <option
-                          key={"mobile" + thread.business_id}
+                          key={"mobile" + thread.business_id + index}
                           value={thread.business_id}
                         >
                           {thread.business_name}
