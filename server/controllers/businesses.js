@@ -184,7 +184,7 @@ router.get("/:id/:date", async (req, res) => {
   //get day as number(0-6)
   const dayOfNum = date.getDay();
 
-  const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Tursday", "Friday", "Saturday"]
+  const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
   //convert number to string
   const day = dayArray[dayOfNum];

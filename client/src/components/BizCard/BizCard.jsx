@@ -29,6 +29,14 @@ import { ThemeProvider } from "@material-ui/styles";
 import { DatePicker, TimePicker } from "@material-ui/pickers";
 import cornerLogo from "../../images/spacehop-name.png";
 import moment from "moment";
+import { makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 
 const theme = createMuiTheme({
   palette: {
@@ -57,7 +65,7 @@ export default function BizCard({ props }) {
   const [pickDate, setPickDate] = useState(false);
   const [pickFuture, setPickFuture] = useState(false);
   const [userReviews, setUserReviews] = useState([]);
-  const [totalPrice, setTotalPrice] = useState("");
+  const [capacity, setCapacity] = useState("");
 
   // props passed to router's useHistory
   const biz = props.location.state.state;
@@ -123,16 +131,51 @@ export default function BizCard({ props }) {
     }
   }
 
+  //convert date to a string to fetch from databasee
+  const selectedDate = new Date(date);
+  const sendyear = selectedDate.getFullYear();
+  const sendmonth = selectedDate.getMonth() + 1;
+  const senddate = selectedDate.getDate();
+
+  const dateToSend =
+    String(sendyear) + "-" + String(sendmonth) + "-" + String(senddate);
+
   useEffect(() => {
     const ac = new AbortController();
     async function getRating() {
       let res = await axios.get(`${baseUrl}/api/ratings/${biz.business_id}`);
       setUserReviews(res.data);
-
+      let availabilityRes = await axios.get(
+        `http://localhost:4000/api/businesses/${biz.id}/${dateToSend}`
+      );
+      setCapacity(availabilityRes.data);
       return () => ac.abort(); // Abort fetch on unmount
     }
     getRating();
   }, [baseUrl, biz.business_id]);
+
+  //styles for table
+  const useStyles = makeStyles({
+    table: {
+      minWidth: 100,
+    },
+  });
+  const classes = useStyles();
+
+  //create data for table
+  function createData(name, seat) {
+    return { name, seat };
+  }
+
+  //create rows for table
+  const rows = [];
+  function availabilityHandler() {
+    for (const hour in capacity) {
+      rows.push(createData(hour + ":", capacity[hour]));
+    }
+  }
+  availabilityHandler();
+
 
   //post reservation to database
   async function reservationHandler() {
@@ -273,6 +316,35 @@ export default function BizCard({ props }) {
                     </div>
                   )}
                 </div>
+                {date ? <div id="reviews-header">{"Availability "}</div> : console.log('no') }
+                {date ?   
+                <TableContainer
+                  className="availability-table"
+                  component={Paper}
+                >
+                  <Table
+                    className={classes.table}
+                    size="small"
+                    aria-label="a dense table"
+                  >
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Hours</TableCell>
+                        <TableCell align="right">Seats Open</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {rows.map((row) => (
+                        <TableRow key={row.name}>
+                          <TableCell component="th" scope="row">
+                            {row.name}
+                          </TableCell>
+                          <TableCell align="right">{row.seat}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer> : console.log('no')}
               </div>
 
               <hr className="divider" id="mobile-divider"></hr>
