@@ -18,7 +18,7 @@ export function listObjects(bizId) {
   });
   const listObjects = new Promise((resolve, reject) => {
     bucket.listObjects((error, data) => {
-        error ? console.log(error) : resolve(data.Contents);
+      error ? console.error("error: ", error) : resolve(data.Contents);
     });
   });
 
@@ -75,10 +75,11 @@ export function saveObject(bizId, file) {
 }
 
 // Delete folder
-export function deleteObjects(objects) {
+export function deleteObjects(folderName, objects) {
   const bucket = new aws.S3({
     params: {
       Bucket: bucketName,
+      Prefix: `${folderName}/`
     },
   });
   const deleteObjects = new Promise((resolve, reject) => {
