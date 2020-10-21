@@ -53,19 +53,23 @@ export default function Inbox() {
         let data = res.data;
         let businessResults;
         console.log("data :", data);
-        let userResults = data.user_messages.map((thread) => {
-          const parsedMsg = JSON.parse(thread.message);
-          thread.message = parsedMsg;
-          return thread;
-        });
-        setAllUserMessages(userResults);
-
-        if (data.business_messages && data.business_messages.length > 0) {
-          businessResults = data.business_messages.map((thread) => {
+        let userResults = data.user_messages
+          .sort((a, b) => b.created_at - a.created_at)
+          .map((thread) => {
             const parsedMsg = JSON.parse(thread.message);
             thread.message = parsedMsg;
             return thread;
           });
+        setAllUserMessages(userResults);
+
+        if (data.business_messages && data.business_messages.length > 0) {
+          businessResults = data.business_messages
+            .sort((a, b) => b.created_at - a.created_at)
+            .map((thread) => {
+              const parsedMsg = JSON.parse(thread.message);
+              thread.message = parsedMsg;
+              return thread;
+            });
         }
         setAllBusinessMessages(businessResults);
       }
