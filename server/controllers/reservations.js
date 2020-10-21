@@ -17,7 +17,6 @@ router.post("/", async (req, res) => {
     const user = await db.select("*").table("users").where({
       email,
     });
-
     const date = req.body.date.substr(0,10);
     const price = req.body.price;
     const start_at = req.body.start_at;
