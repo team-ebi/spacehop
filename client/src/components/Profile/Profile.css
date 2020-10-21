@@ -14,10 +14,6 @@
     display: flex;
     flex-flow: row wrap;
 }
-.upload-btn-container {
-    width: 100%;
-    text-align: center;
-}
 .upload-img-button {
     background-color: transparent;
     border: none;
@@ -27,23 +23,23 @@
     text-decoration: underline;
 }
 .user-img-preview {
-    object-fit: contain;
-    width: 100%;
     display: flex;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
     justify-content: center;
 }
 #user-photo-file {
     display: none;
 }
-.upload-btn-container {
+.profile-upload-btn-container {
     margin-bottom: 20px;
     margin-top: 10px;
+    width: 300px;
 }
 #img-circle {
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
-    object-fit: over;
+    object-fit: cover;
 }
 .attribute {
     margin-left: 15px;

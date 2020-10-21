@@ -156,7 +156,7 @@ function Profile() {
                   <img src={`data:image;base64,${image}`} id="img-circle" />
                 )}
               </div>
-              <div className="upload-btn-container">
+              <div className="profile-upload-btn-container">
                 <button className="upload-img-button" onClick={openFile}>
                   Upload Photo
                 </button>
