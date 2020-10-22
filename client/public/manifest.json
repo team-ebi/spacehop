@@ -21,6 +21,11 @@
             "src": "s512_choju45_0009_0.png",
             "type": "image/png",
             "sizes": "422x512"
+        },
+        {
+            "src": "cafe.jpg",
+            "type": "image/jpg",
+            "sizes": "375x119"
         }
     ],
     "start_url": ".",
