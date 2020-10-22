@@ -20,7 +20,6 @@
   background-color: white;
   margin-bottom: 15px;
   height: 600px;
-  overflow-y: scroll;
 }
 .msg {
   margin-bottom: 15px;
@@ -190,7 +189,6 @@
   #inbox {
     flex-flow: row wrap;
     bottom: 65px;
-    overflow-y: scroll;
   }
   .dropdown-bookings {
     width: 250px;
@@ -239,7 +237,6 @@
       width: 94%;
       padding: 10px;
       padding-bottom: 5px;
-      overflow-y: scroll;
     }
     .msg-input-area {
       height: 40px;
