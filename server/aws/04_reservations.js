@@ -92,7 +92,8 @@ const reservations = () => {
         user_id: 15,
         start_at: 15,
         end_at: 17
-      }, {
+      },
+      {
         date: "2020-11-02",
         price: 1250,
         created_at: "2020-10-01",
@@ -100,7 +101,8 @@ const reservations = () => {
         user_id: 1,
         start_at: 12,
         end_at: 17
-      }, {
+      },
+      {
         date: "2020-11-02",
         price: 1250,
         created_at: "2020-10-01",
@@ -108,7 +110,8 @@ const reservations = () => {
         user_id: 2,
         start_at: 12,
         end_at: 17
-      }, {
+      },
+      {
         date: "2020-11-02",
         price: 1250,
         created_at: "2020-10-01",
@@ -116,7 +119,8 @@ const reservations = () => {
         user_id: 3,
         start_at: 12,
         end_at: 17
-      }, {
+      },
+      {
         date: "2020-11-02",
         price: 1250,
         created_at: "2020-10-01",
@@ -124,7 +128,8 @@ const reservations = () => {
         user_id: 4,
         start_at: 12,
         end_at: 17
-      }, {
+      },
+      {
         date: "2020-11-02",
         price: 1250,
         created_at: "2020-10-01",
