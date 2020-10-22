@@ -146,7 +146,7 @@ export default function BizCard({ props }) {
       let res = await axios.get(`${baseUrl}/api/ratings/${biz.business_id}`);
       setUserReviews(res.data);
       let availabilityRes = await axios.get(
-        `http://localhost:4000/api/businesses/${biz.id}/${dateToSend}`
+        `${baseUrl}/api/businesses/${biz.id}/${dateToSend}`
       );
       setCapacity(availabilityRes.data);
       return () => ac.abort(); // Abort fetch on unmount

@@ -44,12 +44,9 @@ function Profile() {
         setEmail(data[0].email);
         setPhone(data[0].phone);
 
-        // fetch images from s3
-        const arrayOfPhotoObjects = await listObjects(data[0].email)
-          .then((result) =>
-            result.map((elem) => getSingleObject(email, elem.Key))
-          )
-          .then((result) => Promise.all(result));
+        const arrayOfPhotoObjects = await listObjects(user.attributes.email)
+        .then(result => result.map(elem => getSingleObject(user.attributes.email, elem.Key)))
+        .then(result => Promise.all(result));
         setImage(arrayOfPhotoObjects[0]);
       }
     }
@@ -72,33 +69,32 @@ function Profile() {
   // upload image
   async function uploadImage(event) {
     event.persist();
-    try {
-      //set loading sign
-      setLoadingImg(true);
-
-      const isList = await listObjects(email);
-      console.log("isList :", isList);
-      await isList.map(elem => ({ "Key": elem.Key }))
-      .then(result => deleteObjects(result));
-
     
-      await saveObject(email, event.target.files[0]);
-      const newImg = await getSingleObject(
-        email,
-        `${email}/${event.target.files[0].name}`
-      );
+    // set loading sign
+    setLoadingImg(true);
 
-      setImage(newImg);
-    } catch {
+    const fileInfo = await listObjects(email);
+    const imageKey = fileInfo.map(elem => ({ "Key": elem.Key }) );
+
+    if (imageKey.length === 0) {
       await saveObject(email, event.target.files[0]);
       const newImg = await getSingleObject(
         email,
         `${email}/${event.target.files[0].name}`
       );
       setImage(newImg);
-      //close loading sign
       setLoadingImg(false);
+      return;
     }
+
+    await deleteObjects(email, imageKey)
+    await saveObject(email, event.target.files[0]);
+    const newImg = await getSingleObject(
+      email,
+      `${email}/${event.target.files[0].name}`
+    );
+    setImage(newImg);
+    setLoadingImg(false);
   }
 
   // create ref for input button
