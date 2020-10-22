@@ -25,7 +25,9 @@ const setupServer = () => {
     app.use("/api/image", imageAPI);
     app.use("/api/messages", messagesAPI)
     app.use("/api/prod", productionTest);
-
+    app.get('*', (req, res)=>{
+        res.sendFile(pate.join(__dirname, '../../client/public/index.html'));
+      })
     return app;
 };
 
