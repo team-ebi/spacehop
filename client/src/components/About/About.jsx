@@ -2,8 +2,8 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import "./About.css";
 import cornerLogo from "../../images/spacehop-name.png";
-import imgPic from "../../images/file-20200624-132988-168jsqs (2).jpg";
-import frogPic from "../../images/s512_choju45_0009_0.png";
+import imgPic from "../../images/cafe.jpg";
+import frogPic from "../../images/dancing-frog.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 

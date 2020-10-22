@@ -73,7 +73,8 @@ export default function BizCard({ props }) {
   mapProps.push(biz);
 
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
-  const frontUrl = process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000";
+  const frontUrl =
+    process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000";
 
   //publishable stripe API key
   const stripePromise = loadStripe(
@@ -175,7 +176,6 @@ export default function BizCard({ props }) {
     }
   }
   availabilityHandler();
-
 
   //post reservation to database
   async function reservationHandler() {
@@ -316,35 +316,46 @@ export default function BizCard({ props }) {
                     </div>
                   )}
                 </div>
-                {date ? <div id="reviews-header">{"Availability "}</div> : console.log('no') }
-                {date ?   
-                <TableContainer
-                  className="availability-table"
-                  component={Paper}
-                >
-                  <Table
-                    className={classes.table}
-                    size="small"
-                    aria-label="a dense table"
+                {date ? (
+                  <div id="reviews-header">{"Availability "}</div>
+                ) : (
+                  console.log("no")
+                )}
+                {date ? (
+                  <TableContainer
+                    className="availability-table"
+                    component={Paper}
                   >
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Hours</TableCell>
-                        <TableCell align="right">Seats Open</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {rows.map((row) => (
-                        <TableRow key={row.name}>
-                          <TableCell component="th" scope="row">
-                            {row.name}
-                          </TableCell>
-                          <TableCell align="right">{row.seat}</TableCell>
+                    <Table
+                      className={classes.table}
+                      size="small"
+                      aria-label="a dense table"
+                    >
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="center">Hours</TableCell>
+                          <TableCell align="center">Seats Open</TableCell>
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer> : console.log('no')}
+                      </TableHead>
+                      <TableBody>
+                        {rows.map((row) => (
+                          <TableRow key={row.name}>
+                            <TableCell
+                              align="center"
+                              component="th"
+                              scope="row"
+                            >
+                              {row.name}
+                            </TableCell>
+                            <TableCell align="center">{row.seat}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                ) : (
+                  console.log("no")
+                )}
               </div>
 
               <hr className="divider" id="mobile-divider"></hr>
@@ -379,44 +390,50 @@ export default function BizCard({ props }) {
                       />
                     </ThemeProvider>
                   </div>
-                  <div id="booking-time-container">
-                    <div className="booking-time single-time-container">
-                      <ThemeProvider theme={theme}>
-                        <TimePicker
-                          autoOk
-                          className="booking-date-input booking-time"
-                          label="Start Time"
-                          className="date-input"
-                          value={startTime}
-                          onChange={(time) => setStartTime(time)}
-                          disablePast={true}
-                          cancelLabel={false}
-                          okLabel={false}
-                          views={["hours"]}
-                          InputProps={{
-                            disableUnderline: true,
-                          }}
-                        />
-                      </ThemeProvider>
-                    </div>
-                    <div className="booking-time single-time-container">
-                      <ThemeProvider theme={theme}>
-                        <TimePicker
-                          autoOk
-                          className="booking-date-input booking-time"
-                          label="End Time"
-                          className="date-input"
-                          value={endTime}
-                          onChange={(time) => setEndTime(time)}
-                          disablePast={true}
-                          views={["hours"]}
-                          cancelLabel={false}
-                          okLabel={false}
-                          InputProps={{
-                            disableUnderline: true,
-                          }}
-                        />
-                      </ThemeProvider>
+                  <div className="bizcard-time-container">
+                    <div id="booking-time-container">
+                      <div className="booking-time single-time-container">
+                        <ThemeProvider theme={theme}>
+                          <TimePicker
+                            autoOk
+                            className="booking-date-input booking-time"
+                            label="Start Time"
+                            className="date-input"
+                            value={startTime}
+                            onChange={(time) =>
+                              setStartTime(time.startOf("hour"))
+                            }
+                            disablePast={true}
+                            cancelLabel={false}
+                            okLabel={false}
+                            views={["hours"]}
+                            InputProps={{
+                              disableUnderline: true,
+                            }}
+                          />
+                        </ThemeProvider>
+                      </div>
+                      <div className="booking-time single-time-container">
+                        <ThemeProvider theme={theme}>
+                          <TimePicker
+                            autoOk
+                            className="booking-date-input booking-time"
+                            label="End Time"
+                            className="date-input"
+                            value={endTime}
+                            onChange={(time) =>
+                              setEndTime(time.startOf("hour"))
+                            }
+                            disablePast={true}
+                            views={["hours"]}
+                            cancelLabel={false}
+                            okLabel={false}
+                            InputProps={{
+                              disableUnderline: true,
+                            }}
+                          />
+                        </ThemeProvider>
+                      </div>
                     </div>
                   </div>
                 </div>
