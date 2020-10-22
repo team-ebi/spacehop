@@ -99,7 +99,7 @@ knex.schema
       table.integer("user_id");
       table.integer("business_id");
       table.text("message");
-      table.timestamp("created_at");
+      table.timestamp("created_at").defaultTo(knex.fn.now())
 
       table
       .foreign("user_id")
@@ -112,6 +112,20 @@ knex.schema
       .references("id")
       .inTable("businesses")
       .onDelete("CASCADE");
-    });
+    })
+    .raw(`
+      CREATE OR REPLACE FUNCTION update_created_at_column()
+      RETURNS TRIGGER AS $$
+      BEGIN
+      NEW."created_at"=now(); 
+      RETURN NEW;
+      END;
+      $$ language 'plpgsql';
+    `)
+    .raw(`
+      CREATE TRIGGER update_user_created_at BEFORE UPDATE
+      ON ?? FOR EACH ROW EXECUTE PROCEDURE 
+      update_created_at_column();
+    `, ['messages']);
 })
 .then(() => process.exit());
