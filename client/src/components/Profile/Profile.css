@@ -95,10 +95,8 @@
     display: flex;
     flex-flow: row nowrap;
 }
-.main {
-    width: 50%;
-    border-right: solid lightgrey;
-    border-width: 1px;
+#main {
+    width: 100%;
 }
 section {
     width: 50%;
@@ -137,7 +135,7 @@ section {
     #section-container {
         flex-flow: row wrap;
     }
-    .main {
+    #main {
         width: 100%;
         border-right: none;
     }
