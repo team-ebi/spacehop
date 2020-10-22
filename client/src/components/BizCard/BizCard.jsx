@@ -87,7 +87,7 @@ export default function BizCard({ props }) {
     const hours = Math.round(Math.abs(date1 - date2) / 36e5 / 1000);
     return hours;
   }
-
+  
   // will not run if user hasn't selected date or date is in the past
   // if user is not logged in, login page will be displayed
   // handles stripe checkout and redirects to checkout page
