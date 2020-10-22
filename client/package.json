@@ -42,7 +42,11 @@
     "react-loading": "^2.0.3",
     "react-places-autocomplete": "^7.3.0",
     "react-router-dom": "^5.2.0",
+<<<<<<< HEAD
     "react-scripts": "3.4.4",
+=======
+    "react-scripts": "3.4.2",
+>>>>>>> 0970883be551f9e5d1dc06105a3086b195da289d
     "react-scroll-to-bottom": "^4.0.0",
     "react-slick": "^0.27.11",
     "react-test-renderer": "^16.13.1",

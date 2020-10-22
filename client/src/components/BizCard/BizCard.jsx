@@ -73,7 +73,7 @@ export default function BizCard({ props }) {
   mapProps.push(biz);
 
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
-  const frontUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+  const frontUrl = process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000";
 
   //publishable stripe API key
   const stripePromise = loadStripe(
