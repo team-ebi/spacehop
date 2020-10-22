@@ -40,7 +40,7 @@
     justify-content: center;
 }
 #img-circle {
-    object-fit: cover;
+    object-fit: contain;
 }
 .attribute {
     margin-left: 15px;
