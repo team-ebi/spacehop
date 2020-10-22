@@ -26,6 +26,11 @@
             "src": "cafe.jpg",
             "type": "image/jpg",
             "sizes": "375x119"
+        },
+          {
+            "src": "dancing-frog.jpg",
+            "type": "image/png",
+            "sizes": "150x182"
         }
     ],
     "start_url": ".",
