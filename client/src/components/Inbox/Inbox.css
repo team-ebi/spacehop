@@ -203,7 +203,7 @@
   }
   #message-preview-container {
       width: 100%;
-      height: 625px;
+      height: 600px;
       top: 100px;
       bottom: 65px;
       overflow-y: scroll;
