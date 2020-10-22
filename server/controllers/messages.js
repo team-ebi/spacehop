@@ -5,6 +5,7 @@ const moment = require("moment");
 const { returning } = require("../src/knex.js");
 
 router.get("/:user", async (req, res) => {
+  let objToSend = {};
   const email = req.params.user;
   const user = await db
     .select("*")
@@ -12,23 +13,58 @@ router.get("/:user", async (req, res) => {
     .where({ email });
   const user_id = user[0].id;
 
-  const messages = await db
+  const user_messages = await db
     .select("*")
     .table("messages")
     .where({ user_id });
-    
-    for (let i = 0; i < messages.length; i++) {
-      const business_id = messages[i].business_id
-    
-      const business = await db
+
+  //add businesses' name
+  for (let i = 0; i < user_messages.length; i++) {
+    const business_id = user_messages[i].business_id
+
+    const business = await db
       .select("*")
       .table("businesses")
       .where("id", business_id);
 
-    messages[i]["business_name"] = business[0].name;
+    user_messages[i]["business_name"] = business[0].name;
   }
 
-  res.send(messages);
+  objToSend["user_messages"] = user_messages;
+
+  const business = await db
+    .select("*")
+    .table("businesses")
+    .where({ user_id });
+
+  if (business.length !== 0) {
+    //if business owner
+    const business_id = business[0].id;
+
+    const business_messages = await db
+      .select("*")
+      .table("messages")
+      .where({ business_id });
+
+    //add businesses' name
+    for (let i = 0; i < business_messages.length; i++) {
+      const user_id = business_messages[i].user_id
+
+      const user = await db
+        .select("*")
+        .table("users")
+        .where("id", user_id);
+
+        business_messages[i]["user_first_name"] = user[0].first_name;
+        business_messages[i]["user_last_name"] = user[0].last_name;
+        business_messages[i]["email"] = user[0].email;
+
+    }
+
+    objToSend["business_messages"] = business_messages;
+  }
+
+  res.send(objToSend);
 });
 
 //get all messages

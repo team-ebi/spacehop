@@ -128,20 +128,21 @@ const messages = () => {
   const stringify7 = JSON.stringify(sample7);
   const stringify8 = JSON.stringify(sample8);
 
+  const createAt = new Date();
 
   knex("messages")
     .del()
     .then(() => {
       return knex("messages")
         .insert([
-          { user_id: 1, business_id: 1, message: stringify},
-          { user_id: 1, business_id: 2, message: stringify2},
-          { user_id: 1, business_id: 3, message: stringify3},
-          { user_id: 1, business_id: 4, message: stringify4},
-          { user_id: 1, business_id: 5, message: stringify5},
-          { user_id: 1, business_id: 6, message: stringify6},
-          { user_id: 1, business_id: 7, message: stringify7},
-          { user_id: 1, business_id: 8, message: stringify8}
+          { user_id: 1, business_id: 1, message: stringify, created_at: createAt },
+          { user_id: 1, business_id: 2, message: stringify2, created_at: createAt },
+          { user_id: 1, business_id: 3, message: stringify3, created_at: createAt },
+          { user_id: 1, business_id: 4, message: stringify4, created_at: createAt },
+          { user_id: 1, business_id: 5, message: stringify5, created_at: createAt },
+          { user_id: 1, business_id: 6, message: stringify6, created_at: createAt },
+          { user_id: 1, business_id: 7, message: stringify7, created_at: createAt },
+          { user_id: 1, business_id: 8, message: stringify8, created_at: createAt }
         ])
         .then(() => process.exit());
     });
