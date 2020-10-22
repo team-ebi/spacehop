@@ -84,6 +84,7 @@ function Profile() {
       );
       setImage(newImg);
       setLoadingImg(false);
+      return;
     }
 
     await deleteObjects(email, imageKey)
