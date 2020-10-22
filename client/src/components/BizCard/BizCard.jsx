@@ -120,7 +120,7 @@ export default function BizCard({ props }) {
             ],
             mode: "payment",
             successUrl: `${frontUrl}`,
-            cancelUrl: `${frontUrl}`,
+            cancelUrl: `${frontUrl}/profile`,
           });
         })
         .then((result) => {

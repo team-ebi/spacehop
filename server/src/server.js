@@ -16,7 +16,6 @@ const productionTest = require("../controllers/productionTest");
 const setupServer = () => {
     app.use(express.json());
     app.use(cors());
-
     app.use("/api/businesses", businessesAPI);
     app.use("/api/users", usersAPI);
     app.use("/api/availability", availabilityAPI);
