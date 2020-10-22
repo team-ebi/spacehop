@@ -62,12 +62,13 @@
 #location-input {
   align-self: center;
   text-indent: 20px;
-  font-size: 20px;
+  font-size: 16px;
   height: 50px;
   border: none;
   background-color: transparent;
   border-radius: 50px;
-  width: 100%;
+  width: 300px;
+  outline: none;
 }
 #autocomplete-selections {
   border-radius: 20px;
@@ -112,6 +113,9 @@
 }
 #loadingSign {
   display: block;
+}
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected {
+  background-color: #80cc37
 }
 @media (min-height: 700px) and (max-height: 850px) {
   #search-bar-container {

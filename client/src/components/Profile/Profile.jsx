@@ -25,7 +25,7 @@ function Profile() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [displayInputs, setDisplayInputs] = useState(false);
-  const [image, setImage] = useState([]);
+  const [image, setImage] = useState(null);
 
   // will connect to aws or default to loalhost
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
@@ -145,7 +145,7 @@ function Profile() {
                 {!image && (
                   <FontAwesomeIcon
                     icon={faUserCircle}
-                    size="8x"
+                    size="10x"
                     color="darkslategrey"
                   />
                 )}
@@ -153,7 +153,7 @@ function Profile() {
                   <img src={`data:image;base64,${image}`} id="img-circle" />
                 )}
               </div>
-              <div className="upload-btn-container">
+              <div className="profile-upload-btn-container">
                 <button className="upload-img-button" onClick={openFile}>
                   Upload Photo
                 </button>

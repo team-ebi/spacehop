@@ -118,9 +118,9 @@ router.patch("/:user/:biz", async (req, res) => {
     .where({ email });
 
   const user_id = user[0].id;
-  const business_id = 1;
+
+  const business_id = req.params.biz;
   const updatedMessage = req.body;
-  console.log(updatedMessage);
   const updated = await db
     .select("*")
     .table("messages")

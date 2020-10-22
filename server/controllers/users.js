@@ -44,7 +44,7 @@ router.get("/data", async (req, res) => {
 // Check if user has business account by email
 // If business acccount, send joined business, user and reservation table
 // If not send empty array
-router.post("/account/", async (req, res) => {
+router.post("/account", async (req, res) => {
   try {
     const email = req.body.email;
   

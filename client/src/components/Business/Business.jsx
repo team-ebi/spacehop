@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { listObjects, saveObject } from "../../utils/index";
 import Image from "../Image/Image";
 import { UserContext } from "../useContext/UserContext";
+import { UserBusinessContext } from "../useContext/BusinessContext";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleLeft, faImages } from "@fortawesome/free-solid-svg-icons";
@@ -12,7 +13,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Business.css";
-import LoadingSign from "../LoadingSign/LoadingSign"
+import LoadingSign from "../LoadingSign/LoadingSign";
 
 function Business() {
   // user email used to fetch data from db
@@ -20,7 +21,7 @@ function Business() {
 
   // if user already has business, get req will update this state
   // and display business details on business profile
-  const [userBusiness, setUserBusiness] = useState(null);
+  const { userBusiness, setUserBusiness } = useContext(UserBusinessContext);
 
   // state will be updated when user enters inputs
   const [businessName, setBusinessName] = useState("");
@@ -63,7 +64,7 @@ function Business() {
   const [dimPast, setDimPast] = useState("dim");
 
   //handle loading sign
-  const [loadingImg, setLoadingImg] = useState(false);  
+  const [loadingImg, setLoadingImg] = useState(false);
 
   // will connect to aws or default to loalhost
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
@@ -71,52 +72,42 @@ function Business() {
   // fetch user's business
   useEffect(() => {
     async function fetchUserBiz() {
-      // check if user is logged in
-      if (user) {
-        // check to see if user has a business associated with their account
-        // if so, set userBusiness to their business
-        const res = await axios({
-          method: "POST",
-          url: `${baseUrl}/api/users/account`,
-          data: { email: user.attributes.email },
-        });
-        if (res.data.length > 0) {
-          const biz = res.data[0];
+      if (userBusiness) {
+        const biz = userBusiness;
 
-          // fetch images from s3
-          const arrayOfPhotoObjects = await listObjects(biz.id);
-          const result = arrayOfPhotoObjects
-            // map to pull keys only
-            .map((obj) => obj.Key);
-          biz.images = result;
-          setImages(result);
+        // fetch images from s3
+        const arrayOfPhotoObjects = await listObjects(biz.id);
+        const result = arrayOfPhotoObjects
+          // map to pull keys only
+          .map((obj) => obj.Key);
+        biz.images = result;
+        setImages(result);
 
-          setDisplayInputs(false);
-          setDisplayBizPage(true);
-          setUserBusiness(biz);
-          setSubmittedForm(false);
-          setBusinessName(biz.name);
-          setAddressStreet(biz.address_street);
-          setAddressCity(biz.address_city);
-          setAddressZip(biz.address_zip);
-          setPhone(biz.phone);
-          setBizType(biz.business_type);
-          setCapacity(biz.capacity);
-          setPrice(biz.price);
+        setDisplayInputs(false);
+        setDisplayBizPage(true);
+        setUserBusiness(biz);
+        setSubmittedForm(false);
+        setBusinessName(biz.name);
+        setAddressStreet(biz.address_street);
+        setAddressCity(biz.address_city);
+        setAddressZip(biz.address_zip);
+        setPhone(biz.phone);
+        setBizType(biz.business_type);
+        setCapacity(biz.capacity);
+        setPrice(biz.price);
 
-          for (const avail of biz.availabilities) {
-            const update = availability[avail.day];
-            const date1 = new Date();
-            const date2 = new Date();
-            date1.setHours(avail.start_hour, 0);
-            date2.setHours(avail.end_hour, 0);
-            update.startTime = date1;
-            update.endTime = date2;
-            setAvailability({ ...availability, update });
-          }
-        } else {
-          setDisplayInputs(false);
+        for (const avail of biz.availabilities) {
+          const update = availability[avail.day];
+          const date1 = new Date();
+          const date2 = new Date();
+          date1.setHours(avail.start_hour, 0);
+          date2.setHours(avail.end_hour, 0);
+          update.startTime = date1;
+          update.endTime = date2;
+          setAvailability({ ...availability, update });
         }
+      } else {
+        setDisplayInputs(false);
       }
     }
     fetchUserBiz();
@@ -243,26 +234,25 @@ function Business() {
 
   // upload image
   async function uploadImage(event) {
-
-    try{
-
-      //set loading sign 
-      setLoadingImg(true); 
+    try {
+      //set loading sign
+      setLoadingImg(true);
 
       event.persist();
       // save new image
       const saveImg = await saveObject(userBusiness.id, event.target.files[0]);
-      
+
       // add image to carousel
-      setImages(images.concat(`${userBusiness.id}/${event.target.files[0].name}`));
-      
-    }catch(error){console.log(error)}
-
-      //close loading sign  
-      setLoadingImg(false); 
+      setImages(
+        images.concat(`${userBusiness.id}/${event.target.files[0].name}`)
+      );
+    } catch (error) {
+      console.log(error);
     }
-    
 
+    //close loading sign
+    setLoadingImg(false);
+  }
 
   return (
     <div id="biz-profile-container">
@@ -618,10 +608,19 @@ function Business() {
                 soon to complete the verification process.
               </div>
             )}
-            {loadingImg ? <div className="loadingSign" style = {{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
-              <LoadingSign />
-            </div> : null 
-              }
+            {loadingImg ? (
+              <div
+                className="loadingSign"
+                style={{
+                  position: "fixed",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                }}
+              >
+                <LoadingSign />
+              </div>
+            ) : null}
           </main>
           <hr id="profile-divider"></hr>
           {/* <section>
