@@ -144,7 +144,7 @@ function Profile() {
         <main id="main">
           <div id="profile-info">
             <div id="profile-img">
-              <div className="user-img-preview">
+              {/* <div className="user-img-preview">
                 {image.length === 0 && (
                   <FontAwesomeIcon
                     icon={faUserCircle}
@@ -155,7 +155,7 @@ function Profile() {
                 {image.length > 0 && (
                   <img src={`data:image;base64,${image}`} id="img-circle" />
                 )}
-              </div>
+              </div> */}
               <div className="upload-btn-container">
                 <button className="upload-img-button" onClick={openFile}>
                   Upload Photo

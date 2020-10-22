@@ -3,10 +3,7 @@ import { UserContext } from "../useContext/UserContext";
 import axios from "axios";
 import "../BookingsAll/BookingsAll.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCalendarAlt,
-  faClock,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCalendarAlt, faClock } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 import Rating from "@material-ui/lab/Rating";
 
@@ -20,7 +17,7 @@ export default function BookingSingle({ booking, display }) {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
-  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000"
+  const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 
   // function will fetch user's review for this space
   async function fetchReview() {
@@ -90,23 +87,33 @@ export default function BookingSingle({ booking, display }) {
 
       <div className="detail-row">{booking.phone}</div>
 
+      <div id="edit-button-container">
+        <button
+          id="edit-button"
+          onClick={() => {}}
+        >
+          Send Message
+        </button>
+      </div>
+
       {/* will render past reservations */}
       {display === "past" && (
         <>
-        {/* clickable star rating system for biz */}
+          {/* clickable star rating system for biz */}
           <hr className="biz-info-divider"></hr>
           {!review && (
-          <div className="star-rating">
-            <Rating
-              className="star-rating"
-              name="simple-controlled"
-              value={rating}
-              onChange={(event, newValue) => {
-                // set new value upon click
-                setRating(newValue);
-              }}
-            />
-          </div>)}
+            <div className="star-rating">
+              <Rating
+                className="star-rating"
+                name="simple-controlled"
+                value={rating}
+                onChange={(event, newValue) => {
+                  // set new value upon click
+                  setRating(newValue);
+                }}
+              />
+            </div>
+          )}
 
           {/* if review exists already in db, will display "Your Review" header"*/}
           {review && <div className="review-header">Your Review: </div>}

@@ -39,7 +39,7 @@ export default function Inbox() {
       if (user) {
         let req = axios.get(`${baseUrl}/api/messages/${user.attributes.email}`);
         let res = await req;
-        let data = res.data;
+        let data = res.data.user_messages;
         let result = data.map((thread) => {
           const parsedMsg = JSON.parse(thread.message);
           thread.message = parsedMsg;
@@ -136,6 +136,7 @@ export default function Inbox() {
               <div
                 className="single-preview"
                 onClick={() => {
+                  console.log(thread);
                   setSelectedThread(thread);
                   setDisplayInboxList(false);
                 }}
