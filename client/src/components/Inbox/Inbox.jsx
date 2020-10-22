@@ -3,7 +3,11 @@ import { UserContext } from "../useContext/UserContext";
 import { UserBusinessContext } from "../useContext/BusinessContext";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle, faArrowCircleLeft, faEdit } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUserCircle,
+  faArrowCircleLeft,
+  faEdit,
+} from "@fortawesome/free-solid-svg-icons";
 import cornerLogo from "../../images/spacehop-name.png";
 import Messages from "../Messages/Messages";
 import axios from "axios";
@@ -22,7 +26,7 @@ export default function Inbox() {
   // will connect to aws or default to localhost
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 
-  // this is for dropdown menu, will check each message's biz id 
+  // this is for dropdown menu, will check each message's biz id
   // and see if it matches value of option selected
   function updateSelected(e) {
     const businessId = Number(e.target.value);
@@ -85,7 +89,6 @@ export default function Inbox() {
   }
 
   return (
-    // this is just the header section with a header and for mobile, back button & corner logo
     <div id="inbox-container">
       <div className="back-icon" onClick={goBack}>
         <FontAwesomeIcon
@@ -112,7 +115,6 @@ export default function Inbox() {
         Inbox
       </h2>
       <div className="inbox-buttons">
-        {/* this switch will appear if user has business */}
         {userBusiness && (
           <div className="inbox-toggle">
             <span className="toggle-text">User</span>
@@ -133,7 +135,6 @@ export default function Inbox() {
           </div>
         )}
 
-        {/* when clicked, will display only the inbox */}
         <div id="back-inbox-container" className="mobile-version">
           <button
             className="back-to-inbox"
@@ -144,9 +145,7 @@ export default function Inbox() {
         </div>
       </div>
 
-      {/* main section of inbox page that has inbox list and selected message */}
       <div id="inbox">
-        {/* inbox that lists preview of user's messages */}
         {displayInboxList && (
           <div id="message-preview-container" className="mobile-version">
             <>
@@ -154,7 +153,6 @@ export default function Inbox() {
                 <h4 className="inbox-subheader">Messages</h4>
               </div>
 
-              {/* this dropdown menu should only show on mobile version */}
               <div className="write-new mobile">
                 <div className="new-msg-icon">
                   <FontAwesomeIcon
@@ -172,43 +170,131 @@ export default function Inbox() {
                     onChange={updateSelected}
                   >
                     <option>Select a recipient</option>
-                    {/* will go through all user messages */}
                     {displayMessages === "userMessages" &&
                       allUserMessages
-                        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                        .sort(
+                          (a, b) =>
+                            new Date(b.created_at) - new Date(a.created_at)
+                        )
                         .map((thread, index) => (
-                        <option
-                          key={"mobile" + thread.business_id + index}
-                          value={thread.business_id}
-                        >
-                          {thread.business_name}
-                        </option>
-                      ))}
-                      {/* if user is biz owner, will go through biz messages if switch is toggled
-                      to display businesses */}
+                          <option
+                            key={"mobile" + thread.business_id + index}
+                            value={thread.business_id}
+                          >
+                            {thread.business_name}
+                          </option>
+                        ))}
                     {displayMessages === "businessMessages" &&
                       allBusinessMessages
-                        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                        .sort(
+                          (a, b) =>
+                            new Date(b.created_at) - new Date(a.created_at)
+                        )
                         .map((thread) => (
-                        <option
-                          key={"mobile" + thread.business_id}
-                          value={thread.business_id}
-                        >
-                          {thread.user_first_name + " " + thread.user_last_name}
-                        </option>
-                      ))}
+                          <option
+                            key={"mobile" + thread.business_id}
+                            value={thread.business_id}
+                          >
+                            {thread.user_first_name +
+                              " " +
+                              thread.user_last_name}
+                          </option>
+                        ))}
                   </select>
                 </div>
               </div>
 
-              {/* map over all user message to display in the inbox list */}
               {displayMessages === "userMessages" &&
                 allUserMessages
-                  .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                  .sort(
+                    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+                  )
                   .map((thread) => (
+                    <div
+                      className="single-preview"
+                      key={"mobile-version" + thread.business_name}
+                      onClick={() => {
+                        setSelectedThread(thread);
+                        setDisplayInboxList(false);
+                      }}
+                    >
+                      <div className="inbox-profile-container">
+                        <FontAwesomeIcon
+                          className="icon"
+                          icon={faUserCircle}
+                          size="lg"
+                          color="darkslategrey"
+                        />
+                      </div>
+                      <div className="message-preview">
+                        <div className="biz-name-messenger">
+                          {thread.business_name}
+                        </div>
+                        <div className="preview">
+                          {thread.message[thread.message.length - 1]
+                            .business_message
+                            ? thread.message[thread.message.length - 1]
+                                .business_message
+                            : thread.message[thread.message.length - 1]
+                                .user_message}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              {displayMessages === "businessMessages" &&
+                allBusinessMessages
+                  .sort(
+                    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+                  )
+                  .map((thread) => (
+                    <div
+                      className="single-preview"
+                      key={"mobile-version" + thread.user_last_name}
+                      onClick={() => {
+                        setSelectedThread(thread);
+                        setDisplayInboxList(false);
+                      }}
+                    >
+                      <div className="inbox-profile-container">
+                        <FontAwesomeIcon
+                          className="icon"
+                          icon={faUserCircle}
+                          size="lg"
+                          color="darkslategrey"
+                        />
+                      </div>
+                      <div className="message-preview">
+                        <div className="biz-name-messenger">
+                          {thread.user_first_name + " " + thread.user_last_name}
+                        </div>
+                        <div className="preview">
+                          {thread.message[thread.message.length - 1]
+                            .business_message
+                            ? thread.message[thread.message.length - 1]
+                                .business_message
+                            : thread.message[thread.message.length - 1]
+                                .user_message}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+            </>
+          </div>
+        )}
+
+        <div id="message-preview-container" className="web-version">
+          <>
+            <div>
+              <h4 className="inbox-subheader">Messages</h4>
+            </div>
+
+            {displayMessages === "userMessages" &&
+              allUserMessages
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                .map((thread) => (
                   <div
                     className="single-preview"
-                    key={"mobile-version" + thread.business_name}
+                    key={"web-version" + thread.business_name}
                     onClick={() => {
                       setSelectedThread(thread);
                       setDisplayInboxList(false);
@@ -237,13 +323,13 @@ export default function Inbox() {
                     </div>
                   </div>
                 ))}
-              {displayMessages === "businessMessages" &&
-                allBusinessMessages
-                  .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-                  .map((thread) => (
+            {displayMessages === "businessMessages" &&
+              allBusinessMessages
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                .map((thread) => (
                   <div
                     className="single-preview"
-                    key={"mobile-version" + thread.user_last_name}
+                    key={"web-version" + thread.user_first_name}
                     onClick={() => {
                       setSelectedThread(thread);
                       setDisplayInboxList(false);
@@ -259,7 +345,7 @@ export default function Inbox() {
                     </div>
                     <div className="message-preview">
                       <div className="biz-name-messenger">
-                        {thread.user_first_name + " " + thread.user_last_name}
+                        {thread.business_name}
                       </div>
                       <div className="preview">
                         {thread.message[thread.message.length - 1]
@@ -272,92 +358,9 @@ export default function Inbox() {
                     </div>
                   </div>
                 ))}
-            </>
-          </div>
-        )}
-
-        {/* this web version will stay on same page */}
-        <div id="message-preview-container" className="web-version">
-          <>
-            <div>
-              <h4 className="inbox-subheader">Messages</h4>
-            </div>
-
-            {/* map over all message to display in the inbox list */}
-            {displayMessages === "userMessages" &&
-              allUserMessages
-                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-                .map((thread) => (
-                <div
-                  className="single-preview"
-                  key={"web-version" + thread.business_name}
-                  onClick={() => {
-                    setSelectedThread(thread);
-                    setDisplayInboxList(false);
-                  }}
-                >
-                  <div className="inbox-profile-container">
-                    <FontAwesomeIcon
-                      className="icon"
-                      icon={faUserCircle}
-                      size="lg"
-                      color="darkslategrey"
-                    />
-                  </div>
-                  <div className="message-preview">
-                    <div className="biz-name-messenger">
-                      {thread.business_name}
-                    </div>
-                    <div className="preview">
-                      {thread.message[thread.message.length - 1]
-                        .business_message
-                        ? thread.message[thread.message.length - 1]
-                            .business_message
-                        : thread.message[thread.message.length - 1]
-                            .user_message}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            {displayMessages === "businessMessages" &&
-              allBusinessMessages
-                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-                .map((thread) => (
-                <div
-                  className="single-preview"
-                  key={"web-version" + thread.user_first_name}
-                  onClick={() => {
-                    setSelectedThread(thread);
-                    setDisplayInboxList(false);
-                  }}
-                >
-                  <div className="inbox-profile-container">
-                    <FontAwesomeIcon
-                      className="icon"
-                      icon={faUserCircle}
-                      size="lg"
-                      color="darkslategrey"
-                    />
-                  </div>
-                  <div className="message-preview">
-                    <div className="biz-name-messenger">
-                      {thread.business_name}
-                    </div>
-                    <div className="preview">
-                      {thread.message[thread.message.length - 1]
-                        .business_message
-                        ? thread.message[thread.message.length - 1]
-                            .business_message
-                        : thread.message[thread.message.length - 1]
-                            .user_message}
-                    </div>
-                  </div>
-                </div>
-              ))}
           </>
         </div>
 
-        {/* this section shows the opened message window for selected message for web*/}
         <div id="selected-message-container">
           <div className="write-new">
             <div className="new-msg-icon">
@@ -374,26 +377,30 @@ export default function Inbox() {
                 <option>Select a recipient</option>
                 {displayMessages === "userMessages" &&
                   allUserMessages
-                    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                    .sort(
+                      (a, b) => new Date(b.created_at) - new Date(a.created_at)
+                    )
                     .map((thread) => (
-                    <option
-                      key={"web" + thread.business_name}
-                      value={thread.business_name}
-                    >
-                      {thread.business_name}
-                    </option>
-                  ))}
+                      <option
+                        key={"web" + thread.business_name}
+                        value={thread.business_name}
+                      >
+                        {thread.business_name}
+                      </option>
+                    ))}
                 {displayMessages === "businessMessages" &&
                   allBusinessMessages
-                    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                    .sort(
+                      (a, b) => new Date(b.created_at) - new Date(a.created_at)
+                    )
                     .map((thread) => (
-                    <option
-                      key={"web" + thread.user_first_name}
-                      value={thread.business_id}
-                    >
-                      {thread.user_first_name + " " + thread.user_last_name}
-                    </option>
-                  ))}
+                      <option
+                        key={"web" + thread.user_first_name}
+                        value={thread.business_id}
+                      >
+                        {thread.user_first_name + " " + thread.user_last_name}
+                      </option>
+                    ))}
               </select>
             </div>
           </div>
@@ -405,7 +412,6 @@ export default function Inbox() {
           )}
         </div>
 
-        {/* mobile version of message container */}
         {!displayInboxList && (
           <div id="mobile-selected-message-container">
             {selectedThread && (
