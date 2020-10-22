@@ -16,7 +16,6 @@ const productionTest = require("../controllers/productionTest");
 const setupServer = () => {
     app.use(express.json());
     app.use(cors());
-
     app.use("/api/businesses", businessesAPI);
     app.use("/api/users", usersAPI);
     app.use("/api/availability", availabilityAPI);
@@ -26,7 +25,9 @@ const setupServer = () => {
     app.use("/api/image", imageAPI);
     app.use("/api/messages", messagesAPI)
     app.use("/api/prod", productionTest);
-
+    app.get('*', (req, res)=>{
+        res.sendFile(pate.join(__dirname, '../../client/public/index.html'));
+      })
     return app;
 };
 
