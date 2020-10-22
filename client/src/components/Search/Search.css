@@ -153,20 +153,22 @@
     width: 80%;
   }
   .input {
-    width: 90%;
+    width: 280px;
     background-color: white;
     margin-bottom: 30px;
   }
+  .input:hover {
+    border: solid #80cc37;
+  }
   #location-input-field {
-    width: 90%;
+    width: 280px;
   }
   #location-input {
     font-size: 16px;
     font-family: "Roboto", sans-serif;
-    width: 100%;
+    width: 280px;
   }
   #location-input:focus {
-    border: solid #80cc37;
     outline: none;
   }
   .date-input {
