@@ -26,7 +26,7 @@ const setupServer = () => {
     app.use("/api/messages", messagesAPI)
     app.use("/api/prod", productionTest);
     app.get('*', (req, res)=>{
-        res.sendFile(pate.join(__dirname, '../../client/public/index.html'));
+        res.sendFile(path.resolve(__dirname, '../../client/public/index.html'));
       })
     return app;
 };
