@@ -119,7 +119,7 @@ export default function BizCard({ props }) {
               },
             ],
             mode: "payment",
-            successUrl: `${frontUrl}/profile`,
+            successUrl: `${frontUrl}`,
             cancelUrl: `${frontUrl}`,
           });
         })
