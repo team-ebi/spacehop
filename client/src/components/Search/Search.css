@@ -117,26 +117,7 @@
   li.react-datepicker__time-list-item--selected {
   background-color: #80cc37;
 }
-@media (max-width: 414px) and (max-height: 896px) {
-  .input {
-    margin-bottom: 15px;
-  }
-  #logo {
-    width: 200px;
-  }
-  #logo-container {
-    padding: 0px;
-  }
-  #search-container {
-    height: 86vh;
-  }
-  #search-bar-container {
-    margin-top: 25px;
-  }
-  #search-btn-container {
-    width: 280px;
-  }
-}
+
 @media (min-height: 700px) and (max-height: 850px) {
   #search-bar-container {
     margin-top: 50px;
@@ -163,6 +144,26 @@
       rgb(230, 228, 245),
       #efefbb
     ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+  @media (max-width: 420px) and (max-height: 900px) {
+    .input {
+      margin-bottom: 15px;
+    }
+    #logo {
+      width: 200px;
+    }
+    #logo-container {
+      padding: 0px;
+    }
+    #search-container {
+      height: 86vh;
+    }
+    #search-bar-container {
+      margin-top: 25px;
+    }
+    #search-button-container {
+      width: 280px;
+    }
   }
 
   #search-bar {
