@@ -126,11 +126,12 @@ table {
   border-spacing: 0;
 }
 /* ^^^^ reset */
-
 body {
   line-height: 20px;
   font-family: "Roboto", sans-serif;
   background-color: rgb(250, 238, 238);
+  height: 100vh;
+  overflow: hidden;
 }
 h1 {
   font-size: 40px;
