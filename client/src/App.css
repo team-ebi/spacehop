@@ -130,7 +130,7 @@ body {
   line-height: 20px;
   font-family: "Roboto", sans-serif;
   background-color: rgb(250, 238, 238);
-  height: 100vh;
+  max-height: 100vh;
   overflow: hidden;
 }
 h1 {
