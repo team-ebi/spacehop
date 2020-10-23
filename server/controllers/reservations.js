@@ -49,6 +49,23 @@ router.post("/", async (req, res) => {
         start_at,
         end_at
       });
+
+      //Check already have messages
+      const message = await db.select("*").table("messages").where({
+        business_id,
+        user_id
+      });
+
+      //If this is the first time to book this space, send message
+      if(message.length==0){
+        const newMessage=[{"business_message":"Thank you for booking! Feel free to send messages if you have questions."}]
+  
+        const message = await db.select("*").table("messages").insert({
+          business_id,
+          user_id,
+          message:JSON.stringify(newMessage)
+        });
+      }
   
       res.send("New reservation created!");
     }
