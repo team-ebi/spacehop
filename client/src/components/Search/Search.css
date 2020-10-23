@@ -117,7 +117,7 @@
   li.react-datepicker__time-list-item--selected {
   background-color: #80cc37;
 }
-@media (max-width: 414px) and (max-height: 896px) {
+@media (max-width: 420px) and (max-height: 900px) {
   .input {
     margin-bottom: 15px;
   }
@@ -133,7 +133,7 @@
   #search-bar-container {
     margin-top: 25px;
   }
-  #search-btn-container {
+  #search-button-container {
     width: 280px;
   }
 }
