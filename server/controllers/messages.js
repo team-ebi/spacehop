@@ -57,6 +57,7 @@ router.get("/:user", async (req, res) => {
 
         business_messages[i]["user_first_name"] = user[0].first_name;
         business_messages[i]["user_last_name"] = user[0].last_name;
+        business_messages[i]["email"] = user[0].email;
 
     }
 
@@ -117,9 +118,9 @@ router.patch("/:user/:biz", async (req, res) => {
     .where({ email });
 
   const user_id = user[0].id;
-  const business_id = 1;
+
+  const business_id = req.params.biz;
   const updatedMessage = req.body;
-  console.log(updatedMessage);
   const updated = await db
     .select("*")
     .table("messages")

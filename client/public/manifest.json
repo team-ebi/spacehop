@@ -15,12 +15,22 @@
         {
             "src": "spacehop-name.png",
             "type": "image/png",
-            "sizes": "500x112"
+            "sizes": "100x22"
         },
         {
             "src": "s512_choju45_0009_0.png",
             "type": "image/png",
             "sizes": "422x512"
+        },
+        {
+            "src": "cafe.jpg",
+            "type": "image/jpg",
+            "sizes": "375x119"
+        },
+          {
+            "src": "dancing-frog.jpg",
+            "type": "image/png",
+            "sizes": "150x182"
         }
     ],
     "start_url": ".",

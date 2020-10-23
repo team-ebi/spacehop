@@ -7,6 +7,14 @@
   margin-top: 50px;
   padding-top: 20px;
 }
+.MuiPaper-root MuiTableContainer-root avalability-table MuiPaper-elevation1 MuiPaper-rounded{
+  border-radius: 100px;
+}
+.bizcard-time-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 #bizcard-location-container {
   display: flex;
   flex-flow: row wrap;
@@ -62,7 +70,7 @@
 #bizcard-location-cell {
   display: flex;
   flex-flow: row nowrap;
-  width: 800px;
+  width: 1000px;
 }
 #reviews-header{
   padding-left: 20px;
@@ -76,6 +84,7 @@
   width: 50%;
   border-right: solid lightgrey;
   border-width: 1px;
+  padding: 10px;
 }
 #booking-details {
   width: 100%;

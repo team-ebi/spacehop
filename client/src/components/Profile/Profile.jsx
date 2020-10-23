@@ -25,7 +25,7 @@ function Profile() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [displayInputs, setDisplayInputs] = useState(false);
-  const [image, setImage] = useState([]);
+  const [image, setImage] = useState(null);
 
   // will connect to aws or default to loalhost
   const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
@@ -44,12 +44,9 @@ function Profile() {
         setEmail(data[0].email);
         setPhone(data[0].phone);
 
-        // fetch images from s3
-        const arrayOfPhotoObjects = await listObjects(data[0].email)
-          .then((result) =>
-            result.map((elem) => getSingleObject(email, elem.Key))
-          )
-          .then((result) => Promise.all(result));
+        const arrayOfPhotoObjects = await listObjects(user.attributes.email)
+        .then(result => result.map(elem => getSingleObject(user.attributes.email, elem.Key)))
+        .then(result => Promise.all(result));
         setImage(arrayOfPhotoObjects[0]);
       }
     }
@@ -72,32 +69,32 @@ function Profile() {
   // upload image
   async function uploadImage(event) {
     event.persist();
-    try {
-      //set loading sign
-      setLoadingImg(true);
-
-      const isList = await listObjects(email)
-      await isList.map(elem => ({ "Key": elem.Key }))
-      .then(result => deleteObjects(email, result));
-
     
-      await saveObject(email, event.target.files[0]);
-      const newImg = await getSingleObject(
-        email,
-        `${email}/${event.target.files[0].name}`
-      );
+    // set loading sign
+    setLoadingImg(true);
 
-      setImage(newImg);
-    } catch {
+    const fileInfo = await listObjects(email);
+    const imageKey = fileInfo.map(elem => ({ "Key": elem.Key }) );
+
+    if (imageKey.length === 0) {
       await saveObject(email, event.target.files[0]);
       const newImg = await getSingleObject(
         email,
         `${email}/${event.target.files[0].name}`
       );
       setImage(newImg);
-      //close loading sign
       setLoadingImg(false);
+      return;
     }
+
+    await deleteObjects(email, imageKey)
+    await saveObject(email, event.target.files[0]);
+    const newImg = await getSingleObject(
+      email,
+      `${email}/${event.target.files[0].name}`
+    );
+    setImage(newImg);
+    setLoadingImg(false);
   }
 
   // create ref for input button
@@ -145,18 +142,18 @@ function Profile() {
           <div id="profile-info">
             <div id="profile-img">
               <div className="user-img-preview">
-                {image.length === 0 && (
+                {!image && (
                   <FontAwesomeIcon
                     icon={faUserCircle}
-                    size="8x"
+                    size="10x"
                     color="darkslategrey"
                   />
                 )}
-                {image.length > 0 && (
+                {image && (
                   <img src={`data:image;base64,${image}`} id="img-circle" />
                 )}
               </div>
-              <div className="upload-btn-container">
+              <div className="profile-upload-btn-container">
                 <button className="upload-img-button" onClick={openFile}>
                   Upload Photo
                 </button>

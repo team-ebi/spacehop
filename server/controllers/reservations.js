@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
     const user = await db.select("*").table("users").where({
       email,
     });
-
+    
     const business_id = req.body.business_id;
 
     //get business data and pick up hourly price

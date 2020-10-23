@@ -20,35 +20,57 @@
   background-color: white;
   margin-bottom: 15px;
   height: 600px;
-  overflow-y: scroll;
 }
 .msg {
   margin-bottom: 15px;
+  display: flex;
+  flex-flow: row wrap;
 }
 .to {
   font-weight: 700;
   margin-right: 10px;
 }
 .recipient {
-  background-color: rgb(228, 224, 224);
-  padding: 8px;
-  border-radius: 10px;
-  margin: 10px;
+  padding: 2px;
+  margin: 5px;
   text-align: right;
   width: auto;
 }
 .right:not(.left) {
   text-align: right;
   padding-right: 7px;
+  justify-content: flex-end;
+}
+.left {
+  justify-content: flex-start;
 }
 .other-messenger {
-  padding: 5px;
+  padding-top: 2px;
   margin: 5px;
+  text-align: left;
+  width: auto;
 }
 .msg-name {
   font-weight: 700;
   padding: 5px;
   color: darkslategrey;
+  width: 100%;
+}
+.sender-chat-bubble {
+  padding: 8px;
+  border-radius: 20px;
+  width: 80%;
+  display: flex;
+  justify-content: flex-end;
+  background-color: #80cc37;
+}
+.other-chat-bubble {
+  width: 80%;
+  background-color: rgb(223, 226, 223);
+  padding: 8px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: flex-start;
 }
 #message-preview-container {
   border-right: solid lightgrey;
@@ -104,6 +126,10 @@
 .inbox-subheader {
   text-align: center;
 }
+.inbox-buttons {
+  display: flex;
+  flex-flow: row nowrap;
+}
 .msg-input-area {
   display: flex;
   align-items: center;
@@ -135,10 +161,16 @@
 #mobile-selected-message-container {
   display: none;
 }
+.inbox-toggle {
+  margin-bottom: 10px;
+  display:flex;
+  justify-content: center;
+}
 @media (max-height: 815px) {
   #inbox-container {
     overflow: hidden;
-    max-height: 100vh;
+    bottom: 65px;
+    height: 100vh;    
     padding-top: 5px;
     top: 0;
     background: #efefbb; /* fallback for old browsers */
@@ -157,9 +189,10 @@
   #inbox {
     flex-flow: row wrap;
     bottom: 65px;
-    overflow-y: scroll;
   }
-
+  .dropdown-bookings {
+    width: 250px;
+  }
   .mobile-version {
     display: inline;
   }
@@ -200,10 +233,10 @@
       padding: 2px;
     }
     .message-body-container {
-      height: 45%;
+      height: 450px;
       width: 94%;
       padding: 10px;
-      overflow-y: scroll;
+      padding-bottom: 5px;
     }
     .msg-input-area {
       height: 40px;
@@ -217,12 +250,12 @@
     .back-to-inbox {
       width: 100px;
       border: none;
-      background-color: #73b930;
-      border-radius: 10px;
+      background-color: #80cc37;
+      border-radius: 30px;
       margin-right: 5px;
       cursor: pointer;
       text-align: center;
-      height: 20px;
+      height: 35px;
       box-shadow: 0 4px 8px lightgrey;
     }
     #back-inbox-container {
@@ -235,7 +268,9 @@
       z-index: 100
     }
     .biz-name-message {
-      width: 150px;
+      width: 300px;
+      display: flex;
+      flex-flow: row nowrap;
     }
     .web-version {
       display: none;
@@ -247,7 +282,7 @@
 }
 @media (max-height: 700px) {
   .message-body-container {
-    height: 30%;
+    height: 335px;
   }
   #message-preview-container {
     height: 480px;
@@ -255,4 +290,5 @@
   #mobile-selected-message-container {
     overflow-y: hidden;
   }
+
 }
