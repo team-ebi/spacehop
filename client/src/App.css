@@ -138,8 +138,8 @@ body {
   font-weight: 300;
   font-style: normal;
   background-color: rgb(250, 238, 238);
-  height: 120vh;
-  overflow: hidden;
+  /* height: 120vh; */
+  /* overflow: hidden; */
 }
 h1 {
   font-size: 40px;
