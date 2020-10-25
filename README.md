@@ -29,7 +29,7 @@ The pandemic may not last forever, but remote work will be here to stay. Spaceho
 
 5) You can manage your account info and future bookings on your Profile page.
 
-6) You can message business owners whose space you have booked. 
+6) You can message business owners whose spaces you have booked. 
 
 7) If you are a business owner, you can register your business on the Business Profile page, and you can toggle between User and Business messages in your inbox.
 
@@ -82,7 +82,7 @@ yarn start
 
 ### Future Features
 
-- Re-route payments fro customers to businesses using Stripe API Connect
+- Re-route payments for customers to businesses using Stripe API Connect
 - Include other alternative uses for space rentals (e.g. meetups, art classes, exericse classes)
 - Add filters for amenities
 - Share location feature to coordinate with friends
