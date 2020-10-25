@@ -1,9 +1,7 @@
 const knex = require("./config.js");
 
 const reservations = () => {
-  knex("reservations")
-    .del()
-    .then(() => {
+  knex("reservations").del().then(() => {
       return knex("reservations").insert([
         {
           date: "2020-11-02",
@@ -12,7 +10,7 @@ const reservations = () => {
           business_id: 1,
           user_id: 23,
           start_at: 12,
-          end_at: 17,
+          end_at: 17
         },
         {
           date: "2020-11-05",
@@ -21,7 +19,7 @@ const reservations = () => {
           business_id: 2,
           user_id: 1,
           start_at: 15,
-          end_at: 17,
+          end_at: 17
         },
         {
           date: "2020-12-01",
@@ -30,7 +28,7 @@ const reservations = () => {
           business_id: 5,
           user_id: 1,
           start_at: 12,
-          end_at: 15,
+          end_at: 15
         },
         {
           date: "2020-10-01",
@@ -39,7 +37,7 @@ const reservations = () => {
           business_id: 4,
           user_id: 1,
           start_at: 12,
-          end_at: 14,
+          end_at: 14
         },
         {
           date: "2020-09-15",
@@ -48,7 +46,7 @@ const reservations = () => {
           business_id: 5,
           user_id: 1,
           start_at: 12,
-          end_at: 14,
+          end_at: 14
         },
         {
           date: "2020-11-02",
@@ -57,7 +55,7 @@ const reservations = () => {
           business_id: 1,
           user_id: 11,
           start_at: 16,
-          end_at: 17,
+          end_at: 17
         },
         {
           date: "2020-11-03",
@@ -66,7 +64,7 @@ const reservations = () => {
           business_id: 1,
           user_id: 12,
           start_at: 12,
-          end_at: 14,
+          end_at: 14
         },
         {
           date: "2020-11-04",
@@ -75,7 +73,7 @@ const reservations = () => {
           business_id: 1,
           user_id: 13,
           start_at: 12,
-          end_at: 15,
+          end_at: 15
         },
         {
           date: "2020-11-05",
@@ -84,7 +82,7 @@ const reservations = () => {
           business_id: 1,
           user_id: 14,
           start_at: 12,
-          end_at: 17,
+          end_at: 17
         },
         {
           date: "2020-11-06",
@@ -93,7 +91,7 @@ const reservations = () => {
           business_id: 1,
           user_id: 15,
           start_at: 15,
-          end_at: 17,
+          end_at: 17
         },
         {
           date: "2020-11-09",
@@ -102,7 +100,7 @@ const reservations = () => {
           business_id: 3,
           user_id: 1,
           start_at: 12,
-          end_at: 17,
+          end_at: 17
         },
         {
           date: "2020-11-02",
@@ -111,7 +109,7 @@ const reservations = () => {
           business_id: 3,
           user_id: 2,
           start_at: 12,
-          end_at: 17,
+          end_at: 17
         },
         {
           date: "2020-11-02",
@@ -120,7 +118,7 @@ const reservations = () => {
           business_id: 3,
           user_id: 3,
           start_at: 12,
-          end_at: 17,
+          end_at: 17
         },
         {
           date: "2020-11-02",
@@ -129,7 +127,7 @@ const reservations = () => {
           business_id: 3,
           user_id: 4,
           start_at: 12,
-          end_at: 17,
+          end_at: 17
         },
         {
           date: "2020-11-02",
@@ -138,7 +136,7 @@ const reservations = () => {
           business_id: 3,
           user_id: 5,
           start_at: 12,
-          end_at: 17,
+          end_at: 17
         },
       ]);
     })
