@@ -61,7 +61,7 @@ function Map({ businesses, forBizCard }) {
               }}
             >
               <div className="location-name">{selected.name}</div>
-              <div>
+              <div className="map-img">
                 <Image photos={selected.images} key={selected.id} arrows={false}/>
               </div>
               <div className="location-city info">
