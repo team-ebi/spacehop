@@ -19,8 +19,9 @@ nav {
 }
 h2 {
   font-size: 30px;
-  font-weight: 700;
   font-family: "Poetsen One";
+  font-weight: 700;
+  font-style: normal;
   color: darkslategrey;
 }
 #logo-container {
