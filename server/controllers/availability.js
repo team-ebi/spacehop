@@ -2,10 +2,6 @@ const express = require("express");
 const router = express.Router();
 const db = require("../src/knex.js");
 
-router.get("/test", async (req, res) => {
-  res.send("working");
-});
-
 router.get("/", async (req, res) => {
   const address_city = req.query.address_city;
   const start_hour = req.query.start_hour;
