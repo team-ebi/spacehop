@@ -74,11 +74,12 @@
 }
 #reviews-header{
   padding-left: 20px;
-  font-weight: 700;
   font-size: 20px;
   color: darkslategrey;
   margin-bottom: 20px;
   font-family: "Poetsen One";
+  font-weight: normal;
+  font-style: normal;
 }
 #info-cell {
   width: 50%;
@@ -98,10 +99,11 @@
 }
 #booking-header {
   padding-left: 20px;
-  font-weight: 700;
   font-size: 20px;
   color: darkslategrey;
   font-family: "Poetsen One";
+  font-weight: normal;
+  font-style: normal;
 }
 .divider {
   width: 80%;

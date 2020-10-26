@@ -34,7 +34,7 @@ exports.seed = function(knex) {
         },
         {
           business_id: 2,
-          user_id: 1,
+          user_id: 23,
           point: 3,
           comment: "Business owner is very kind. Will work here again soon!"
         },
@@ -64,7 +64,7 @@ exports.seed = function(knex) {
         },
         {
           business_id: 3,
-          user_id: 1,
+          user_id: 20,
           point: 2,
           comment: "Just okay."
         },
@@ -148,7 +148,7 @@ exports.seed = function(knex) {
         },
         {
           business_id: 6,
-          user_id: 1,
+          user_id: 21,
           point: 3,
           comment: "Business owner is very kind. Will work here again soon!"
         },
@@ -178,7 +178,7 @@ exports.seed = function(knex) {
         },
         {
           business_id: 7,
-          user_id: 1,
+          user_id: 23,
           point: 5,
           comment: "Business owner is very kind. Will work here again soon!"
         },
@@ -208,7 +208,7 @@ exports.seed = function(knex) {
         },
         {
           business_id: 8,
-          user_id: 1,
+          user_id: 22,
           point: 3,
           comment: "Business owner is very kind. Will work here again soon!"
         },

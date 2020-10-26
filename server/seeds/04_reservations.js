@@ -7,10 +7,9 @@ exports.seed = function (knex) {
           price: 2500,
           created_at: "2020-10-01",
           business_id: 1,
-          user_id: 1,
+          user_id: 23,
           start_at: 12,
           end_at: 17
-
         },
         {
           date: "2020-11-05",
@@ -25,7 +24,7 @@ exports.seed = function (knex) {
           date: "2020-12-01",
           price: 750,
           created_at: "2020-10-01",
-          business_id: 3,
+          business_id: 5,
           user_id: 1,
           start_at: 12,
           end_at: 15
@@ -94,7 +93,7 @@ exports.seed = function (knex) {
           end_at: 17
         },
         {
-          date: "2020-11-02",
+          date: "2020-11-09",
           price: 1250,
           created_at: "2020-10-01",
           business_id: 3,
@@ -137,7 +136,7 @@ exports.seed = function (knex) {
           user_id: 5,
           start_at: 12,
           end_at: 17
-        } 
+        },
       ]);
     });
 };
