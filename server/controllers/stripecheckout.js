@@ -5,11 +5,6 @@ require("dotenv").config();
 //secret api key in .env
 const stripe = require('stripe')(process.env.SECRET_KEY);
 
-//test for route
-router.get("/test", async(req, res) => {
-  res.send("working");
-});
-
 //stripe checkout session endpoint
 router.post("/checkoutsession", async (req, res) => {
   const session = await stripe.checkout.sessions.create({
