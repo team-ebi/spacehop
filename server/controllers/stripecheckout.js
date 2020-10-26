@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 require("dotenv").config();
 
-//secret api key in .env
-const stripe = require('stripe')(process.env.SECRET_KEY);
+// Secret api key in .env
+const stripe = require("stripe")(process.env.SECRET_KEY);
 
-//stripe checkout session endpoint
+// Stripe checkout session
 router.post("/checkoutsession", async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
@@ -25,8 +25,6 @@ router.post("/checkoutsession", async (req, res) => {
     success_url: "http://localhost:3000/success",
     cancel_url: "https://example.com/cancel",
   });
-  
-  console.log({id: session.id})
   res.json({ id: session.id });
 });
 
