@@ -6,7 +6,6 @@ const businessesAPI = require("../controllers/businesses");
 const usersAPI = require("../controllers/users");
 const availabilityAPI = require("../controllers/availability");
 const reservationsAPI = require("../controllers/reservations");
-const stripecheckoutAPI = require("../controllers/stripecheckout");
 const ratingsAPI = require("../controllers/ratings");
 const messagesAPI = require("../controllers/messages");
 
@@ -18,7 +17,6 @@ const setupServer = () => {
   app.use("/api/availability", availabilityAPI);
   app.use("/api/reservations", reservationsAPI);
   app.use("/api/ratings", ratingsAPI);
-  app.use("/api/stripecheckout", stripecheckoutAPI);
   app.use("/api/messages", messagesAPI);
 
   return app;
