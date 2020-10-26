@@ -70,7 +70,10 @@ router.post("/", async (req, res) => {
   const availabilities = req.body.availability;
 
   // Get user id by email
-  const user = await db.select("*").table("users").where({email});
+  const user = await db
+    .select("*")
+    .table("users")
+    .where({ email });
   const user_id = user[0]["id"];
 
   // Create business account, then create availability
@@ -90,26 +93,29 @@ router.post("/", async (req, res) => {
       price,
     });
 
-  // get new business id 
+  // Get new business id 
   const business_id = business[0].id;
 
-  // loop through availabilities and insert each one into availability table
+  // Loop through availabilities and insert each one into availability table
   for (const availability of availabilities) {
-    await db.select("*").table("availability").insert({
-      business_id,
-      day: availability.day,
-      start_hour: availability.start_hour,
-      end_hour: availability.end_hour,
-    });
+    await db
+      .select("*")
+      .table("availability")
+      .insert({
+        business_id,
+        day: availability.day,
+        start_hour: availability.start_hour,
+        end_hour: availability.end_hour,
+      });
   }
 
-  // fetch all availabilities
+  // Fetch all availabilities
   const availability = await db
     .select("*")
     .table("availability")
     .where({ business_id });
 
-  // add availability to business data that will be sent in response
+  // Add availability to business data that will be sent in response
   business[0]["availability"] = availability;
 
   res.send(business);
@@ -131,7 +137,7 @@ router.patch("/", async (req, res) => {
   const updateInfo = req.body;
   delete updateInfo.email;
 
-  // update business info for user
+  // Update business info for user
   const businessInfo = await db
     .select("*")
     .returning("*")
@@ -139,7 +145,7 @@ router.patch("/", async (req, res) => {
     .where({ user_id })
     .update(updateInfo);
 
-  // get business id to fetch all reservations to be sent in response
+  // Get business id to fetch all reservations to be sent in response
   const business_id = businessInfo[0]["id"];
 
   const reservationInfo = await db
@@ -163,7 +169,10 @@ router.delete("/", async (req, res) => {
     .where({ email });
   const user_id = user[0]["id"];
 
-  await db.table("businesses").where({ user_id }).del();
+  await db
+    .table("businesses")
+    .where({ user_id })
+    .del();
 
   res.send("Business information deleted");
 });
@@ -171,22 +180,26 @@ router.delete("/", async (req, res) => {
 // Get all business data
 router.get("/data", async (req, res) => {
   const allBusinessesInfo = await db.select("*").table("businesses");
-
   res.send(allBusinessesInfo);
 });
 
 // Get selected business's data
 router.get("/:id/:date", async (req, res) => {
-
   const id = req.params.id;
   const date = new Date(req.params.date);
 
-  //get day as number(0-6)
+  // Get day as number (0-6)
   const dayOfNum = date.getDay();
-
-  const dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-
-  //convert number to string
+  const dayArray = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
+  // Convert number to string
   const day = dayArray[dayOfNum];
 
   const BusinessesInfo = await db
@@ -196,7 +209,7 @@ router.get("/:id/:date", async (req, res) => {
     .where("businesses.id", id)
     .andWhere("availability.day", day);
 
-  //if there is a data
+  // If there is a data
   if (BusinessesInfo.length === 1) {
     const start_hour = Number(BusinessesInfo[0].start_hour);
     const end_hour = Number(BusinessesInfo[0].end_hour);
@@ -216,7 +229,7 @@ router.get("/:id/:date", async (req, res) => {
         })
         .where("start_at", "<=", i)
         .andWhere("end_at", ">=", i + 1);
-      const timeScale = String(i)+"-"+String(i+1);
+      const timeScale = String(i) + "-" + String(i + 1);
       timeObj[timeScale] = capacity - Number(reservationsAlready[0].count);
     }
 
@@ -225,12 +238,9 @@ router.get("/:id/:date", async (req, res) => {
 
     res.send(timeObj);
   }else{
-    //if not open that day, return empty object
+    // If not open that day, return empty object
     res.send({});
   }
-
 });
-
-
 
 module.exports = router;
