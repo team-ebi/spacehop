@@ -59,7 +59,7 @@ router.post("/", async (req, res) => {
     phone,
     business_type,
     capacity,
-    price,
+    price
   });
 
   // Get new business id 

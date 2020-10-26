@@ -44,7 +44,7 @@ router.post("/", async (req, res) => {
       point,
       comment
     });
-    
+
     res.send(ratings);
   } catch {
     res.sendStatus(500);
@@ -69,7 +69,7 @@ router.get("/:business_id/:email", async (req, res) => {
     .table("ratings")
     .where({
       business_id,
-      user_id,
+      user_id
     });
 
     res.send(rating);
