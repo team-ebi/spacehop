@@ -183,7 +183,6 @@ export default function BizCard({ props }) {
     const start_at_send = start_at.getHours();
     const end_at = new Date(endTime);
     const end_at_send = end_at.getHours();
-    console.log("starting to post to res table");
     try {
       await axios.post(`${baseUrl}/api/reservations/`, {
         email: user.attributes.email,
@@ -193,9 +192,8 @@ export default function BizCard({ props }) {
         start_at: start_at_send,
         end_at: end_at_send,
       });
-      console.log("finished posting to res table");
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -318,9 +316,7 @@ export default function BizCard({ props }) {
                 </div>
                 {date ? (
                   <div id="reviews-header">{"Availability "}</div>
-                ) : (
-                  console.log("no")
-                )}
+                ) :  null}
                 {date ? (
                   <TableContainer
                     className="availability-table"
@@ -353,9 +349,7 @@ export default function BizCard({ props }) {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                ) : (
-                  console.log("no")
-                )}
+                ) : null}
               </div>
 
               <hr className="divider" id="mobile-divider"></hr>

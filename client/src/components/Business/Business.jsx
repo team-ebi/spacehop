@@ -160,7 +160,6 @@ function Business() {
 
       // if user business does not exist, send post request
       else if (!userBusiness) {
-        console.log("posting");
         res = await axios.post(`${baseUrl}/api/businesses/`, {
           email: user.attributes.email,
           name: businessName,
@@ -173,7 +172,6 @@ function Business() {
           price: price,
           availability: availArray,
         });
-        console.log("finish posting", res.data[0]);
         setSubmittedForm(true);
       }
 
@@ -247,7 +245,7 @@ function Business() {
         images.concat(`${userBusiness.id}/${event.target.files[0].name}`)
       );
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
 
     //close loading sign
@@ -622,53 +620,6 @@ function Business() {
               </div>
             ) : null}
           </main>
-          <hr id="profile-divider"></hr>
-          {/* <section>
-            <div id="availability-container">
-              <div id="biz-res-title">
-                <p>Upcoming Reservations:</p>
-              </div>
-              <div id="biz-reservations">
-                {userBusiness && userBusiness.reservations.length === 0 && (
-                  <p>No upcoming reservations</p>
-                )}
-
-                {userBusiness && userBusiness.reservations.length > 0 && (
-                  <>
-                    <div id="upcoming-past-button-container">
-                      <button
-                        className={`selected-button ${dimUpcoming}`}
-                        onClick={displayUpcoming}
-                      >
-                        Upcoming
-                      </button>
-                      <button
-                        className={`selected-button ${dimPast}`}
-                        onClick={displayPast}
-                      >
-                        Past
-                      </button>
-                    </div>
-                    <div id="res-table">
-                      {userBusiness.reservations
-                        .filter((booking) => {
-                          const today = new Date();
-                          const resDate = new Date(booking.date);
-                          if (display === "past") {
-                            return resDate < today;
-                          } else {
-                            return resDate >= today;
-                          }
-                        })
-                        .map((booking) => (
-                          <div>{booking.name}</div>
-                        ))}
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-          </section> */}
         </div>
       )}
     </div>

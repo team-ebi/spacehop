@@ -226,7 +226,7 @@ input.checkbox-body{
     #biz-profile-container {
         margin-top: 0;
         overflow-y: scroll;
-        padding-bottom: 60px;
+        padding-bottom: 100px;
         bottom: 0;
         background: #efefbb; /* fallback for old browsers */
         background: -webkit-linear-gradient(
@@ -258,6 +258,7 @@ input.checkbox-body{
     main {
         width: 100%;
         border-right: none;
+        margin-bottom: 100px;
     }
     section {
         width: 100%;
