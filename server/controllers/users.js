@@ -1,11 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../src/knex.js");
-const moment = require('moment');
-
-router.get("/test", async (req, res) => {
-  res.send("working");
-});
+const moment = require("moment");
 
 // Creating new user
 router.post("/", async (req, res) => {
@@ -79,12 +75,13 @@ router.post("/account", async (req, res) => {
     
     // Format to YYYY-MM-DD
     for(elm of reservationInfo){
-      elm.date=moment(elm.date).format("YYYY-MM-DD");
-      elm.created_at=moment(elm.created_at).format("YYYY-MM-DD");
+      elm.date = moment(elm.date).format("YYYY-MM-DD");
+      elm.created_at = moment(elm.created_at).format("YYYY-MM-DD");
     }
     // Combine business, availability and reservation info
     businessInfo[0]["availabilities"] = availabilityInfo;
     businessInfo[0]["reservations"] = reservationInfo;
+
     res.send(businessInfo);
   } catch {
     res.send([]);
@@ -96,9 +93,10 @@ router.get("/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const user = await db.select("*").table("users").where("email", email);
+
     res.send(user);
   } catch {
-    //If error occur, send 500 status code
+    // If error occur, send 500 status code
     res.sendStatus(500);
   }
 });
