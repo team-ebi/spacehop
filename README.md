@@ -33,6 +33,9 @@ The pandemic may not last forever, but remote work will be here to stay. Spaceho
 
 7) If you are a business owner, you can register your business on the Business Profile page, and you can toggle between User and Business messages in your inbox.
 
+Please note:
+Our styles are prioritized to work best on an Iphone X. 
+
 ***
 
 ### For Contributors
@@ -70,6 +73,9 @@ cd client
 yarn start
 ```
 
+Please note:
+Our styles are prioritized to work best on an Iphone X in production. If you are unable to scroll down a page locally, please comment out `overflow: hidden` in the `body` selector of App.css.
+
 ***
 ### Technologies
 - React
@@ -86,5 +92,7 @@ yarn start
 - Include other alternative uses for space rentals (e.g. meetups, art classes, exericse classes)
 - Add filters for amenities
 - Share location feature to coordinate with friends
+
+***
 
 

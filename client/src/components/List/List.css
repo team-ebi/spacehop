@@ -314,5 +314,6 @@ input:checked + .slider:before {
 @media (max-height: 815px) {
   #location-container {
     margin-left: 30px;
+    padding-bottom: 65px;
   }
 }
