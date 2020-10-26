@@ -24,15 +24,15 @@ router.get("/", async (req, res) => {
 
   // Get all availability
   const availability = await db
-    .select("*")
-    .table("businesses")
-    .leftJoin("availability", { "availability.business_id": "businesses.id" })
-    .where({
-      "availability.day": day,
-      "businesses.address_city": address_city
-    })
-    .where("start_hour", "<=", start_hour)
-    .andWhere("end_hour", ">=", end_hour);
+  .select("*")
+  .table("businesses")
+  .leftJoin("availability", { "availability.business_id": "businesses.id" })
+  .where({
+    "availability.day": day,
+    "businesses.address_city": address_city
+  })
+  .where("start_hour", "<=", start_hour)
+  .andWhere("end_hour", ">=", end_hour);
 
   const filteredAvailability = [];
 
@@ -46,14 +46,14 @@ router.get("/", async (req, res) => {
     // Search each hour's left seats
     for (let i = start_hour; i < end_hour; i++) {
       const reservationCount = await db
-        .count({ count: "*" })
-        .from("reservations")
-        .where({
-          "date": date,
-          "business_id": id
-        })
-        .where("start_at", "<=", i)
-        .andWhere("end_at", ">=", i + 1);
+      .count({ count: "*" })
+      .from("reservations")
+      .where({
+        "date": date,
+        "business_id": id
+      })
+      .where("start_at", "<=", i)
+      .andWhere("end_at", ">=", i + 1);
         
       // Not appear in list if full.
       if (Number(reservationCount[0].count) === capacity) {
@@ -71,9 +71,9 @@ router.get("/", async (req, res) => {
   // Calculate average point for each business in array
   for (const business of filteredAvailability) {
     const avgRating = await db
-      .avg("point")
-      .from("ratings")
-      .where("business_id", business.id);
+    .avg("point")
+    .from("ratings")
+    .where("business_id", business.id);
     business["avg"] = Number(avgRating[0].avg);
   }
   res.send(filteredAvailability);
@@ -96,11 +96,11 @@ router.patch("/:id", async (req, res) => {
 
     // Update availability
     const updated = await db
-      .select("*")
-      .returning("*")
-      .table("availability")
-      .where({ business_id, day })
-      .update(dailyAvail);
+    .select("*")
+    .returning("*")
+    .table("availability")
+    .where({ business_id, day })
+    .update(dailyAvail);
 
     // If update query returns empty array, then it's a new
     // Availability day => need to insert new row
@@ -109,17 +109,18 @@ router.patch("/:id", async (req, res) => {
       const end_hour = dailyAvail.end_hour;
       const day = dailyAvail.day;
       await db
-        .select("*")
-        .table("availability")
-        .insert({ business_id, day, start_hour, end_hour });
+      .select("*")
+      .table("availability")
+      .insert({ business_id, day, start_hour, end_hour });
     }
   }
 
   // Query all availabilities for business to send as response
   const update = await db
-    .select("*")
-    .table("availability")
-    .where({ business_id });
+  .select("*")
+  .table("availability")
+  .where({ business_id });
+  
   res.send(update);
 });
 
