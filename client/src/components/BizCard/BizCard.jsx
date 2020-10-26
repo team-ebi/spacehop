@@ -316,7 +316,7 @@ export default function BizCard({ props }) {
                 </div>
                 {date ? (
                   <div id="reviews-header">{"Availability "}</div>
-                ) :  console.log("no")}
+                ) :  null}
                 {date ? (
                   <TableContainer
                     className="availability-table"
@@ -349,7 +349,7 @@ export default function BizCard({ props }) {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                ) : console.log("no")}
+                ) : null}
               </div>
 
               <hr className="divider" id="mobile-divider"></hr>
