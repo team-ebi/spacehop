@@ -189,7 +189,7 @@ router.get("/:id/:date", async (req, res) => {
     //search each hour's left seats
     for (let i = start_hour; i < end_hour; i++) {
       reservationsAlready = await db
-      .count({ count: '*' })
+      .count({ count: "*" })
       .from("reservations")
       .where({
         "date": date,
