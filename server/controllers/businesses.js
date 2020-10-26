@@ -2,37 +2,6 @@ const express = require("express");
 const router = express.Router();
 const db = require("../src/knex.js");
 
-router.get("/test", async (req, res) => {
-  res.send("working");
-});
-
-// Get business info by id with ratings
-// router.get("/:id", async (req, res) => {
-//   const id = req.params.id;
-
-//   const averageRating = await db.avg('point')
-//     .from('ratings')
-//     .where('business_id', '=', id)
-
-//   //Get each rating & comment
-//   const comments = await db
-//     .select("point", "comment", "users.first_name", "users.last_name")
-//     .table("ratings")
-//     .where('business_id', '=', id)
-//     .join("users", { "ratings.user_id": "users.id" })
-
-//   const business = await db
-//     .select("*")
-//     .table("businesses")
-//     .where('id', '=', id)
-
-//   //add average point to business data
-//   business[0]['avg'] = averageRating[0]['avg'];
-//   business[0]['comments'] = comments;
-
-//   res.send(business[0]);
-// });
-
 // Create business account by email
 /*
 Example JSON request to create business account
