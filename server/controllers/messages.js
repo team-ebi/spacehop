@@ -18,9 +18,9 @@ router.get("/:user", async (req, res) => {
     .table("messages")
     .where({ user_id });
 
-  //add businesses' name
+  // Add businesses' name
   for (let i = 0; i < user_messages.length; i++) {
-    const business_id = user_messages[i].business_id
+    const business_id = user_messages[i].business_id;
 
     const business = await db
       .select("*")
@@ -38,7 +38,7 @@ router.get("/:user", async (req, res) => {
     .where({ user_id });
 
   if (business.length !== 0) {
-    //if business owner
+    // If business owner
     const business_id = business[0].id;
 
     const business_messages = await db
@@ -46,28 +46,24 @@ router.get("/:user", async (req, res) => {
       .table("messages")
       .where({ business_id });
 
-    //add businesses' name
+    // Add businesses' name
     for (let i = 0; i < business_messages.length; i++) {
-      const user_id = business_messages[i].user_id
-
+      const user_id = business_messages[i].user_id;
       const user = await db
         .select("*")
         .table("users")
         .where("id", user_id);
 
-        business_messages[i]["user_first_name"] = user[0].first_name;
-        business_messages[i]["user_last_name"] = user[0].last_name;
-        business_messages[i]["email"] = user[0].email;
-
+      business_messages[i]["user_first_name"] = user[0].first_name;
+      business_messages[i]["user_last_name"] = user[0].last_name;
+      business_messages[i]["email"] = user[0].email;
     }
-
     objToSend["business_messages"] = business_messages;
   }
-
   res.send(objToSend);
 });
 
-//get all messages
+// Get all messages
 router.get("/", async (req, res) => {
   const messages = await db.select("*").table("messages");
   res.send(messages);
@@ -98,7 +94,7 @@ router.get("/", async (req, res) => {
 //   res.send(messages);
 // });
 
-//get messages by user and biz
+// Get messages by user and biz
 router.get("/:user/:biz", async (req, res) => {
   const business_id = req.params.biz;
   const user_id = req.params.user;
@@ -109,14 +105,13 @@ router.get("/:user/:biz", async (req, res) => {
   res.send(messages);
 });
 
-//update messages by user and biz
+// Update messages by user and biz
 router.patch("/:user/:biz", async (req, res) => {
   const email = req.params.user;
   const user = await db
     .select("*")
     .table("users")
     .where({ email });
-
   const user_id = user[0].id;
 
   const business_id = req.params.biz;
@@ -139,7 +134,7 @@ router.patch("/:user/:biz", async (req, res) => {
   res.status(200).end();
 });
 
-//post new message to db by user id and biz id
+// Post new message to db by user id and biz id
 router.post("/:user/:biz", async (req, res) => {
   const business_id = req.params.biz;
   const user_id = req.params.user;
