@@ -202,7 +202,7 @@ router.get("/:id/:date", async (req, res) => {
       timeObj[timeScale] = capacity - Number(reservationsAlready[0].count);
     }
 
-    // ex) { "12-13": 19,"13-14": 19,"14-15": 19,"15-16": 19,"16-17": 18 }
+    // ex) { "12-13": 19, "13-14": 19,"14-15": 19, "15-16": 19, "16-17": 18 }
     res.send(timeObj);
   }else{
     // If not open that day, return empty object
