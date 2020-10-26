@@ -310,6 +310,6 @@ input:checked + .slider:before {
 }
 @media (max-width: 414px) and (max-height: 896px) {
   #location-container{
-    margin-left: 47px;
+    margin-left: 70px;
   }
 }
