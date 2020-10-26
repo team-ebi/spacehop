@@ -193,7 +193,7 @@ router.get("/:id/:date", async (req, res) => {
       .from("reservations")
       .where({
         "date": date,
-        "business_id": id,
+        "business_id": id
       })
       .where("start_at", "<=", i)
       .andWhere("end_at", ">=", i + 1);
