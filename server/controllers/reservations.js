@@ -1,11 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../src/knex.js");
-const moment = require("moment");
-
-// router.get("/", async(req, res) => {
-//   res.send("working");
-// });
 
 //Make a Reservation
 router.post("/", async (req, res) => {
@@ -75,21 +70,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-//Get selected user's reservations
-// router.get("/", async(req, res) => {
-//   const user_id = req.params.user_id;
-
-//   const reservations = await db
-//   .select("*")
-//   .table("reservations")
-//   .where({
-//     user_id
-//   })
-//   .orderBy('date', 'asc');
-
-//   res.send(reservations);
-// });
-
 // Get user's upcoming reservations
 router.get("/:email", async (req, res) => {
   try {
@@ -111,8 +91,5 @@ router.get("/:email", async (req, res) => {
     res.sendStatus(500);
   }
 });
-
-//ISO 8601("2020-10-08T15:00:00.000Z") => YYYY-MM-DD
-const convertDate = (IsoString) => {};
 
 module.exports = router;
