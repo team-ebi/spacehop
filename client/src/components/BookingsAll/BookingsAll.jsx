@@ -24,7 +24,7 @@ export default function FutureBookings() {
           setFutureBookings(reservations.data);
         }
       } catch (err) {
-        console.log('FETCH ERROR: ', err);
+        console.error('FETCH ERROR: ', err);
       }
     }
     fetchBookings();

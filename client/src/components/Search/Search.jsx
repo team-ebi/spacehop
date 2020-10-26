@@ -7,7 +7,6 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
-// import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { BusinessContext } from "../useContext/BusinessContext";
 import { UserContext } from "../useContext/UserContext";
@@ -64,7 +63,6 @@ export default function Search() {
   const handleLocationSelect = async (value) => {
     const results = await geocodeByAddress(value);
     const latLng = await getLatLng(results[0]);
-    console.log(latLng);
     setLocation(value);
     setCoordinates(latLng);
   };
@@ -100,13 +98,6 @@ export default function Search() {
     // parse time from selected start time
     const selectedEndTime = new Date(endTime).getHours();
   
-    console.log("selecteddate",selectedDate);
-    // console.log("selectedday",selectedDay);
-
-    // set data to axios.get(http://) then get filtered data
-    // const res = await axios.get(
-    //   `${baseUrl}/api/availability/?date=${selectedDate}&address_city=${selectedLocation}&start_hour=${startTime}&end_hour=${endTime}`
-    // );
     const res = await axios.get(
 
       `${baseUrl}/api/availability/?date=${dateToSend}&address_city=${selectedLocation}&start_hour=${selectedStartTime}&end_hour=${selectedEndTime}`

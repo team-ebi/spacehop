@@ -17,7 +17,7 @@ aws.config.credentials = new aws.Credentials({
 const listObjects = (bucket) => {
   const listObjects = new Promise((resolve, reject) => {
     bucket.listObjects((error, data) => {
-      error ? console.log(error) : resolve(data.Contents);
+      error ? console.error(error) : resolve(data.Contents);
     });
   });
   return listObjects;
@@ -27,7 +27,7 @@ const listObjects = (bucket) => {
 const getSingleObject = (bucket, key) => {
   const getSingleObject = new Promise((resolve, reject) => {
     bucket.getObject({ Bucket: bucketName, Key: key }, (error, data) => {
-      error ? console.log(error) : resolve(data.Body.toString("base64"));
+      error ? console.error(error) : resolve(data.Body.toString("base64"));
     });
   });
   return getSingleObject;

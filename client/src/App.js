@@ -63,7 +63,6 @@ export default function App() {
             email: email,
             phone: user.attributes.phone_number,
           });
-          console.log("posted new user to db");
         }
       }
     }

@@ -2,7 +2,6 @@ const knex = require("./config.js");
 
 const messages = () => {
   const sample = [
-    { business_message: "Yes, we have unlimited wi-fi" },
     { user_message: "Sounds good! Thank you for responding." },
     { user_message: "I am sorry, I have one more question - Do you have many electrical outlets at the izakaya?" },
     { business_message: "No problem! Yes we have many easily accessible outlets here and also have extension cords." },
@@ -12,7 +11,8 @@ const messages = () => {
     { user_message: "Thank you so much." },
     { business_message : "We have found your laptop charger! Would you like us to send it to you?" },
     { user_message: "Oh great! Thank you so much. I can come pick it up later today. Thank you again." },
-    { user_message: "Hello, do you have wi-fi at the izakaya?" }
+    { user_message: "Hello, do you have wi-fi at the izakaya?" },
+    { business_message: "Yes, we have unlimited wi-fi" }
   ]
 
   const sample2 = [

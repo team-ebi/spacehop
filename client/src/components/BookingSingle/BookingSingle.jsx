@@ -3,10 +3,7 @@ import { UserContext } from "../useContext/UserContext";
 import axios from "axios";
 import "../BookingsAll/BookingsAll.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCalendarAlt,
-  faClock,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCalendarAlt, faClock} from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 import Rating from "@material-ui/lab/Rating";
 

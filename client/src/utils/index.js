@@ -39,7 +39,7 @@ export function getSingleObject(bizId, key) {
         Key: key,
       },
       (error, data) => {
-        error ? console.log(error) : resolve(data.Body.toString("base64"));
+        error ? console.error(error) : resolve(data.Body.toString("base64"));
     });
   });
 
