@@ -109,7 +109,7 @@ h2 {
 #mobile-menu {
   display: none;
 }
-@media (max-width: 700px) {
+@media (max-width: 800px) {
   nav {
     top: auto;
     bottom: 0;
