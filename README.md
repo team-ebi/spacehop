@@ -17,6 +17,30 @@ With Spacehop, remote workers can conveniently search for places to work from fo
 The pandemic may not last forever, but remote work will be here to stay. Spacehop can help!
 
 ***
+### Demo
+
+User searching for a space:<br>
+<img width="150" alt="logo" src="./client/public/DEMO_search.gif">
+
+Results offered in list and map views, then user can click on a space for more details and to book:<br>
+<img width="150" alt="logo" src="./client/public/DEMO_results.gif">
+
+User profiles allow users to edit their info, look at upcoming and past bookings, and leave a rating and review:<br>
+<img width="150" alt="logo" src="./client/public/DEMO_profile.gif">
+
+Users can send a message to business owners and find more info in the main menu (like our team page!):<br>
+<img width="150" alt="logo" src="./client/public/DEMO_chat.gif">
+
+Businesses owners can register their business details by clicking on Business Profile from the main menu:<br>
+<img width="150" alt="logo" src="./client/public/DEMO_addbusiness.gif">
+
+Once registered, business owners can manage their profile and availability from the business profile page:<br>
+<img width="150" alt="logo" src="./client/public/DEMO_businessprofile.gif">
+
+Business owners will have a switch in their inbox allowing them to toggle between user messages and business messages:<br>
+  <img width="150" alt="logo" src="./client/public/DEMO_businessinbox.gif">
+
+***
 
 ### How it works
 1) Users must sign up and be logged in. You will need to verify your email before logging in.
