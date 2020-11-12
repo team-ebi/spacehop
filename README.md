@@ -63,10 +63,7 @@ Our styles are prioritized to work best on an Iphone X.
 ***
 
 ### For Contributors
-1) Clone this repository.
-```
-git clone https://github.com/team-ebi/spacehop.git
-```
+1) Fork and clone this repository.
 
 2) Install dependencies.
 ```
@@ -92,13 +89,9 @@ yarn seed
 5) Start backend and frontend server.
 ```
 yarn start
-cd ..
-cd client
+cd ../client
 yarn start
 ```
-
-Please note:
-Our styles are prioritized to work best on an Iphone X in production. If you are unable to scroll down a page locally, please comment out `overflow: hidden` in the `body` selector of App.css.
 
 ***
 ### Technologies
@@ -106,7 +99,10 @@ Our styles are prioritized to work best on an Iphone X in production. If you are
 - Node/Express
 - Knex
 - Postgres
-- AWS (Amplify, Elastic Beanstalk, Cognito, S3)
+- AWS (Amplify, Elastic Beanstalk, Cognito, S3, RDS)
+- CircleCI
+- Google Maps API
+- Stripe Checkout API
 
 ***
 
