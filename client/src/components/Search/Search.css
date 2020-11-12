@@ -139,8 +139,9 @@
     width: 80%;
     background-color: white;
     margin-bottom: 30px;
+    border: solid transparent;
   }
-  .input:focus:not(.time) {
+  .input:hover:not(.time) {
     border: solid #80cc37;
   }
   #location-input-field {
@@ -158,8 +159,10 @@
     font-size: 16px;
   }
   #search-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
     width: 80%;
-    margin-top: 20px;
   }
   #search-button {
     border-radius: 100px;
@@ -239,25 +242,31 @@
     width: 250px;
   }
 }
+
+/* iphone 6/7/8 ; moto g4 ; galaxy s5*/
 @media (max-width: 375px) and (max-height: 700px) {
   #search-button-container {
     width: 280px;
     padding: 10px;
     margin-top: 0px;
   }
-  #search-button {
-    width: 280px;
-  }
   #search-bar-container {
-    margin-top: 15px;
+    margin-top: 10px;
   }
   #logo {
-    width: 40%;
+    width: 35%;
+  }
+  .input {
+    height: 25px;
+    margin-bottom: 20px;
   }
 }
+
+/* iphone 5/SE */
 @media (max-width: 325px) and (max-height: 570px) {
   .input {
     height: 20px;
+    margin-bottom: 15px;
   }
   #search-button-container {
     display: flex;
@@ -265,5 +274,8 @@
   }
   #search-button {
     width: 80%;
+  }
+  #mobile-welcome {
+    padding-bottom: 20px;
   }
 }
