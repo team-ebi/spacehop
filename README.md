@@ -31,7 +31,7 @@ User profiles allow users to edit their info, look at upcoming and past bookings
 Users can send a message to business owners and find more info in the main menu (like our team page!):<br>
 <img width="250" alt="logo" src="./client/public/DEMO_chat.gif">
 
-Businesses owners can register their business details by clicking on Business Profile from the main menu:<br>
+Business owners can register their business details by clicking on Business Profile from the main menu:<br>
 <img width="250" alt="logo" src="./client/public/DEMO_addbusiness.gif">
 
 Once registered, business owners can manage their profile and availability from the business profile page:<br>
@@ -114,5 +114,6 @@ yarn start
 - Share location feature to coordinate with friends
 
 ***
+
 
 
