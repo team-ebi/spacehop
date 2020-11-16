@@ -1,37 +1,26 @@
-#search-container {
-  background: transparent;
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
 #logo-container {
-  width: 100%;
   text-align: center;
 }
 #logo {
   margin-top: 80px;
-  width: 300px;
+  width: 250px;
 }
 #search-bar-container {
-  width: 100%;
-  height: 150px;
   display: flex;
   justify-content: center;
 }
 #search-bar {
   background-color: white;
   display: flex;
-  height: 100px;
   border-radius: 50px;
   width: 80%;
   box-shadow: 0 4px 8px lightgrey;
   z-index: 10;
-  align-self: flex-start;
 }
 #location-input-field {
   width: 40%;
 }
 .input {
-  background-color: white;
   padding: 10px;
   border-radius: 50px;
   display: flex;
@@ -88,9 +77,6 @@
 .time {
   width: 20%;
 }
-#search-button-container {
-  width: 5%;
-}
 .MuiFormControl-root {
   width: 100%;
 }
@@ -118,21 +104,14 @@
   background-color: #80cc37;
 }
 
-@media (min-height: 700px) and (max-height: 850px) {
-  #search-bar-container {
-    margin-top: 50px;
-    height: 100vh;
-  }
-  .input {
-    margin-bottom: 30px;
-  }
-}
-@media (max-width: 700px) {
+/* ipad portrait mode */
+@media (max-width: 815px) {
   #search-container {
     margin-top: 0;
     margin-bottom: 65px;
     height: 100vh;
-    overflow-y: hidden;
+    width: 100vw;
+    position: fixed;
     background: #9e9e84; /* fallback for old browsers */
     background: -webkit-linear-gradient(
       to bottom,
@@ -145,29 +124,33 @@
       #efefbb
     ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   }
-
+  #mobile-welcome {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 30px;
+  }
   #search-bar {
-    flex-flow: row wrap;
+    flex-flow: column nowrap;
     background-color: transparent;
     box-shadow: none;
-    justify-content: center;
-    width: 80%;
+    align-items: center;
   }
   .input {
-    width: 280px;
+    width: 80%;
     background-color: white;
     margin-bottom: 30px;
+    border: solid transparent;
   }
   .input:hover:not(.time) {
     border: solid #80cc37;
   }
   #location-input-field {
-    width: 280px;
+    width: 80%;
   }
   #location-input {
     font-size: 16px;
     font-family: "Roboto", sans-serif;
-    width: 280px;
+    min-width: 280px;
   }
   #location-input:focus {
     outline: none;
@@ -176,8 +159,10 @@
     font-size: 16px;
   }
   #search-button-container {
-    width: 100%;
-    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    width: 80%;
   }
   #search-button {
     border-radius: 100px;
@@ -192,6 +177,7 @@
   }
 }
 
+/* iphone 11 */
 @media (max-width: 415px) and (max-height: 897px) {
   .input {
     margin-bottom: 15px;
@@ -201,6 +187,7 @@
   }
   #logo-container {
     padding: 0px;
+    margin-bottom: 20px;
   }
   #search-container {
     height: 100vh;
@@ -217,29 +204,25 @@
   }
 }
 
-@media (max-width: 400px) and (max-height: 820px) {
-  #logo-container {
-    height: 180px;
-    width: 100%;
-    padding: 0px;
-    padding-top: 30px;
-  }
+/* pixel 2 */
+@media (max-width: 415px) and (max-height: 740px) {
   #logo {
-    margin-top: 0px;
-    width: 50%;
+    margin-top: 40px;
   }
   .input {
     height: 30px;
-    margin-bottom: 15px;
+  }
+}
+
+/* iphone X */
+@media (max-width: 400px) and (max-height: 820px) {
+  .input {
+    height: 30px;
+    margin-bottom: 25px;
   }
   #autocomplete-selections {
     z-index: 100;
     position: fixed;
-  }
-  #mobile-welcome {
-    display: flex;
-    justify-content: center;
-    padding-bottom: 30px;
   }
   .date-input {
     text-indent: 20px;
@@ -257,5 +240,42 @@
   }
   #loadingSign {
     width: 250px;
+  }
+}
+
+/* iphone 6/7/8 ; moto g4 ; galaxy s5*/
+@media (max-width: 375px) and (max-height: 700px) {
+  #search-button-container {
+    width: 280px;
+    padding: 10px;
+    margin-top: 0px;
+  }
+  #search-bar-container {
+    margin-top: 10px;
+  }
+  #logo {
+    width: 35%;
+  }
+  .input {
+    height: 25px;
+    margin-bottom: 20px;
+  }
+}
+
+/* iphone 5/SE */
+@media (max-width: 325px) and (max-height: 570px) {
+  .input {
+    height: 20px;
+    margin-bottom: 15px;
+  }
+  #search-button-container {
+    display: flex;
+    justify-content: center;
+  }
+  #search-button {
+    width: 80%;
+  }
+  #mobile-welcome {
+    padding-bottom: 20px;
   }
 }
