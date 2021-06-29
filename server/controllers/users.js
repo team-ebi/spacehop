@@ -1,13 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../src/knex.js");
-const moment = require('moment');
+const moment = require("moment");
 
-router.get("/test", async (req, res) => {
-  res.send("working");
-});
-
-//creating new user
+// Creating new user
 router.post("/", async (req, res) => {
   const first_name = req.body.first_name;
   const last_name = req.body.last_name;
@@ -15,28 +11,30 @@ router.post("/", async (req, res) => {
   const phone = req.body.phone;
 
   try {
-    const register = await db.select("*").table("users").insert({
+    const register = await db
+    .select("*")
+    .table("users")
+    .insert({
       first_name,
       last_name,
       email,
-      phone,
+      phone
     });
 
     res.send("New user created!");
   } catch {
-    //If error occur, send 500 status code
+    // If error occur, send 500 status code
     res.sendStatus(500);
   }
 });
 
-//Get all users
+// Get all users
 router.get("/data", async (req, res) => {
   try {
     const users = await db.select("*").table("users");
-
     res.send(users);
   } catch {
-    //If error occur, send 500 status code
+    // If error occur, send 500 status code
     res.sendStatus(500);
   }
 });
@@ -73,30 +71,32 @@ router.post("/account", async (req, res) => {
     .table("reservations")
     .where({ business_id });
 
-    reservationInfo[0].created_at=moment(reservationInfo[0].created_at).format('YYYY-MM-DD')
+    reservationInfo[0].created_at = moment(reservationInfo[0].created_at).format("YYYY-MM-DD");
     
-    //format to YYYY-MM-DD
+    // Format to YYYY-MM-DD
     for(elm of reservationInfo){
-      elm.date=moment(elm.date).format('YYYY-MM-DD');
-      elm.created_at=moment(elm.created_at).format('YYYY-MM-DD');
+      elm.date = moment(elm.date).format("YYYY-MM-DD");
+      elm.created_at = moment(elm.created_at).format("YYYY-MM-DD");
     }
     // Combine business, availability and reservation info
     businessInfo[0]["availabilities"] = availabilityInfo;
     businessInfo[0]["reservations"] = reservationInfo;
+
     res.send(businessInfo);
   } catch {
     res.send([]);
   }
 });
 
-//Get selected user's info
+// Get selected user's info
 router.get("/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const user = await db.select("*").table("users").where("email", email);
+
     res.send(user);
   } catch {
-    //If error occur, send 500 status code
+    // If error occur, send 500 status code
     res.sendStatus(500);
   }
 });
